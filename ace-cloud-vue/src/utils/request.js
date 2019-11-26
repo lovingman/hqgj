@@ -12,7 +12,6 @@ const service = axios.create({
   // baseURL: "http://111.8.133.83:9011", // url = base url + request url
   // baseURL: "http://zx.huacainfo.com/", // url = base url + request url
   // baseURL: "http://zhtz.cdtyzx.gov.cn/", // url = base url + request url
-  // baseURL: "http://10.0.0.11:9011/", // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000 // request timeout
 })

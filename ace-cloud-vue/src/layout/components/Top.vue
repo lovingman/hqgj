@@ -58,10 +58,8 @@
     }
     .undertone{
         display: inline-flex;
-        width:10rem;
+        width:100%;
         height: 76px;
-        background-size:100% 100%;
-        background-repeat:no-repeat;
         background: url(../../assets/img/icon_1.jpg);
 
     }
