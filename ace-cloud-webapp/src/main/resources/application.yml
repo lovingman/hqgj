@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: webapp
+  profiles:
+    #    active: dev
+    active: prod
+
