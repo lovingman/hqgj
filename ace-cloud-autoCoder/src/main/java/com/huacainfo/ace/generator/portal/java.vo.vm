@@ -1,0 +1,8 @@
+package com.huacainfo.ace.portal.vo;
+
+import com.huacainfo.ace.portal.model.$!{bean.name};
+
+
+public class $!{bean.name}Vo extends $!{bean.name} {
+private static final long serialVersionUID = 1L;
+}
