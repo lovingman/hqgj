@@ -1,0 +1,74 @@
+server:
+  port: 9011
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9012/eureka/
+zuul:
+  host:
+    socket-timeout-millis: 200000
+    connect-timeout-millis: 200000
+  sslHostnameValidationEnabled: false
+  sensitive-headers: true
+#  sensitive-headers: Access-Control-Allow-Origin
+#  ignored-headers: Access-Control-Allow-Origin,H-APP-Id,Token,APPToken
+
+spring:
+  application:
+    name: zuul
+  zipkin:
+    base-url: http://localhost:9027
+  redis:
+    cluster:
+      nodes: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
+    port: 6379
+    timeout: 60000
+    pool:
+      max-active: 300
+      max-wait: -1
+      max-idle: 100
+      min-idle: 20
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+  output:
+    ansi:
+      enabled: DETECT
+  #file upload
+  servlet:
+    multipart:
+      max-file-size: 512MB
+      max-request-size: 512MB
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+logging:
+  level:
+    com.huacainfo.ace: debug
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mySecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+filter:
+  ignoreuris: /login,/security/login,/feign,/zcpa-portal/security/login,/zcpa/www,/zcpa-portal/www,/webapp/
+#
+cloudplatform-service-local:
+  #设置ribbon的请求超时时间，大文件上传必须调高此时间
+  ribbon:
+    ConnectTimeout: 60000
+    ReadTimeout: 20000
+    #同一个Server重试的次数(除去首次)
+    MaxAutoRetries: 3
+    #切换到不同Server的次数
+    MaxAutoRetriesNextServer: 3
+    #对所有方法进行重试
+    okToRetryOnAllOperations: true

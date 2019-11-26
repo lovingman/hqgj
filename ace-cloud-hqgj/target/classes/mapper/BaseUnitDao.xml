@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.BaseUnitDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.BaseUnit">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="areaCode" jdbcType="VARCHAR" property="areaCode" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId"/>
+     <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName"/>
+    <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, address, telephone, areaCode, createUserId, createUserName, createDate, lastModifyUserId,
+    lastModifyUserName, lastModifyDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_unit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_unit
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.BaseUnit">
+    insert into base_unit (id, name, address, 
+      telephone, areaCode, createUserId, 
+      createUserName, createDate, lastModifyUserId,
+    lastModifyUserName, lastModifyDate)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},#{lastModifyUserId,jdbcType=VARCHAR},
+      #{lastModifyUserName,jdbcType=VARCHAR}, #{lastModifyDate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.BaseUnit">
+    update base_unit
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      areaCode = #{areaCode,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+       lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR},
+      lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR},
+      lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.BaseUnitVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.name, t.address, t.telephone, t.areaCode, t.createUserId, t.createUserName, t.createDate,t.lastModifyUserId,
+    t.lastModifyUserName, t.lastModifyDate
+  </sql>
+  <sql id="From_Statement">
+    FROM base_unit t
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.name != null and condition.name != ''">
+         and t.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.address != null and condition.address != ''">
+         and t.address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.telephone != null and condition.telephone != ''">
+         and t.telephone = #{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.areaCode != null and condition.areaCode != ''">
+         and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserId != null and condition.createUserId != ''">
+         and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserName != null and condition.createUserName != ''">
+         and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null and condition.createDate != ''">
+         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+      limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.BaseUnit" resultType="int">
+            select count(1)
+        from base_unit
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from base_unit
+        where id in
+     <foreach collection="array" item="id" open="(" separator="," close=")">
+        #{id}
+     </foreach>
+  </delete>
+</mapper>

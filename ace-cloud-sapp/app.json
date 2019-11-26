@@ -1,0 +1,17 @@
+{
+	"pages": [
+		
+		"pages/forum/index",
+		"pages/index/index",
+		"pages/logs/logs",
+		"pages/body/index"
+		
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "WeChat",
+		"navigationBarTextStyle": "black"
+	},
+	"sitemapLocation": "sitemap.json"
+}

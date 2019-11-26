@@ -1,0 +1,40 @@
+# Save gitignore file
+!.gitignore
+
+# Java class files
+*.class
+
+# Log Files
+*.log
+
+# IntelliJ IDEA #
+*.iml
+*.ipr
+.idea
+target
+
+# Version control
+vcs.xml
+
+### Eclipse template
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.classpath
+.project
+
+# Package Files #
+*.war
+
+# os system file #
+.DS_Store
+node_modules/
+request.js / 

@@ -1,0 +1,87 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:9012/eureka/
+server:
+  port: 9016
+
+spring:
+  application:
+    name: zcpa-portal
+  aop:
+    auto: true
+  redis:
+    cluster:
+      nodes: 10.0.0.12:7000,10.0.0.12:7001,10.0.0.12:7002
+    timeout: 60000
+    pool:
+      max-active: 300
+      max-wait: -1
+      max-idle: 100
+      min-idle: 20
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      url: jdbc:mysql://10.0.0.12:3306/portal_zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: huacai$2019
+      initial-size: 2
+      max-active: 100
+      min-idle: 2
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+  #解决文件上传大小限制问题
+  servlet:
+    multipart:
+      max-file-size: 512MB
+      max-request-size: 512MB
+mybatis:
+  mapper-locations: classpath:mapper/**.xml
+# 打印sql
+logging:
+  level:
+    com.huacainfo.ace: debug
+#fastdfs
+fdfs:
+  soTimeout: 15000
+  connectTimeout: 6000
+  thumbImage:
+    width: 400
+    height: 400
+  trackerList: 10.0.0.12:22122
+  pool:
+    jmx-enabled: false
+  web-server-url: http://10.0.0.12:8888/
+
+#用于配置是否启用swagger
+swagger:
+  scan: "com.huacainfo.ace.portal.controller"
+  enable: false
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mySecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+filter:
+  ignoreuris: /login,/security/login,/feign,/portal/security/login,/portal/download,/www
+# 其他插件配置项
+sms:
+  hxrt:
+    url: https://www.stongnet.com/sdkhttp/sendsms.aspx
+    req: 101100-WEB-HUAX-135086
+    pwd: YTHYNYZA
+    suffix: 【华彩伟业】
+    sourceadd:
+

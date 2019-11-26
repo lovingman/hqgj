@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" type="text/css" href="font/LCDN.css" />
+	<script src="js/echarts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+	<body>
+		<div class="hc_model">
+			<div class="hc-wrap">
+				<div class="hc_head">
+					<div id="left">
+						<img src="img/line@2x.png" />
+						<span class="title">
+							众创平安专题云图
+						</span>
+					</div>
+					<div class="right">
+						<!--<span>2019/06/29 15:45:50</span>-->
+					</div>
+
+				</div>
+				<div class="hc_body" id="productNumber">
+					<div class="content1 content">
+						<div class="box angle">
+							<div class="title">
+								志愿服务次数
+							</div>
+							<div class="info">
+								<div class="card1 card">
+									<div class="subtitle">
+										志愿服务次数
+									</div>
+									<div class="ledNum">
+										<ul>
+											<li class="zero">0</li>
+											<li>1</li>
+											<li>2</li>
+											<li>3</li>
+											<li>4</li>
+											<li>5</li>
+											<li>6</li>
+											<li>7</li>
+											<li>8</li>
+										</ul>
+									</div>
+									<div class="tongji">
+										<ul>
+											<li>
+												<div>
+													<p class="number color1"><i id="productNumber_1" data-sum="140000">0</i></p>
+													<p class="footnote">参与志愿服务人员</p>
+												</div>
+												<div class="percentage">
+													36.4%
+												</div>
+											</li>
+											<li>
+												<div>
+													<p class="number color2"><i id="productNumber_2" data-sum="2200">0</i></p>
+													<p class="footnote">参与志愿服务村、社区数</p>
+												</div>
+												<div class="percentage">
+													97.1%
+												</div>
+											</li>
+											<li>
+												<div>
+													<p class="number color3"><i id="productNumber_3" data-sum="172">0</i></p>
+													<p class="footnote">参与志愿服务乡镇、街道数</p>
+												</div>
+												<div class="percentage">
+													100%
+												</div>
+											</li>
+											<li>
+												<div>
+													<p class="number color4"><i id="productNumber_4" data-sum="3000">0</i></p>
+													<p class="footnote">参与志愿服务单位占比 </p>
+												</div>
+												<div class="percentage">
+													81.1%
+												</div>
+											</li>
+											<li>
+												<div>
+													<p class="number color5"><i id="productNumber_19" data-sum="1156">0</i></p>
+													<p class="footnote">参与社会组织服务数 </p>
+												</div>
+												<div class="percentage">
+													7%
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div class="echart_one" id="echart_one"></div>
+								</div>
+								<div class="card2 card">
+									<div class="subtitle">
+										情暖家庭
+									</div>
+									<div class="echart_two" id="echart_two">
+
+									</div>
+									<div class="legend_list">
+										<ul>
+											<li>
+												<div class="text c1">社区矫正人员</div>
+												<div class="number"><i id="productNumber_5" data-sum="525">0</i></div>
+											</li>
+											<li>
+												<div class="text c2">刑满释放人员</div>
+												<div class="number"><i id="productNumber_6" data-sum="340">0</i></div>
+											</li>
+											<li>
+												<div class="text c3">肇事肇祸精神病人</div>
+												<div class="number"><i id="productNumber_7" data-sum="128">0</i></div>
+											</li>
+											<li>
+												<div class="text c4">重点青少年</div>
+												<div class="number"><i id="productNumber_8" data-sum="180">0</i></div>
+											</li>
+											<li>
+												<div class="text c5">重点上访人员</div>
+												<div class="number"><i id="productNumber_9" data-sum="34">0</i></div>
+											</li>
+											<li>
+												<div class="text c6">吸毒人员</div>
+												<div class="number"><i id="productNumber_10" data-sum="46">0</i></div>
+											</li>
+											<li>
+												<div class="text c7">个人极端重点人员</div>
+												<div class="number"><i id="productNumber_11" data-sum="12">0</i></div>
+											</li>
+											<li>
+												<div class="text c8">其他</div>
+												<div class="number"><i id="productNumber_12" data-sum="40">0</i></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="card3 card">
+									<div class="subtitle">
+										志愿者对接
+									</div>
+									<div class="title1">
+										<p>需对接志愿者数<span><i id="productNumber_13" data-sum="400000">0</i></span></p>
+										<p>已对接志愿者数<span><i id="productNumber_14" data-sum="378560">0</i></span></p>
+									</div>
+									<div id="detail" class="detail">
+										<ul>
+											<li class="item">
+												<div class="name">情暖家庭</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">护安校园</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">法安沅澧</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">和事佬</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">心房工程</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">巡逻守护</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+										</ul>
+										<div id="">
+											<div class="item">
+												<div class="name"></div>
+												<div class="scale">
+													<ul>
+														<li>0%</li>
+														<li>20%</li>
+														<li style="text-align: center;">40%</li>
+														<li style="text-align: center;">60%</li>
+														<li style="text-align: right;">80%</li>
+														<li style="text-align: right;">100%</li>
+													</ul>
+												</div>
+												<div class="percentage"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="bottom_angle">
+
+							</div>
+						</div>
+						<div class="chart_map">
+							<div id="chart_map">
+							</div>
+							<div id="contextMenu" style="position: absolute;background:#000;opacity:0.8;cursor: pointer;border-radius: 2px;padding:8px 30px;display:none;color: #fff;font-size:14px;">返回上一级</div>
+							<div class="window">
+								<div class="percentage">98.7</div>
+								<div class="text"><span>指数分</span>
+									<div class="img"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="content2 content">
+						<div class="box angle">
+							<div class="title title_tab">
+								<ul>
+									<li class="active" data-type="tab1">
+										平安志愿者分析
+									</li>
+									<li class="middle" data-type="tab2">
+										社会组织分析
+									</li>
+									<li class="" data-type="tab3">
+										平安单位分析
+									</li>
+								</ul>
+							</div>
+							<div class="info switch">
+								<div class="tab1">
+									<div class="card4 card ">
+										<div class="subtitle">
+											志愿者分析
+										</div>
+										<div class="echart_three" id="echart_three">
+
+										</div>
+									</div>
+
+									<div class="card5 card ">
+										<div class="subtitle">
+											身份分析
+										</div>
+										<div class="echart_four" id="echart_four">
+
+										</div>
+									</div>
+
+									<div class="card6 card ">
+										<div class="subtitle">
+											专业分析
+										</div>
+										<div class="echart_five" id="echart_five">
+
+										</div>
+									</div>
+								</div>
+								<div class="tab_active tab2">
+									<div class="tab_content" id="detail">
+										<ul>
+											<li class="item">
+												<div class="name">社会组织</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">社会组织成员</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">平安类社会组织</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+											<li class="item">
+												<div class="name">不达标乡镇街道</div>
+												<div class="progress">
+													<div class="loc">
+													</div>
+												</div>
+												<div class="percentage"><span class="current">1200</span>/<span class="total">2400</span></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="tab_active tab3">
+									<div class="matrix">
+										<div class="menu">
+											<ul>
+												<li class="active">
+													全部
+												</li>
+												<li>国家</li>
+												<li>省级</li>
+												<li>市级</li>
+												<li>县级</li>
+												<li>乡级</li>
+												<li>村级</li>
+											</ul>
+										</div>
+										<div class="data">
+											<ul>
+												<li>
+													<img src="img/icon1-1.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安家庭</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-2.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安村</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-3.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安社区</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-4.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安乡镇街道</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-5.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安区县市</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-6.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安单位</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-7.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安学校</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-8.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安医院</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-9.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安企业</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-10.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安园区</p>
+													</div>
+												</li>
+												<li>
+													<img src="img/icon1-11.png" alt="" />
+													<div>
+														<p class="number"><span>120</span>/240(50%)</p>
+														<p class="tip">平安景区</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="bottom_angle">
+
+							</div>
+						</div>
+
+						<div class="angle box box1">
+							<div class="title">
+								原创文章排行榜
+							</div>
+							<div class="info">
+								<div class="table">
+									<div class="table-head">
+										<table>
+											<colgroup>
+												<col span="5" style="width: 100px;" />
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th width="10%">排行</th>
+													<th width="45%">文章标题</th>
+													<th width="15%">阅读</th>
+													<th width="15%">点赞</th>
+													<th width="15%">评论</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+									<div class="table-body">
+										<table>
+											<tbody>
+												<tr>
+													<td class="index index1" width="10%"><span>1</span></td>
+													<td class="title1" width="45%" title="加强治安防范体系建设…">加强治安防范体系建设……</td>
+													<td class="number1" width="15%">15263</td>
+													<td class="number2" width="15%">534</td>
+													<td class="number3" width="15%">197</td>
+												</tr>
+												<tr>
+													<td class="index index2" width="10%"><span>2</span></td>
+													<td class="title1" width="45%" title="千方百计保护安全多措…">千方百计保护安全多措……</td>
+													<td class="number1" width="15%">12263</td>
+													<td class="number2" width="15%">504</td>
+													<td class="number3" width="15%">147</td>
+												</tr>
+												<tr>
+													<td class="index index3" width="10%"><span>3</span></td>
+													<td class="title1" width="45%" title="突出践行科学发展推进…">突出践行科学发展推进……</td>
+													<td class="number1" width="15%">5263</td>
+													<td class="number2" width="15%">234</td>
+													<td class="number3" width="15%">97</td>
+												</tr>
+												<tr>
+													<td class="index" width="10%">4</td>
+													<td class="title1" width="45%" title="大力加强社会治安管理…">大力加强社会治安管理……</td>
+													<td class="number1" width="15%">152</td>
+													<td class="number2" width="15%">53</td>
+													<td class="number3" width="15%">17</td>
+												</tr>
+												<tr>
+													<td class="index" width="10%">5</td>
+													<td class="title1" width="45%" title="发挥综合执法在治安管…">发挥综合执法在治安管……</td>
+													<td class="number1" width="15%">123</td>
+													<td class="number2" width="15%">4</td>
+													<td class="number3" width="15%">7</td>
+												</tr>
+												<tr>
+													<td class="index" width="10%">6</td>
+													<td class="title1" width="45%" title="创一流治安环境让平安…">创一流治安环境让平安……</td>
+													<td class="number1" width="15%">63</td>
+													<td class="number2" width="15%">4</td>
+													<td class="number3" width="15%">6</td>
+												</tr>
+												<tr>
+													<td class="index" width="10%">7</td>
+													<td class="title1" width="45%" title="加强治安系建设加强治安系建设加强治安系建设加强治安系建设">加强治安系建设加强治安系建设加强治安系建设加强治安系建设…</td>
+													<td class="number1" width="15%">52</td>
+													<td class="number2" width="15%">3</td>
+													<td class="number3" width="15%">19</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="bottom_angle">
+
+							</div>
+						</div>
+						<div>
+							<div class="angle box box2">
+								<div class="title">
+									指数排名
+								</div>
+								<div class="info">
+									<div class="table">
+										<div class="table-head">
+											<table>
+												<colgroup>
+													<col span="5" style="width: 100px;" />
+													<col />
+												</colgroup>
+												<thead>
+													<tr>
+														<th width="20%">地区</th>
+														<th width="20%">排行</th>
+														<th width="20%">本地排行</th>
+														<th width="20%">全市排行</th>
+														<th width="20%">得分</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div class="table-body">
+											<table>
+												<tbody>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index index1" width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>2</span></td>
+														<td class="index " width="20%"><span>3</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index index2" width="20%"><span>2</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>4</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index index3" width="20%"><span>3</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+													<tr>
+														<td class="title1" width="20%">武陵区…</td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="index " width="20%"><span>1</span></td>
+														<td class="number1" width="20%">15263</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="bottom_angle">
+
+								</div>
+							</div>
+							<div class="box4">
+								<div class="module">
+									<div class="title">
+										轨迹总览
+									</div>
+									<div class="data">
+										<div>
+											<p class="tilte1">总更新数</p>
+											<p class="number"><i id="productNumber_15" data-sum="4399">0</i></p>
+										</div>
+										<div>
+											<p class="tilte1">总预警数</p>
+											<p class="number"><i id="productNumber_16" data-sum="4399">0</i></p>
+										</div>
+									</div>
+								</div>
+								<div class="module">
+									<div class="title">
+										今日轨迹
+									</div>
+									<div class="data">
+										<div>
+											<p class="tilte1">今日更新数</p>
+											<p class="number"><i id="productNumber_17" data-sum="4399">0</i></p>
+										</div>
+										<div>
+											<p class="tilte1">今日预警数</p>
+											<p class="number"><i id="productNumber_18" data-sum="4399">0</i></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="circle l-tr r_top r_right">
+
+				</div>
+				<div class="circle l-tl r_top r_left">
+
+				</div>
+				<div class="circle l-br r_bottom r_right">
+
+				</div>
+				<div class="circle l-bl r_bottom r_left">
+
+				</div>
+			</div>
+		</div>
+		<script src="js/count.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/china-main-city-map.js"></script>
+		<script src="js/echartMap.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$('.hc_body .content2 .title_tab').on('click', 'li', switchTab);
+
+			function switchTab() {
+				var that = $(this);
+				that.siblings().removeClass('active');
+				that.addClass('active');
+				var type = that.data('type');
+				$('.hc_body .content2 .switch >div').addClass('tab_active');
+				$('.hc_body .content2 .switch .' + type).removeClass('tab_active');
+			}
+		</script>
+	</body>
+
+</html>

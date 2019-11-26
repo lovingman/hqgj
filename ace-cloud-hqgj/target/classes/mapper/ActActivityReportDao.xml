@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActActivityReportDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActActivityReport">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="activityId" jdbcType="VARCHAR" property="activityId"/>
+        <result column="postingId" jdbcType="VARCHAR" property="postingId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="reportedUserId" jdbcType="VARCHAR" property="reportedUserId"/>
+        <result column="reportContemt" jdbcType="VARCHAR" property="reportContemt"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="postingId" jdbcType="VARCHAR" property="postingId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, activityId, postingId, userId, reportedUserId, reportContemt, remark, status, 
+    createDate,postingId
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from act_activity_report
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_activity_report
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActActivityReport">
+    insert into act_activity_report (id, activityId, postingId, 
+      userId, reportedUserId, reportContemt, 
+      remark, status, createDate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{postingId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{reportedUserId,jdbcType=VARCHAR}, #{reportContemt,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActActivityReport">
+    update act_activity_report
+    set activityId = #{activityId,jdbcType=VARCHAR},
+      postingId = #{postingId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=VARCHAR},
+      reportedUserId = #{reportedUserId,jdbcType=VARCHAR},
+      reportContemt = #{reportContemt,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+       postingId=#{postingId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActActivityReportVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.activityId, t.postingId, t.userId, t.reportedUserId, t.reportContemt, t.remark, t.status, t.createDate,t.postingId
+  </sql>
+    <sql id="From_Statement">
+    FROM act_activity_report t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.activityId != null">
+                and t.activityId = #{activityId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.postingId != null">
+                and t.postingId = #{postingId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.userId != null">
+                and t.userId = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.reportedUserId != null">
+                and t.reportedUserId = #{reportedUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.reportContemt != null">
+                and t.reportContemt = #{reportContemt,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.remark != null">
+                and t.remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null">
+                and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.ActActivityReport" resultType="int">
+            select count(1)
+        from act_activity_report
+        where  postingId=#{postingId,jdbcType=VARCHAR} and   userId=#{userId,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from act_activity_report
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPostingIds">
+        delete from act_activity_report
+        where postingId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>

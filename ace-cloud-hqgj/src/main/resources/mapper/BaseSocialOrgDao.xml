@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.BaseSocialOrgDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.BaseSocialOrg">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="uniCreditCode" jdbcType="VARCHAR" property="uniCreditCode"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="dutyName" jdbcType="VARCHAR" property="dutyName"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="detailAddr" jdbcType="VARCHAR" property="detailAddr"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId"/>
+        <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName"/>
+        <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, orgName, uniCreditCode, category, phone, dutyName, areaCode, detailAddr, remark,
+    status, createUserId, createUserName, createDate, lastModifyUserId, lastModifyUserName,
+    lastModifyDate
+  </sql>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_social_org
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.BaseSocialOrg">
+    insert into base_social_org (id, orgName, uniCreditCode,
+      category, phone, dutyName,
+      areaCode, detailAddr, remark,
+      status, createUserId, createUserName,
+      createDate, lastModifyUserId, lastModifyUserName,
+      lastModifyDate)
+    values (#{id,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{uniCreditCode,jdbcType=VARCHAR},
+      #{category,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{dutyName,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR}, #{detailAddr,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{lastModifyUserId,jdbcType=VARCHAR}, #{lastModifyUserName,jdbcType=VARCHAR},
+      #{lastModifyDate,jdbcType=TIMESTAMP})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.BaseSocialOrg">
+    update base_social_org
+    set orgName = #{orgName,jdbcType=VARCHAR},
+      uniCreditCode = #{uniCreditCode,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      dutyName = #{dutyName,jdbcType=VARCHAR},
+      areaCode = #{areaCode,jdbcType=VARCHAR},
+      detailAddr = #{detailAddr,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR},
+      lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR},
+      lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.BaseSocialOrgVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.orgName, t.uniCreditCode, t.category, t.phone, t.dutyName, t.areaCode, t.detailAddr, t.remark, t.status, t.createUserId, t.createUserName, t.createDate, t.lastModifyUserId, t.lastModifyUserName, t.lastModifyDate
+  </sql>
+    <sql id="From_Statement">
+    FROM base_social_org t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.orgName != null and condition.orgName != ''">
+                and t.orgName like concat('%',#{condition.orgName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.uniCreditCode != null and condition.uniCreditCode != ''">
+                and t.uniCreditCode = #{uniCreditCode,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.category != null and condition.category != ''">
+                and t.category = #{category,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.phone != null and condition.phone != ''">
+                and t.phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.dutyName != null and condition.dutyName != ''">
+                and t.dutyName = #{dutyName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.areaCode != null and condition.areaCode != ''">
+                and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.detailAddr != null and condition.detailAddr != ''">
+                and t.detailAddr = #{detailAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.remark != null and condition.remark != ''">
+                and t.remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{createuserid,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserName != null and condition.createUserName != ''">
+                and t.createUserName = #{createusername,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null and condition.createDate != ''">
+                and t.createDate = #{createdate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.lastModifyUserId != null and condition.lastModifyUserId != ''">
+                and t.lastModifyUserId = #{lastmodifyuserid,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.lastModifyUserName != null and condition.lastModifyUserName != ''">
+                and t.lastModifyUserName = #{lastmodifyusername,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.lastModifyDate != null and condition.lastModifyDate != ''">
+                and t.lastModifyDate = #{lastmodifydate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.userId != null and condition.userId != ''">
+                and t.id not in (select s.socialOrgId from relation_social_volunteer s
+                where s.volunteerId = #{condition.userId,jdbcType=VARCHAR}
+                and s.auditStatus != 3)
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.category
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.BaseSocialOrg" resultType="int">
+            select count(1)
+        from base_social_org
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from base_social_org
+ where id in
+ <foreach collection="array" item="id" open="(" separator="," close=")">
+    #{id}
+ </foreach>
+  </delete>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActPosterBlacklistDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActPosterBlacklist">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="postingId" jdbcType="VARCHAR" property="postingId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId" />
+    <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName" />
+    <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, postingId, status, createUserId, createUserName, createDate, lastModifyUserId, 
+    lastModifyUserName, lastModifyDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_poster_blacklist
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_poster_blacklist
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActPosterBlacklist">
+    insert into act_poster_blacklist (id, postingId, status, 
+      createUserId, createUserName, createDate, 
+      lastModifyUserId, lastModifyUserName, lastModifyDate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{postingId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastModifyUserId,jdbcType=VARCHAR}, #{lastModifyUserName,jdbcType=VARCHAR}, #{lastModifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActPosterBlacklist">
+    update act_poster_blacklist
+    set postingId = #{postingId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR},
+      lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR},
+      lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActPosterBlacklistVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.postingId, t.status, t.createUserId, t.createUserName, t.createDate, t.lastModifyUserId, t.lastModifyUserName, t.lastModifyDate
+  </sql>
+  <sql id="From_Statement">
+    FROM act_poster_blacklist t
+    left join base_volunteer bv on bv.id = t.postingId
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.postingId != null">
+         and t.postingId = #{postingId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.status != null">
+         and t.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserId != null">
+         and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserName != null">
+         and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null">
+         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.lastModifyUserId != null">
+         and t.lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.lastModifyUserName != null">
+         and t.lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.lastModifyDate != null">
+         and t.lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>,bv.name as userName
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>,bv.name as userName
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY t.${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+      limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="java.lang.String" resultType="int">
+            select count(1)
+        from act_poster_blacklist
+        where postingId = #{postingId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from act_poster_blacklist
+     where id in
+ <foreach collection="array" item="ids" open="(" separator="," close=")">
+    #{ids}
+ </foreach>
+  </delete>
+
+
+</mapper>

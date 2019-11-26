@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActTopicVolunteerDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActTopicVolunteer">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="topicId" jdbcType="VARCHAR" property="topicid" />
+    <result column="volunteerId" jdbcType="VARCHAR" property="volunteerid" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, topicId, volunteerId, remark, status, createDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_topic_volunteer
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_topic_volunteer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActTopicVolunteer">
+    insert into act_topic_volunteer (id, topicId, volunteerId, 
+      remark, status, createDate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{topicid,jdbcType=VARCHAR}, #{volunteerid,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huacainfo.ace.zcpa.model.ActTopicVolunteer">
+    insert into act_topic_volunteer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="topicid != null">
+        topicId,
+      </if>
+      <if test="volunteerid != null">
+        volunteerId,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="topicid != null">
+        #{topicid,jdbcType=VARCHAR},
+      </if>
+      <if test="volunteerid != null">
+        #{volunteerid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.zcpa.model.ActTopicVolunteer">
+    update act_topic_volunteer
+    <set>
+      <if test="topicid != null">
+        topicId = #{topicid,jdbcType=VARCHAR},
+      </if>
+      <if test="volunteerid != null">
+        volunteerId = #{volunteerid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActTopicVolunteer">
+    update act_topic_volunteer
+    set topicId = #{topicid,jdbcType=VARCHAR},
+      volunteerId = #{volunteerid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActTopicVolunteerVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.topicId, t.volunteerId, t.remark, t.status, t.createDate
+  </sql>
+  <sql id="From_Statement">
+    FROM act_topic_volunteer t
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.topicid != null">
+         and t.topicId = #{topicid,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.volunteerid != null">
+         and t.volunteerId = #{volunteerid,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.remark != null">
+         and t.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.status != null">
+         and t.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createdate != null">
+         and t.createDate = #{createdate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.ActTopicVolunteer" resultType="int">
+            select count(1)
+        from act_topic_volunteer
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from act_topic_volunteer
+ where id in
+ <foreach collection="ids" item="id" open="(" separator="," close=")">
+    #{id}
+ </foreach>
+  </delete>
+</mapper>

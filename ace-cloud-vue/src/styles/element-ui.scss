@@ -1,0 +1,325 @@
+// cover some element-ui styles
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+.cell {
+  .el-tag {
+    margin-right: 0px;
+  }
+}
+
+.small-padding {
+  .cell {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.fixed-width {
+  .el-button--mini {
+    padding: 7px 10px;
+    width: 60px;
+  }
+}
+
+.status-col {
+  .cell {
+    padding: 0 10px;
+    text-align: center;
+
+    .el-tag {
+      margin-right: 0px;
+    }
+  }
+}
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+// refine element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
+  }
+}
+
+// fix date-picker ui bug in filter-item
+.el-range-editor.el-input__inner {
+  display: inline-flex !important;
+}
+.el-submenu__title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.el-menu-item {
+  font-size: 0.9rem;
+  font-weight: 300;
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.el-submenu .el-menu-item{
+  font-weight: 300;
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.el-card {
+  border-radius: 0px;
+  border: 0px solid #e6ebf5;
+}
+.el-button--medium {
+  border-radius: 0px;
+}
+/*.el-radio-button:first-child .el-radio-button__inner {
+  border-radius: 0px 0 0 0px;
+}
+.el-radio-button:last-child .el-radio-button__inner {
+  border-radius: 0 0px 0px 0;
+}*/
+.el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next, .el-pagination.is-background .el-pager li {
+  border-radius: 0px;
+}
+.el-input-group__append, .el-input-group__prepend {
+  border-radius: 0px;
+}
+.el-table th {
+  background-color: #FAFAFA;
+  height: 2.5rem;
+  font-size: 0.8rem;
+  padding: 0px 0rem;
+  text-align: left;
+  font-weight: 600;
+}
+.el-table thead {
+  color: #353535;
+  font-weight: 500;
+}
+.el-table th.is-leaf, .el-table td {
+  border-bottom: 0px;
+}
+.el-table td {
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+
+}
+.el-table .cell {
+  line-height: 2.0rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  color: #666;
+}
+table {
+  background-color: transparent;
+}
+.el-table--medium td {
+  padding: 0.3rem 0;
+}
+.el-row {
+  margin-bottom: 20px;
+}
+.el-pagination {
+  text-align: end;
+}
+.strightline {
+  color: #eee;
+  margin: 0 4px;
+}
+a:active,
+a:focus,
+a:hover,
+a:visited {
+  color: $mycolor;
+  outline: 0;
+}
+.page-total{
+  font-size: 0.85rem;
+  color: #666;
+}
+.page-total-num{
+  font-size: 0.85rem;
+  color: #666;
+}
+.el-button--medium {
+  font-size: 0.8rem;
+}
+.el-form-item__label {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 40px;
+}
+.el-form-item--medium .el-form-item__content {
+  line-height: 46px;
+}
+.el-button-group > .el-button:first-child:last-child {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: $mycolor;
+}
+.el-upload-dragger{
+  width:22rem;
+  height: 12rem;
+}
+.el-input__inner {
+  border-radius: 0px;
+}
+.el-form-item--medium .el-form-item__content {
+  line-height: 40px;
+}
+.el-button--primary {
+  background-color: $mycolor;
+  border-color: $mycolor;
+}
+.el-button--primary:hover, .el-button--primary:focus, .el-button--primary:active {
+  background: $mycolorActive;
+  border-color: $mycolorActive;
+}
+.el-button--text:hover, .el-button--text:focus, .el-button--text:active {
+  color: $mycolorActive;
+}
+.el-button--text {
+  color: $mycolor;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: $mycolor;
+}
+.el-loading-spinner i {
+  color: $mycolor;
+}
+.el-loading-spinner .el-loading-text {
+  color: $mycolor;
+}
+.el-dropdown-menu__item:not(.is-disabled):hover, .el-dropdown-menu__item:focus {
+  color: $mycolorActive;
+}
+.el-breadcrumb__inner.is-link:hover, .el-breadcrumb__inner a:hover {
+  color: $mycolorActive;
+}
+.el-input__inner:focus {
+  border-color: $mycolorActive;
+}
+.el-select .el-input.is-focus .el-input__inner {
+  border-color: $mycolorActive;
+}
+.el-cascader .el-input.is-focus .el-input__inner {
+  border-color: $mycolorActive;
+}
+.el-button--default:hover, .el-button--default:focus {
+  color:  $mycolor;
+  border-color: $mycolorActive;
+  background-color: #fff;
+}
+.el-select .el-input {
+  width: 100%;
+}
+.submit{
+	width: 100%;
+}
+
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  background-color:$mycolor;
+  border-color: $mycolor;
+  -webkit-box-shadow: -1px 0 0 0 $mycolor;
+  box-shadow: -1px 0 0 0 $mycolor;
+}
+.el-radio-button__inner:hover {
+  color: $mycolor;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: $mycolor;
+  border-color: $mycolor;
+}
+.el-switch.is-checked .el-switch__core {
+  border-color: $mycolor;
+  background-color: $mycolor;
+}
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: $mycolor;
+  background: $mycolor;
+}
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: $mycolor;
+  border-color: $mycolor;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: $mycolor;
+}
+.el-transfer-panel__item:hover {
+  color: $mycolor
+}
+
+.el-checkbox__inner:hover {
+  border-color: $mycolor;
+}
+.el-message-box__status.el-icon-info {
+  color: $mycolor;
+}
+.el-textarea__inner:focus {
+  outline: none;
+  border-color: $mycolor;
+}
+.el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
+  border-color: #DCDFE6;
+}
+.el-input__inner:hover {
+  border-color: $mycolor;
+}
+.el-textarea__inner:hover {
+  border-color: $mycolor;
+}
+.el-select .el-input__inner:focus {
+  border-color: $mycolor;
+}
+.el-select-dropdown__item.selected {
+  color: $mycolor;
+  font-weight: bold;
+}
+.el-cascader-menu__item.is-active {
+  color: $mycolor;
+}
+.el-radio__input.is-checked + .el-radio__label {
+  color: $mycolor;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.el-switch__label.is-active {
+  color: $mycolor;
+}

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "LCDN";
+  src: url("LCDN.woff2") format("woff2"),
+       url("LCDN.woff") format("woff"),
+       url("LCDN.ttf") format("truetype"),
+       url("LCDN.eot") format("embedded-opentype"),
+       url("LCDN.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bahnschrift-Regular";
+  src: url("bahnschrift.woff2") format("woff2"),
+       url("bahnschrift.woff") format("woff"),
+       url("bahnschrift.ttf") format("truetype"),
+       url("bahnschrift.eot") format("embedded-opentype"),
+       url("bahnschrift.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}

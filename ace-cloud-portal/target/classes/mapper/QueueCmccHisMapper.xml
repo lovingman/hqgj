@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huacainfo.ace.portal.dao.QueueCmccHisMapper">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.portal.model.QueueCmccHis">
+        <id column="queue_id" property="queueId" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="msg" property="msg" jdbcType="VARCHAR"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.huacainfo.ace.portal.vo.QueueCmccHisVo" extends="BaseResultMap">
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    queue_id, tel, name, msg, add_time, remark, create_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from queue_cmcc_his
+        where queue_id = #{queueId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from queue_cmcc_his
+    where queue_id = #{queueId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.portal.model.QueueCmccHis">
+    insert into queue_cmcc_his (queue_id, tel, name, 
+      msg, add_time, remark, 
+      create_time)
+    values (#{queueId,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{msg,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.huacainfo.ace.portal.model.QueueCmccHis">
+        insert into queue_cmcc_his
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="queueId != null">
+                queue_id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="msg != null">
+                msg,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="queueId != null">
+                #{queueId,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.portal.model.QueueCmccHis">
+        update queue_cmcc_his
+        <set>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                msg = #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where queue_id = #{queueId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.portal.model.QueueCmccHis">
+    update queue_cmcc_his
+    set tel = #{tel,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where queue_id = #{queueId,jdbcType=VARCHAR}
+  </update>
+    <sql id="whereCondition">
+        from queue_cmcc_his where 0=0
+
+        <if test="condition.tel!=null and condition.tel!=&quot;&quot;">
+            and tel like
+            concat(#{condition.tel,jdbcType=VARCHAR},'%')
+        </if>
+        <if test='condition.startDate!=null and condition.startDate!=""'>
+            <![CDATA[
+			and create_time>=str_to_date(#{condition.startDate},'%Y-%m-%d %H:%i:%S')
+			]]>
+        </if>
+        <if test='condition.endDate!=null and condition.endDate!=""'>
+            <![CDATA[
+				and create_time<=str_to_date(#{condition.endDate},'%Y-%m-%d %H:%i:%S')   
+				]]>
+        </if>
+    </sql>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="whereCondition"/>
+    </select>
+    <select id="findList" resultMap="BaseResultMapVo">
+
+        select
+        <include refid="Base_Column_List"/>
+        <include refid="whereCondition"/>
+        <choose>
+            <when test="orderBy!=null and orderBy!=&quot;&quot;">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY create_time desc
+            </otherwise>
+        </choose>
+
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+
+    </select>
+    <insert id="batchInsert" parameterType="com.huacainfo.ace.portal.model.QueueCmccHis">
+    insert into queue_cmcc_his (queue_id, tel, name, 
+      msg, add_time, remark, 
+      create_time)
+    values (#{queueId,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{msg,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP});
+      delete from queue_cmcc_wait where queue_id=#{queueId,jdbcType=VARCHAR};
+  </insert>
+</mapper>

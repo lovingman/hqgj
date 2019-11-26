@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActFamilyVolunteerDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActFamilyVolunteer">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="projectId" jdbcType="VARCHAR" property="projectId"/>
+        <result column="targetId" jdbcType="VARCHAR" property="targetId"/>
+        <result column="volunteerId" jdbcType="VARCHAR" property="volunteerId"/>
+        <result column="volName" jdbcType="VARCHAR" property="volName"/>
+        <result column="idCardNo" jdbcType="VARCHAR" property="idCardNo"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="volType" jdbcType="VARCHAR" property="volType"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="aidTargetType" jdbcType="VARCHAR" property="aidTargetType"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, areaCode, projectId, targetId, volunteerId, volName, idCardNo, telephone, volType,
+    remark, status, createUserId, createUserName, createDate,aidTargetType
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from act_family_volunteer
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_family_volunteer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActFamilyVolunteer">
+    insert into act_family_volunteer (id, areaCode, projectId, 
+      targetId, volunteerId, volName,
+      idCardNo, telephone, volType, 
+      remark, status, createUserId, 
+      createUserName, createDate,aidTargetType)
+    values (#{id,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{targetId,jdbcType=VARCHAR}, #{volunteerId,jdbcType=VARCHAR}, #{volName,jdbcType=VARCHAR},
+      #{idCardNo,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{volType,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},#{aidTargetType,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActFamilyVolunteer">
+    update act_family_volunteer
+    set areaCode = #{areaCode,jdbcType=VARCHAR},
+      projectId = #{projectId,jdbcType=VARCHAR},
+      targetId = #{targetId,jdbcType=VARCHAR},
+      volunteerId = #{volunteerId,jdbcType=VARCHAR},
+      volName = #{volName,jdbcType=VARCHAR},
+      idCardNo = #{idCardNo,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      volType = #{volType,jdbcType=VARCHAR},
+      <if test="aidTargetType != null">
+      aidTargetType= #{aidTargetType,jdbcType=VARCHAR}
+        </if>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateVolunteerId" parameterType="java.lang.String">
+     update act_family_volunteer
+     set  volunteerId = #{volunteerId,jdbcType=VARCHAR}
+          where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="batchUpdate" parameterType="java.lang.String">
+            update act_family_volunteer
+             set   volunteerId = null ,
+             aidTargetType='6'
+             where  id  in
+            <foreach collection="array" item="ids" open="(" separator="," close=")">
+                #{ids}
+            </foreach>
+    </update>
+
+
+
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActFamilyVolunteerVo">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="userType" jdbcType="VARCHAR" property="userType"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.areaCode, t.projectId, t.targetId, t.volunteerId, t.volName, t.idCardNo, t.telephone, t.volType, t.remark, t.status,
+    t.createUserId, t.createUserName, t.createDate,t.aidTargetType,p.name,p.idCard,p.userType,p.mobile
+  </sql>
+    <sql id="From_Statement">
+    FROM act_family_volunteer t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.areaCode != null">
+                and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.projectId != null">
+                and t.projectId = #{projectId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.personId != null">
+                and t.targetId = #{targetId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.volunteerId != null">
+                and t.volunteerId = #{volunteerId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.volName != null">
+                and t.volName = #{volName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.idCardNo != null">
+                and t.idCardNo = #{idCardNo,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.telephone != null">
+                and t.telephone = #{telephone,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.volType != null">
+                and t.volType = #{volType,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.remark != null">
+                and t.remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null">
+                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserName != null">
+                and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null">
+                and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.ActFamilyVolunteer" resultType="int">
+        select count(1)
+        from act_family_volunteer t
+        where t.projectId = #{projectId,jdbcType=VARCHAR} and t.targetId=#{targetId,jdbcType=VARCHAR} and t.volunteerId = #{volunteerId,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from act_family_volunteer
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByProjectId" parameterType="java.lang.String">
+    delete from act_family_volunteer
+    where projectId = #{projectId,jdbcType=VARCHAR}
+  </delete>
+
+    <delete id="deleteByTargetId">
+        delete from act_family_volunteer
+        where targetId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+
+    </delete>
+
+    <select id="selectByProjectId" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        t.id, t.areaCode, t.projectId, t.targetId, t.volunteerId,t.aidTargetType,p.name,p.idCard,p.mobile,p.userType
+        FROM act_family_volunteer t
+        left join base_volunteer p on t.volunteerId = p.id
+        where t.projectId = #{projectId,jdbcType=VARCHAR} and t.targetId = #{targetId,jdbcType=VARCHAR}
+    </select>
+
+
+<sql id="Vo_Project_List">
+     p.id, p.projectCode, p.projectName, p.projectLevel, p.category, p.areaCode, p.startTime, p.endTime, p.summary, p.projectState, p.actTimes,
+     p.overallScore, p.partakeDuration, p.anomalyTimes,p.fmUrl, p.nineteenJiFen, p.jiFen, p.status,p.pid ,zp.name  areaName
+</sql>
+
+    <resultMap id="ProjectResultMap" type="com.huacainfo.ace.zcpa.vo.ActProjectVo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="projectCode" jdbcType="VARCHAR" property="projectCode"/>
+        <result column="projectName" jdbcType="VARCHAR" property="projectName"/>
+        <result column="projectLevel" jdbcType="VARCHAR" property="projectLevel"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="startTime" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="endTime" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="projectState" jdbcType="VARCHAR" property="projectState"/>
+        <result column="actTimes" jdbcType="INTEGER" property="actTimes"/>
+        <result column="overallScore" jdbcType="DECIMAL" property="overallScore"/>
+        <result column="partakeDuration" jdbcType="DECIMAL" property="partakeDuration"/>
+        <result column="anomalyTimes" jdbcType="INTEGER" property="anomalyTimes"/>
+        <result column="fmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+        <result column="nineteenJiFen" jdbcType="INTEGER" property="nineteenJiFen"/>
+        <result column="jiFen" jdbcType="INTEGER" property="jiFen"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId"/>
+        <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName"/>
+        <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
+    </resultMap>
+    <select id="findProjectId" parameterType="java.lang.String" resultMap="ProjectResultMap">
+        select
+         <include refid="Vo_Project_List"/>
+         from act_family_volunteer v ,act_project p
+         left join  portal_zcpa.province zp on zp.code=p.areaCode
+         where v.projectId=p.id  and v.volunteerId = #{volunteerId,jdbcType=VARCHAR
+         and p.projectState=#{projectState,jdbcType=VARCHAR}
+        union
+        select
+         <include refid="Vo_Project_List"/>
+         from act_project_volunteer pv ,act_project p
+         left join  portal_zcpa.province zp on zp.code=p.areaCode
+         where pv.projectId=p.id  and pv.volunteerId = #{volunteerId,jdbcType=VARCHAR} and p.projectState=#{projectState,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findFamilyTarget" parameterType="java.lang.String" resultType="java.util.Map">
+         select DISTINCT
+         p.id pid,p.category,  t.personId targetId, pe.personName targetName,t.areaCode
+         from act_project p
+         left join act_family_target t on t.projectId =p.id
+         left join  act_family_volunteer v on v.targetId=t.id
+         left join act_person pe on pe.id=t.personId
+         where p.projectState='2' and p.id=#{projectId,jdbcType=VARCHAR} and  v.volunteerId = #{volunteerId,jdbcType=VARCHAR}
+          and p.category='1'
+    </select>
+
+    <select id="findProjectTarget" parameterType="java.lang.String" resultType="java.util.Map">
+       select DISTINCT
+          p.id pid,p.category, t.targetId targetId,  s.schoolName targetName, t.areaCode
+         from act_project p
+         left join act_project_target t on t.projectId =p.id
+         LEFT JOIN act_project_volunteer v on t.id=v.targetId
+         left join act_school s on s.id=t.targetId
+         where p.projectState='2' and p.id=#{projectId,jdbcType=VARCHAR}  and v.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+         and p.category=#{category,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findProjectVolunteer" parameterType="java.lang.String" resultType="java.util.Map">
+       select DISTINCT p.id pid,p.category,  v.areaCode
+         from act_project p
+         LEFT JOIN act_project_volunteer v on p.id=v.projectId
+         where p.projectState='2' and p.id=#{projectId,jdbcType=VARCHAR}  and v.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+         and p.category=#{category,jdbcType=VARCHAR}
+    </select>
+
+
+
+</mapper>

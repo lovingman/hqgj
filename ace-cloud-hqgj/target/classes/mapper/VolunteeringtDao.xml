@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.VolunteeringDao">
+    <resultMap id="BaseResultMap1" type="com.huacainfo.ace.zcpa.model.Volunteering">
+        <id column="vType" jdbcType="VARCHAR" property="vType"/>
+        <result column="total" jdbcType="VARCHAR" property="total"/>
+    </resultMap>
+
+    <select id="volunteerQuotaCount" resultMap="BaseResultMap1" parameterType="java.lang.String">
+    SELECT DISTINCT fv.aidTargetType vType,  (SELECT count(1) FROM `act_family_volunteer` fv
+     LEFT JOIN act_project t on t.id = fv.projectId
+     left join act_family_target ft on ft.id=fv.targetId
+    WHERE t.category='1'AND t.projectState='2' AND fv.aidTargetType=vType AND (fv.volunteerId='' OR fv.volunteerId IS NULL)
+     AND ft.areaCode like concat(#{areaCode,jdbcType=VARCHAR},'%') and t.id=#{projectId,jdbcType=VARCHAR}) as total
+    FROM act_family_volunteer fv
+</select>
+
+    <select id="participationDocking" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT fv.id volunteerId from act_family_volunteer fv
+        left join act_family_target ft on ft.id=fv.targetId
+        LEFT join act_project p on p.id = fv.projectId
+        where p.category='1' and p.projectState='2' and p.id=#{projectId,jdbcType=VARCHAR}
+        and (fv.volunteerId='' or fv.volunteerId is null)
+        and ft.areaCode=#{areaCode,jdbcType=VARCHAR}
+        <choose>
+            <when test="aidTargetType=='5'">
+                and (fv.aidTargetType=#{aidTargetType,jdbcType=VARCHAR} or fv.aidTargetType is null)
+            </when>
+            <otherwise>
+                and fv.aidTargetType=#{aidTargetType,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.vo.VolunteeringVo">
+        <id column="projectId" jdbcType="VARCHAR" property="projectId"/>
+        <result column="targetId" jdbcType="VARCHAR" property="targetId"/>
+        <result column="schoolName" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="total" jdbcType="VARCHAR" property="total"/>
+    </resultMap>
+    <select id="schoolVolunteerQuota" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select DISTINCT p.id projectId, t.id targetId, s.schoolName,(select count(1) from act_project_volunteer v  where v.targetId=t.id) as total
+         from act_project_target t
+        LEFT JOIN act_project_volunteer pv on t.id=pv.targetId
+        LEFT JOIN act_project p on t.projectId=p.id
+        LEFT JOIN act_school s on t.targetid=s.id
+        where p.category='2' and p.projectState='2'
+        and  t.areaCode like concat(#{areaCode,jdbcType=VARCHAR},'%')
+        and p.id=#{projectId,jdbcType=VARCHAR}
+    </select>
+
+    <update id="wupdateVolunteer" parameterType="java.lang.String">
+         update act_family_volunteer
+         set  volunteerId = null
+         where projectId = #{projectId,jdbcType=VARCHAR} and volunteerId = #{volunteerId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="wdeleteVolunteer" parameterType="java.lang.String">
+         delete  from act_project_volunteer
+         where projectId = #{projectId,jdbcType=VARCHAR} and volunteerId = #{volunteerId,jdbcType=VARCHAR}
+    </update>
+
+
+    <resultMap id="VoResultMap2" type="com.huacainfo.ace.zcpa.vo.BaseVolunteerVo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="userType" jdbcType="VARCHAR" property="userType"/>
+        <result column="orgId" jdbcType="VARCHAR" property="orgId"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="homeAreaCode" jdbcType="VARCHAR" property="homeAreaCode"/>
+        <result column="homeAddr" jdbcType="VARCHAR" property="homeAddr"/>
+        <result column="nowAreaCode" jdbcType="VARCHAR" property="nowAreaCode"/>
+        <result column="nowAddr" jdbcType="VARCHAR" property="nowAddr"/>
+        <result column="deptId" jdbcType="VARCHAR" property="deptId"/>
+        <result column="volType" jdbcType="VARCHAR" property="volType"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+    </resultMap>
+
+    <sql id="Vo_Column_List">
+    t.id, t.name, t.sex, t.mobile, t.idCard, t.userType, t.orgId, t.areaCode, t.homeAreaCode, t.homeAddr, t.nowAreaCode, t.nowAddr, t.deptId, t.volType
+  </sql>
+
+    <select id="findVolunteerList" parameterType="java.lang.String" resultMap="VoResultMap2">
+        select
+        <include refid="Vo_Column_List"/>,w.headimgurl
+        <choose>
+            <when test='category!=null and category=="1"'>
+                from act_family_volunteer v
+            </when>
+            <otherwise>
+                from act_project_volunteer v
+            </otherwise>
+        </choose>
+        left join base_volunteer t on t.id = v.volunteerId
+        left join wechat_user w on t.unionid=w.unionid
+        where v.projectId =#{projectId,jdbcType=VARCHAR} and v.volunteerId is not null
+        and t.name is not null
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY v.createDate desc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+
+    <select id="findVolunteerCount" resultType="java.lang.Integer">
+        select count(1)
+        <choose>
+            <when test='category!=null and category=="1"'>
+                from act_family_volunteer v
+            </when>
+            <otherwise>
+                from act_project_volunteer v
+            </otherwise>
+        </choose>
+        left join base_volunteer t on t.id = v.volunteerId
+        where v.projectId =#{projectId,jdbcType=VARCHAR} and v.volunteerId is not null
+        and t.name is not null
+    </select>
+
+
+    <sql id="Vo_projectColumn_List">
+    t.id, t.projectCode, t.projectName, t.projectLevel, t.category,  t.startTime, t.endTime, t.summary, t.projectState, t.actTimes,
+    t.overallScore, t.partakeDuration, t.anomalyTimes,t.fmUrl, t.nineteenJiFen, t.jiFen, t.remark, t.status,t.pid
+  </sql>
+    <resultMap id="VoProjectResultMap" type="com.huacainfo.ace.zcpa.vo.ActProjectVo">
+        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
+        <result column="isToday" jdbcType="INTEGER" property="isToday"/>
+        <result column="schoolName" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="targetId" jdbcType="VARCHAR" property="targetId"/>
+        <result column="isSubmit" jdbcType="VARCHAR" property="isSubmit"/>
+
+    </resultMap>
+
+    <select id="findMyVolunteerServiceList" parameterType="java.lang.String" resultMap="VoProjectResultMap">
+        (select
+        <include refid="Vo_projectColumn_List"/>,v.areaCode,v.targetId as targetId,
+        zp.name as areaName ,'' as schoolName,
+        (select count(1) from  act_project_activity a WHERE  a.volunteerId=#{volunteerId,jdbcType=VARCHAR}
+        and   (DATE_FORMAT(NOW(),"%Y-%m-%d")) = (DATE_FORMAT(a.createDate,"%Y-%m-%d")) and a.status!='2') as isToday,
+        (select count(1) from  act_project_activity a WHERE a.projectId=t.id and  a.volunteerId=#{volunteerId,jdbcType=VARCHAR}) as isSubmit
+        from act_family_volunteer v
+        left join act_project t on  v.projectId=t.id
+        left join portal_zcpa.province zp on zp.code=v.areaCode
+        where  v.volunteerId=#{volunteerId,jdbcType=VARCHAR}
+        and t.projectState = #{status,jdbcType=VARCHAR}
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY v.createDate desc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+        )
+        union
+        (select
+        <include refid="Vo_projectColumn_List"/>,v.areaCode,v.targetId as targetId,
+        zp.name as areaName,s.schoolName as schoolName,
+        (select count(1) from  act_project_activity a WHERE  a.volunteerId=#{volunteerId,jdbcType=VARCHAR}
+        and   (DATE_FORMAT(NOW(),"%Y-%m-%d")) = (DATE_FORMAT(a.createDate,"%Y-%m-%d")) and a.status!='2') as isToday,
+        (select count(1) from  act_project_activity a WHERE a.projectId=t.id and  a.volunteerId=#{volunteerId,jdbcType=VARCHAR}) as isSubmit
+        from act_project_volunteer v
+        left join act_project t on  v.projectId=t.id
+        left join portal_zcpa.province zp on zp.code=v.areaCode
+        left join act_project_target pt on v.targetId=pt.id
+        left join act_school s on s.id=pt.targetId
+        where v.volunteerId=#{volunteerId,jdbcType=VARCHAR}
+        and t.projectState = #{status,jdbcType=VARCHAR}
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY v.createDate desc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL})
+        <if test='status!= null and status=="4"'>
+            union
+            (select
+            <include refid="Vo_projectColumn_List"/>,v.areaCode,v.targetId  as targetId,
+            zp.name as areaName,s.schoolName as schoolName, 1 as isToday,
+            (select count(1) from  act_project_activity a WHERE a.projectId=t.id and  a.volunteerId=#{volunteerId,jdbcType=VARCHAR}) as isSubmit
+            from act_project_volunteer_signout v
+            left join act_project t on  v.projectId=t.id
+            left join act_project_target pt on  v.targetId=pt.id
+            left join act_school s on s.id=pt.targetId
+            left join portal_zcpa.province zp on zp.code=v.areaCode
+            where  v.volunteerId=#{volunteerId,jdbcType=VARCHAR}
+            <choose>
+                <when test='orderBy!=null and orderBy!=""'>
+                    ORDER BY ${orderBy}
+                </when>
+                <otherwise>
+                    ORDER BY v.createDate desc
+                </otherwise>
+            </choose>
+            limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL})
+        </if>
+    </select>
+
+
+    <select id="myVolunteerServiceCount" resultType="java.lang.Integer">
+        select sum(a) from (
+        SELECT
+        count(1) as a
+        FROM
+        act_family_volunteer v,
+        act_project p
+        LEFT JOIN portal_zcpa.province zp ON zp. CODE = p.areaCode
+        WHERE
+        v.projectId = p.id
+        AND v.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+        and p.projectState = #{status,jdbcType=VARCHAR}
+        UNION
+        SELECT
+        count(1) as a
+        FROM
+        act_project_volunteer pv,
+        act_project p
+        LEFT JOIN portal_zcpa.province zp ON zp. CODE = p.areaCode
+        WHERE
+        pv.projectId = p.id
+        AND pv.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+        AND p.projectState = #{status,jdbcType=VARCHAR}
+        <if test='status!= null and status=="4"'>
+            UNION
+            SELECT
+            count(1) as a
+            FROM
+            act_project_volunteer_signout pv,
+            act_project p
+            LEFT JOIN portal_zcpa.province zp ON zp. CODE = p.areaCode
+            WHERE
+            pv.projectId = p.id
+            AND pv.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+        </if>
+          )b
+    </select>
+
+
+    <select id="findState" parameterType="java.lang.String" resultType="java.lang.Integer">
+           ( SELECT
+            count(1) AS state
+        FROM
+            `act_family_volunteer` v,
+            act_project p
+        WHERE
+            p.id = v.projectId
+        AND v.volunteerId = #{volunteerId,jdbcType=VARCHAR}
+        AND p.projectState != '4'
+    )
+    UNION
+        ( SELECT
+                count(1) AS state
+            FROM
+                `act_project_volunteer` v,
+                act_project p
+            WHERE
+                p.id = v.projectId
+            AND v.volunteerId =#{volunteerId,jdbcType=VARCHAR}
+            AND p.projectState != '4'
+        )
+        </select>
+
+    <select id="getSpoorData" resultType="java.util.Map">
+
+select
+		b.id as volunteerId, b.`name`,w.headimgurl,
+		(SELECT count(*) from act_project_activity t where t.`status` = '1' and t.volunteerId= #{volunteerId} ) as voCount,
+		IFNULL(SUM(v.score),0) as score,
+		IFNULL(SUM(v.volHour),0) as volHour,		
+		-- 发帖数量
+		(select count(1)
+		from act_activity_forumposting t
+		where t.postingId = #{volunteerId}) as postNum,
+		-- 获得评论数量
+			(select count(1) 
+			from act_activity_forum t
+			where t.postingId in (
+				select id from act_activity_forumposting where postingId = #{volunteerId}
+			)) as getCommentNum,
+		-- 获得点赞数
+			(select count(1) 
+			from act_activity_admirer t
+			where t.postingId in (
+				select id from act_activity_forumposting where postingId = #{volunteerId}
+			)) as getAdmirerNum ,
+		-- 个人活动平均分
+			(select TRUNCATE(AVG(t.activityScore),1) 
+			from act_project_activity t
+			where t.`status` = 1
+			and t.volunteerId = #{volunteerId} ) as actAvgScore
+from base_volunteer b
+ left join wechat_user w on b.unionid=w.unionid
+left join (
+		SELECT
+				t.volunteerId,
+				IFNULL(t.activityJiFen,0) as score,
+				CASE when ISNULL(t.startTime) then 0
+				when ISNULL(t.endTime) then 0
+				ELSE timestampdiff(HOUR,t.startTime, t.endTime) END volHour
+		FROM `act_project_activity` t
+		where t.`status` = '1'
+		and t.volunteerId = #{volunteerId}
+)v on v.volunteerId = b.id
+where b.id = #{volunteerId}
+group by v.volunteerId, b.`name`
+
+    </select>
+
+
+
+    <select id="selectWechatHeadimgurl" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT ifnull(w.headimgurl,null) as headimgurl
+        FROM   base_volunteer b
+        left join wechat_user w on b.unionid=w.unionid
+        where b.id = #{userId,jdbcType=VARCHAR}
+    </select>
+</mapper>

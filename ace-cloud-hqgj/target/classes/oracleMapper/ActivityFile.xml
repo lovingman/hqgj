@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.oracleDao.ActivityFileDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.oracleModel.ActivityFile">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="activityId" jdbcType="VARCHAR" property="activityId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="filePath" jdbcType="VARCHAR" property="filePath" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, activityId, name, filePath, createDate
+  </sql>
+  <select id="findList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from activityfile
+  </select>
+
+
+  <insert id="insert" parameterType="com.huacainfo.ace.zcpa.oracleModel.ActivityFile">
+    insert into activityfile (id, activityId, name, filePath, createDate)
+    values (#{id,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{filePath,jdbcType=VARCHAR},  #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <delete id="deleteFile">
+     truncate table activityfile
+  </delete>
+
+  <delete id="deleteByIds">
+    delete from activityfile
+    where activityId in
+    <foreach collection="array" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

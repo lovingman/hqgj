@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huacainfo.ace.portal.dao.TaskCmccMapper">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.portal.model.TaskCmcc">
+        <id column="task_id" property="taskId" jdbcType="VARCHAR"/>
+        <result column="task_name" property="taskName" jdbcType="VARCHAR"/>
+        <result column="msg" property="msg" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId"
+                jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="complete_time" property="completeTime"
+                jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.huacainfo.ace.portal.model.TaskCmcc"
+               extends="BaseResultMap">
+        <result column="tel" property="tel" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="BaseResultMapVo"
+               type="com.huacainfo.ace.portal.vo.TaskCmccVo">
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="department_name" property="departmentName"
+                jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="BaseResultMapQueue" type="com.huacainfo.ace.portal.model.QueueCmccWait">
+        <id column="queue_id" property="queueId" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="msg" property="msg" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		task_id, task_name, msg, create_time, create_user_id,
+		status, complete_time
+	</sql>
+    <sql id="Blob_Column_List">
+		tel
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from task_cmcc
+        where task_id = #{taskId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		task_cmcc
+		where task_id = #{taskId,jdbcType=VARCHAR}
+	</delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.portal.model.TaskCmcc">
+		insert into task_cmcc
+		(task_id, task_name, msg,
+		create_time, create_user_id, status,
+		complete_time, tel)
+		values (#{taskId,jdbcType=VARCHAR},
+		#{taskName,jdbcType=VARCHAR},
+		#{msg,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{completeTime,jdbcType=VARCHAR},
+		#{tel,jdbcType=LONGVARCHAR})
+	</insert>
+    <insert id="insertSelective" parameterType="com.huacainfo.ace.portal.model.TaskCmcc">
+        insert into task_cmcc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="taskName != null">
+                task_name,
+            </if>
+            <if test="msg != null">
+                msg,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="completeTime != null">
+                complete_time,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="taskName != null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="completeTime != null">
+                #{completeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.portal.model.TaskCmcc">
+        update task_cmcc
+        <set>
+            <if test="taskName != null">
+                task_name = #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                msg = #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="completeTime != null">
+                complete_time = #{completeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where task_id = #{taskId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.huacainfo.ace.portal.model.TaskCmcc">
+		update
+		task_cmcc
+		set task_name = #{taskName,jdbcType=VARCHAR},
+		msg =
+		#{msg,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		complete_time = #{completeTime,jdbcType=VARCHAR},
+		tel =
+		#{tel,jdbcType=LONGVARCHAR}
+		where task_id = #{taskId,jdbcType=VARCHAR}
+	</update>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.portal.model.TaskCmcc">
+		update task_cmcc
+		set task_name = #{taskName,jdbcType=VARCHAR},
+		msg =
+		#{msg,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		complete_time = #{completeTime,jdbcType=VARCHAR}
+		where task_id =
+		#{taskId,jdbcType=VARCHAR}
+	</update>
+    <select id="isExitByTaskName" resultType="int">
+		select count(*) from
+		task_cmcc where task_name=#{name}
+	</select>
+    <sql id="whereCondition">
+
+        from task_cmcc left join users on
+        task_cmcc.create_user_id=users.user_id where 0=0
+
+
+        <if test="condition.taskName!=null and condition.taskName!=&quot;&quot;">
+
+            and
+            task_name like
+            concat('%',concat(#{condition.taskName,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="condition.dateStart!=null and condition.dateStart!=&quot;&quot;">
+            <![CDATA[
+					and task_cmcc.create_time >=str_to_date(#{condition.dateStart},'%Y-%m-%d %H:%i:%S')  
+				]]>
+        </if>
+
+        <if test="condition.dateEnd!=null and condition.dateEnd!=&quot;&quot;">
+            <![CDATA[
+					and task_cmcc.create_time <=str_to_date(#{condition.dateEnd},'%Y-%m-%d %H:%i:%S')  
+				]]>
+        </if>
+
+    </sql>
+
+    <select id="findCount" resultType="int">
+
+        SELECT COUNT(*)
+
+        <include refid="whereCondition"/>
+
+    </select>
+
+    <select id="findList" resultMap="BaseResultMapVo">
+        select
+        task_id, task_name, msg, task_cmcc.create_time,
+        task_cmcc.create_user_id, status,
+        complete_time,users.name
+        <include refid="whereCondition"/>
+
+        <choose>
+
+            <when test="orderBy!=null and orderBy!=&quot;&quot;">
+
+                ORDER BY ${orderBy}
+
+            </when>
+
+            <otherwise>
+
+                ORDER BY task_cmcc.create_time desc
+
+            </otherwise>
+
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+    <select id="selectByTask" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from task_cmcc
+        where status = '0' order by create_time asc limit 0, 50
+    </select>
+    <select id="selectQueueByTask" resultMap="BaseResultMapQueue">
+		select
+		queue_id, tel,
+		name, msg, create_time
+		from queue_cmcc_wait
+		where 0=0 order by
+		create_time asc limit 0, 500
+	</select>
+    <update id="updateStatusByPrimaryKey">
+		update task_cmcc
+		set
+		status = #{status,jdbcType=VARCHAR}
+		where task_id =
+		#{taskId,jdbcType=VARCHAR}
+	</update>
+    <select id="selectWorkflowTaskMsg" resultType="map">
+		SELECT u1.user_id userId,c.objname_,u1.name,u1.mobile,a.DBID_,a.name_,a.create_,
+		(
+		SELECT
+			u2. NAME
+		FROM
+			jbpmdb.jbpm4_hist_task t
+		LEFT JOIN edu.users u2 ON t.ASSIGNEE_ = u2.user_id
+		WHERE
+			t.EXECUTION_ = a.EXECUTION_ID_
+		ORDER BY
+			t.create_
+		LIMIT 0,
+		1
+	) name2
+	
+		 FROM
+		jbpmdb.jbpm4_task a,jbpmdb.jbpm4_execution b,jbpmdb.jbpm4_deployprop c
+		,users u1
+		where a.execution_id_=b.id_
+		and b.procdefid_=c.stringval_
+		and a.assignee_=u1.user_id
+		and a.create_>date_sub(now(), interval 2 day)
+		and a.status=0 and LOCATE('提交', a.name_)=0
+	</select>
+    <update id="updateWorkflowTaskMsgByTaskId">
+		update jbpmdb.jbpm4_task a
+		set
+		a.status = 1
+		where a.DBID_ =
+		#{id,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

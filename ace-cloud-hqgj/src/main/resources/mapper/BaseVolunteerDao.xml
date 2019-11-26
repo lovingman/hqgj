@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.BaseVolunteerDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.BaseVolunteer">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="userType" jdbcType="VARCHAR" property="userType"/>
+        <result column="orgId" jdbcType="VARCHAR" property="orgId"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="homeAreaCode" jdbcType="VARCHAR" property="homeAreaCode"/>
+        <result column="homeAddr" jdbcType="VARCHAR" property="homeAddr"/>
+        <result column="nowAreaCode" jdbcType="VARCHAR" property="nowAreaCode"/>
+        <result column="nowAddr" jdbcType="VARCHAR" property="nowAddr"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId"/>
+        <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName"/>
+        <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate"/>
+
+        <result column="deptId" jdbcType="VARCHAR" property="deptId"/>
+        <result column="volType" jdbcType="VARCHAR" property="volType"/>
+        <result column="birthDate" jdbcType="TIMESTAMP" property="birthDate"/>
+        <result column="politicalAppearance" jdbcType="VARCHAR" property="politicalAppearance"/>
+        <result column="unionid" jdbcType="VARCHAR" property="unionid"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, sex, mobile, idCard, userType, orgId, areaCode, homeAreaCode, homeAddr, 
+    nowAreaCode, nowAddr, remark, status, createUserId, createUserName, createDate, lastModifyUserId, 
+    lastModifyUserName, lastModifyDate, deptId, volType,unionid
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from base_volunteer
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_volunteer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.BaseVolunteer">
+    insert into base_volunteer (id, name, sex, 
+      mobile, idCard, userType, 
+      orgId, areaCode, homeAreaCode, 
+      homeAddr, nowAreaCode, nowAddr, 
+      remark, status, createUserId, 
+      createUserName, createDate, lastModifyUserId, 
+      lastModifyUserName, lastModifyDate,
+      deptId, volType,birthDate,politicalAppearance,unionid)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{homeAreaCode,jdbcType=VARCHAR}, 
+      #{homeAddr,jdbcType=VARCHAR}, #{nowAreaCode,jdbcType=VARCHAR}, #{nowAddr,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastModifyUserId,jdbcType=VARCHAR}, 
+      #{lastModifyUserName,jdbcType=VARCHAR}, #{lastModifyDate,jdbcType=TIMESTAMP},
+      #{deptId,jdbcType=VARCHAR},  #{volType,jdbcType=VARCHAR},
+      #{birthDate,jdbcType=TIMESTAMP}, #{politicalAppearance,jdbcType=VARCHAR},#{unionid,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.BaseVolunteer">
+    update base_volunteer
+    set sex = #{sex,jdbcType=VARCHAR},
+      userType = #{userType,jdbcType=VARCHAR},
+      areaCode = #{areaCode,jdbcType=VARCHAR},
+      deptId=#{deptId,jdbcType=VARCHAR},
+      lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR},
+      lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR},
+      lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP},
+      politicalAppearance= #{politicalAppearance,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.BaseVolunteerVo">
+        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
+        <result column="sexName" jdbcType="VARCHAR" property="sexName"/>
+        <result column="userTypeName" jdbcType="VARCHAR" property="userTypeName"/>
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.deptId, t.volType,
+    t.id, t.name, t.sex,if(t.sex='1',"男","女") as sexName, t.mobile, t.idCard, t.userType,(select name from portal_zcpa.dict where code=t.userType and categoryId='49')as userTypeName, t.orgId, t.areaCode, t.homeAreaCode, t.homeAddr, t.nowAreaCode, t.nowAddr, t.remark,
+    t.status, t.createUserId, t.createUserName, t.createDate, t.lastModifyUserId, t.lastModifyUserName, t.lastModifyDate,t.birthDate,t.politicalAppearance
+  </sql>
+    <sql id="Vo_AreaColumn_List">
+    p.type as selfAreaType,
+        p.name as selfAreaName,
+        pp.pName, ppp.ppNames,
+        case p.type
+        when '4' then   '常德市'
+        when '3' then   concat_ws(">",'常德市',p.name)
+        when '2' then   concat_ws(">", ppp.ppNames,pp.pName,p.name)
+        when '1' then   concat_ws(">",'常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
+  </sql>
+    <sql id="From_Statement">
+    FROM base_volunteer t
+    left join  portal_zcpa.province p on p.code=t.areaCode
+     left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.name != null and condition.name !=''">
+                and (t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
+                or t.idCard  like concat('%',#{condition.name,jdbcType=VARCHAR},'%'))
+            </if>
+            <if test="condition.mobile != null and condition.mobile !=''">
+                and t.mobile = like concat('%',#{condition.mobile,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.userType != null and condition.userType !=''">
+                and t.userType = #{condition.userType,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.areaCode != null and condition.areaCode !=''">
+                and t.areaCode  like concat(#{condition.areaCode,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.status != null and condition.status !=''">
+                and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null and condition.status !=''">
+                and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.startTime != null">
+                and t.lastModifyDate <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.endTime != null">
+                and t.lastModifyDate <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="condition.screening != null and condition.screening!=''">
+            and  t.id not in (select v.volunteerId from act_family_volunteer v ,act_project p where v.projectId=p.id and p.projectState='2' and v.volunteerId is not null)
+            and  t.id not in (select pv.volunteerId from act_project_volunteer pv,act_project p where pv.projectId=p.id and p.projectState='2' and pv.volunteerId is not null)
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>,
+        <include refid="Vo_AreaColumn_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>,
+        <include refid="Vo_AreaColumn_List"/>
+        <include refid="From_Statement"/>
+
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY t.${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        FROM base_volunteer t
+        left join  portal_zcpa.province p on p.code=t.areaCode
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.BaseVolunteer" resultType="int">
+            select count(1)
+        from base_volunteer
+        where idCard = #{idCard,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from base_volunteer
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+</mapper>

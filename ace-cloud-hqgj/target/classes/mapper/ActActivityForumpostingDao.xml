@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActActivityForumpostingDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActActivityForumposting">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="projectCode" jdbcType="VARCHAR" property="projectCode"/>
+        <result column="postingId" jdbcType="VARCHAR" property="postingId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastModifyUserId"/>
+        <result column="lastModifyUserName" jdbcType="VARCHAR" property="lastModifyUserName"/>
+        <result column="lastModifyDate" jdbcType="TIMESTAMP" property="lastModifyDate"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, projectCode, postingId, title, content, status, createUserId, createUserName,
+    createDate, lastModifyUserId, lastModifyUserName, lastModifyDate,areaCode
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from act_activity_forumposting
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_activity_forumposting
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActActivityForumposting">
+    insert into act_activity_forumposting (id, projectCode, postingId,
+      title, content, status,
+      createUserId, createUserName, createDate,
+      lastModifyUserId, lastModifyUserName, lastModifyDate,areaCode
+      )
+    values (#{id,jdbcType=VARCHAR}, #{projectCode,jdbcType=VARCHAR}, #{postingId,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{lastModifyUserId,jdbcType=VARCHAR}, #{lastModifyUserName,jdbcType=VARCHAR}, #{lastModifyDate,jdbcType=TIMESTAMP},
+      #{areaCode,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActActivityForumposting">
+    update act_activity_forumposting
+    set projectCode = #{projectCode,jdbcType=VARCHAR},
+      postingId = #{postingId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      lastModifyUserId = #{lastModifyUserId,jdbcType=VARCHAR},
+      lastModifyUserName = #{lastModifyUserName,jdbcType=VARCHAR},
+      lastModifyDate = #{lastModifyDate,jdbcType=TIMESTAMP},
+       areaCode=#{areaCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActActivityForumpostingVo">
+        <result column="totalForum" jdbcType="INTEGER" property="totalForum"/>
+        <result column="totalReport" jdbcType="INTEGER" property="totalReport"/>
+        <result column="totalAdmirer" jdbcType="INTEGER" property="totalAdmirer"/>
+        <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="admirerState" jdbcType="INTEGER" property="admirerState"/>
+        <result column="isBlack" jdbcType="INTEGER" property="isBlack"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <collection property="actActivityAttach" column="id" ofType="com.huacainfo.ace.zcpa.model.ActActivityAttach">
+            <result column="attid" jdbcType="VARCHAR" property="id"/>
+            <result column="fileType" jdbcType="VARCHAR" property="filetype"/>
+            <result column="fileName" jdbcType="VARCHAR" property="filename"/>
+            <result column="fileURL" jdbcType="VARCHAR" property="fileurl"/>
+            <result column="type" jdbcType="VARCHAR" property="type"/>
+        </collection>
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.projectCode, t.postingId, t.title, t.content, t.status, t.createUserId, t.createUserName, t.createDate,t.areaCode
+
+  </sql>
+    <sql id="From_Statement">
+    FROM act_activity_forumposting t
+    LEFT JOIN base_volunteer v ON t.createUserId =v.id
+    left join act_activity_attach att on att.actId =t.id
+    left join  portal_zcpa.province zp on zp.code=t.areaCode
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.projectcode != null and condition.projectcode !=''">
+                and t.projectCode = #{condition.projectCode,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.postingId != null and condition.postingId !=''">
+                and t.postingId = #{condition.postingId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.title != null and condition.title !=''">
+                and t.title like concat('%',#{condition.title,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.status != null and condition.status !=''">
+                and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.content != null and condition.content !=''">
+                and t.content like concat('%', #{condition.content,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.areaCode != null and condition.areaCode !=''">
+                and t.areaCode like concat(#{condition.areaCode,jdbcType=VARCHAR},'%')
+            </if>
+
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        att.id attid,att.fileURL,att.fileType,att.fileName,
+        v.* from (
+        select DISTINCT
+        <include refid="Vo_Column_List"/>, v.name as userName,
+        (select count(1) from act_activity_forum where postingId=t.id) as totalForum,
+        (select count(1) from act_activity_report r,act_activity_forum f  where r.postingId=f.id and  f.postingId=t.id) as totalReport,
+        (select count(1) from act_activity_admirer where postingId=t.id) as totalAdmirer,
+        zp.type as selfAreaType,
+        zp.name as selfAreaName,
+        pp.pName, ppp.ppNames,
+        case zp.type
+        when '4' then   '常德市'
+        when '3' then   concat_ws(">",'常德市',zp.name)
+        when '2' then   concat_ws(">", ppp.ppNames,pp.pName,zp.name)
+        when '1' then   concat_ws(">",'常德市', ppp.ppNames,pp.pName,zp.name)
+        end  areaName
+        <include refid="From_Statement"/>
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = zp.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
+        <include refid="Where_Condition"/>
+        <if test='orderBy==null || orderBy==""'>
+            ORDER BY t.createDate desc
+        </if>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL})v
+        left join act_activity_attach att on att.actId = v.id  and att.type='1'
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY v.${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY v.createDate desc
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(1)
+        FROM (
+        SELECT t.id
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        GROUP by t.id
+        ) a
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.ActActivityForumposting" resultType="int">
+            select count(1)
+        from act_activity_forumposting
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from act_activity_forumposting
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+    <select id="getForumPostingDetail" resultMap="VoResultMap"
+            resultType="com.huacainfo.ace.zcpa.vo.ActActivityForumpostingVo">
+        select
+        t.id, t.projectCode, t.postingId, t.title, t.content,
+        t.status, t.createUserId, t.createUserName, t.createDate,
+        t.areaCode,
+        v.name as userName, att.id attid,att.fileURL,att.fileType,att.fileName,att.type,w.headimgurl,
+        -- 该帖被点赞次数
+        (select count(1) from act_activity_forum where postingId=t.id) as totalForum,
+        (select count(1) from act_activity_admirer where postingId=t.id) as totalAdmirer,
+        (select count(1) from act_poster_blacklist where postingId=#{userId}) as isBlack,
+        <choose>
+            <when test="userId != null and userId !=''">
+                -- 当前用户点赞状态
+                (select count(1)
+                from act_activity_admirer a
+                where a.postingId = t.postingId and a.userId = #{userId}
+                ) as admirerState
+            </when>
+            <otherwise>
+                0 as admirerState
+            </otherwise>
+        </choose>
+        FROM act_activity_forumposting t
+        LEFT JOIN base_volunteer v ON t.createUserId =v.id
+        left join act_activity_attach att on att.actId =t.id  and att.type!='2'
+        left join  portal_zcpa.province zp on zp.code=t.areaCode
+        left join wechat_user w on v.unionid=w.unionid
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateStatus" parameterType="com.huacainfo.ace.zcpa.model.ActProjectActivity">
+     update act_activity_forumposting
+     set status = #{status,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="myForumpostingList"   parameterType="java.lang.String" resultMap="VoResultMap">
+        select DISTINCT t.id,t.title,v.`name` as userName,t.createDate,t.status from act_activity_forumposting t
+        left join act_activity_forum f  on f.postingId=t.id
+        left join base_volunteer v on v.id=t.postingId
+        where f.userId=#{userId,jdbcType=VARCHAR}
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+
+    <select id="myForumpostingListCount" resultType="int">
+        SELECT COUNT(1)
+        FROM (
+        SELECT t.id
+        from act_activity_forumposting t
+          left join act_activity_forum f  on f.postingId=t.id
+          left join base_volunteer v on v.id=t.postingId
+          where f.userId=#{userId,jdbcType=VARCHAR}
+        GROUP by t.id
+        ) a
+    </select>
+
+</mapper>

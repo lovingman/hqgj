@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.WechatUserDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.WechatUser">
+        <id column="unionid" jdbcType="VARCHAR" property="unionid"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="privilege" jdbcType="LONGVARCHAR" property="privilege"/>
+        <result column="access_token" jdbcType="VARCHAR" property="access_token"/>
+        <result column="refresh_token" jdbcType="VARCHAR" property="refresh_token"/>
+        <result column="expires_in" jdbcType="BIGINT" property="expires_in"/>
+        <result column="appid" jdbcType="VARCHAR" property="appid"/>
+        <result column="sysId" jdbcType="VARCHAR" property="sysId"/>
+        <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    unionid, openid, nickname, headimgurl, sex, country, province, city, access_token, 
+    refresh_token, expires_in, appid, sysId, privilege, updateTime, createTime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_user
+        where unionid = #{unionid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wechat_user
+    where unionid = #{unionid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.WechatUser">
+    insert into wechat_user (unionid, openid, nickname, 
+      headimgurl, sex, country, 
+      province, city, access_token, 
+      refresh_token, expires_in, appid, 
+      sysId, privilege, updateTime, createTime)
+    values (#{unionid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{headimgurl,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{access_token,jdbcType=VARCHAR}, 
+      #{refresh_token,jdbcType=VARCHAR}, #{expires_in,jdbcType=BIGINT}, #{appid,jdbcType=VARCHAR}, 
+      #{sysId,jdbcType=VARCHAR}, #{privilege,jdbcType=LONGVARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.WechatUser">
+    update wechat_user
+    set openid = #{openid,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      access_token = #{access_token,jdbcType=VARCHAR},
+      refresh_token = #{refresh_token,jdbcType=VARCHAR},
+      expires_in = #{expires_in,jdbcType=BIGINT},
+      appid = #{appid,jdbcType=VARCHAR},
+      sysId = #{sysId,jdbcType=VARCHAR},
+      privilege = #{privilege,jdbcType=LONGVARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where unionid = #{unionid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="isExists" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM `wechat_user` t
+        where t.unionid = #{unionid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="openIdList" resultMap="BaseResultMap" >
+       SELECT t.openid,bv.name as nickname
+        FROM  wechat_user t
+        left join base_volunteer bv on bv.unionid=t.unionid
+        left join act_project_volunteer v  on bv.id =v.volunteerId
+        where v.projectId = #{projectId,jdbcType=VARCHAR}
+          and v.areaCode like concat(#{areaCode,jdbcType=VARCHAR},'%')
+        <if test='targetId!= null and targetId!="" '>
+            and v.targetId =#{targetId,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

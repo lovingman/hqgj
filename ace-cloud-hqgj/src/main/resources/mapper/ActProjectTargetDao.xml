@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.zcpa.dao.ActProjectTargetDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.zcpa.model.ActProjectTarget">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="areaCode" jdbcType="VARCHAR" property="areaCode" />
+    <result column="projectId" jdbcType="VARCHAR" property="projectId" />
+    <result column="targetId" jdbcType="VARCHAR" property="targetId" />
+    <result column="targetType" jdbcType="VARCHAR" property="targetType" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, areaCode, projectId, targetId, targetType, remark, status, createDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_project_target
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_project_target
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.zcpa.model.ActProjectTarget">
+    insert into act_project_target (id, areaCode, projectId, 
+      targetId, targetType, remark, 
+      status, createDate)
+    values (#{id,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{targetId,jdbcType=VARCHAR}, #{targetType,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.zcpa.model.ActProjectTarget">
+    update act_project_target
+    set areaCode = #{areaCode,jdbcType=VARCHAR},
+      projectId = #{projectId,jdbcType=VARCHAR},
+      targetId = #{targetId,jdbcType=VARCHAR},
+      targetType = #{targetType,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.zcpa.vo.ActProjectTargetVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.areaCode, t.projectId, t.targetId, t.targetType, t.remark, t.status, t.createDate
+  </sql>
+  <sql id="From_Statement">
+    FROM act_project_target t
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.areaCode != null">
+         and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.projectId != null">
+         and t.projectId = #{projectId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.targetId != null">
+         and t.targetId = #{targetId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.targetType != null">
+         and t.targetType = #{targetType,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.remark != null">
+         and t.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.status != null">
+         and t.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null">
+         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.zcpa.model.ActProjectTarget" resultType="int">
+            select count(1)
+        from act_project_target
+        where projectId = #{projectId,jdbcType=VARCHAR} and targetId = #{projectId,jdbcType=VARCHAR}
+  </select>
+    <select id="getProjectAreaTree" resultType="java.util.Map">
+      select ID, PID, TEXT, ICON, SRC, CHILD_COUNT from (
+SELECT DISTINCT
+	t.areaCode AS ID,
+	p.parent_code AS PID,
+	p.name AS TEXT,
+	'' AS ICON,
+	p.type AS SRC,
+	0 AS CHILD_COUNT
+FROM `act_project_target` t
+left join portal_zcpa.province p on t.areaCode = p.`code`
+WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(select count(1)
+		from (	SELECT DISTINCT
+				p.parent_code as PID
+			FROM `act_project_target` t
+			left join portal_zcpa.province p on t.areaCode = p.`code`
+			WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+		)v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.`code` in (
+		SELECT DISTINCT
+		p.parent_code as PID
+	FROM `act_project_target` t
+	left join portal_zcpa.province p on t.areaCode = p.`code`
+	WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+)
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(	select count(1)
+		from (
+			select
+				p.parent_code AS PID
+			from portal_zcpa.province p
+			where p.`code` in (
+				SELECT DISTINCT
+					p.parent_code as PID
+				FROM `act_project_target` t
+				left join portal_zcpa.province p on t.areaCode = p.`code`
+				WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+			)
+		)v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.code in (
+	select
+		p.parent_code AS PID
+	from portal_zcpa.province p
+	where p.`code` in (
+		SELECT DISTINCT
+			p.parent_code as PID
+		FROM `act_project_target` t
+		left join portal_zcpa.province p on t.areaCode = p.`code`
+		WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+	)
+)
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(	select count(1)
+		from (
+			select
+				p.parent_code AS PID
+			from portal_zcpa.province p
+			where p.code in (
+				select
+					p.parent_code AS PID
+				from portal_zcpa.province p
+				where p.`code` in (
+					SELECT DISTINCT
+						p.parent_code as PID
+					FROM `act_project_target` t
+					left join portal_zcpa.province p on t.areaCode = p.`code`
+					WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+				)
+			)
+		)v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.`code` = '4307'
+        )v
+        order by v.ID
+    </select>
+
+    <select id="getFamilyAreaTree" resultType="java.util.Map">
+         select ID, PID, TEXT, ICON, SRC, CHILD_COUNT from (
+SELECT DISTINCT
+	t.areaCode AS ID,
+	p.parent_code AS PID,
+	p.name AS TEXT,
+	'' AS ICON,
+	p.type AS SRC,
+	0 AS CHILD_COUNT
+FROM `act_family_target` t
+left join portal_zcpa.province p on t.areaCode = p.`code`
+WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(select count(1)
+		from (	SELECT DISTINCT
+				p.parent_code as PID
+			FROM `act_family_target` t
+			left join portal_zcpa.province p on t.areaCode = p.`code`
+			WHERE	t.projectId = #{projectId,jdbcType=VARCHAR})v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.`code` in (
+		SELECT DISTINCT
+		p.parent_code as PID
+	FROM `act_family_target` t
+	left join portal_zcpa.province p on t.areaCode = p.`code`
+	WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+)
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(	select count(1)
+		from (
+			select
+				p.parent_code AS PID
+			from portal_zcpa.province p
+			where p.`code` in (
+				SELECT DISTINCT
+					p.parent_code as PID
+				FROM `act_family_target` t
+				left join portal_zcpa.province p on t.areaCode = p.`code`
+				WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+			)
+		)v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.code in (
+	select
+		p.parent_code AS PID
+	from portal_zcpa.province p
+	where p.`code` in (
+		SELECT DISTINCT
+			p.parent_code as PID
+		FROM `act_family_target` t
+		left join portal_zcpa.province p on t.areaCode = p.`code`
+		WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+	)
+)
+UNION ALL
+select
+	p.`code` AS ID,
+	p.parent_code AS PID,
+	p.`name` AS TEXT,
+	'' AS ICON,
+	P.type AS SRC,
+	(	select count(1)
+		from (
+			select
+				p.parent_code AS PID
+			from portal_zcpa.province p
+			where p.code in (
+				select
+					p.parent_code AS PID
+				from portal_zcpa.province p
+				where p.`code` in (
+					SELECT DISTINCT
+						p.parent_code as PID
+					FROM `act_family_target` t
+					left join portal_zcpa.province p on t.areaCode = p.`code`
+					WHERE	t.projectId = #{projectId,jdbcType=VARCHAR}
+				)
+			)
+		)v
+		where p.`code` = v.PID
+	) AS CHILD_COUNT
+from portal_zcpa.province p
+where p.`code` = '4307' 
+        )v
+        order by v.ID
+    </select>
+    <delete id="deleteByIds">
+     delete from act_project_target
+ where id in
+ <foreach collection="array" item="ids" open="(" separator="," close=")">
+    #{ids}
+ </foreach>
+  </delete>
+
+    <delete id="deleteByProjectId" parameterType="java.lang.String">
+    delete from act_project_target
+    where projectId = #{projectId,jdbcType=VARCHAR}
+  </delete>
+</mapper>
