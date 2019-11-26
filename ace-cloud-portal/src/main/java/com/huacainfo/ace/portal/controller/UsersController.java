@@ -55,9 +55,9 @@ public class UsersController extends BaseController {
      */
     @GetMapping(value = "/page", produces = "application/json;charset=UTF-8")
     public PageDTO<UsersVo> page(UsersQVo condition, PageParam page) throws Exception {
-        if (StringUtils.isEmpty(condition.getAreaCode())) {
-            condition.setAreaCode(this.getCurUserProp().getAreaCode());
-        }
+//        if (StringUtils.isEmpty(condition.getAreaCode())) {
+//            condition.setAreaCode(this.getCurUserProp().getAreaCode());
+//        }
        /* if (StringUtils.isEmpty(condition.getCorpId())) {
             condition.setCorpId(this.getCurUserProp().getCorpId());
         }*/
