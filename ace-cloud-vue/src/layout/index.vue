@@ -1,7 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <!--<v-head></v-head>-->
     <sidebar class="sidebar-container" />
     <div class="navbar">
       <navbar />
@@ -21,12 +20,10 @@ import RightPanel from "@/components/RightPanel";
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
 import { mapState } from "vuex";
-// import vHead from "./components/Header.vue";
 
 export default {
   name: "Layout",
   components: {
-    // vHead,
     AppMain,
     Navbar,
     RightPanel,
