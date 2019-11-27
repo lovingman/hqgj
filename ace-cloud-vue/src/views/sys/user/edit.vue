@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     load(){
-        this.loading = true;
+        // this.loading = true;
         this.id = this.$route.query.id;
         getById(this.id)
         .then(response => {

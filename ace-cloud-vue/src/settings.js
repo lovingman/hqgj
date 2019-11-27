@@ -1,5 +1,5 @@
 module.exports = {
-  title: '常德市众创平安服务平台',
+  title: '常德市慧企管家服务平台',
 
   /**
    * @type {boolean} true | false
