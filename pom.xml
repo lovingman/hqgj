@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.huacainfo</groupId>
-    <artifactId>ace-zcpa</artifactId>
+    <artifactId>ace-hqgj</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <name>ace-zcpa</name>
+    <name>ace-hqgj</name>
     <description></description>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,7 +21,7 @@
         <module>ace-cloud-hystrix</module>
         <module>ace-cloud-portal</module>
         <module>ace-cloud-zuul</module>
-        <module>ace-cloud-zcpa</module>
+        <module>ace-cloud-hqgj</module>
 
         <module>ace-cloud-webapp</module>
     </modules>

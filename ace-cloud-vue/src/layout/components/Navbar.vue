@@ -1,16 +1,27 @@
 <template>
   <div class="navbar">
+    <div class="title">
+      <el-row style="margin-left: 20px;">
+        <el-col :span="4" style="margin-top: 5px">
+          <img src="@/assets/images/huiqiicon.png" alt="">
+        </el-col>
+        <el-col :span="12">
+          <div class="title-nm">
+            <span>慧企管家服务平台</span>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-      </template>
-
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
+          <div class="head-img">
+            <img src="@/assets/images/huiqiicon.png" alt />
+          </div>
          <div class="user-name text-center">{{ name }}</div>
           <i class="el-icon-caret-bottom" style="float:left;" />
         </div>
@@ -65,11 +76,22 @@ export default {
   height: 45px;
   overflow: hidden;
   background: #fff;
-  padding-right: 120px;
-  top: 126px;
+  /*padding-right: 150px;*/
   width: 100%;
   /*box-shadow: 0 1px 4px rgba(0,21,41,.08);*/
 
+  .title{
+    background-color:rgb(0, 65, 136);
+    width: 250px;
+    float: left;
+    height: 45px;
+    padding: 0;
+    text-align: center
+  }
+  .title-nm{
+    color: white;
+    line-height: 45px;
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -121,9 +143,22 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        display: flex;
+        align-items: center;
         position: relative;
 
+        .head-img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin-right: 15px;
+
+          img {
+            object-fit: cover;
+            width: 100%;
+          }
+        }
         .user-avatar {
           cursor: pointer;
           width: 40px;

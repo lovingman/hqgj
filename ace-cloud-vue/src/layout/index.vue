@@ -1,14 +1,13 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <v-top></v-top>
-    <v-head></v-head>
+    <!--<v-head></v-head>-->
     <sidebar class="sidebar-container" />
+    <div class="navbar">
+      <navbar />
+      <tags-view v-if="needTagsView" />
+    </div>
     <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <!--<div :class="{'fixed-header':fixedHeader}">-->
-        <!--<navbar />-->
-        <!--<tags-view v-if="needTagsView" />-->
-      <!--</div>-->
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
@@ -22,14 +21,12 @@ import RightPanel from "@/components/RightPanel";
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
 import { mapState } from "vuex";
-import vTop from "./components/Top.vue";
-import vHead from "./components/Header.vue";
+// import vHead from "./components/Header.vue";
 
 export default {
   name: "Layout",
   components: {
-    vTop,
-    vHead,
+    // vHead,
     AppMain,
     Navbar,
     RightPanel,
