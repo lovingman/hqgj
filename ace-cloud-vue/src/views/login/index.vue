@@ -9,7 +9,7 @@
             </div> -->
           </el-col>
           <el-col :span="24">
-            <div class="sys-name">常德市工业和信息化局</div>
+            <div class="sys-name">常德市武陵区工业和信息化局</div>
           </el-col>
         </el-row>
       </el-header>
@@ -44,7 +44,7 @@
                   <el-input
                     ref="username"
                     v-model="loginForm.username"
-                    placeholder="Username"
+                    placeholder="账号"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -61,7 +61,7 @@
                     ref="password"
                     v-model="loginForm.password"
                     :type="passwordType"
-                    placeholder="Password"
+                    placeholder="密码"
                     name="password"
                     tabindex="2"
                     autocomplete="on"
