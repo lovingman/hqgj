@@ -21,18 +21,11 @@ spring:
       min-idle: 20
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
     druid:
-       primary:
-         driverClassName: com.mysql.jdbc.Driver
-         url: jdbc:mysql://192.168.2.253:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-         username: root
-         password: 123456
-       secondary:
-         driverClassName: oracle.jdbc.driver.OracleDriver
-         url: jdbc:oracle:thin:@192.168.2.253:1521:orcl
-         username: partyschool
-         password: partyschool
-
+       url: jdbc:mysql://192.168.2.253:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+       username: root
+       password: 123456
        initial-size: 2
        max-active: 100
        min-idle: 2
@@ -68,7 +61,7 @@ fdfs:
 
 #用于配置是否启用swagger
 swagger:
-  scan: "com.huacainfo.ace.zcpa.controller"
+  scan: "com.huacainfo.ace.hqgj.controller"
   enable: true
 jwt:
   tokenHeader: Authorization #JWT存储的请求头

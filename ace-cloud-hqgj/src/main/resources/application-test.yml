@@ -23,17 +23,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      primary:
-        driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://10.0.0.12:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-        username: root
-        password: huacai#2019
-      secondary:
-        driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://10.0.0.12:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-        username: root
-        password: huacai#2019
-
+      url: jdbc:mysql://10.0.0.12:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: huacai#2019
       initial-size: 2
       max-active: 100
       min-idle: 2
