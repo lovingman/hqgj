@@ -53,7 +53,7 @@
                     <template slot-scope="scope">
                         <el-button @click="" height="40" type="text" @click="person">成员管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" height="40" type="text">编辑</el-button>
+                        <el-button @click="" height="40" type="text" @click="edit">编辑</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
@@ -90,11 +90,17 @@
             },
             create(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise/create" });
+            },
+            edit(){
+                this.$router.push({ path: "/hqgj/BasicData/enterprise/edit" });
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .container {
+        padding: 20px;
+        background-color: #fff;
+    }
 </style>
