@@ -92,13 +92,13 @@
         },
         methods:{
             person(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/Member" });
+                this.$router.push({ path: "/hqgj/BasicData/service/Member" });
             },
             create(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/create" });
+                this.$router.push({ path: "/hqgj/BasicData/service/create" });
             },
             edit(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/edit" });
+                this.$router.push({ path: "/hqgj/BasicData/service/edit" });
             }
         }
     }

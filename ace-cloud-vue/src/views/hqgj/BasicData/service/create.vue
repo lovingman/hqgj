@@ -61,7 +61,7 @@
         },
         methods:{
             back(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise" });
+                this.$router.push({ path: "/hqgj/BasicData/service" });
             },
 
         }

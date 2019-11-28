@@ -77,10 +77,10 @@
         },
         methods:{
             createPerson(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/createPerson" });
+                this.$router.push({ path: "/hqgj/BasicData/service/createPerson" });
             },
             editPerson(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/editPerson" });
+                this.$router.push({ path: "/hqgj/BasicData/service/editPerson" });
             }
         }
     }

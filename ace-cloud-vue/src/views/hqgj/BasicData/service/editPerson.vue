@@ -37,7 +37,7 @@
         },
         methods:{
             back(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/Member" });
+                this.$router.push({ path: "/hqgj/BasicData/service/Member" });
             },
 
         }
