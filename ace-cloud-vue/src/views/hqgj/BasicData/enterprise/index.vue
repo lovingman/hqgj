@@ -43,7 +43,7 @@
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
                 <el-table-column label="企业名称" prop="name" sortable='custom' >
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="personName" width="250" label="企业法人" prop="activityTitle">
+                <el-table-column width="250" label="企业法人" prop="personName">
                 </el-table-column>
                 <el-table-column label="联系方式" prop="mobile" width="300">
                 </el-table-column>
@@ -57,7 +57,7 @@
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">详情</el-button>
+                        <el-button @click="preview" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -93,6 +93,9 @@
             },
             edit(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise/edit" });
+            },
+            preview(){
+                this.$router.push({ path: "/hqgj/BasicData/enterprise/details" });
             }
         }
     }

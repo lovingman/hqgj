@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="handle-box" style="margin-bottom: 30px">
-            <span style="font-size: 25px">添加机构成员</span>
+            <span style="font-size: 25px">机构成员详情</span>
         </div>
         <el-form :rules="rules" ref="ruleForm" label-width="300px" class="demo-ruleForm">
             <el-row>
@@ -168,13 +168,9 @@
     }
     .hide /deep/ .el-upload--picture-card {
         display: none;
-     }
+    }
     .hide2 /deep/ .el-upload--picture-card {
         display: none;
     }
-
-
-
-
 
 </style>

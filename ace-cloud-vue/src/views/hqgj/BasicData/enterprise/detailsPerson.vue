@@ -39,7 +39,6 @@
             back(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise/Member" });
             },
-
         }
     }
 </script>
@@ -49,4 +48,5 @@
         padding: 20px;
         background-color: #fff;
     }
+
 </style>

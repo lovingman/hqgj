@@ -52,7 +52,7 @@
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">详情</el-button>
+                        <el-button @click="previewPerson" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -81,6 +81,9 @@
             },
             editPerson(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise/editPerson" });
+            },
+            previewPerson(){
+                this.$router.push({ path: "/hqgj/BasicData/enterprise/detailsPerson" });
             }
         }
     }

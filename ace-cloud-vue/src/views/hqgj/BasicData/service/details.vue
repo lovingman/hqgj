@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="handle-box">
-            <span style="font-size: 25px;font-weight:bold">创建服务机构</span>
+            <span style="font-size: 25px;font-weight:bold">服务机构详情</span>
         </div>
         <el-form :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
             <el-form-item label="机构名称:" prop="name">
@@ -64,7 +64,7 @@
 
 <script>
     export default {
-        name: "create",
+        name: "edit",
         data() {
             return {
                 add: {
@@ -72,12 +72,12 @@
                 }
             };
         },
-        created() {
+        created(){
 
         },
-        methods: {
-            back() {
-                this.$router.push({path: "/hqgj/BasicData/service"});
+        methods:{
+            back(){
+                this.$router.push({ path: "/hqgj/BasicData/service" });
             },
             clickitem(e) {
                 e === this.add.type ? this.add.type = '' : this.add.type = e

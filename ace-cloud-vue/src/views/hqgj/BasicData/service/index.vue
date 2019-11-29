@@ -49,7 +49,7 @@
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
                 <el-table-column label="机构名称" prop="name" sortable='custom' >
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="type" width="250" label="机构类型" prop="activityTitle">
+                <el-table-column width="250" label="机构类型" prop="type">
                 </el-table-column>
                 <el-table-column label="联系方式" prop="mobile" width="300">
                 </el-table-column>
@@ -57,13 +57,13 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="person">成员管理</el-button>
+                        <el-button  height="40" type="text" @click="person">成员管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" height="40" type="text" @click="edit">编辑</el-button>
+                        <el-button  height="40" type="text" @click="edit">编辑</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">删除</el-button>
+                        <el-button  type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">详情</el-button>
+                        <el-button type="text" @click="preview">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -99,6 +99,9 @@
             },
             edit(){
                 this.$router.push({ path: "/hqgj/BasicData/service/edit" });
+            },
+            preview(){
+                this.$router.push({ path: "/hqgj/BasicData/service/details" });
             }
         }
     }

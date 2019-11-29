@@ -1,14 +1,17 @@
 <template>
     <div class="container">
         <div class="handle-box">
-            <span style="font-size: 25px;font-weight:bold">编辑服务机构</span>
+            <span style="font-size: 25px;font-weight:bold">企业详情</span>
         </div>
         <el-form :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
-            <el-form-item label="机构名称:" prop="name">
-                <el-input style="width: 50%" placeholder="请输入机构名称"></el-input>
+            <el-form-item label="企业名称:" prop="name">
+                <el-input style="width: 50%" placeholder="请输入企业名称"></el-input>
             </el-form-item>
             <el-form-item label="统一社会信用代码:" prop="name">
                 <el-input style="width: 50%" placeholder="请输入18位统一社会信用代码"></el-input>
+            </el-form-item>
+            <el-form-item label="法定代表人:" prop="name">
+                <el-input style="width: 50%" placeholder="请输入法定代表人姓名"></el-input>
             </el-form-item>
             <el-form-item label="联系方式:" prop="name">
                 <el-input style="width: 21%" placeholder="联系人姓名"></el-input>
@@ -34,25 +37,8 @@
                 </el-select>
                 <el-input
                         type="textarea"
-                        placeholder="请输入机构详细地址，xx社区xx路xx号(xx小区xx栋xx楼xx号）"
+                        placeholder="请输入企业详细地址，xx社区xx路xx号(xx小区xx栋xx楼xx号）"
                         style="width: 50%"></el-input>
-            </el-form-item>
-            <el-form-item label="简介:" prop="name">
-                <el-input
-                        type="textarea"
-                        maxlength="500"
-                        rows="4"
-                        show-word-limit
-                        placeholder="请输入机构简介"
-                        style="width: 50%"></el-input>
-            </el-form-item>
-            <el-form-item label="类型:" prop="name">
-                <el-radio-group style="margin-left: 20px"
-                                v-model="add.type">
-                    <el-radio :label="1" @click.native.prevent="clickitem(1)">律师事务所</el-radio>
-                    <el-radio :label="2" @click.native.prevent="clickitem(2)">会计事务所</el-radio>
-                    <el-radio :label="3" @click.native.prevent="clickitem(3)">培训机构</el-radio>
-                </el-radio-group>
             </el-form-item>
             <el-form-item>
                 <el-button @click="back">取消</el-button>
@@ -77,7 +63,7 @@
         },
         methods:{
             back(){
-                this.$router.push({ path: "/hqgj/BasicData/service" });
+                this.$router.push({ path: "/hqgj/BasicData/enterprise" });
             },
             clickitem(e) {
                 e === this.add.type ? this.add.type = '' : this.add.type = e
