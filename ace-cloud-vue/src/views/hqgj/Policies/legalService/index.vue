@@ -4,32 +4,20 @@
       <el-row>
         <el-button type="primary" style="float:left;" @click="create">创建</el-button>
         <el-col class="selectSearch" :span="10">
-          <el-col :span="7" style="margin-right:20px;">
-            <el-select v-model="query.stauts" placeholder="请选择">
-              <el-option
-                v-for="item in stautsArr"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="16">
-            <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
-              <el-button slot="append">搜索</el-button>
-            </el-input>
-          </el-col>
+          <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
+            <el-button slot="append">搜索</el-button>
+          </el-input>
         </el-col>
       </el-row>
     </div>
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-        <el-table-column prop="name" sortable label="政策名称"></el-table-column>
-        <el-table-column prop="time" sortable label="创建时间"></el-table-column>
-        <el-table-column prop="state" sortable label="状态"></el-table-column>
+        <el-table-column prop="name" sortable label="名称"></el-table-column>
+        <el-table-column prop="time" sortable label="上传时间"></el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
           <template>
+            <el-button type="text">下载</el-button>
             <el-button type="text">编辑</el-button>
             <el-button type="text">删除</el-button>
             <el-button type="text">详情</el-button>
@@ -58,47 +46,24 @@ export default {
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
       query: {
-        name: "", //搜索
-        status: "" //状态
+        name: "" //搜索
       },
-      stautsArr: [
-        {
-          value: "选项1",
-          label: "全部"
-        },
-        {
-          value: "选项2",
-          label: "待发布"
-        },
-        {
-          value: "选项2",
-          label: "已发布"
-        },
-        {
-          value: "选项2",
-          label: "已下线"
-        }
-      ], //状态容器
       tableData: [
         {
           name: "我去",
-          time: "2019-05-01",
-          state: "已发布"
+          time: "2019-05-01"
         },
         {
           name: "我去2",
-          time: "2019-05-11",
-          state: "已发布"
+          time: "2019-05-11"
         },
         {
           name: "我去3",
-          time: "2019-05-12",
-          state: "已发布"
+          time: "2019-05-12"
         },
         {
           name: "我去4",
-          time: "2019-05-22",
-          state: "已发布"
+          time: "2019-05-22"
         }
       ]
     };
@@ -110,7 +75,7 @@ export default {
     handleTableCurrent() {},
     //创建
     create() {
-      this.$router.push({ path: "/hqgj/Policies/OtrlPolicy/add" });
+      this.$router.push({ path: "/hqgj/Policies/legalService/add" });
     }
   }
 };

@@ -74,8 +74,9 @@ export default {
   }
 }
 .app-main {
-  height: calc(100% - 130px);
+  height: calc(100% - 100px);
   overflow-x: hidden;
+  overflow-y: auto;
   /deep/ .el-pagination {
     margin-top: 20px;
   }

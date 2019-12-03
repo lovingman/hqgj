@@ -1,20 +1,18 @@
 <template>
-  <el-table-column class="main-box">
+  <div class="main-box">
     <div class="header">
       <el-row>
-        <el-button type="primary" style="float:left;" @click="create">创建</el-button>
-        <el-col class="selectSearch" :span="10">
-          <el-col :span="7" style="margin-right:20px;">
-            <el-select v-model="query.stauts" placeholder="请选择">
-              <el-option
-                v-for="item in stautsArr"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+        <el-col class="selectSearch" :span="12">
+          <el-col :span="12">
+            <el-date-picker
+              v-model="query.times"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            ></el-date-picker>
           </el-col>
-          <el-col :span="16">
+          <el-col :span="11" :offset="1">
             <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
               <el-button slot="append">搜索</el-button>
             </el-input>
@@ -25,17 +23,17 @@
     <el-table-column class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="title" sortable label="培训标题"></el-table-column>
-        <el-table-column prop="train" sortable label="培训人数"></el-table-column>
-        <el-table-column prop="report" sortable label="报名人数"></el-table-column>
-        <el-table-column prop="start" sortable label="开始时间"></el-table-column>
-        <el-table-column prop="end" sortable label="截止时间"></el-table-column>
-        <el-table-column prop="state" sortable label="状态"></el-table-column>
+        <el-table-column prop="name" sortable label="姓名"></el-table-column>
+        <el-table-column prop="content" sortable label="评价内容"></el-table-column>
+        <el-table-column prop="evaValue" sortable label="服务评分">
+          <template slot-scope="scope">
+            <el-rate v-model="scope.row.evaValue" :allow-half="true" disabled text-color="#ff9900"></el-rate>
+          </template>
+        </el-table-column>
+        <el-table-column prop="mechanism" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="times" sortable label="评价时间"></el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
           <template>
-            <el-button type="text">审核</el-button>
-            <el-button type="text" @click="registrationClick">报名管理</el-button>
-            <el-button type="text">编辑</el-button>
             <el-button type="text">删除</el-button>
             <el-button type="text">详情</el-button>
           </template>
@@ -51,12 +49,12 @@
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
     </el-table-column>
-  </el-table-column>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "index",
+  name: "evaluate",
   data() {
     return {
       total: 0, //tablepage总数
@@ -64,7 +62,7 @@ export default {
       tableSize: 10, //每页参数
       query: {
         name: "", //搜索
-        status: "" //状态
+        times: "" //时间
       },
       stautsArr: [
         {
@@ -88,38 +86,35 @@ export default {
           label: "已结束"
         }
       ], //状态容器
+      //订单数据
       tableData: [
         {
-          title: "常德市中小企业文化培训讲座",
-          train: "12",
-          report: "10",
-          start: "2019-05-01",
-          end: "2019-05-31",
-          state: "进行中"
+          name: "12312312312",
+          content: "为企业节省各类成本，提高效率，非常推荐",
+          evaValue: 4,
+          mechanism: "常德市正信会计",
+          times: "2019-11-21 09:31:08"
         },
         {
-          title: "常德市中小企业文化培训讲座2",
-          train: "12",
-          report: "10",
-          start: "2019-05-01",
-          end: "2019-05-31",
-          state: "进行中"
+          name: "12312312312",
+          content: "为企业节省各类成本，提高效率，非常推荐",
+          evaValue: 4,
+          mechanism: "常德市正信会计",
+          times: "2019-11-21 09:31:08"
         },
         {
-          title: "常德市中小企业文化培训讲座3",
-          train: "12",
-          report: "10",
-          start: "2019-05-01",
-          end: "2019-05-31",
-          state: "进行中"
+          name: "12312312312",
+          content: "为企业节省各类成本，提高效率，非常推荐",
+          evaValue: 4,
+          mechanism: "常德市正信会计",
+          times: "2019-11-21 09:31:08"
         },
         {
-          title: "常德市中小企业文化培训讲座4",
-          train: "12",
-          report: "10",
-          start: "2019-05-01",
-          end: "2019-05-31",
-          state: "进行中"
+          name: "12312312312",
+          content: "为企业节省各类成本，提高效率，非常推荐",
+          evaValue: 4,
+          mechanism: "常德市正信会计",
+          times: "2019-11-21 09:31:08"
         }
       ]
     };
@@ -128,15 +123,7 @@ export default {
     //选择tableSize事件
     handleTableSize() {},
     //选择tablePage事件
-    handleTableCurrent() {},
-    //创建
-    create() {
-      this.$router.push({ path: "/hqgj/ServicePack/Training/add" });
-    },
-    //报名管理
-    registrationClick() {
-      this.$router.push({ path: "/hqgj/ServicePack/Training/registration" });
-    }
+    handleTableCurrent() {}
   }
 };
 </script>
@@ -149,6 +136,12 @@ export default {
     /deep/ .el-button--medium {
       border-radius: 4px;
       height: 36px;
+    }
+    /deep/ .el-select {
+      width: 100%;
+    }
+    /deep/ .el-date-editor--datetimerange.el-input__inner {
+      width: 100%;
     }
     .selectSearch {
       float: right;
@@ -168,5 +161,4 @@ export default {
     }
   }
 }
-</style>>
-
+</style>
