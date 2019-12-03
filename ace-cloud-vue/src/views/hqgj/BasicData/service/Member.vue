@@ -56,7 +56,15 @@
                     </template>
                 </el-table-column>
             </el-table>
-
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                    background
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -66,6 +74,9 @@
         name: "Member",
         data() {
             return {
+                currentPage: 1, //初始页
+                pagesize: 10, //  每页的数据
+                total: 0,
                 rows:[
                     {
                         name:"王钦",
