@@ -37,23 +37,23 @@
                     <el-row class="elrow">
                         <el-col :span="8">
                             <el-form-item label="姓名:" prop="name">
-                                <span></span>
+                                <span>付小小</span>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="联系电话:" prop="name">
-                                <span></span>
+                                <span>18100000000</span>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="身份证号:" prop="name">
-                                <span></span>
+                                <span>431224199600556596</span>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row class="elrow">
                         <el-form-item label="申请日期:" prop="name">
-                            <span></span>
+                            <span>2019-11-12 10:22:20</span>
                         </el-form-item>
                     </el-row>
                 </el-form>

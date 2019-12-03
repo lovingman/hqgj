@@ -9,7 +9,7 @@
             </div> -->
           </el-col>
           <el-col :span="24">
-            <div class="sys-name">常德市武陵区工业和信息化局</div>
+            <div class="sys-name">常德市武陵区慧企管家服务平台</div>
           </el-col>
         </el-row>
       </el-header>
