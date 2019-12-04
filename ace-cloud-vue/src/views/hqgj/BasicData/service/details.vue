@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="handle-box">
-            <span style="font-size: 25px;font-weight:bold">服务机构详情</span>
-        </div>
+        <div class="title">服务机构详情</div>
         <el-form :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
             <el-form-item label="机构名称:" prop="name">
                 <el-input placeholder="请输入机构名称" style="width: 50%"></el-input>
@@ -89,7 +87,12 @@
 
 <style scoped>
     .container {
-        padding: 20px;
         background-color: #fff;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
     }
 </style>

@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="handle-box" style="margin-bottom: 30px">
-            <span style="font-size: 25px">机构成员详情</span>
-        </div>
+        <div class="title" style="margin-bottom: 30px">机构成员详情</div>
         <el-form :rules="rules" ref="ruleForm" label-width="300px" class="demo-ruleForm">
             <el-row>
                 <el-col :span="12">
@@ -155,7 +153,6 @@
 
 <style scoped>
     .container {
-        padding: 20px;
         background-color: #fff;
     }
     .button-new-tag {
@@ -171,6 +168,12 @@
     }
     .hide2 /deep/ .el-upload--picture-card {
         display: none;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
     }
 
 </style>

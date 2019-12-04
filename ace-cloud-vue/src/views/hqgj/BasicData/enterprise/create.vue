@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="handle-box">
-            <span style="font-size: 25px;font-weight:bold">创建企业</span>
-        </div>
+        <div class="title">企业创建</div>
         <el-form :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
             <el-form-item label="企业名称:" prop="name">
                 <el-input style="width: 50%" placeholder="请输入企业名称"></el-input>
@@ -68,9 +66,14 @@
     }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
     .container {
-        padding: 20px;
         background-color: #fff;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
     }
 </style>
