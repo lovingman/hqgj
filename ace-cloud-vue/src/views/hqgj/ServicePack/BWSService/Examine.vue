@@ -27,6 +27,15 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <el-dropdown trigger="click" style="margin-top: 20px">
+                    <el-button>
+                        压缩包下载<i class="el-icon-arrow-down el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>rar下载</el-dropdown-item>
+                        <el-dropdown-item>zip下载</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
             </el-tab-pane>
             <el-tab-pane label="申请人信息" name="2">
                 <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">

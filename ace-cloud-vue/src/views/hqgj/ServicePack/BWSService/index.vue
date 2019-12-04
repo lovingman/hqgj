@@ -5,22 +5,22 @@
                 <el-row>
                     <el-col :span="14">
                         <el-date-picker
-                                style="float: right"
-                                v-model="value2"
-                                type="datetimerange"
+                                :default-time="['12:00:00', '08:00:00']"
                                 align="right"
-                                start-placeholder="开始时间"
                                 end-placeholder="结束时间"
-                                :default-time="['12:00:00', '08:00:00']">
+                                start-placeholder="开始时间"
+                                style="float: right"
+                                type="datetimerange"
+                                v-model="value2">
                         </el-date-picker>
                     </el-col>
                     <el-col :span="4">
-                        <el-select v-model="value" placeholder="状态" style="float: right;margin-right: 20px">
+                        <el-select placeholder="状态" style="float: right;margin-right: 20px" v-model="value">
                             <el-option
-                                    v-for="item in options"
                                     :key="item.value"
                                     :label="item.label"
-                                    :value="item.value">
+                                    :value="item.value"
+                                    v-for="item in options">
                             </el-option>
                         </el-select>
                     </el-col>
@@ -47,9 +47,9 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="注册企业名称" prop="name" >
+                <el-table-column label="注册企业名称" prop="name">
                 </el-table-column>
-                <el-table-column width="200" label="申请人" sortable='custom' prop="personName">
+                <el-table-column label="申请人" prop="personName" sortable='custom' width="200">
                 </el-table-column>
                 <el-table-column label="联系电话" prop="mobile" width="250">
                 </el-table-column>
@@ -57,16 +57,16 @@
                 </el-table-column>
                 <el-table-column label="状态" prop="status" sortable='custom' width="100">
                     <!--<template slot-scope="scope">-->
-                        <!--<div type="text" class="green" v-if="scope.list.status==='1'">待审核</div>-->
-                        <!--<div type="text" class="red" v-if="scope.list.status==='2'">办理中</div>-->
-                        <!--<div type="text" class="orange" v-if="scope.list.status==='3'">注册成功</div>-->
-                        <!--<div type="text" class="orange" v-if="scope.list.status==='4'">驳回修改</div>-->
+                    <!--<div type="text" class="green" v-if="scope.list.status==='1'">待审核</div>-->
+                    <!--<div type="text" class="red" v-if="scope.list.status==='2'">办理中</div>-->
+                    <!--<div type="text" class="orange" v-if="scope.list.status==='3'">注册成功</div>-->
+                    <!--<div type="text" class="orange" v-if="scope.list.status==='4'">驳回修改</div>-->
                     <!--</template>-->
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="edit">审核</el-button>
-                        <!--<el-button v-if="scope.list.status=='2'" @click="" height="40" type="text" @click="edit">进度标记</el-button>-->
+                        <el-button @click="edit" height="40" type="text">审核</el-button>
+                        <el-button @click="progress" height="40" type="text">进度标记</el-button>
                         <!--<el-button v-if="scope.list.status=='3'" @click="" height="40" type="text" @click="edit">进度记录</el-button>-->
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
@@ -76,16 +76,34 @@
                 </el-table-column>
             </el-table>
             <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
                     :current-page="currentPage"
                     :page-size="pagesize"
+                    :total="total"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
                     background
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
+                    layout="total, sizes, prev, pager, next, jumper">
             </el-pagination>
-
         </div>
+        <el-dialog
+                :before-close="handleClose"
+                :visible.sync="progressVisible"
+                title="办理进度标记"
+                width="60%">
+            <light-timeline :items='items'>
+                <template slot='tag' slot-scope='{ item }'>
+                    {{item.date}}
+                </template>
+                <template slot='content' slot-scope='{ item }'>
+                    {{item.msg}}
+                    {{item.date}}
+                </template>
+            </light-timeline>
+            <span class="dialog-footer" slot="footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button @click="dialogVisible = false" type="primary">确 定</el-button>
+  </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -97,28 +115,49 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                list:[
+                progressVisible: false,
+                items: [
                     {
-                        name:"湖南常德市凤天有限公司",
-                        personName:"王琦",
-                        mobile:"17688876666",
+                        date: '2019-02-12',
+                        msg: '00-资料审核已通过'
+                    },
+                    {
+                        date:'2019-02-13',
+                        msg: '01-人工到工商局窗口审核名称。确定名称100%可用'
+                    }
+                ],
+                list: [
+                    {
+                        name: "湖南常德市凤天有限公司",
+                        personName: "王琦",
+                        mobile: "17688876666",
                         address: "2019-11-21 09:31:08",
-                        status:1
+                        status: 1
+                    },
+                    {
+                        name: "湖南常德市凤天有限公司",
+                        personName: "王琦",
+                        mobile: "17688876666",
+                        address: "2019-11-21 09:31:08",
+                        status: 2
                     }
                 ],
                 value: '',
                 value2: ''
             };
         },
-        created(){
+        created() {
 
         },
-        methods:{
-            edit(){
-                this.$router.push({ path: "/hqgj/ServicePack/BWSService/Examine" });
+        methods: {
+            edit() {
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
             },
-            preview(){
-                this.$router.push({ path: "/hqgj/ServicePack/BWSService/Examine" });
+            preview() {
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
+            },
+            progress() {
+                this.progressVisible = true;
             }
         }
     }
