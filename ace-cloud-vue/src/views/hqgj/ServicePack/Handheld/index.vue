@@ -143,7 +143,7 @@ export default {
     //创建
     create() {
       this.$router.push({ path: "/hqgj/ServicePack/Handheld/add" });
-    },
+    }
   }
 };
 </script>
@@ -172,7 +172,7 @@ export default {
   }
   .table-box {
     padding: 0 30px 30px 30px;
-     /deep/ .el-table th:last-child {
+    /deep/ .el-table th:last-child {
       text-align: right;
       padding-right: 10px;
     }

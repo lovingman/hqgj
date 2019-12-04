@@ -36,8 +36,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="内容" prop="content">
-              <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="serviceForm.content"></el-input>
+            <el-form-item label="内容:" prop="content">
+              <editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>
             </el-form-item>
           </el-col>
         </el-row>
@@ -54,8 +54,10 @@
 </template>
 
 <script>
+import EditorBar from "../../publicTemplate/wangEnduit";
 export default {
   name: "add",
+  components: { EditorBar },
   data() {
     return {
       //数据
@@ -72,8 +74,16 @@ export default {
             message: "请输入标题,字数在50字以内",
             trigger: "blur"
           }
+        ],
+        content: [
+          {
+            required: true,
+            message: "请输入详细内容",
+            trigger: "blur"
+          }
         ]
-      }
+      },
+      isClear: false
     };
   },
   methods: {
@@ -81,6 +91,9 @@ export default {
       this.$router.push({
         path: "/hqgj/Policies/legalService"
       });
+    },
+    change(val) {
+      console.log(val);
     }
   }
 };
@@ -89,7 +102,7 @@ export default {
 <style lang="less" scoped>
 .main-box {
   background: #fff;
-  .formBox{
+  .formBox {
     padding-right: 50px;
   }
   .title {
