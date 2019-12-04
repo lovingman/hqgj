@@ -1,7 +1,8 @@
 <template>
   <div class="editor">
     <div ref="toolbar" class="toolbar"></div>
-    <div ref="editor" class="text"></div>
+    <div ref="editor" class="text"></div> 
+    
   </div>
 </template>
 
