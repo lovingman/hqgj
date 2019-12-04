@@ -42,21 +42,20 @@
                     :data="list"
                     @selection-change="handleSelectionChange"
                     @sort-change="handleSort"
-                    border
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="注册企业名称" prop="name" sortable='custom' >
+                <el-table-column label="注册企业名称" prop="name" >
                 </el-table-column>
-                <el-table-column width="200" label="申请人" prop="personName">
+                <el-table-column width="200" label="申请人" sortable='custom' prop="personName">
                 </el-table-column>
                 <el-table-column label="联系电话" prop="mobile" width="250">
                 </el-table-column>
-                <el-table-column label="申请日期" prop="address" width="300">
+                <el-table-column label="申请日期" prop="address" sortable='custom' width="300">
                 </el-table-column>
-                <el-table-column label="状态" prop="status" width="100">
+                <el-table-column label="状态" prop="status" sortable='custom' width="100">
                     <!--<template slot-scope="scope">-->
                         <!--<div type="text" class="green" v-if="scope.list.status==='1'">待审核</div>-->
                         <!--<div type="text" class="red" v-if="scope.list.status==='2'">办理中</div>-->

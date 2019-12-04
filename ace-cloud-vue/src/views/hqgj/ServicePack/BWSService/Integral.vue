@@ -24,7 +24,6 @@
                     :data="list"
                     @selection-change="handleSelectionChange"
                     @sort-change="handleSort"
-                    border
                     class="table"
                     max-height="475"
                     ref="multipleTable"
@@ -40,8 +39,6 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="edit">编辑</el-button>
-                        <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="preview" type="text">详情</el-button>
@@ -64,7 +61,7 @@
 
 <script>
     export default {
-        name: "Integral",
+        name: "index",
         data() {
             return {
                 currentPage: 1, //初始页
@@ -87,8 +84,8 @@
 
         },
         methods:{
-            edit(){
-                this.$router.push({ path: "/hqgj/ServicePack/BWSService/Examine" });
+            create(){
+                this.$router.push({ path: "/hqgj/ServicePack/BWSService/create" });
             },
             preview(){
                 this.$router.push({ path: "/hqgj/ServicePack/BWSService/Examine" });
