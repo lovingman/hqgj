@@ -166,7 +166,7 @@
                       :label="'名称'"
                       :prop="'domains.'+index+'.serviceName'"
                       :rules="serviceRules.serviceName"
-                      :key="domain.key+'01'"
+                      :key="domain.key"
                     >
                       <el-input
                         v-model="domain.serviceName"
@@ -177,7 +177,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item :label="'价格'" :rules="serviceRules.prices" :key="domain.key+'01'">
+                    <el-form-item :label="'价格'" :rules="serviceRules.prices" :key="domain.key">
                       <el-input v-model="domain.prices" placeholder="请输入价格"></el-input>
                     </el-form-item>
                   </el-col>

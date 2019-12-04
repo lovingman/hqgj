@@ -35,7 +35,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="20">
             <el-form-item label="内容:" prop="content">
 
               <editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>
