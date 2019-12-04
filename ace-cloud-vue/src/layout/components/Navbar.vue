@@ -5,7 +5,7 @@
         <el-col :span="4" style="margin-top: 5px">
           <img src="@/assets/images/huiqiicon.png" alt="">
         </el-col>
-        <el-col :span="12">
+        <el-col :span="14">
           <div class="title-nm">
             <span>慧企管家服务平台</span>
           </div>
