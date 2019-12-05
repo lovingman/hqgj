@@ -92,16 +92,27 @@
                 width="60%">
             <light-timeline :items='items'>
                 <template slot='tag' slot-scope='{ item }'>
-                    {{item.date}}
+                    <el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">
+                        <span v-if="item.checked">已标记</span>
+                        <span v-else="item.checked">标记</span>
+                    </el-radio>
+                    <!--<el-checkbox true-label="1" v-model="item.checked">-->
+                        <!--<span v-if="item.checked">已标记</span>-->
+                        <!--<span v-else="item.checked">标记</span>-->
+                    <!--</el-checkbox>-->
                 </template>
                 <template slot='content' slot-scope='{ item }'>
-                    {{item.msg}}
-                    {{item.date}}
+                    <div>
+                        {{item.content}}
+                    </div>
+                    <div>
+                        {{item.tag}}
+                    </div>
                 </template>
             </light-timeline>
             <span class="dialog-footer" slot="footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button @click="dialogVisible = false" type="primary">确 定</el-button>
+    <el-button @click="progressVisible = false">取 消</el-button>
+    <el-button @click="progressVisible = false" type="primary">确 定</el-button>
   </span>
         </el-dialog>
     </div>
@@ -112,18 +123,30 @@
         name: "index",
         data() {
             return {
+                checked:true,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
                 progressVisible: false,
                 items: [
                     {
-                        date: '2019-02-12',
-                        msg: '00-资料审核已通过'
+                        tag: '2018-01-12',
+                        content: '00-资料审核已通过',
+                        checked:"1",
+                        color: '#949fa8',
                     },
                     {
-                        date:'2019-02-13',
-                        msg: '01-人工到工商局窗口审核名称。确定名称100%可用'
+                        tag: '2018-01-13',
+                        content: '01-人工到工商局窗口审核名称。确定名称100%可用',
+                        checked:"",
+                        color: '#949fa8',
+                    },
+                    {
+                        tag: '2018-01-14',
+                        content: '02-收集所有新办企业需要提供的资料',
+                        class: 'fas fa-star',
+                        checked:"",
+                        color: '#949fa8',
                     }
                 ],
                 list: [
@@ -132,14 +155,14 @@
                         personName: "王琦",
                         mobile: "17688876666",
                         address: "2019-11-21 09:31:08",
-                        status: 1
+                        status: "1"
                     },
                     {
                         name: "湖南常德市凤天有限公司",
                         personName: "王琦",
                         mobile: "17688876666",
                         address: "2019-11-21 09:31:08",
-                        status: 2
+                        status: "2"
                     }
                 ],
                 value: '',
@@ -158,7 +181,7 @@
             },
             progress() {
                 this.progressVisible = true;
-            }
+            },
         }
     }
 </script>
