@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="title" style="margin-bottom: 30px">添加企业成员</div>
+        <div class="title" style="margin-bottom: 30px">企业成员详情</div>
         <div class="handle-box">
             <el-form :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
                 <el-form-item label="姓名:" prop="name">

@@ -92,14 +92,14 @@
                 width="60%">
             <light-timeline :items='items'>
                 <template slot='tag' slot-scope='{ item }'>
-                    <el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">
-                        <span v-if="item.checked">已标记</span>
-                        <span v-else="item.checked">标记</span>
-                    </el-radio>
-                    <!--<el-checkbox true-label="1" v-model="item.checked">-->
+                    <!--<el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">-->
                         <!--<span v-if="item.checked">已标记</span>-->
                         <!--<span v-else="item.checked">标记</span>-->
-                    <!--</el-checkbox>-->
+                    <!--</el-radio>-->
+                    <el-checkbox true-label="1" v-model="item.checked">
+                        <span v-if="item.checked">已标记</span>
+                        <span v-else="item.checked">标记</span>
+                    </el-checkbox>
                 </template>
                 <template slot='content' slot-scope='{ item }'>
                     <div>
