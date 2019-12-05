@@ -28,6 +28,9 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import LightTimeline from 'vue-light-timeline';
+
+Vue.use(LightTimeline);
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

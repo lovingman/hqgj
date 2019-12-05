@@ -9,10 +9,10 @@
                             <el-input  placeholder="请输入姓名"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式:" prop="name">
-                            <el-input  placeholder="请输入身份证号"></el-input>
+                            <el-input  placeholder="请输入联系方式"></el-input>
                         </el-form-item>
                         <el-form-item label="职务/职称:" prop="name">
-                            <el-input  placeholder="请输入联系方式"></el-input>
+                            <el-input  placeholder="请输入职务/职称"></el-input>
                         </el-form-item>
                         <el-form-item label="擅长领域:" prop="name">
                             <el-tag
@@ -34,9 +34,19 @@
                             >
                             </el-input>
                             <el-button v-else class="button-new-tag" icon="el-icon-plus" size="small" @click="showInput">添加</el-button>
+                            <div class="tips" style="font-size:12px;margin-left: 10px">不超过5个</div>
                         </el-form-item>
                         <el-form-item label="简介:" prop="name">
-                            <el-input  placeholder="请输入职位"></el-input>
+                            <el-input
+                                    type="textarea"
+                                    placeholder="请输入简介"
+                                    v-model="textarea"
+                                    maxlength="500"
+                                    rows="6"
+                                    maxRows="6"
+                                    show-word-limit
+                            >
+                            </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
