@@ -13,8 +13,8 @@
               end-placeholder="结束日期"
             ></el-date-picker>
           </el-col>
-          <el-col :span="4" :offset="1">
-            <el-select v-model="query.stauts" placeholder="请选择">
+          <el-col :span="3" :offset="1">
+            <el-select v-model="query.stauts" placeholder="请选择类型">
               <el-option
                 v-for="item in stautsArr"
                 :key="item.value"
@@ -23,8 +23,18 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="8" :offset="1">
-            <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
+          <el-col :span="3" :offset="1">
+            <el-select v-model="query.state" placeholder="请选择状态">
+              <el-option
+                v-for="item in stateArr"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="5" :offset="1">
+            <el-input placeholder="请输入订单号" v-model="query.name" clearable class="input-with-select">
               <el-button slot="append">搜索</el-button>
             </el-input>
           </el-col>
@@ -35,10 +45,9 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
         <el-table-column prop="oddNumbers" sortable label="订单号"></el-table-column>
-        <el-table-column prop="name" sortable label="服务名称"></el-table-column>
         <el-table-column prop="type" sortable label="类型"></el-table-column>
         <el-table-column prop="mechanism" sortable label="机构名称"></el-table-column>
-        <el-table-column prop="price" sortable label="应付金额(元)"></el-table-column>
+        <el-table-column prop="name" sortable label="企业名称"></el-table-column>
         <el-table-column prop="time" sortable label="下单时间"></el-table-column>
         <el-table-column prop="state" sortable label="状态"></el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
@@ -73,9 +82,11 @@ export default {
       tableSize: 10, //每页参数
       query: {
         name: "", //搜索
-        status: "", //状态
+        status: "", //类型
+        state: "", //状态
         times: "" //时间
       },
+      //类型容器
       stautsArr: [
         {
           value: "选项1",
@@ -83,21 +94,36 @@ export default {
         },
         {
           value: "选项2",
-          label: "待审核"
+          label: "代理计账"
         },
         {
-          value: "选项2",
-          label: "未通过"
+          value: "选项3",
+          label: "财税管家"
         },
         {
-          value: "选项2",
-          label: "进行中"
-        },
-        {
-          value: "选项2",
-          label: "已结束"
+          value: "选项4",
+          label: "专家问诊"
         }
-      ], //状态容器
+      ],
+      //状态容器
+      stateArr: [
+        {
+          value: "选项1",
+          label: "全部"
+        },
+        {
+          value: "选项2",
+          label: "待完成"
+        },
+        {
+          value: "选项3",
+          label: "已完成"
+        },
+        {
+          value: "选项4",
+          label: "已取消"
+        }
+      ],
       //订单数据
       tableData: [
         {
@@ -105,7 +131,7 @@ export default {
           name: "一站式代理计财，为企业",
           type: "代理计财",
           mechanism: "常德市正信会计",
-          price: "1266",
+
           time: "2019-11-21 09:31:08",
           state: "进行中"
         },
@@ -114,7 +140,7 @@ export default {
           name: "一站式代理计财，为企业",
           type: "代理计财",
           mechanism: "常德市正信会计",
-          price: "1266",
+
           time: "2019-11-21 09:31:08",
           state: "进行中"
         },
@@ -123,7 +149,7 @@ export default {
           name: "一站式代理计财，为企业",
           type: "代理计财",
           mechanism: "常德市正信会计",
-          price: "1266",
+
           time: "2019-11-21 09:31:08",
           state: "进行中"
         },
@@ -132,7 +158,7 @@ export default {
           name: "一站式代理计财，为企业",
           type: "代理计财",
           mechanism: "常德市正信会计",
-          price: "1266",
+
           time: "2019-11-21 09:31:08",
           state: "进行中"
         }
@@ -175,7 +201,7 @@ export default {
   }
   .table-box {
     padding: 0 30px 30px 30px;
-     /deep/ .el-table th:last-child {
+    /deep/ .el-table th:last-child {
       text-align: right;
       padding-right: 10px;
     }

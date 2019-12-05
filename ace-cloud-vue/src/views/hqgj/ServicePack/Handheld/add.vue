@@ -24,21 +24,12 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <div class="ties" v-if="tisShow">选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
           <div class="ties" v-if="tieShow">选择该类型，用户可免费享受咨询服务</div>
         </el-row>
         <!-- 代理财政是否显示 -->
         <div v-if="financeShow" class="show-box">
           <el-row>
-            <el-col :span="12">
-              <el-form-item label="标题：" prop="title">
-                <el-input
-                  v-model="serviceForm.title"
-                  maxlength="50"
-                  show-word-limit
-                  placeholder="请输入标题"
-                ></el-input>
-              </el-form-item>
-            </el-col>
             <el-col :span="12">
               <el-form-item label="服务机构：" prop="mechanism">
                 <el-select
@@ -53,6 +44,11 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="联系方式：" prop="phone">
+                <el-input v-model="serviceForm.phone" placeholder="请输入联系方式"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -88,16 +84,6 @@
         <div class="show-box" v-if="financeTaxShow">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="标题：" prop="title">
-                <el-input
-                  v-model="serviceForm.title"
-                  maxlength="50"
-                  show-word-limit
-                  placeholder="请输入标题"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
               <el-form-item label="服务机构：" prop="mechanism">
                 <el-select
                   v-model="serviceForm.mechanism"
@@ -111,6 +97,11 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="联系方式：" prop="phone">
+                <el-input v-model="serviceForm.phone" placeholder="请输入联系方式"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -184,7 +175,7 @@
                 </div>
               </div>
               <el-button type="primary" @click="addMember" style="margin-top:20px;">
-                <i class="el-icon-plus"></i>添加日程
+                <i class="el-icon-plus"></i>添加项目
               </el-button>
             </div>
           </el-row>
@@ -245,33 +236,6 @@
               ></el-input>
             </el-form-item>
           </el-row>
-          <div
-            class="memberModel"
-            v-for="(timeModel,index) in serviceForm.timeModels"
-            :key="timeModel.key"
-          >
-            <el-row>
-              <el-col :span="12">
-                <el-form-item
-                  :label="'服务时间'"
-                  :prop="'timeModels.'+index+'.'"
-                  :rules="serviceRules.serviceTime"
-                  :key="timeModel.key+'01'"
-                >
-                  <el-date-picker
-                    v-model="serviceForm.serviceTime"
-                    type="datetimerange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-          <el-button type="primary" @click="addTime" style="margin-left:120px;">
-            <i class="el-icon-plus"></i>添加时间
-          </el-button>
         </div>
         <!-- end -->
       </el-form>
@@ -297,15 +261,16 @@ export default {
       dialogVisible: false, //预览弹窗是否显示
       dialogImageUrl: "", //显示预览图片
       tieShow: false, //提示是否显示
+      tisShow: false, //计帐是否显示提示
       //服务包类型
       typeArr: [
         {
           value: "1",
-          label: "代理计财"
+          label: "代理计账"
         },
         {
           value: "2",
-          label: "财税管理"
+          label: "财税管家"
         },
         {
           value: "3",
@@ -329,7 +294,7 @@ export default {
       //服务包容器
       serviceForm: {
         typeName: "", //类型
-        title: "", //标题
+        phone: "", //联系方式
         mechanism: "", //服务机构
         photo: "", //封面
         introduce: "", //详细内容
@@ -337,12 +302,11 @@ export default {
         serviceName: "", //服务名称
         prices: "", //价格
         domains: [], //新增服务项目数组
-        timeModels: [], ///新增服务时间数组
         quota: "", //名额
         contact: "", //联系方式
         place: "", //地点
-        serviceIntroduce: "", //介绍
-        serviceTime: "" //服务时间
+        expert:"",//专家
+        serviceIntroduce: "" //介绍
       },
       serviceRules: {
         typeName: [
@@ -352,11 +316,18 @@ export default {
             trigger: "change"
           }
         ],
-        title: [
+        phone: [
           {
             required: true,
-            message: "请输入标题，字数在50字以内",
+            message: "请输入联系方式",
             trigger: "blur"
+          }
+        ],
+        photo: [
+          {
+            required: true,
+            message: "请上传图片",
+            trigger: "change"
           }
         ],
         mechanism: [
@@ -364,6 +335,13 @@ export default {
             required: true,
             message: "请选择服务机构",
             trigger: "change"
+          }
+        ],
+        quota: [
+          {
+            required: true,
+            message: "请输入免费咨询名额",
+            trigger: "blur"
           }
         ],
         introduce: [
@@ -401,13 +379,6 @@ export default {
             trigger: "blur"
           }
         ],
-        serviceTime: [
-          {
-            required: true,
-            message: "请选择服务时间",
-            trigger: "change"
-          }
-        ]
       }
     };
   },
@@ -416,19 +387,24 @@ export default {
     changeType(value) {
       if (value == 1) {
         this.financeShow = true;
-        this.financeTaxShow = false;
-        this.expertShow = false;
+
+        this.tisShow = true;
+      } else {
+        this.tisShow = false;
+        this.financeShow = false;
       }
       if (value == 2) {
         this.financeTaxShow = true;
-        this.financeShow = false;
-        this.expertShow = false;
+      } else {
+        this.financeTaxShow = false;
       }
       if (value == 3) {
         this.expertShow = true;
-        this.financeShow = false;
-        this.financeTaxShow = false;
+
         this.tieShow = true;
+      } else {
+        this.expertShow = false;
+        this.tieShow = false;
       }
     },
     //服务机构选择
@@ -444,7 +420,7 @@ export default {
     },
     //取消返回
     black() {
-      this.$router.push({ path: "/hqgj/ServicePack/Handheld" });
+      this.$router.push({ path: "/hqgj/ServicePack/Handheld/index" });
     },
     //提交
     submission() {},
@@ -461,13 +437,6 @@ export default {
       if (index !== -1) {
         this.serviceForm.domains.splice(index, 1);
       }
-    },
-    //添加服务时间
-    addTime() {
-      this.serviceForm.timeModels.push({
-        serviceTime: "", //服务时间
-        key: Date.now()
-      });
     }
   }
 };

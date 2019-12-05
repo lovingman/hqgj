@@ -25,7 +25,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="人数：">
+                <el-form-item label="人数：" prop="peopleNumber">
                   <el-input v-model="basicForm.peopleNumber" clearable placeholder="请输入最多可报名人数"></el-input>
                 </el-form-item>
               </el-col>
@@ -70,7 +70,7 @@
             </el-row>
             <el-row>
               <el-form-item label="内容" prop="content">
-                <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="basicForm.content"></el-input>
+                <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar>
               </el-form-item>
             </el-row>
           </el-form>
@@ -188,7 +188,11 @@
                 </el-form-item>
               </el-row>
             </div>
-            <el-button type="primary" @click="addSchedule" style="margin-top:20px;">
+            <el-button
+              type="primary"
+              @click="addSchedule"
+              style="margin-top:20px;margin-left:120px;"
+            >
               <i class="el-icon-plus"></i>添加日程
             </el-button>
           </el-form>
@@ -212,13 +216,17 @@
 </template>
 
 <script>
+import EditorBar from "../../publicTemplate/wangEnduit";
 export default {
+  components: { EditorBar },
   name: "add",
   data() {
     return {
       tabsName: "first", //选项卡展示第几个
       noClickTabs: true, //是否可以点击选项卡
       isShow: true, //是否显示
+      dialogVisible: false, //预览弹窗是否显示
+      dialogImageUrl: "", //是否显示预览图片
       //基本信息
       basicForm: {
         title: "", //标题
@@ -228,6 +236,7 @@ export default {
         photo: "", //封面
         content: "" //内容
       },
+      isClear: false,
       //基本信息验证
       basicRules: {
         title: [
@@ -242,6 +251,13 @@ export default {
             required: true,
             message: "请选择开始结束时间",
             trigger: "change"
+          }
+        ],
+        peopleNumber: [
+          {
+            required: true,
+            message: "请输入最多可报名人数",
+            trigger: "blur"
           }
         ],
         content: [
@@ -269,6 +285,20 @@ export default {
             message: "请输入培训名称,字数在50字以内",
             trigger: "blur"
           }
+        ],
+        time: [
+          {
+            required: true,
+            message: "请选择时间",
+            trigger: "change"
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: "简要概述培训内容，不超过200字",
+            trigger: "blur"
+          }
         ]
       }
     };
@@ -276,6 +306,9 @@ export default {
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -309,6 +342,9 @@ export default {
         courseware: "", //课件
         key: Date.now()
       });
+    },
+    change(val) {
+      console.log(val);
     }
   }
 };
@@ -322,6 +358,7 @@ export default {
   }
   .content-box {
     padding-top: 20px;
+    padding-bottom: 30px;
     .title {
       font-weight: bold;
       font-size: 16px;
