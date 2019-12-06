@@ -7,7 +7,7 @@ server:
 
 spring:
   application:
-    name: zcpa
+    name: hqgj
   aop:
     auto: true
   redis:
@@ -23,7 +23,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-       url: jdbc:mysql://192.168.2.253:3306/zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+       url: jdbc:mysql://192.168.2.253:3306/hqgj?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
        username: root
        password: 123456
        initial-size: 2
