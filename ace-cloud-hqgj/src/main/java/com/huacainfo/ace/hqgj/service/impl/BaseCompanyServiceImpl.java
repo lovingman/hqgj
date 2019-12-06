@@ -175,7 +175,7 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
-    
+
     @Override
     @Transactional
     @Log(operationObj = "企业管理", operationType = "Excel导入", detail = "导入Excel数据")
@@ -188,7 +188,6 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
                 if (CommonUtils.isBlank(o.getCompanyName())) {
                     return new ResponseDTO(0,"行"+i+ ",企业名称不能为空！");
                 }
-
             o.setId(GUIDUtil.getGUID());
             o.setCreateDate(new Date());
             o.setStatus("1");
