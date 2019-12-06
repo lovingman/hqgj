@@ -8,7 +8,10 @@
                     </el-col>
                     <el-col :span="14">
                         <el-dropdown style="line-height: 35px;" trigger="click">
-                            <span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon--right"></i></span>
+                            <el-button>
+                                批量操作<i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <!--<span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></span>-->
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="importXls">批量导入</el-dropdown-item>
                                 <el-dropdown-item command="exportXls">批量导出</el-dropdown-item>
@@ -35,7 +38,6 @@
                     :data="list"
                     @selection-change="handleSelectionChange"
                     @sort-change="handleSort"
-                    border
                     class="table"
                     max-height="475"
                     ref="multipleTable"
@@ -51,7 +53,7 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="person">成员管理</el-button>
+                        <el-button @click="" height="40" type="text" @click="person">员工管理</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="" height="40" type="text" @click="edit">编辑</el-button>
                         <span class="strightline">|</span>

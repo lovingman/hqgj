@@ -25,7 +25,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="人数：">
+                <el-form-item label="人数：" prop="peopleNumber">
                   <el-input v-model="basicForm.peopleNumber" clearable placeholder="请输入最多可报名人数"></el-input>
                 </el-form-item>
               </el-col>
@@ -70,7 +70,7 @@
             </el-row>
             <el-row>
               <el-form-item label="内容" prop="content">
-                <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="basicForm.content"></el-input>
+                <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar>
               </el-form-item>
             </el-row>
           </el-form>
@@ -79,7 +79,6 @@
       <el-tab-pane label="日程安排" name="second">
         <div class="content-box">
           <div class="title">日程安排</div>
-
           <el-form
             :model="scheduleForm"
             :inline="true"
@@ -88,77 +87,114 @@
             label-width="120px"
             class="formBox scheduleBox"
           >
-            <div class="schedule-title">日程安排-01</div>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="名称：" prop="name">
-                  <el-input
-                    type="text"
-                    maxlength="50"
-                    show-word-limit
-                    placeholder="请输入培训名称"
-                    v-model="scheduleForm.name"
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="讲师：" prop="lecturer">
-                  <el-button class="get-address">
-                    <i class="el-icon-plus"></i>选择讲师
-                  </el-button>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="地点：" prop="address">
-                  <el-input
-                    type="text"
-                    maxlength="50"
-                    show-word-limit
-                    placeholder="请输入详细地址"
-                    v-model="scheduleForm.address"
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="时间：" prop="time">
-                  <el-date-picker
-                    v-model="scheduleForm.time"
-                    type="datetimerange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-form-item label="简介：" prop="content">
-                <el-input
-                  type="textarea"
-                  maxlength="200"
-                  show-word-limit
-                  :rows="8"
-                  placeholder="简要概述培训内容，不超过200字"
-                  v-model="scheduleForm.content"
-                ></el-input>
-              </el-form-item>
-            </el-row>
-            <el-row>
-              <el-form-item label="课件：" prop="courseware">
-                <el-upload
-                  class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
-                  multiple
+            <div
+              class="memberModel"
+              v-for="(scheduleModel,index) in scheduleForm.scheduleModels"
+              :key="scheduleModel.key"
+            >
+              <div class="schedule-title">日程安排-{{index+1}}</div>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    :label="'名称：'"
+                    :prop="'scheduleModels.'+index+'.name'"
+                    :rules="scheduleRules.name"
+                    :key="scheduleModel.key"
+                  >
+                    <el-input
+                      type="text"
+                      maxlength="50"
+                      show-word-limit
+                      placeholder="请输入培训名称"
+                      v-model="scheduleModel.name"
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    :label="'讲师：'"
+                    :prop="'scheduleModels.'+index+'.lecturer'"
+                    :key="scheduleModel.key"
+                  >
+                    <el-button class="get-address">
+                      <i class="el-icon-plus"></i>选择讲师
+                    </el-button>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    :label="'地点：'"
+                    :prop="'scheduleModels.'+index+'.address'"
+                    :rules="scheduleRules.address"
+                    :key="scheduleModel.key"
+                  >
+                    <el-input
+                      type="text"
+                      maxlength="50"
+                      show-word-limit
+                      placeholder="请输入详细地址"
+                      v-model="scheduleModel.address"
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    :label="'时间：'"
+                    :prop="'scheduleModels.'+index+'.time'"
+                    :rules="scheduleRules.time"
+                    :key="scheduleModel.key"
+                  >
+                    <el-date-picker
+                      v-model="scheduleModel.time"
+                      type="datetimerange"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-form-item
+                  :label="'简介：'"
+                  :prop="'scheduleModels.'+index+'.content'"
+                  :rules="scheduleRules.content"
+                  :key="scheduleModel.key"
                 >
-                  <el-button size="small" type="primary">上传课件</el-button>
-                  <div slot="tip" class="el-upload__tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M</div>
-                </el-upload>
-              </el-form-item>
-            </el-row>
+                  <el-input
+                    type="textarea"
+                    maxlength="200"
+                    show-word-limit
+                    :rows="8"
+                    placeholder="简要概述培训内容，不超过200字"
+                    v-model="scheduleForm.content"
+                  ></el-input>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
+                  <el-upload
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">上传课件</el-button>
+                    <div slot="tip" class="el-upload__tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M</div>
+                  </el-upload>
+                </el-form-item>
+              </el-row>
+            </div>
+            <el-button
+              type="primary"
+              @click="addSchedule"
+              style="margin-top:20px;margin-left:120px;"
+            >
+              <i class="el-icon-plus"></i>添加日程
+            </el-button>
           </el-form>
         </div>
       </el-tab-pane>
@@ -180,13 +216,17 @@
 </template>
 
 <script>
+import EditorBar from "../../publicTemplate/wangEnduit";
 export default {
+  components: { EditorBar },
   name: "add",
   data() {
     return {
       tabsName: "first", //选项卡展示第几个
       noClickTabs: true, //是否可以点击选项卡
       isShow: true, //是否显示
+      dialogVisible: false, //预览弹窗是否显示
+      dialogImageUrl: "", //是否显示预览图片
       //基本信息
       basicForm: {
         title: "", //标题
@@ -196,6 +236,7 @@ export default {
         photo: "", //封面
         content: "" //内容
       },
+      isClear: false,
       //基本信息验证
       basicRules: {
         title: [
@@ -212,6 +253,13 @@ export default {
             trigger: "change"
           }
         ],
+        peopleNumber: [
+          {
+            required: true,
+            message: "请输入最多可报名人数",
+            trigger: "blur"
+          }
+        ],
         content: [
           {
             required: true,
@@ -226,7 +274,8 @@ export default {
         address: "", //地点
         time: "", //时间
         content: "", //简介
-        courseware: "" //课件
+        courseware: "", //课件
+        scheduleModels: [] //日程数组
       },
       //日程管理验证
       scheduleRules: {
@@ -236,6 +285,20 @@ export default {
             message: "请输入培训名称,字数在50字以内",
             trigger: "blur"
           }
+        ],
+        time: [
+          {
+            required: true,
+            message: "请选择时间",
+            trigger: "change"
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: "简要概述培训内容，不超过200字",
+            trigger: "blur"
+          }
         ]
       }
     };
@@ -243,6 +306,9 @@ export default {
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -259,9 +325,26 @@ export default {
       this.tabsName = "second";
       this.isShow = false;
     },
+    //上一步
     prevClick() {
       this.tabsName = "first";
       this.isShow = true;
+    },
+
+    //添加日程
+    addSchedule() {
+      this.scheduleForm.scheduleModels.push({
+        name: "", //名称
+        lecturer: "", //讲师
+        address: "", //地点
+        time: "", //时间
+        content: "", //简介
+        courseware: "", //课件
+        key: Date.now()
+      });
+    },
+    change(val) {
+      console.log(val);
     }
   }
 };
@@ -275,6 +358,7 @@ export default {
   }
   .content-box {
     padding-top: 20px;
+    padding-bottom: 30px;
     .title {
       font-weight: bold;
       font-size: 16px;

@@ -1,20 +1,20 @@
 <template>
     <div class="container">
+        <div class="title">创建</div>
         <div class="handle-box">
-            <span style="font-size: 25px;font-weight:bold">创建企业</span>
+            <el-form :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
+                <el-form-item label="企业名称:" prop="name">
+                    <el-input style="width: 50%" placeholder="请输入企业名称"></el-input>
+                </el-form-item>
+                <el-form-item label="获得积分:" prop="name">
+                    <el-input style="width: 50%" placeholder="请输入获得积分"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="back">取消</el-button>
+                    <el-button type="primary" @click="">提交</el-button>
+                </el-form-item>
+            </el-form>
         </div>
-        <el-form :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
-            <el-form-item label="企业名称:" prop="name">
-                <el-input style="width: 50%" placeholder="请输入企业名称"></el-input>
-            </el-form-item>
-            <el-form-item label="获得积分:" prop="name">
-                <el-input style="width: 50%" placeholder="请输入获得积分"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click="back">取消</el-button>
-                <el-button type="primary" @click="">提交</el-button>
-            </el-form-item>
-        </el-form>
     </div>
 </template>
 
@@ -40,7 +40,16 @@
 
 <style scoped>
     .container {
-        padding: 20px;
         background-color: #fff;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+    }
+    .handle-box{
+        padding-top: 40px;
+        padding-bottom: 40px;
     }
 </style>

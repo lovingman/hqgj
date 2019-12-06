@@ -1,5 +1,5 @@
 <template>
-  <el-table-column class="main-box">
+  <div class="main-box">
     <div class="header">
       <el-row>
         <el-col :span="10">
@@ -7,9 +7,9 @@
         </el-col>
         <el-col class="selectSearch" :span="14">
           <el-col :span="5">
-            <el-select v-model="query.service" placeholder="请选择">
+            <el-select v-model="query.mechanism" placeholder="请选择服务机构">
               <el-option
-                v-for="item in stautsArr"
+                v-for="item in mechanismArr"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -17,7 +17,7 @@
             </el-select>
           </el-col>
           <el-col :span="5" :offset="1">
-            <el-select v-model="query.stauts" placeholder="请选择">
+            <el-select v-model="query.stauts" placeholder="请选择状态">
               <el-option
                 v-for="item in stautsArr"
                 :key="item.value"
@@ -27,19 +27,24 @@
             </el-select>
           </el-col>
           <el-col :span="12" :offset="1">
-            <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
+            <el-input
+              placeholder="请输入服务机构名称"
+              v-model="query.name"
+              clearable
+              class="input-with-select"
+            >
               <el-button slot="append">搜索</el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
-    <el-table-column class="table-box">
+    <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="name" sortable label="服务名称"></el-table-column>
         <el-table-column prop="type" sortable label="类型"></el-table-column>
         <el-table-column prop="service" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="phone" sortable label="联系方式"></el-table-column>
         <el-table-column prop="creatTime" sortable label="创建时间"></el-table-column>
         <el-table-column prop="state" sortable label="状态"></el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
@@ -61,8 +66,8 @@
         background
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
-    </el-table-column>
-  </el-table-column>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -75,8 +80,29 @@ export default {
       tableSize: 10, //每页参数
       query: {
         name: "", //搜索
+        mechanism: "", //服务机构
         status: "" //状态
       },
+      //机构容器
+      mechanismArr: [
+        {
+          value: "选项1",
+          label: "全部"
+        },
+        {
+          value: "选项2",
+          label: "代理计账"
+        },
+        {
+          value: "选项3",
+          label: "财税管家"
+        },
+        {
+          value: "选项4",
+          label: "专家问诊"
+        }
+      ],
+      //状态容器
       stautsArr: [
         {
           value: "选项1",
@@ -102,31 +128,31 @@ export default {
           value: "选项6",
           label: "已下线"
         }
-      ], //状态容器
+      ],
       tableData: [
         {
-          name: "一站式代理计财，为企业省事、省心、省钱",
+          phone: "158715222",
           type: "代理计财",
           service: "常德武陵区会计事务所",
           creatTime: "2019-05-01",
           state: "已上线"
         },
         {
-          name: "一站式代理计财，为企业省事、省心、省钱",
+          phone: "158715222",
           type: "代理计财",
           service: "常德武陵区会计事务所",
           creatTime: "2019-05-01",
           state: "已上线"
         },
         {
-          name: "一站式代理计财，为企业省事、省心、省钱",
+          phone: "158715222",
           type: "代理计财",
           service: "常德武陵区会计事务所",
           creatTime: "2019-05-01",
           state: "已上线"
         },
         {
-          name: "一站式代理计财，为企业省事、省心、省钱",
+          phone: "158715222",
           type: "代理计财",
           service: "常德武陵区会计事务所",
           creatTime: "2019-05-01",

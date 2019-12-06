@@ -72,6 +72,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/application',
+    component: () => import('@/views/hqgj/ServicePack/BWSService/Application'),
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',

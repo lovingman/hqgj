@@ -31,8 +31,9 @@
         <el-table-column prop="start" sortable label="开始时间"></el-table-column>
         <el-table-column prop="end" sortable label="截止时间"></el-table-column>
         <el-table-column prop="state" sortable label="状态"></el-table-column>
-        <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="280" align="right" header-align="center">
           <template>
+            <el-button type="text">发布</el-button>
             <el-button type="text">审核</el-button>
             <el-button type="text" @click="registrationClick">报名管理</el-button>
             <el-button type="text">编辑</el-button>

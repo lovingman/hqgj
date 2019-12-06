@@ -8,7 +8,10 @@
                     </el-col>
                     <el-col :span="14">
                         <el-dropdown style="line-height: 35px;" trigger="click">
-                            <span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon--right"></i></span>
+                            <el-button>
+                                批量操作<i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <!--<span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></span>-->
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="importXls">批量导入</el-dropdown-item>
                                 <el-dropdown-item command="exportXls">批量导出</el-dropdown-item>
