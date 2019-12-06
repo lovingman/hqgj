@@ -39,6 +39,8 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
+                        <el-button @click="" type="text">编辑</el-button>
+                        <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="preview" type="text">详情</el-button>
