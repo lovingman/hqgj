@@ -22,7 +22,7 @@
                     <el-col :span="6">
                         <el-input
                                 @change="toggleChange"
-                                v-model="query.name"
+                                v-model="query.companyName"
                                 class="input-with-select"
                                 placeholder="请输入企业名称或统一社会信用代码"
                                 style="float: right"
@@ -90,7 +90,7 @@
                 list: [],
                 //搜索
                 query: {
-                    name: ""
+                    companyName: ""
                 },
 
             };
@@ -120,7 +120,7 @@
                     pageSize: this.pagesize,
                     totalRecord: this.total
                 });
-                getList().then(response => {
+                getList(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
                     console.log(response);
