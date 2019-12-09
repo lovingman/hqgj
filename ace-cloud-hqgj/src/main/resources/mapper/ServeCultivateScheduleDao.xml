@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeCultivateScheduleDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="serveCultivateId" jdbcType="VARCHAR" property="serveCultivateId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="lecturerId" jdbcType="VARCHAR" property="lecturerId"/>
+        <result column="lecturerName" jdbcType="VARCHAR" property="lecturerName"/>
+        <result column="startLng" jdbcType="DECIMAL" property="startLng"/>
+        <result column="startLat" jdbcType="DECIMAL" property="startLat"/>
+        <result column="detailedAddress" jdbcType="VARCHAR" property="detailedAddress"/>
+        <result column="startDate" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="endDate" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, serveCultivateId, title, lecturerId, lecturerName, startLng, startLat, detailedAddress, 
+    startDate, endDate, content, createUserId, createUserName, createDate, modifyUserId, 
+    modifyUserName, modifyDate, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from serve_cultivate_schedule
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serve_cultivate_schedule
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule">
+    insert into serve_cultivate_schedule (id, serveCultivateId, title, 
+      lecturerId, lecturerName, startLng, 
+      startLat, detailedAddress, startDate, 
+      endDate, content, createUserId, 
+      createUserName, createDate, modifyUserId, 
+      modifyUserName, modifyDate, status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{serveCultivateId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{lecturerId,jdbcType=VARCHAR}, #{lecturerName,jdbcType=VARCHAR}, #{startLng,jdbcType=DECIMAL}, 
+      #{startLat,jdbcType=DECIMAL}, #{detailedAddress,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
+      #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule">
+    update serve_cultivate_schedule
+    set serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      lecturerId = #{lecturerId,jdbcType=VARCHAR},
+      lecturerName = #{lecturerName,jdbcType=VARCHAR},
+      startLng = #{startLng,jdbcType=DECIMAL},
+      startLat = #{startLat,jdbcType=DECIMAL},
+      detailedAddress = #{detailedAddress,jdbcType=VARCHAR},
+      startDate = #{startDate,jdbcType=TIMESTAMP},
+      endDate = #{endDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.serveCultivateId, t.title, t.lecturerId, t.lecturerName, t.startLng, t.startLat, t.detailedAddress, t.startDate, t.endDate, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+    <sql id="From_Statement">
+    FROM serve_cultivate_schedule t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.serveCultivateId != null and condition.serveCultivateId != ''">
+                and t.serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.title != null and condition.title != ''">
+                and t.title = #{title,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.lecturerId != null and condition.lecturerId != ''">
+                and t.lecturerId = #{lecturerId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.lecturerName != null and condition.lecturerName != ''">
+                and t.lecturerName = #{lecturerName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.startLng != null and condition.startLng != ''">
+                and t.startLng = #{startLng,jdbcType=DECIMAL}
+            </if>
+            <if test="condition.startLat != null and condition.startLat != ''">
+                and t.startLat = #{startLat,jdbcType=DECIMAL}
+            </if>
+            <if test="condition.detailedAddress != null and condition.detailedAddress != ''">
+                and t.detailedAddress = #{detailedAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.startDate != null and condition.startDate != ''">
+                and t.startDate = #{startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.endDate != null and condition.endDate != ''">
+                and t.endDate = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.content != null and condition.content != ''">
+                and t.content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule" resultType="int">
+            select count(1)
+        from serve_cultivate_schedule
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from serve_cultivate_schedule
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
