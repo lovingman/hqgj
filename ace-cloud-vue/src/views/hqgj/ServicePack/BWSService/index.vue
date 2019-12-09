@@ -90,26 +90,28 @@
                 :visible.sync="progressVisible"
                 title="办理进度标记"
                 width="60%">
-            <light-timeline :items='items'>
-                <template slot='tag' slot-scope='{ item }'>
-                    <!--<el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">-->
+            <div class="dialog-main">
+                <light-timeline :items='items'>
+                    <template slot='tag' slot-scope='{ item }'>
+                        <!--<el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">-->
                         <!--<span v-if="item.checked">已标记</span>-->
                         <!--<span v-else="item.checked">标记</span>-->
-                    <!--</el-radio>-->
-                    <el-checkbox true-label="1" v-model="item.checked">
-                        <span v-if="item.checked">已标记</span>
-                        <span v-else="item.checked">标记</span>
-                    </el-checkbox>
-                </template>
-                <template slot='content' slot-scope='{ item }'>
-                    <div>
-                        {{item.content}}
-                    </div>
-                    <div>
-                        {{item.tag}}
-                    </div>
-                </template>
-            </light-timeline>
+                        <!--</el-radio>-->
+                        <el-checkbox false-label="0" true-label="1" v-model="item.checked" @change="sign">
+                            <span v-if="item.checked">已标记</span>
+                            <span v-else="item.checked">标记</span>
+                        </el-checkbox>
+                    </template>
+                    <template slot='content' slot-scope='{ item }'>
+                        <div>
+                            {{item.content}}
+                        </div>
+                        <div>
+                            {{item.tag}}
+                        </div>
+                    </template>
+                </light-timeline>
+            </div>
             <span class="dialog-footer" slot="footer">
     <el-button @click="progressVisible = false">取 消</el-button>
     <el-button @click="progressVisible = false" type="primary">确 定</el-button>
@@ -182,6 +184,9 @@
             progress() {
                 this.progressVisible = true;
             },
+            sign(data){
+                console.log(data);
+            }
         }
     }
 </script>
