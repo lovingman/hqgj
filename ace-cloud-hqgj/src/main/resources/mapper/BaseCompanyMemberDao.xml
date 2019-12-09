@@ -17,7 +17,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, companyId, name, idCard, mobile, jobs, createUserId, createUserName, createDate, 
+    id, companyId, name, idCard, mobile, jobs, createUserId, createUserName, createDate,
     modifyUserId, modifyUserName, modifyDate, status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,15 +31,15 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseCompanyMember">
-    insert into base_company_member (id, companyId, name, 
-      idCard, mobile, jobs, 
-      createUserId, createUserName, createDate, 
-      modifyUserId, modifyUserName, modifyDate, 
+    insert into base_company_member (id, companyId, name,
+      idCard, mobile, jobs,
+      createUserId, createUserName, createDate,
+      modifyUserId, modifyUserName, modifyDate,
       status)
-    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{jobs,jdbcType=VARCHAR}, 
-      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{jobs,jdbcType=VARCHAR},
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
   </insert>
 
@@ -72,7 +72,8 @@
                 and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
             </if>
             <if test="condition.name != null and condition.name != ''">
-                and t.name = #{condition.name,jdbcType=VARCHAR}
+                and (t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
+                or t.mobile like concat('%',#{condition.name,jdbcType=VARCHAR},'%'))
             </if>
             <if test="condition.idCard != null and condition.idCard != ''">
                 and t.idCard = #{condition.idCard,jdbcType=VARCHAR}

@@ -19,8 +19,8 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, companyName, creditCode, legalPerson, contactPersonName, contactPersonTel, areaCode, 
-    companyAddress, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
+    id, companyName, creditCode, legalPerson, contactPersonName, contactPersonTel, areaCode,
+    companyAddress, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
     modifyDate, status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -34,16 +34,16 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseCompany">
-    insert into base_company (id, companyName, creditCode, 
-      legalPerson, contactPersonName, contactPersonTel, 
-      areaCode, companyAddress, createUserId, 
-      createUserName, createDate, modifyUserId, 
+    insert into base_company (id, companyName, creditCode,
+      legalPerson, contactPersonName, contactPersonTel,
+      areaCode, companyAddress, createUserId,
+      createUserName, createDate, modifyUserId,
       modifyUserName, modifyDate, status
       )
-    values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, 
-      #{legalPerson,jdbcType=VARCHAR}, #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, 
-      #{areaCode,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
-      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR},
+      #{legalPerson,jdbcType=VARCHAR}, #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR},
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
       )
   </insert>
@@ -75,7 +75,8 @@
         <where>
             1 = 1
             <if test="condition.companyName != null and condition.companyName != ''">
-                and t.companyName = #{condition.companyName,jdbcType=VARCHAR}
+                and (t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
+                or t.creditCode like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%'))
             </if>
             <if test="condition.creditCode != null and condition.creditCode != ''">
                 and t.creditCode = #{condition.creditCode,jdbcType=VARCHAR}
