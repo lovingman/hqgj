@@ -1,4 +1,4 @@
-package com.huacainfo.ace.zcpa.controller;
+package com.huacainfo.ace.hqgj.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.huacainfo.ace.common.vo.PageParam;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
-import com.huacainfo.ace.common.web.controller.zcpaController;
-import com.huacainfo.ace.zcpa.model.$!{bean.name};
-import com.huacainfo.ace.zcpa.service.$!{bean.name}Service;
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}Vo;
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}QVo;
+import com.huacainfo.ace.common.dto.PageDTO;
+import com.huacainfo.ace.common.web.controller.BaseController;
+import com.huacainfo.ace.hqgj.model.$!{bean.name};
+import com.huacainfo.ace.hqgj.service.$!{bean.name}Service;
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}Vo;
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}QVo;
 
 
 /**
@@ -56,10 +56,14 @@ private $!{bean.name}Service $!{bean.lowerName}Service;
     */
     @ApiOperation(value = "/page", notes = "获取$!{bean.tableChineseName}数据集合，支持分页查询")
     @GetMapping(value = "/page", produces = "application/json;charset=UTF-8")
-    public NewPageDTO
+    public PageDTO
     <$!{bean.name}Vo> page($!{bean.name}QVo condition, PageParam page) throws Exception {
-        return this.$!{bean.lowerName}Service.page(condition, page.getPageNum(), page.getPageSize(), page.getOrderBy());
 
+        PageDTO<$!{bean.name}Vo> rst =this.$!{bean.lowerName}Service.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+            if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+            }
+            return rst;
             }
 
             /**

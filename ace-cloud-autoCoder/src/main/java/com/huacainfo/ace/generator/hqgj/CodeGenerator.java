@@ -9,7 +9,7 @@
  * @version V1.0
  */
 
-package com.huacainfo.ace.generator.zcpa;
+package com.huacainfo.ace.generator.hqgj;
 
 /**
  * @ClassName: BeanUtils

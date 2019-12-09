@@ -1,4 +1,4 @@
-package com.huacainfo.ace.generator.zcpa;
+package com.huacainfo.ace.generator.hqgj;
 
 import com.huacainfo.ace.common.tools.CommonUtils;
 

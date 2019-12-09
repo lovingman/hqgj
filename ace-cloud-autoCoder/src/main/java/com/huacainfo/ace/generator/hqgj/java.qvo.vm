@@ -1,6 +1,6 @@
-package com.huacainfo.ace.zcpa.vo;
+package com.huacainfo.ace.hqgj.vo;
 
-import com.huacainfo.ace.zcpa.model.$!{bean.name};
+import com.huacainfo.ace.hqgj.model.$!{bean.name};
 
 
 public class $!{bean.name}QVo extends $!{bean.name} {

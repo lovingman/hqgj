@@ -1,10 +1,10 @@
-package com.huacainfo.ace.zcpa.dao;
+package com.huacainfo.ace.hqgj.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import com.huacainfo.ace.zcpa.model.$!{bean.name};
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}QVo;
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}Vo;
+import com.huacainfo.ace.hqgj.model.$!{bean.name};
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}QVo;
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}Vo;
 
 public interface $!{bean.name}Dao {
 
