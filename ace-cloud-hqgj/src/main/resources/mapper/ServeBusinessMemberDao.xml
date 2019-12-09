@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeBusinessMemberDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="businessId" jdbcType="VARCHAR" property="businessId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="jobs" jdbcType="VARCHAR" property="jobs"/>
+        <result column="sharesProportion" jdbcType="VARCHAR" property="sharesProportion"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, businessId, name, sex, idCard, mobile, jobs, sharesProportion, type, createUserId, 
+    createUserName, createDate, modifyUserId, modifyUserName, modifyDate, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from serve_business_member
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serve_business_member
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
+    insert into serve_business_member (id, businessId, name, 
+      sex, idCard, mobile, 
+      jobs, sharesProportion, type, 
+      createUserId, createUserName, createDate, 
+      modifyUserId, modifyUserName, modifyDate, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{jobs,jdbcType=VARCHAR}, #{sharesProportion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
+    update serve_business_member
+    set businessId = #{businessId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      idCard = #{idCard,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      jobs = #{jobs,jdbcType=VARCHAR},
+      sharesProportion = #{sharesProportion,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessMemberVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.businessId, t.name, t.sex, t.idCard, t.mobile, t.jobs, t.sharesProportion, t.type, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+    <sql id="From_Statement">
+    FROM serve_business_member t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.businessId != null and condition.businessId != ''">
+                and t.businessId = #{businessId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.name != null and condition.name != ''">
+                and t.name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.sex != null and condition.sex != ''">
+                and t.sex = #{sex,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.idCard != null and condition.idCard != ''">
+                and t.idCard = #{idCard,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.mobile != null and condition.mobile != ''">
+                and t.mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.jobs != null and condition.jobs != ''">
+                and t.jobs = #{jobs,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.sharesProportion != null and condition.sharesProportion != ''">
+                and t.sharesProportion = #{sharesProportion,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.type != null and condition.type != ''">
+                and t.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserName != null and condition.createUserName != ''">
+                and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null and condition.createDate != ''">
+                and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
+                and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
+                and t.modifyUserName = #{modifyUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyDate != null and condition.modifyDate != ''">
+                and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember" resultType="int">
+            select count(1)
+        from serve_business_member
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from serve_business_member
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

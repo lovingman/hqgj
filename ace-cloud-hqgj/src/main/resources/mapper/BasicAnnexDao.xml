@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.BasicAnnexDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.BasicAnnex">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="relationId" jdbcType="VARCHAR" property="relationId" />
+    <result column="fileType" jdbcType="VARCHAR" property="fileType" />
+    <result column="fileName" jdbcType="VARCHAR" property="fileName" />
+    <result column="fileSize" jdbcType="DECIMAL" property="fileSize" />
+    <result column="fileURL" jdbcType="VARCHAR" property="fileURL" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, relationId, fileType, fileName, fileSize, fileURL, remark, type, createDate, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from basic_annex
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from basic_annex
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+    insert into basic_annex (id, relationId, fileType, 
+      fileName, fileSize, fileURL, 
+      remark, type, createDate, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=DECIMAL}, #{fileURL,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+    insert into basic_annex
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="relationId != null">
+        relationId,
+      </if>
+      <if test="fileType != null">
+        fileType,
+      </if>
+      <if test="fileName != null">
+        fileName,
+      </if>
+      <if test="fileSize != null">
+        fileSize,
+      </if>
+      <if test="fileURL != null">
+        fileURL,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null">
+        #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=DECIMAL},
+      </if>
+      <if test="fileURL != null">
+        #{fileURL,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+    update basic_annex
+    <set>
+      <if test="relationId != null">
+        relationId = #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        fileType = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        fileName = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        fileSize = #{fileSize,jdbcType=DECIMAL},
+      </if>
+      <if test="fileURL != null">
+        fileURL = #{fileURL,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+    update basic_annex
+    set relationId = #{relationId,jdbcType=VARCHAR},
+      fileType = #{fileType,jdbcType=VARCHAR},
+      fileName = #{fileName,jdbcType=VARCHAR},
+      fileSize = #{fileSize,jdbcType=DECIMAL},
+      fileURL = #{fileURL,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BasicAnnexVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.relationId, t.fileType, t.fileName, t.fileSize, t.fileURL, t.remark, t.type, t.createDate, t.status
+  </sql>
+  <sql id="From_Statement">
+    FROM basic_annex t
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.relationId != null and condition.relationId != ''">
+         and t.relationId = #{relationId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.fileType != null and condition.fileType != ''">
+         and t.fileType = #{fileType,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.fileName != null and condition.fileName != ''">
+         and t.fileName = #{fileName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.fileSize != null and condition.fileSize != ''">
+         and t.fileSize = #{fileSize,jdbcType=DECIMAL}
+      </if>
+      <if test="condition.fileURL != null and condition.fileURL != ''">
+         and t.fileURL = #{fileURL,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+         and t.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.type != null and condition.type != ''">
+         and t.type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null and condition.createDate != ''">
+         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.status != null and condition.status != ''">
+         and t.status = #{status,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex" resultType="int">
+            select count(1)
+        from basic_annex
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from basic_annex
+ where id in
+ <foreach collection="ids" item="id" open="(" separator="," close=")">
+    #{id}
+ </foreach>
+  </delete>
+</mapper>
