@@ -1,6 +1,6 @@
-package com.huacainfo.ace.zcpa.service.impl;
+package com.huacainfo.ace.hqgj.service.impl;
 
-import com.github.pagehelper.PageHelper;
+import com.huacainfo.ace.common.dto.PageDTO;
 import java.util.Date;
 import java.util.List;
 import com.huacainfo.ace.common.tools.GUIDUtil;
@@ -13,11 +13,11 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
-import com.huacainfo.ace.zcpa.dao.$!{bean.name}Dao;
-import com.huacainfo.ace.zcpa.model.$!{bean.name};
-import com.huacainfo.ace.zcpa.service.$!{bean.name}Service;
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}Vo;
-import com.huacainfo.ace.zcpa.vo.$!{bean.name}QVo;
+import com.huacainfo.ace.hqgj.dao.$!{bean.name}Dao;
+import com.huacainfo.ace.hqgj.model.$!{bean.name};
+import com.huacainfo.ace.hqgj.service.$!{bean.name}Service;
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}Vo;
+import com.huacainfo.ace.hqgj.vo.$!{bean.name}QVo;
 import javax.annotation.Resource;
 @Service
 /**
@@ -46,14 +46,17 @@ private $!{bean.name}Dao $!{bean.lowerName}Dao;
     * @version: $!{annotation.version}
     */
     @Override
-    public NewPageDTO
-    <$!{bean.name}Vo> page($!{bean.name}QVo condition, int pageNum, int pageSize, String orderBy) throws Exception {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageDTO
+    <$!{bean.name}Vo> page($!{bean.name}QVo condition, int start, int limit, String orderBy) throws Exception {
+            PageDTO<$!{bean.name}Vo> rst = new PageDTO<>();
+                List<$!{bean.name}Vo> list = this.$!{bean.lowerName}Dao.findList(condition, start, limit, orderBy);
+                    rst.setRows(list);
+                    if (start <= 1) {
+                    int allRows = this.$!{bean.lowerName}Dao.findCount(condition);
+                    rst.setTotal(allRows);
+                    }
+                    return rst;
 
-        List
-        <$!{bean.name}Vo> list = this.$!{bean.lowerName}Dao.findList(condition, pageNum, pageSize, orderBy);
-
-            return new NewPageDTO<>(list);
             }
 
             /**
@@ -81,6 +84,7 @@ private $!{bean.name}Dao $!{bean.lowerName}Dao;
             o.setStatus("1");
             o.setCreateUserName(userProp.getName());
             o.setCreateUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
             this.$!{bean.lowerName}Dao.insert(o);
             return new ResponseDTO(ResultCode.SUCCESS, "成功！");
             }
@@ -101,9 +105,9 @@ private $!{bean.name}Dao $!{bean.lowerName}Dao;
             @Log(operationObj = "$!{bean.tableChineseName}", operationType = "变更", detail = "变更$!{bean.tableChineseName}")
             public ResponseDTO update($!{bean.name} o, UserProp userProp) throws Exception {
             $!{bean.validate}
-            o.setLastModifyDate(new Date());
-            o.setLastModifyUserName(userProp.getName());
-            o.setLastModifyUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
+            o.setModifyUserName(userProp.getName());
+            o.setModifyUserId(userProp.getUserId());
             this.$!{bean.lowerName}Dao.updateByPrimaryKey(o);
             return new ResponseDTO(ResultCode.SUCCESS, "成功！");
             }

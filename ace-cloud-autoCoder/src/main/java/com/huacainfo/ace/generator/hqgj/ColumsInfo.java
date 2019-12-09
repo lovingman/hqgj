@@ -1,4 +1,4 @@
-package com.huacainfo.ace.generator.zcpa;
+package com.huacainfo.ace.generator.hqgj;
 
 public class ColumsInfo implements java.io.Serializable {
 	private static final long serialVersionUID = 6388496672390508697L;
