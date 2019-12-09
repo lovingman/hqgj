@@ -22,6 +22,7 @@
                     <el-col :span="6">
                         <el-input
                                 @change="toggleChange"
+                                v-model="query.name"
                                 class="input-with-select"
                                 placeholder="请输入企业名称或统一社会信用代码"
                                 style="float: right"
@@ -43,40 +44,42 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="企业名称" prop="name" sortable='custom' >
+                <el-table-column label="企业名称" prop="companyName" sortable='custom'>
                 </el-table-column>
-                <el-table-column width="250" label="企业法人" prop="personName">
+                <el-table-column label="企业法人" prop="legalPerson" width="250">
                 </el-table-column>
-                <el-table-column label="联系方式" prop="mobile" width="300">
+                <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>
-                <el-table-column label="地址" prop="address" width="350">
+                <el-table-column label="地址" prop="companyAddress" width="350">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="person">员工管理</el-button>
+                        <el-button  @click="person(scope.$index,scope.row)" height="40" type="text">员工管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" height="40" type="text" @click="edit">编辑</el-button>
+                        <el-button  @click="edit(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">删除</el-button>
+                        <el-button @click="handleDelete(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="preview" type="text">详情</el-button>
+                        <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
                     :current-page="currentPage"
                     :page-size="pagesize"
+                    :total="total"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
                     background
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
+                    layout="total, sizes, prev, pager, next, jumper">
             </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
+    import {getList,deleteById} from "@/api/hqgj/enterprise";
+
     export default {
         name: "index",
         data() {
@@ -84,31 +87,80 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                list:[
-                    {
-                        name:"湖南华彩伟业网络科技有限公司",
-                        personName:"余跃辉",
-                        mobile:"陈琳-0736-7123101",
-                        address: "武陵区互联网产业园A02-3"
-                    }
-                ]
+                list: [],
+                //搜索
+                query: {
+                    name: ""
+                },
+
             };
         },
-        created(){
-
+        created() {
+            this.getlist();
         },
-        methods:{
-            person(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/Member" });
+        methods: {
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
             },
-            create(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/create" });
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
             },
-            edit(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/edit" });
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
             },
-            preview(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise/details" });
+            //获取列表数据
+            getlist() {
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                getList().then(response => {
+                    this.total = response.total;
+                    this.list = response.rows;
+                    console.log(response);
+                })
+            },
+            //搜索
+            search(){
+                this.handleQuery();
+            },
+            person(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/enterprise/Member", query: { id: data.id }});
+            },
+            create() {
+                this.$router.push({path: "/hqgj/BasicData/enterprise/create"});
+            },
+            edit(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/enterprise/edit", query: { id: data.id }});
+            },
+            preview(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/enterprise/details", query: { id: data.id }});
+            },
+            handleDelete(index, data) {
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deleteById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+
+                    });
+            },
+            handleSelectionChange(){
+
             }
         }
     }
