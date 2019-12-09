@@ -78,34 +78,34 @@
     <where>
       1 = 1
       <if test="condition.companyName != null and condition.companyName != ''">
-         and t.companyName = #{companyName,jdbcType=VARCHAR}
+         and t.companyName = #{condition.companyName,jdbcType=VARCHAR}
       </if>
       <if test="condition.creditCode != null and condition.creditCode != ''">
-         and t.creditCode = #{creditCode,jdbcType=VARCHAR}
+         and t.creditCode = #{condition.creditCode,jdbcType=VARCHAR}
       </if>
       <if test="condition.legalPerson != null and condition.legalPerson != ''">
-         and t.legalPerson = #{legalPerson,jdbcType=VARCHAR}
+         and t.legalPerson = #{condition.legalPerson,jdbcType=VARCHAR}
       </if>
       <if test="condition.contactPersonName != null and condition.contactPersonName != ''">
          and t.contactPersonName = #{contactPersonName,jdbcType=VARCHAR}
       </if>
       <if test="condition.contactPersonTel != null and condition.contactPersonTel != ''">
-         and t.contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR}
+         and t.contactPersonTel = #{condition.contactPersonTel,jdbcType=VARCHAR}
       </if>
       <if test="condition.areaCode != null and condition.areaCode != ''">
-         and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+         and t.areaCode = #{condition.areaCode,jdbcType=VARCHAR}
       </if>
       <if test="condition.companyAddress != null and condition.companyAddress != ''">
-         and t.companyAddress = #{companyAddress,jdbcType=VARCHAR}
+         and t.companyAddress = #{condition.companyAddress,jdbcType=VARCHAR}
       </if>
       <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.modifyDate != null and condition.modifyDate != ''">
-         and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+         and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.status != null and condition.status != ''">
-         and t.status = #{status,jdbcType=VARCHAR}
+         and t.status = #{condition.status,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>

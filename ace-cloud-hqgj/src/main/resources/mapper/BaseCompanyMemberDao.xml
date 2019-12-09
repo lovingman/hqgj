@@ -42,133 +42,7 @@
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.BaseCompanyMember">
-    insert into base_company_member
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="companyId != null">
-        companyId,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="idCard != null">
-        idCard,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="jobs != null">
-        jobs,
-      </if>
-      <if test="createUserId != null">
-        createUserId,
-      </if>
-      <if test="createUserName != null">
-        createUserName,
-      </if>
-      <if test="createDate != null">
-        createDate,
-      </if>
-      <if test="modifyUserId != null">
-        modifyUserId,
-      </if>
-      <if test="modifyUserName != null">
-        modifyUserName,
-      </if>
-      <if test="modifyDate != null">
-        modifyDate,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="companyId != null">
-        #{companyId,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null">
-        #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="jobs != null">
-        #{jobs,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null">
-        #{createUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyUserName != null">
-        #{modifyUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.BaseCompanyMember">
-    update base_company_member
-    <set>
-      <if test="companyId != null">
-        companyId = #{companyId,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null">
-        idCard = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="jobs != null">
-        jobs = #{jobs,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        createUserId = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null">
-        createUserName = #{createUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        createDate = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyUserName != null">
-        modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
-        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
   <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BaseCompanyMember">
     update base_company_member
     set companyId = #{companyId,jdbcType=VARCHAR},
@@ -198,40 +72,22 @@
     <where>
       1 = 1
       <if test="condition.companyId != null and condition.companyId != ''">
-         and t.companyId = #{companyId,jdbcType=VARCHAR}
+         and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
       </if>
       <if test="condition.name != null and condition.name != ''">
-         and t.name = #{name,jdbcType=VARCHAR}
+         and t.name = #{condition.name,jdbcType=VARCHAR}
       </if>
       <if test="condition.idCard != null and condition.idCard != ''">
-         and t.idCard = #{idCard,jdbcType=VARCHAR}
+         and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
       </if>
       <if test="condition.mobile != null and condition.mobile != ''">
-         and t.mobile = #{mobile,jdbcType=VARCHAR}
+         and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
       </if>
       <if test="condition.jobs != null and condition.jobs != ''">
-         and t.jobs = #{jobs,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserId != null and condition.createUserId != ''">
-         and t.createUserId = #{createUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserName != null and condition.createUserName != ''">
-         and t.createUserName = #{createUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
-         and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
-         and t.modifyUserName = #{modifyUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyDate != null and condition.modifyDate != ''">
-         and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+         and t.jobs = #{condition.jobs,jdbcType=VARCHAR}
       </if>
       <if test="condition.status != null and condition.status != ''">
-         and t.status = #{status,jdbcType=VARCHAR}
+         and t.status = #{condition.status,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>
