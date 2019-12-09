@@ -73,7 +73,7 @@
             </if>
             <if test="condition.name != null and condition.name != ''">
                 and (t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
-                or t.idCard like concat('%',#{condition.name,jdbcType=VARCHAR},'%'))
+                or t.mobile like concat('%',#{condition.name,jdbcType=VARCHAR},'%'))
             </if>
             <if test="condition.idCard != null and condition.idCard != ''">
                 and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
