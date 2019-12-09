@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeCultivateEnrollDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="serveCultivateId" jdbcType="VARCHAR" property="serveCultivateId"/>
+        <result column="companyId" jdbcType="VARCHAR" property="companyId"/>
+        <result column="companyName" jdbcType="VARCHAR" property="companyName"/>
+        <result column="enrollUserId" jdbcType="VARCHAR" property="enrollUserId"/>
+        <result column="enrollName" jdbcType="VARCHAR" property="enrollName"/>
+        <result column="enrollMobile" jdbcType="VARCHAR" property="enrollMobile"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="isSign" jdbcType="VARCHAR" property="isSign"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, serveCultivateId, companyId, companyName, enrollUserId, enrollName, enrollMobile, 
+    sex, isSign, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
+    modifyDate, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from serve_cultivate_enroll
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serve_cultivate_enroll
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll">
+    insert into serve_cultivate_enroll (id, serveCultivateId, companyId, 
+      companyName, enrollUserId, enrollName, 
+      enrollMobile, sex, isSign, 
+      createUserId, createUserName, createDate, 
+      modifyUserId, modifyUserName, modifyDate, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{serveCultivateId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{enrollUserId,jdbcType=VARCHAR}, #{enrollName,jdbcType=VARCHAR}, 
+      #{enrollMobile,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{isSign,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll">
+    update serve_cultivate_enroll
+    set serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR},
+      companyId = #{companyId,jdbcType=VARCHAR},
+      companyName = #{companyName,jdbcType=VARCHAR},
+      enrollUserId = #{enrollUserId,jdbcType=VARCHAR},
+      enrollName = #{enrollName,jdbcType=VARCHAR},
+      enrollMobile = #{enrollMobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      isSign = #{isSign,jdbcType=VARCHAR},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateEnrollVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.serveCultivateId, t.companyId, t.companyName, t.enrollUserId, t.enrollName, t.enrollMobile, t.sex, t.isSign, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+    <sql id="From_Statement">
+    FROM serve_cultivate_enroll t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.serveCultivateId != null and condition.serveCultivateId != ''">
+                and t.serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.companyId != null and condition.companyId != ''">
+                and t.companyId = #{companyId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.companyName != null and condition.companyName != ''">
+                and t.companyName = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.enrollUserId != null and condition.enrollUserId != ''">
+                and t.enrollUserId = #{enrollUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.enrollName != null and condition.enrollName != ''">
+                and t.enrollName = #{enrollName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.enrollMobile != null and condition.enrollMobile != ''">
+                and t.enrollMobile = #{enrollMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.sex != null and condition.sex != ''">
+                and t.sex = #{sex,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.isSign != null and condition.isSign != ''">
+                and t.isSign = #{isSign,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll" resultType="int">
+            select count(1)
+        from serve_cultivate_enroll
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from serve_cultivate_enroll
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
