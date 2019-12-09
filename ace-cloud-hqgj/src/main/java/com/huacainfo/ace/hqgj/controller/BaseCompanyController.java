@@ -86,7 +86,7 @@ public class BaseCompanyController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
-    public ResponseDTO create(String jsons) throws Exception {
+    public ResponseDTO create(@RequestBody String jsons) throws Exception {
         BaseCompany obj = JSON.parseObject(jsons, BaseCompany.class);
         return this.baseCompanyService.create(obj, this.getCurUserProp());
     }
@@ -107,7 +107,7 @@ public class BaseCompanyController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
-    public ResponseDTO update(String jsons) throws Exception {
+    public ResponseDTO update(@RequestBody String jsons) throws Exception {
         BaseCompany obj = JSON.parseObject(jsons, BaseCompany.class);
         return this.baseCompanyService.update(obj, this.getCurUserProp());
     }

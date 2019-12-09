@@ -78,15 +78,11 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
     @Transactional
     @Log(operationObj = "企业管理", operationType = "创建", detail = "创建企业管理")
     public ResponseDTO create(BaseCompany o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
-        }
-
+        o.setId(GUIDUtil.getGUID());
         int temp = this.baseCompanyDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "企业管理名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());

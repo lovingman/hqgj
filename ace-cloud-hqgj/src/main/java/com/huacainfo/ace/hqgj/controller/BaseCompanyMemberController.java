@@ -56,8 +56,7 @@ private BaseCompanyMemberService baseCompanyMemberService;
     */
     @ApiOperation(value = "/page", notes = "获取企业成员表数据集合，支持分页查询")
     @GetMapping(value = "/page", produces = "application/json;charset=UTF-8")
-    public PageDTO
-    <BaseCompanyMemberVo> page(BaseCompanyMemberQVo condition, PageParam page) throws Exception {
+    public PageDTO<BaseCompanyMemberVo> page(BaseCompanyMemberQVo condition, PageParam page) throws Exception {
 
         PageDTO<BaseCompanyMemberVo> rst =this.baseCompanyMemberService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
             if (page.getStart() > 1) {
