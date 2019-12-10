@@ -20,188 +20,28 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, orgName, creditCode, contactPersonName, contactPersonTel, areaCode, orgAddress, 
-    content, type, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
+    id, orgName, creditCode, contactPersonName, contactPersonTel, areaCode, orgAddress,
+    content, type, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
     modifyDate, status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_organization
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from base_organization
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
-    insert into base_organization (id, orgName, creditCode, 
-      contactPersonName, contactPersonTel, areaCode, 
-      orgAddress, content, type, 
-      createUserId, createUserName, createDate, 
-      modifyUserId, modifyUserName, modifyDate, 
+    insert into base_organization (id, orgName, creditCode,
+      contactPersonName, contactPersonTel, areaCode,
+      orgAddress, content, type,
+      createUserId, createUserName, createDate,
+      modifyUserId, modifyUserName, modifyDate,
       status)
-    values (#{id,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, 
-      #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
-      #{orgAddress,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR},
+      #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
+      #{orgAddress,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
-    insert into base_organization
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="orgName != null">
-        orgName,
-      </if>
-      <if test="creditCode != null">
-        creditCode,
-      </if>
-      <if test="contactPersonName != null">
-        contactPersonName,
-      </if>
-      <if test="contactPersonTel != null">
-        contactPersonTel,
-      </if>
-      <if test="areaCode != null">
-        areaCode,
-      </if>
-      <if test="orgAddress != null">
-        orgAddress,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="createUserId != null">
-        createUserId,
-      </if>
-      <if test="createUserName != null">
-        createUserName,
-      </if>
-      <if test="createDate != null">
-        createDate,
-      </if>
-      <if test="modifyUserId != null">
-        modifyUserId,
-      </if>
-      <if test="modifyUserName != null">
-        modifyUserName,
-      </if>
-      <if test="modifyDate != null">
-        modifyDate,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="orgName != null">
-        #{orgName,jdbcType=VARCHAR},
-      </if>
-      <if test="creditCode != null">
-        #{creditCode,jdbcType=VARCHAR},
-      </if>
-      <if test="contactPersonName != null">
-        #{contactPersonName,jdbcType=VARCHAR},
-      </if>
-      <if test="contactPersonTel != null">
-        #{contactPersonTel,jdbcType=VARCHAR},
-      </if>
-      <if test="areaCode != null">
-        #{areaCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgAddress != null">
-        #{orgAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null">
-        #{createUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyUserName != null">
-        #{modifyUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
-    update base_organization
-    <set>
-      <if test="orgName != null">
-        orgName = #{orgName,jdbcType=VARCHAR},
-      </if>
-      <if test="creditCode != null">
-        creditCode = #{creditCode,jdbcType=VARCHAR},
-      </if>
-      <if test="contactPersonName != null">
-        contactPersonName = #{contactPersonName,jdbcType=VARCHAR},
-      </if>
-      <if test="contactPersonTel != null">
-        contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
-      </if>
-      <if test="areaCode != null">
-        areaCode = #{areaCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgAddress != null">
-        orgAddress = #{orgAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        createUserId = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null">
-        createUserName = #{createUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        createDate = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyUserName != null">
-        modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
-        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
     update base_organization
     set orgName = #{orgName,jdbcType=VARCHAR},
@@ -222,7 +62,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseOrganizationVo">
-     
+
   </resultMap>
   <sql id="Vo_Column_List">
     t.id, t.orgName, t.creditCode, t.contactPersonName, t.contactPersonTel, t.areaCode, t.orgAddress, t.content, t.type, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -234,7 +74,7 @@
     <where>
       1 = 1
       <if test="condition.orgName != null and condition.orgName != ''">
-         and t.orgName = #{orgName,jdbcType=VARCHAR}
+         and t.orgName like concat('%',#{condition.orgName,jdbcType=VARCHAR},'%')
       </if>
       <if test="condition.creditCode != null and condition.creditCode != ''">
          and t.creditCode = #{creditCode,jdbcType=VARCHAR}
@@ -255,7 +95,7 @@
          and t.content = #{content,jdbcType=VARCHAR}
       </if>
       <if test="condition.type != null and condition.type != ''">
-         and t.type = #{type,jdbcType=VARCHAR}
+         and t.type = #{condition.type,jdbcType=VARCHAR}
       </if>
       <if test="condition.createUserId != null and condition.createUserId != ''">
          and t.createUserId = #{createUserId,jdbcType=VARCHAR}

@@ -100,7 +100,7 @@ private BaseOrganizationService baseOrganizationService;
         paramType = "form"),
         })
         @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
-            public ResponseDTO update(String jsons) throws Exception {
+            public ResponseDTO update(@RequestBody String jsons) throws Exception {
             BaseOrganization obj = JSON.parseObject(jsons, BaseOrganization.class);
             return this.baseOrganizationService.update(obj,this.getCurUserProp());
             }

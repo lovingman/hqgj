@@ -27,9 +27,10 @@
                     </el-col>
                     <el-col :span="6">
                         <el-input
+                                 v-model="query.orgName"
                                 @change="toggleChange"
                                 class="input-with-select"
-                                placeholder="请输入企业名称或统一社会信用代码"
+                                placeholder="请输入机构名称"
                                 style="float: right"
                         ></el-input>
                     </el-col>
@@ -60,11 +61,11 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button  height="40" type="text" @click="person">成员管理</el-button>
+                        <el-button  height="40" type="text" @click="person(scope.$index,scope.row)">成员管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button  height="40" type="text" @click="edit">编辑</el-button>
+                        <el-button  height="40" type="text" @click="edit(scope.$index,scope.row)">编辑</el-button>
                         <span class="strightline">|</span>
-                        <el-button  type="text">删除</el-button>
+                        <el-button  type="text" @click="handleDele(scope.$index,scope.row)">删除</el-button>
                         <span class="strightline">|</span>
                         <el-button type="text" @click="preview(scope.$index,scope.row)">详情</el-button>
                     </template>
@@ -84,7 +85,7 @@
 </template>
 
 <script>
-    import {getList} from "@/api/hqgj/service"
+    import {getList,deleteById} from "@/api/hqgj/service"
     export default {
         name: "index",
         data() {
@@ -94,7 +95,7 @@
                 total: 0,
                 list:[],
                 query: {
-                    companyName: ""
+                    orgName: ""
                 },
             };
         },
@@ -129,14 +130,34 @@
                     console.log(response);
                 })
             },
-            person(){
-                this.$router.push({ path: "/hqgj/BasicData/service/Member" });
+            search(){
+                this.handleQuery();
+            },
+            handleDele(index,data){
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deleteById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+
+                    });
+            },
+            person(index,data){
+                this.$router.push({ path: "/hqgj/BasicData/service/Member", query: { id: data.id }});
             },
             create(){
                 this.$router.push({ path: "/hqgj/BasicData/service/create" });
             },
-            edit(){
-                this.$router.push({ path: "/hqgj/BasicData/service/edit" });
+            edit(index,data){
+                this.$router.push({ path: "/hqgj/BasicData/service/edit", query: { id: data.id }});
             },
             preview(index,data){
                 this.$router.push({ path: "/hqgj/BasicData/service/details", query: { id: data.id } });
