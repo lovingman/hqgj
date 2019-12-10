@@ -35,3 +35,40 @@ export function deleteById(id) {
         params: {id:id}
     })
 }
+
+export function personPage(query) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/page',
+        method: 'get',
+        params: query
+    })
+}
+export function deletePerson(id) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/deleteById',
+        method: 'post',
+        params: {id:id}
+    })
+}
+
+export function getByIdPerson(id) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/getById',
+        method: 'get',
+        params: {id:id}
+    })
+}
+export function createPerson(data) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/create',
+        method: 'post',
+        data: data
+    })
+}
+export function updatePerson(data) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/update',
+        method: 'post',
+        data: data
+    })
+}

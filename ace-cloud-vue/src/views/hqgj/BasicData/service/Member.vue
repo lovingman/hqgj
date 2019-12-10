@@ -47,15 +47,15 @@
                 </el-table-column>
                 <el-table-column label="手机号码" prop="mobile">
                 </el-table-column>
-                <el-table-column label="添加时间" prop="createData" width="500">
+                <el-table-column label="添加时间" prop="createDate" width="500">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="150">
                     <template slot-scope="scope">
-                        <el-button @click="" height="40" type="text" @click="editPerson">编辑</el-button>
+                        <el-button @click="editPerson(scope.$index,scope.row)" height="40" type="text" >编辑</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">删除</el-button>
+                        <el-button @click="Delete(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="previewPerson" type="text">详情</el-button>
+                        <el-button @click="previewPerson(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -73,31 +73,81 @@
 </template>
 
 <script>
+    import {personPage,deletePerson} from "@/api/hqgj/service";
     export default {
         name: "Member",
         data() {
             return {
+                orgId:"",//机构id
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                rows:[
-                    {
-                        name:"王钦",
-                        mobile:"17688876666",
-                        createData: "2019-11-21 09:31:08"
-                    }
-                ]
+                rows:[],
+                query: {
+                    orgId:"",
+                    name: ""
+                },
             };
         },
+        created() {
+            this.getlist();
+            // this.AreaCodeQuery();
+        },
         methods:{
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
+            },
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
+            },
+            getlist(){
+                this.query.orgId = this.$route.query.id;
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                personPage(this.query).then(response => {
+                    this.total= response.total;
+                    this.rows = response.rows;
+                    console.log(response);
+                })
+            },
+            Delete(index,data){
+                console.log(data)
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deletePerson(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+
+                    });
+            },
             createPerson(){
-                this.$router.push({ path: "/hqgj/BasicData/service/createPerson" });
+                console.log(this.$route.query.id);
+                this.$router.push({ path: "/hqgj/BasicData/service/createPerson",query:{id:this.$route.query.id} });
             },
-            editPerson(){
-                this.$router.push({ path: "/hqgj/BasicData/service/editPerson" });
+            editPerson(index,data){
+                this.$router.push({ path: "/hqgj/BasicData/service/editPerson" ,query:{id:data.id}});
             },
-            previewPerson(){
-                this.$router.push({ path: "/hqgj/BasicData/service/detailsPerson" });
+            previewPerson(index,data){
+                this.$router.push({ path: "/hqgj/BasicData/service/detailsPerson",query:{id:data.id} });
             }
         }
     }
