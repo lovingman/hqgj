@@ -89,7 +89,7 @@ public class ServeCultivateScheduleServiceImpl implements ServeCultivateSchedule
                 JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateScheduleVo.class));
         if (!CommonUtils.isBlank(serveCultivateSchedule)) {
             for (ServeCultivateScheduleVo o : serveCultivateSchedule) {
-                String cultivateId=GUIDUtil.getGUID();
+                String cultivateId = GUIDUtil.getGUID();
                 o.setId(cultivateId);
                 if (CommonUtils.isBlank(o.getServeCultivateId())) {
                     return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID不能为空！");
@@ -100,14 +100,16 @@ public class ServeCultivateScheduleServiceImpl implements ServeCultivateSchedule
                 o.setCreateUserId(userProp.getUserId());
                 o.setModifyDate(new Date());
                 this.serveCultivateScheduleDao.insert(o);
-                List<BasicAnnex> fileURL =o.getBasicAnnexes();
-                for (BasicAnnex a :fileURL){
-                   a.setId(GUIDUtil.getGUID());
-                   a.setRelationId(cultivateId);
-                   a.setFileURL(a.getFileURL());
-                   a.setType("1");
-                   a.setRemark("培训提升日程表附件");
-                   basicAnnexDao.insert(a);
+                if (o.getBasicAnnexes().size()>0) {
+                    List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                    for (BasicAnnex a : fileURL) {
+                        a.setId(GUIDUtil.getGUID());
+                        a.setRelationId(cultivateId);
+                        a.setFileURL(a.getFileURL());
+                        a.setType("1");
+                        a.setRemark("培训提升日程表附件");
+                        basicAnnexDao.insert(a);
+                    }
                 }
             }
         }

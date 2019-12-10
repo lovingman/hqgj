@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
 import com.huacainfo.ace.common.vo.PageParam;
@@ -79,7 +76,7 @@ public class ServeBusinessOtherController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
-    public ResponseDTO create(String jsons) throws Exception {
+    public ResponseDTO create(@RequestBody String jsons) throws Exception {
         ServeBusinessOther obj = JSON.parseObject(jsons, ServeBusinessOther.class);
         return this.serveBusinessOtherService.create(obj, this.getCurUserProp());
     }
@@ -100,7 +97,7 @@ public class ServeBusinessOtherController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
-    public ResponseDTO update(String jsons) throws Exception {
+    public ResponseDTO update(@RequestBody String jsons) throws Exception {
         ServeBusinessOther obj = JSON.parseObject(jsons, ServeBusinessOther.class);
         return this.serveBusinessOtherService.update(obj, this.getCurUserProp());
     }

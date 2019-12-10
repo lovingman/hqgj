@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.service.impl;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +83,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务包名称重复！");
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
+        o.setLsNo("CY"+sdf.format(new Date()));
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
