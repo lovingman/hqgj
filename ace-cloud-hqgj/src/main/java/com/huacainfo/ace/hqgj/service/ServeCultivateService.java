@@ -90,4 +90,7 @@ public interface ServeCultivateService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+
+    ResponseDTO  updateCoverUrl (String id,String coverUrl);
+
 }

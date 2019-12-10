@@ -39,7 +39,7 @@ public interface ServeCultivateScheduleService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO create(ServeCultivateSchedule o, UserProp userProp) throws Exception;
+    ResponseDTO create(String jsons, UserProp userProp) throws Exception;
 
     /**
      * @throws

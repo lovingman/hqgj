@@ -27,4 +27,6 @@ public interface ServeCultivateDao {
     int isExist(ServeCultivate o);
 
     int deleteByIds(String[] ids);
+
+    int updateCoverUrl(@Param("id") String id, @Param("coverUrl") String coverUrl);
 }
