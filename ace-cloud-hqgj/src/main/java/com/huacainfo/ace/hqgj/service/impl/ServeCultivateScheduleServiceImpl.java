@@ -1,12 +1,18 @@
 package com.huacainfo.ace.hqgj.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,7 +40,8 @@ public class ServeCultivateScheduleServiceImpl implements ServeCultivateSchedule
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeCultivateScheduleDao serveCultivateScheduleDao;
-
+    @Resource
+    private BasicAnnexDao basicAnnexDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -76,23 +83,34 @@ public class ServeCultivateScheduleServiceImpl implements ServeCultivateSchedule
     @Override
     @Transactional
     @Log(operationObj = "培训提升日程表", operationType = "创建", detail = "创建培训提升日程表")
-    public ResponseDTO create(ServeCultivateSchedule o, UserProp userProp) throws Exception {
-        o.setId(GUIDUtil.getGUID());
-        if (CommonUtils.isBlank(o.getServeCultivateId())) {
-            return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID（关联serve_cultivate表id）不能为空！");
+    public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
+        JSONObject jsonObj = JSON.parseObject(jsons);
+        List<ServeCultivateScheduleVo> serveCultivateSchedule = new ArrayList<ServeCultivateScheduleVo>(
+                JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateScheduleVo.class));
+        if (!CommonUtils.isBlank(serveCultivateSchedule)) {
+            for (ServeCultivateScheduleVo o : serveCultivateSchedule) {
+                String cultivateId=GUIDUtil.getGUID();
+                o.setId(cultivateId);
+                if (CommonUtils.isBlank(o.getServeCultivateId())) {
+                    return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID不能为空！");
+                }
+                o.setCreateDate(new Date());
+                o.setStatus("1");
+                o.setCreateUserName(userProp.getName());
+                o.setCreateUserId(userProp.getUserId());
+                o.setModifyDate(new Date());
+                this.serveCultivateScheduleDao.insert(o);
+                List<BasicAnnex> fileURL =o.getBasicAnnexes();
+                for (BasicAnnex a :fileURL){
+                   a.setId(GUIDUtil.getGUID());
+                   a.setRelationId(cultivateId);
+                   a.setFileURL(a.getFileURL());
+                   a.setType("1");
+                   a.setRemark("培训提升日程表附件");
+                   basicAnnexDao.insert(a);
+                }
+            }
         }
-
-        int temp = this.serveCultivateScheduleDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "培训提升日程表名称重复！");
-        }
-
-        o.setCreateDate(new Date());
-        o.setStatus("1");
-        o.setCreateUserName(userProp.getName());
-        o.setCreateUserId(userProp.getUserId());
-        o.setModifyDate(new Date());
-        this.serveCultivateScheduleDao.insert(o);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

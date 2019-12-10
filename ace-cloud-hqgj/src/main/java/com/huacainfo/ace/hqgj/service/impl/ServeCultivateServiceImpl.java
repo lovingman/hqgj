@@ -170,5 +170,21 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
+    /**
+     * 更新封面图片
+     * @param id 提升基础表id
+     * @param coverUrl  图片url
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO updateCoverUrl(String id, String coverUrl){
+        int i = serveCultivateDao.updateCoverUrl(id, coverUrl);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "数据更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "数据更新成功", coverUrl);
+    }
+
 
 }

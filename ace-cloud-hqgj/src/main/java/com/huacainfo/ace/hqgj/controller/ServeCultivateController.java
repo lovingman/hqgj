@@ -1,12 +1,18 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.github.tobato.fastdfs.domain.fdfs.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.huacainfo.ace.common.constant.ResultCode;
+import com.huacainfo.ace.common.tools.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +24,9 @@ import com.huacainfo.ace.hqgj.model.ServeCultivate;
 import com.huacainfo.ace.hqgj.service.ServeCultivateService;
 import com.huacainfo.ace.hqgj.vo.ServeCultivateVo;
 import com.huacainfo.ace.hqgj.vo.ServeCultivateQVo;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 /**
@@ -35,7 +44,16 @@ public class ServeCultivateController extends BaseController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ServeCultivateService serveCultivateService;
+    @Value("${fdfs.web-server-url}")
+    public String webServerUrl;
+    @Autowired
+    private FastFileStorageClient fastFileStorageClient;
 
+    private String getResAccessUrl(StorePath storePath) {
+        String fileUrl = webServerUrl + "/" + storePath.getFullPath();
+        logger.info("{}", fileUrl);
+        return fileUrl;
+    }
 
     /**
      * @throws
@@ -161,4 +179,26 @@ public class ServeCultivateController extends BaseController {
         return this.serveCultivateService.deleteByIds(ids.split(","));
     }
 
+
+    /**
+     * 更新封面图片
+     *
+     * @param id ID
+     * @param coverUrl  封面图片-base64字符串
+     * @return ResponseDTO
+     */
+    @ApiOperation(value = "/updateCoverUrl", notes = "更新项目封面图片")
+    @PostMapping(value = "/updateCoverUrl", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateCoverUrl(String id, String coverUrl) throws IOException {
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(coverUrl)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        //文件服务器图片处理
+        MultipartFile picFile = CommonUtils.base64ToMultipart(coverUrl);
+        StorePath storePath = fastFileStorageClient.uploadFile(picFile.getInputStream(), picFile.getSize(),
+                FilenameUtils.getExtension(picFile.getOriginalFilename()), null);
+        //获取预览地址
+        coverUrl = getResAccessUrl(storePath);
+        return this.serveCultivateService.updateCoverUrl(id, coverUrl);
+    }
 }
