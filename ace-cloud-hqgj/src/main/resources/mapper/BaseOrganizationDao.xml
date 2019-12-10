@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.BaseOrganizationDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.BaseOrganization">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="orgName" jdbcType="VARCHAR" property="orgName" />
+    <result column="creditCode" jdbcType="VARCHAR" property="creditCode" />
+    <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName" />
+    <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel" />
+    <result column="areaCode" jdbcType="VARCHAR" property="areaCode" />
+    <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+    <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orgName, creditCode, contactPersonName, contactPersonTel, areaCode, orgAddress, 
+    content, type, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
+    modifyDate, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_organization
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_organization
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+    insert into base_organization (id, orgName, creditCode, 
+      contactPersonName, contactPersonTel, areaCode, 
+      orgAddress, content, type, 
+      createUserId, createUserName, createDate, 
+      modifyUserId, modifyUserName, modifyDate, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, 
+      #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{orgAddress,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+    insert into base_organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgName != null">
+        orgName,
+      </if>
+      <if test="creditCode != null">
+        creditCode,
+      </if>
+      <if test="contactPersonName != null">
+        contactPersonName,
+      </if>
+      <if test="contactPersonTel != null">
+        contactPersonTel,
+      </if>
+      <if test="areaCode != null">
+        areaCode,
+      </if>
+      <if test="orgAddress != null">
+        orgAddress,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="createUserName != null">
+        createUserName,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId,
+      </if>
+      <if test="modifyUserName != null">
+        modifyUserName,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null">
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPersonName != null">
+        #{contactPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPersonTel != null">
+        #{contactPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+    update base_organization
+    <set>
+      <if test="orgName != null">
+        orgName = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null">
+        creditCode = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPersonName != null">
+        contactPersonName = #{contactPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPersonTel != null">
+        contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        areaCode = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        orgAddress = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        createUserName = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+    update base_organization
+    set orgName = #{orgName,jdbcType=VARCHAR},
+      creditCode = #{creditCode,jdbcType=VARCHAR},
+      contactPersonName = #{contactPersonName,jdbcType=VARCHAR},
+      contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
+      areaCode = #{areaCode,jdbcType=VARCHAR},
+      orgAddress = #{orgAddress,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseOrganizationVo">
+     
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.orgName, t.creditCode, t.contactPersonName, t.contactPersonTel, t.areaCode, t.orgAddress, t.content, t.type, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+  <sql id="From_Statement">
+    FROM base_organization t
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.orgName != null and condition.orgName != ''">
+         and t.orgName = #{orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.creditCode != null and condition.creditCode != ''">
+         and t.creditCode = #{creditCode,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.contactPersonName != null and condition.contactPersonName != ''">
+         and t.contactPersonName = #{contactPersonName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.contactPersonTel != null and condition.contactPersonTel != ''">
+         and t.contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.areaCode != null and condition.areaCode != ''">
+         and t.areaCode = #{areaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.orgAddress != null and condition.orgAddress != ''">
+         and t.orgAddress = #{orgAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.content != null and condition.content != ''">
+         and t.content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.type != null and condition.type != ''">
+         and t.type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserId != null and condition.createUserId != ''">
+         and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserName != null and condition.createUserName != ''">
+         and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null and condition.createDate != ''">
+         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
+         and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
+         and t.modifyUserName = #{modifyUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.modifyDate != null and condition.modifyDate != ''">
+         and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.status != null and condition.status != ''">
+         and t.status = #{status,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization" resultType="int">
+            select count(1)
+        from base_organization
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from base_organization
+ where id in
+ <foreach collection="ids" item="id" open="(" separator="," close=")">
+    #{id}
+ </foreach>
+  </delete>
+</mapper>

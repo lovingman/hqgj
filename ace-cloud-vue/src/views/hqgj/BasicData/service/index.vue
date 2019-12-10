@@ -50,13 +50,13 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="机构名称" prop="name" sortable='custom' >
+                <el-table-column label="机构名称" prop="orgName" sortable='custom' >
                 </el-table-column>
-                <el-table-column width="250" label="机构类型" prop="type">
+                <el-table-column  label="机构类型" prop="type" width="250">
                 </el-table-column>
-                <el-table-column label="联系方式" prop="mobile" width="300">
+                <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>
-                <el-table-column label="地址" prop="address" width="350">
+                <el-table-column label="地址" prop="orgAddress" width="350">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
@@ -66,7 +66,7 @@
                         <span class="strightline">|</span>
                         <el-button  type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button type="text" @click="preview">详情</el-button>
+                        <el-button type="text" @click="preview(scope.$index,scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+    import {getList} from "@/api/hqgj/service"
     export default {
         name: "index",
         data() {
@@ -91,20 +92,43 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                list:[
-                    {
-                        name:"湖南华彩伟业网络科技有限公司",
-                        type:"会计事务所",
-                        mobile:"陈琳-0736-7123101",
-                        address: "武陵区互联网产业园A02-3"
-                    }
-                ]
+                list:[],
+                query: {
+                    companyName: ""
+                },
             };
         },
         created(){
-
+            this.getlist();
         },
         methods:{
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
+            },
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
+            },
+            //获取列表数据
+            getlist() {
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                getList(this.query).then(response => {
+                    this.total = response.total;
+                    this.list = response.rows;
+                    console.log(response);
+                })
+            },
             person(){
                 this.$router.push({ path: "/hqgj/BasicData/service/Member" });
             },
@@ -114,8 +138,8 @@
             edit(){
                 this.$router.push({ path: "/hqgj/BasicData/service/edit" });
             },
-            preview(){
-                this.$router.push({ path: "/hqgj/BasicData/service/details" });
+            preview(index,data){
+                this.$router.push({ path: "/hqgj/BasicData/service/details", query: { id: data.id } });
             }
         }
     }
