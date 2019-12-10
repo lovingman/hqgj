@@ -58,7 +58,7 @@
                                     :on-preview="handlePictureCardPreview"
                                     :on-progress="uploading"
                                     :on-remove="handleRemove"
-                                    action="http://139.224.0.227:9011/portal/www/uploadFile"
+                                    action="http://39.97.185.200:9011/zcpa-portal/www/uploadFile"
                                     list-type="picture-card">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
