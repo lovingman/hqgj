@@ -71,14 +71,14 @@ import request from '@/utils/request'
 // }
 export function page(query) {
     return request({
-        url: '/zcpa-portal/dept/page',
+        url: '/hqgj-portal/dept/page',
         method: 'get',
         params: query
     })
 }
 export function create(data) {
     return request({
-        url: '/zcpa-portal/dept/create',
+        url: '/hqgj-portal/dept/create',
         method: 'post',
         data:data,
         transformRequest: [function (data) {
@@ -95,7 +95,7 @@ export function create(data) {
 }
 export function update(data) {
     return request({
-        url: '/zcpa-portal/dept/update',
+        url: '/hqgj-portal/dept/update',
         method: 'post',
         data:data,
         transformRequest: [function (data) {
@@ -112,21 +112,21 @@ export function update(data) {
 }
 export function deleteById(id) {
     return request({
-        url: '/zcpa-portal/dept/deleteById',
+        url: '/hqgj-portal/dept/deleteById',
         method: 'get',
         params: {id:id}
     })
 }
 export function deleteByIds(ids) {
     return request({
-        url: '/zcpa-portal/dept/deleteByIds',
+        url: '/hqgj-portal/dept/deleteByIds',
         method: 'get',
         params: {ids:ids}
     })
 }
 export function getById(id) {
     return request({
-        url: '/zcpa-portal/dept/getById',
+        url: '/hqgj-portal/dept/getById',
         method: 'get',
         params: {id:id}
     })
@@ -134,7 +134,7 @@ export function getById(id) {
 
 export function getList(name) {
     return request({
-        url: '/zcpa-portal/dept/getList',
+        url: '/hqgj-portal/dept/getList',
         method: 'get',
         params: {name:name}
     })

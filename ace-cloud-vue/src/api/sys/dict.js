@@ -70,14 +70,14 @@ import request from '@/utils/request'
 // }
 export function page(query) {
   return request({
-    url: '/zcpa-portal/dict/page',
+    url: '/hqgj-portal/dict/page',
     method: 'get',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/zcpa-portal/dict/create',
+    url: '/hqgj-portal/dict/create',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -94,7 +94,7 @@ export function create(data) {
 }
 export function update(data) {
   return request({
-    url: '/zcpa-portal/dict/update',
+    url: '/hqgj-portal/dict/update',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -111,21 +111,21 @@ export function update(data) {
 }
 export function deleteById(id) {
   return request({
-    url: '/zcpa-portal/dict/deleteById',
+    url: '/hqgj-portal/dict/deleteById',
     method: 'get',
     params: {id:id}
   })
 }
 export function deleteByIds(ids) {
   return request({
-    url: '/zcpa-portal/dict/deleteByIds',
+    url: '/hqgj-portal/dict/deleteByIds',
     method: 'get',
     params: {ids:ids}
   })
 }
 export function getById(id) {
   return request({
-    url: '/zcpa-portal/dict/getById',
+    url: '/hqgj-portal/dict/getById',
     method: 'get',
     params: {id:id}
   })
@@ -133,7 +133,7 @@ export function getById(id) {
 
 export function getList() {
   return request({
-    url: '/zcpa-portal/dictCategory/findDictCategoryListAll',
+    url: '/hqgj-portal/dictCategory/findDictCategoryListAll',
     method: 'get'
   })
 }

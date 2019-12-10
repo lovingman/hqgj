@@ -107,14 +107,14 @@ import request from '@/utils/request'
 // }
 export function page(query) {
   return request({
-    url: '/zcpa-portal/resources/page',
+    url: '/hqgj-portal/resources/page',
     method: 'get',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/zcpa-portal/resources/create',
+    url: '/hqgj-portal/resources/create',
     method: 'post',
     data: data,
     transformRequest: [function (data) {
@@ -133,7 +133,7 @@ export function create(data) {
 }
 export function update(data) {
   return request({
-    url: '/zcpa-portal/resources/update',
+    url: '/hqgj-portal/resources/update',
     method: 'post',
     data: data,
     transformRequest: [function (data) {
@@ -150,7 +150,7 @@ export function update(data) {
 }
 export function deleteById(id) {
   return request({
-    url: '/zcpa-portal/resources/deleteById',
+    url: '/hqgj-portal/resources/deleteById',
     method: 'get',
     params: {
       id: id
@@ -159,7 +159,7 @@ export function deleteById(id) {
 }
 export function deleteByIds(ids) {
   return request({
-    url: '/zcpa-portal/resources/deleteByIds',
+    url: '/hqgj-portal/resources/deleteByIds',
     method: 'get',
     params: {
       ids: ids
@@ -168,7 +168,7 @@ export function deleteByIds(ids) {
 }
 export function getById(id) {
   return request({
-    url: '/zcpa-portal/resources/getById',
+    url: '/hqgj-portal/resources/getById',
     method: 'get',
     params: {
       id: id
@@ -178,14 +178,14 @@ export function getById(id) {
 
 export function getTree() {
   return request({
-    url: '/zcpa-portal/resources/getResTreeList',
+    url: '/hqgj-portal/resources/getResTreeList',
     method: 'get'
   })
 }
 
 export function getListByPid(pid) {
   return request({
-    url: '/zcpa-portal/resources/getListByPid',
+    url: '/hqgj-portal/resources/getListByPid',
     method: 'get',
     params: {
       pid: pid
@@ -195,7 +195,7 @@ export function getListByPid(pid) {
 
 export function updateSequence(data) {
   return request({
-    url: '/zcpa-portal/resources/updateSequence',
+    url: '/hqgj-portal/resources/updateSequence',
     method: 'post',
     data: data,
     transformRequest: [function (data) {

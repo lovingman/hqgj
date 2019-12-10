@@ -62,7 +62,7 @@ import request from '@/utils/request'
 // }
 export function login(data) {
   return request({
-    url: '/zcpa-portal/security/login',
+    url: '/hqgj-portal/security/login',
     method: 'post',
     data: data,
     transformRequest: [function (data) {
@@ -80,14 +80,14 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: '/zcpa-portal/system/getUserPropInfo',
+    url: '/hqgj-portal/system/getUserPropInfo',
     method: 'get'
   })
 }
 
 export function logout() {
   return request({
-    url: '/zcpa-portal/security/logout',
+    url: '/hqgj-portal/security/logout',
     method: 'get'
   })
 }
@@ -95,19 +95,19 @@ export function logout() {
 
 export function getMenu() {
   return request({
-    url: '/zcpa-portal/system/getSysTreeMenu',
+    url: '/hqgj-portal/system/getSysTreeMenu',
     method: 'get'
   })
 }
 export function getBtn() {
   return request({
-    url: '/zcpa-portal/system/getSysButtons',
+    url: '/hqgj-portal/system/getSysButtons',
     method: 'get'
   })
 }
 export function getDict(ids) {
   return request({
-    url: '/zcpa-portal/dict/getByCategoryIds',
+    url: '/hqgj-portal/dict/getByCategoryIds',
     method: 'get',
     params: {
       categoryIds: `4,47,48,49,50,51`,

@@ -63,14 +63,14 @@ import request from '@/utils/request'
 // }
 export function Categorypage(query) {
   return request({
-    url: '/zcpa-portal/dictCategory/page',
+    url: '/hqgj-portal/dictCategory/page',
     method: 'get',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/zcpa-portal/dictCategory/create',
+    url: '/hqgj-portal/dictCategory/create',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -87,7 +87,7 @@ export function create(data) {
 }
 export function update(data) {
   return request({
-    url: '/zcpa-portal/dictCategory/update',
+    url: '/hqgj-portal/dictCategory/update',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -104,21 +104,21 @@ export function update(data) {
 }
 export function deleteById(id) {
   return request({
-    url: '/zcpa-portal/dictCategory/deleteById',
+    url: '/hqgj-portal/dictCategory/deleteById',
     method: 'get',
     params: {id:id}
   })
 }
 export function deleteByIds(ids) {
   return request({
-    url: '/zcpa-portal/dictCategory/deleteByIds',
+    url: '/hqgj-portal/dictCategory/deleteByIds',
     method: 'get',
     params: {ids:ids}
   })
 }
 export function getById(id) {
   return request({
-    url: '/zcpa-portal/dictCategory/getById',
+    url: '/hqgj-portal/dictCategory/getById',
     method: 'get',
     params: {id:id}
   })

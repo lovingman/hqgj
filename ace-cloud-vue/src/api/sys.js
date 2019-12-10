@@ -68,21 +68,21 @@ import request from '@/utils/request'
 // }
 export function getAreaTree(query) {
   return request({
-    url: '/zcpa-portal/system/getAreaTree',
+    url: '/hqgj-portal/system/getAreaTree',
     method: 'get',
     params: query
   })
 }
 export function initProvinceCity(query) {
   return request({
-    url: '/zcpa-portal/system/getAreaTree?pid=00&type=4',
+    url: '/hqgj-portal/system/getAreaTree?pid=00&type=4',
     method: 'get',
     params: query
   })
 }
 export function getDict(ids) {
   return request({
-    url: '/zcpa-portal/dict/getByCategoryIds',
+    url: '/hqgj-portal/dict/getByCategoryIds',
     method: 'get',
     params: {categoryIds:ids}
   })
@@ -108,7 +108,7 @@ export function filedown(query,url) {
 }
 export function getPAreaCode(areaCode) {
   return request({
-    url: '/zcpa-portal/system/getPAreaCode',
+    url: '/hqgj-portal/system/getPAreaCode',
     method: 'get',
     params:{areaCode:areaCode}
   })

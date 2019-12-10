@@ -63,40 +63,40 @@ import request from '@/utils/request'
 // }
 export function page(query) {
   return request({
-    url: '/zcpa-portal/role/page',
+    url: '/hqgj-portal/role/page',
     method: 'get',
     params: query
   })
 }
 export function create(query) {
   return request({
-    url: '/zcpa-portal/role/create',
+    url: '/hqgj-portal/role/create',
     params: query
   })
 }
 
 export function update(query) {
   return request({
-    url: '/zcpa-portal/role/update',
+    url: '/hqgj-portal/role/update',
     params: query
   })
 }
 export function deleteById(id) {
   return request({
-    url: '/zcpa-portal/role/deleteById',
+    url: '/hqgj-portal/role/deleteById',
     params: { id: id }
   })
 }
 export function deleteByIds(ids) {
   return request({
-    url: '/zcpa-portal/role/deleteByIds',
+    url: '/hqgj-portal/role/deleteByIds',
     method: 'get',
     params: { ids: ids }
   })
 }
 export function getById(id) {
   return request({
-    url: '/zcpa-portal/role/getById',
+    url: '/hqgj-portal/role/getById',
     method: 'get',
     params: { id: id }
   })
@@ -105,20 +105,20 @@ export function getById(id) {
 
 export function insertRoleRes(query) {
   return request({
-    url: '/zcpa-portal/role/insertRoleRes',
+    url: '/hqgj-portal/role/insertRoleRes',
     params: query
   })
 }
 export function getResTreeList() {
   return request({
-    url: '/zcpa-portal/resources/getResTreeList',
+    url: '/hqgj-portal/resources/getResTreeList',
     method: 'get',
     params: {}
   })
 }
 export function selectRoleResByRoleId(roleId) {
   return request({
-    url: '/zcpa-portal/role/selectRoleResByRoleId',
+    url: '/hqgj-portal/role/selectRoleResByRoleId',
     method: 'get',
     params: { roleId: roleId }
   })

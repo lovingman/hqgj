@@ -123,14 +123,14 @@ import request from '@/utils/request'
 // }
 export function page(query) {
   return request({
-    url: '/zcpa-portal/users/page',
+    url: '/hqgj-portal/users/page',
     method: 'get',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/zcpa-portal/users/create',
+    url: '/hqgj-portal/users/create',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -147,7 +147,7 @@ export function create(data) {
 }
 export function update(data) {
   return request({
-    url: '/zcpa-portal/users/update',
+    url: '/hqgj-portal/users/update',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -164,21 +164,21 @@ export function update(data) {
 }
 export function deleteById(id) {
   return request({
-    url: '/zcpa-portal/users/deleteById',
+    url: '/hqgj-portal/users/deleteById',
     method: 'get',
     params: {id:id}
   })
 }
 export function deleteByIds(ids) {
   return request({
-    url: '/zcpa-portal/users/deleteByIds',
+    url: '/hqgj-portal/users/deleteByIds',
     method: 'get',
     params: {ids:ids}
   })
 }
 export function getById(id) {
   return request({
-    url: '/zcpa-portal/users/getById',
+    url: '/hqgj-portal/users/getById',
     method: 'get',
     params: {id:id}
   })
@@ -187,7 +187,7 @@ export function getById(id) {
 
 export function assignRoles(data) {
   return request({
-    url: '/zcpa-portal/users/assignRoles',
+    url: '/hqgj-portal/users/assignRoles',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -204,14 +204,14 @@ export function assignRoles(data) {
 }
 export function getAllRoles() {
   return request({
-    url: '/zcpa-portal/users/getAllRoles',
+    url: '/hqgj-portal/users/getAllRoles',
     method: 'get',
     params: {}
   })
 }
 export function getMyRoles(userId) {
   return request({
-    url: '/zcpa-portal/users/getMyRoles',
+    url: '/hqgj-portal/users/getMyRoles',
     method: 'get',
     params: {userId:userId}
   })
@@ -220,7 +220,7 @@ export function getMyRoles(userId) {
 
 export function initPwd(data) {
   return request({
-    url: '/zcpa-portal/users/initPwd',
+    url: '/hqgj-portal/users/initPwd',
     method: 'post',
     data:data,
     transformRequest: [function (data) {
@@ -238,7 +238,7 @@ export function initPwd(data) {
 
 export function updateStatus(userId,status) {
   return request({
-    url: '/zcpa-portal/users/updateStatus',
+    url: '/hqgj-portal/users/updateStatus',
     method: 'get',
     params: {userId:userId,status:status}
   })
