@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "zcpa-portal", fallback = SysLogFallBack.class)
+@FeignClient(value = "hqgj-portal", fallback = SysLogFallBack.class)
 public interface SysLogService {
 
 

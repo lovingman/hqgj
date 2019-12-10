@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Author Arvin Zou
  * @Date 2019/8/5 20:24
  */
-@FeignClient(value = "zcpa-portal", fallback = FeignTaskCmccFallBack.class)
+@FeignClient(value = "hqgj-portal", fallback = FeignTaskCmccFallBack.class)
 public interface FeignTaskCmccService {
 
     @RequestMapping(value = "/feign/sms/addTaskCmcc", produces = "application/json;charset=UTF-8")

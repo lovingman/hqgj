@@ -83,7 +83,7 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
         String memberId=GUIDUtil.getGUID();
         o.setId(memberId);
         if (CommonUtils.isBlank(o.getBusinessId())) {
-            return new ResponseDTO(ResultCode.FAIL, "创业服务表ID（关联serve_business表ID）不能为空！");
+            return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
         }
 
         int temp = this.serveBusinessMemberDao.isExist(o);

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(value = "zcpa-portal", fallback = FeignSecurityFallBack.class)
+@FeignClient(value = "hqgj-portal", fallback = FeignSecurityFallBack.class)
 public interface FeignSecurityService {
 
     @RequestMapping(value = "/feign/selectUsersByAccount", produces = "application/json;charset=UTF-8")

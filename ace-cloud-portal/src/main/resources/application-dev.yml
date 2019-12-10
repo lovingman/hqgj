@@ -7,7 +7,7 @@ server:
 
 spring:
   application:
-    name: zcpa-portal
+    name: hqgj-portal
   aop:
     auto: true
   redis:

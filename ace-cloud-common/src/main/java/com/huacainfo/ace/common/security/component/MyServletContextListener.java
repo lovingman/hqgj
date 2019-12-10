@@ -42,7 +42,7 @@ public class MyServletContextListener implements ServletContextListener {
 
         if (StringUtils.isEmpty(name)) {
             delay = 1000;
-        } else if (name.equals("zcpa-portal")) {
+        } else if (name.equals("hqgj-portal")) {
             delay = 1000 * 40;
         }
 

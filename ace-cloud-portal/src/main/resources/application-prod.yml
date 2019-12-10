@@ -6,7 +6,7 @@ server:
   port: 9016
 spring:
   application:
-    name: zcpa-portal
+    name: hqgj-portal
   aop:
     auto: true
   redis:
