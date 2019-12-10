@@ -11,6 +11,7 @@
         <result column="jobs" jdbcType="VARCHAR" property="jobs"/>
         <result column="sharesProportion" jdbcType="VARCHAR" property="sharesProportion"/>
         <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="explain" jdbcType="VARCHAR" property="explain"/>
         <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
         <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
         <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
@@ -20,7 +21,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, businessId, name, sex, idCard, mobile, jobs, sharesProportion, type, createUserId, 
+    id, businessId, name, sex, idCard, mobile, jobs, sharesProportion, type,explain,createUserId,
     createUserName, createDate, modifyUserId, modifyUserName, modifyDate, status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -36,13 +37,13 @@
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
     insert into serve_business_member (id, businessId, name, 
       sex, idCard, mobile, 
-      jobs, sharesProportion, type, 
+      jobs, sharesProportion, type, `explain`,
       createUserId, createUserName, createDate, 
       modifyUserId, modifyUserName, modifyDate, 
       status)
     values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{jobs,jdbcType=VARCHAR}, #{sharesProportion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{jobs,jdbcType=VARCHAR}, #{sharesProportion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{explain,jdbcType=VARCHAR},
       #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=VARCHAR})
@@ -58,6 +59,7 @@
       jobs = #{jobs,jdbcType=VARCHAR},
       sharesProportion = #{sharesProportion,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
+      `explain`=#{explain,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
@@ -65,10 +67,16 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessMemberVo">
-
+        <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+            <result column="baId" jdbcType="VARCHAR" property="id"/>
+            <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+            <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+            <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+            <result column="batype" jdbcType="VARCHAR" property="type"/>
+        </collection>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.businessId, t.name, t.sex, t.idCard, t.mobile, t.jobs, t.sharesProportion, t.type, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.businessId, t.name, t.sex, t.idCard, t.mobile, t.jobs, t.sharesProportion, t.type,t.`explain`, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_business_member t
@@ -77,49 +85,25 @@
         <where>
             1 = 1
             <if test="condition.businessId != null and condition.businessId != ''">
-                and t.businessId = #{businessId,jdbcType=VARCHAR}
+                and t.businessId = #{condition.businessId,jdbcType=VARCHAR}
             </if>
             <if test="condition.name != null and condition.name != ''">
-                and t.name = #{name,jdbcType=VARCHAR}
+                and t.name = #{condition.name,jdbcType=VARCHAR}
             </if>
             <if test="condition.sex != null and condition.sex != ''">
-                and t.sex = #{sex,jdbcType=VARCHAR}
+                and t.sex = #{condition.sex,jdbcType=VARCHAR}
             </if>
             <if test="condition.idCard != null and condition.idCard != ''">
-                and t.idCard = #{idCard,jdbcType=VARCHAR}
+                and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
             </if>
             <if test="condition.mobile != null and condition.mobile != ''">
-                and t.mobile = #{mobile,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.jobs != null and condition.jobs != ''">
-                and t.jobs = #{jobs,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.sharesProportion != null and condition.sharesProportion != ''">
-                and t.sharesProportion = #{sharesProportion,jdbcType=VARCHAR}
+                and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
             </if>
             <if test="condition.type != null and condition.type != ''">
-                and t.type = #{type,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.createUserId != null and condition.createUserId != ''">
-                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.createUserName != null and condition.createUserName != ''">
-                and t.createUserName = #{createUserName,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.createDate != null and condition.createDate != ''">
-                and t.createDate = #{createDate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
-                and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
-                and t.modifyUserName = #{modifyUserName,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.modifyDate != null and condition.modifyDate != ''">
-                and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+                and t.type in (#{condition.type,jdbcType=VARCHAR})
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
@@ -131,6 +115,9 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
+        ba.id baId,ba.fileURL,ba.fileType,ba.fileName,ba.type batype,
+        v.* from (
+        select DISTINCT
         <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
@@ -142,7 +129,8 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL})v
+        left join basic_annex ba on ba.relationId = v.id  and ba.type='3'
     </select>
     <select id="findCount" resultType="int">
         SELECT COUNT(*)

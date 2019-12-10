@@ -67,6 +67,11 @@ public class ServeBusinessMember extends BaseModel {
     private String type;
 
     /**
+     * 特殊说明
+     */
+    private String explain;
+
+    /**
      * 字段名：serve_business_member.createUserId
      * 注释：创建人ID
      */
@@ -234,5 +239,13 @@ public class ServeBusinessMember extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
     }
 }

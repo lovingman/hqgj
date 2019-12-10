@@ -3,6 +3,7 @@
 <mapper namespace="com.huacainfo.ace.hqgj.dao.ServeBusinessDao">
     <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeBusiness">
         <id column="id" jdbcType="VARCHAR" property="id"/>
+        <id column="lsNo" jdbcType="VARCHAR" property="lsNo"/>
         <result column="applyPersonName" jdbcType="VARCHAR" property="applyPersonName"/>
         <result column="applyPersonTel" jdbcType="VARCHAR" property="applyPersonTel"/>
         <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
@@ -24,7 +25,7 @@
     <sql id="Base_Column_List">
     id, applyPersonName, applyPersonTel, idCard, companyName, readyName, legalPerson, 
     regBonus, areaCode, companyAddress, manageExtent, createUserId, createUserName, createDate, 
-    modifyUserId, modifyUserName, modifyDate, status
+    modifyUserId, modifyUserName, modifyDate, status,lsNo
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -37,14 +38,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusiness">
-    insert into serve_business (id, applyPersonName, applyPersonTel, 
+    insert into serve_business (id,lsNo, applyPersonName, applyPersonTel,
       idCard, companyName, readyName, 
       legalPerson, regBonus, areaCode, 
       companyAddress, manageExtent, createUserId, 
       createUserName, createDate, modifyUserId, 
       modifyUserName, modifyDate, status
       )
-    values (#{id,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, #{applyPersonTel,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{lsNo,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, #{applyPersonTel,jdbcType=VARCHAR},
       #{idCard,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{readyName,jdbcType=VARCHAR}, 
       #{legalPerson,jdbcType=VARCHAR}, #{regBonus,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
       #{companyAddress,jdbcType=VARCHAR}, #{manageExtent,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
@@ -75,7 +76,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.applyPersonName, t.applyPersonTel, t.idCard, t.companyName, t.readyName, t.legalPerson, t.regBonus, t.areaCode, t.companyAddress, t.manageExtent, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id,t.lsNo, t.applyPersonName, t.applyPersonTel, t.idCard, t.companyName, t.readyName, t.legalPerson, t.regBonus, t.areaCode, t.companyAddress, t.manageExtent, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_business t

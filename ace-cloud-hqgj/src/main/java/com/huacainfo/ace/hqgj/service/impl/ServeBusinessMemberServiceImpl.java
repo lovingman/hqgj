@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,7 +36,8 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeBusinessMemberDao serveBusinessMemberDao;
-
+    @Resource
+    private BasicAnnexDao basicAnnexDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -76,10 +79,9 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     @Override
     @Transactional
     @Log(operationObj = "创业服务资料清单人员表", operationType = "创建", detail = "创建创业服务资料清单人员表")
-    public ResponseDTO create(ServeBusinessMember o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
-        }
+    public ResponseDTO create(ServeBusinessMemberVo o, UserProp userProp) throws Exception {
+        String memberId=GUIDUtil.getGUID();
+        o.setId(memberId);
         if (CommonUtils.isBlank(o.getBusinessId())) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务表ID（关联serve_business表ID）不能为空！");
         }
@@ -88,13 +90,24 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.serveBusinessMemberDao.insert(o);
+        if(!CommonUtils.isBlank(o.getBasicAnnexes())) {
+            List<BasicAnnex> fileURL = o.getBasicAnnexes();
+            for (BasicAnnex a : fileURL) {
+                a.setId(GUIDUtil.getGUID());
+                a.setRelationId(memberId);
+                a.setFileURL(a.getFileURL());
+                //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
+                a.setType("3");
+                a.setRemark("培训提升日程表附件");
+                basicAnnexDao.insert(a);
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

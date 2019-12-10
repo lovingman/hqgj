@@ -26,4 +26,6 @@ public interface BasicAnnexDao {
     int isExist(BasicAnnex o);
 
     int deleteByIds(String[] ids);
+
+    int deleteByRelationIds(String[] relationIds);
 }
