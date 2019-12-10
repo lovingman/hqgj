@@ -21,3 +21,17 @@ export function create(data) {
         data: data
     })
 }
+export function update(data) {
+    return request({
+        url: '/hqgj/baseOrganization/update',
+        method: 'post',
+        data: data
+    })
+}
+export function deleteById(id) {
+    return request({
+        url: '/hqgj/baseOrganization/deleteById',
+        method: 'post',
+        params: {id:id}
+    })
+}
