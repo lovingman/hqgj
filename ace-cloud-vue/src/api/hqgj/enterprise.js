@@ -36,6 +36,13 @@ export function deleteById(id) {
         params: {id:id}
     })
 }
+export function deleteByIds(ids) {
+    return request({
+        url: '/hqgj/baseCompany/deleteByIds',
+        method: 'post',
+        params: {ids:ids}
+    })
+}
 export function personPage(query) {
     return request({
         url: '/hqgj/baseCompanyMember/page',
@@ -48,5 +55,12 @@ export function deletePerson(id) {
         url: '/hqgj/baseCompanyMember/deleteById',
         method: 'post',
         params: {id:id}
+    })
+}
+export function deletePersons(ids) {
+    return request({
+        url: '/hqgj/baseCompanyMember/deleteByIds',
+        method: 'post',
+        params: {ids:ids}
     })
 }

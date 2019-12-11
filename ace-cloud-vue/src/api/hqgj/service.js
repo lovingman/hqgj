@@ -35,7 +35,13 @@ export function deleteById(id) {
         params: {id:id}
     })
 }
-
+export function deleteByIds(ids) {
+    return request({
+        url: '/hqgj/baseOrganization/deleteByIds',
+        method: 'post',
+        params: {ids:ids}
+    })
+}
 export function personPage(query) {
     return request({
         url: '/hqgj/baseOrganizationMember/page',
@@ -48,6 +54,13 @@ export function deletePerson(id) {
         url: '/hqgj/baseOrganizationMember/deleteById',
         method: 'post',
         params: {id:id}
+    })
+}
+export function deletePersons(ids) {
+    return request({
+        url: '/hqgj/baseOrganizationMember/deleteByIds',
+        method: 'post',
+        params: {ids:ids}
     })
 }
 
@@ -72,3 +85,4 @@ export function updatePerson(data) {
         data: data
     })
 }
+

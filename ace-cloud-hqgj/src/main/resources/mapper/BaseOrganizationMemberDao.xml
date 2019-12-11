@@ -79,7 +79,8 @@
          and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
       </if>
       <if test="condition.name != null and condition.name != ''">
-         and t.name = #{condition.name,jdbcType=VARCHAR}
+         and(t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
+         or t.mobile like concat('%',#{condition.name,jdbcType=VARCHAR},'%') )
       </if>
       <if test="condition.idCard != null and condition.idCard != ''">
          and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
@@ -159,8 +160,8 @@
   <delete id="deleteByIds">
      delete from base_organization_member
  where id in
- <foreach collection="ids" item="id" open="(" separator="," close=")">
-    #{id}
+ <foreach collection="array" item="ids" open="(" separator="," close=")">
+    #{ids}
  </foreach>
   </delete>
 </mapper>
