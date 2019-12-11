@@ -159,8 +159,8 @@
   <delete id="deleteByIds">
      delete from base_organization_member
  where id in
- <foreach collection="ids" item="id" open="(" separator="," close=")">
-    #{id}
+ <foreach collection="array" item="ids" open="(" separator="," close=")">
+    #{ids}
  </foreach>
   </delete>
 </mapper>
