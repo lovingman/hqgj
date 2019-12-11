@@ -7,7 +7,7 @@
                         <!--<el-button @click="createPerson" icon="el-icon-plus" style="float: left" type="primary">添加</el-button>-->
                     <!--</el-col>-->
                     <el-col :span="16">
-                        <el-dropdown style="line-height: 35px;" trigger="click">
+                        <el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">
                             <el-button>
                                 批量操作<i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-    import {personPage,deletePerson} from "@/api/hqgj/enterprise";
+    import {personPage,deletePerson,deletePersons} from "@/api/hqgj/enterprise";
     export default {
         name: "Member",
         data() {
@@ -82,6 +82,7 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
+                multipleSelection: [],//选中行数据
                 rows:[],
                 query: {
                     companyId:"",
@@ -140,6 +141,46 @@
                     .catch(() => {
 
                     });
+            },
+            //批量操作
+            handleCommand(command) {
+                //导入
+                if (command == 'importXls') {
+                    console.log(456)
+                }
+                //导出
+                if (command == 'exportXls') {
+                    console.log(789)
+                }
+                //删除
+                if (command == 'deleteIds') {
+                    if (this.multipleSelection.length) {
+                        this.ids = this.multipleSelection.map(item => item.id).join(",");
+                        this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                deletePersons(this.ids).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.multipleSelection = [];
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
+                            });
+                    } else {
+                        this.$message({
+                            message: (`未选中数据`),
+                            type: "warning"
+                        });
+                    }
+                }
+            },
+            //获取选中行数据
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
             },
             createPerson(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise/createPerson" });

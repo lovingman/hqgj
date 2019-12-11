@@ -7,7 +7,7 @@
                         <el-button @click="create" icon="el-icon-plus" style="float: left" type="primary">创建</el-button>
                     </el-col>
                     <el-col :span="10">
-                        <el-dropdown style="line-height: 35px;" trigger="click">
+                        <el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">
                             <el-button>
                                 批量操作<i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
@@ -20,18 +20,22 @@
                         </el-dropdown>
                     </el-col>
                     <el-col :span="4">
-                        <el-select placeholder="全部类型">
-                            <el-option>
-                            </el-option>
+                        <el-select v-model="typeObj" clearable placeholder="全部类型"  @change="handleStatus">
+                            <el-option
+                                    :key="item.code"
+                                    :label="item.name"
+                                    :value="item.code"
+                                    v-for="item in dict"
+                            ></el-option>
                         </el-select>
                     </el-col>
                     <el-col :span="6">
                         <el-input
-                                 v-model="query.orgName"
                                 @change="toggleChange"
                                 class="input-with-select"
                                 placeholder="请输入机构名称"
                                 style="float: right"
+                                v-model="query.orgName"
                         ></el-input>
                     </el-col>
                     <el-col :span="2">
@@ -51,9 +55,9 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="机构名称" prop="orgName" sortable='custom' >
+                <el-table-column label="机构名称" prop="orgName" sortable='custom'>
                 </el-table-column>
-                <el-table-column  label="机构类型" prop="type" width="250">
+                <el-table-column label="机构类型" prop="type" width="250">
                 </el-table-column>
                 <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>
@@ -61,31 +65,33 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button  height="40" type="text" @click="person(scope.$index,scope.row)">成员管理</el-button>
+                        <el-button @click="person(scope.$index,scope.row)" height="40" type="text">成员管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button  height="40" type="text" @click="edit(scope.$index,scope.row)">编辑</el-button>
+                        <el-button @click="edit(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
                         <span class="strightline">|</span>
-                        <el-button  type="text" @click="handleDele(scope.$index,scope.row)">删除</el-button>
+                        <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button type="text" @click="preview(scope.$index,scope.row)">详情</el-button>
+                        <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
                     :current-page="currentPage"
                     :page-size="pagesize"
+                    :total="total"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
                     background
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
+                    layout="total, sizes, prev, pager, next, jumper">
             </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
-    import {getList,deleteById} from "@/api/hqgj/service"
+    import {getList, deleteById, deleteByIds} from "@/api/hqgj/service";
+    import {getAreaTree, getDict} from "@/api/sys";
+
     export default {
         name: "index",
         data() {
@@ -93,16 +99,21 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                list:[],
+                multipleSelection: [],//选中行数据
+                dict: [],//服务机构类型
+                list: [],
+                typeObj:"",
                 query: {
-                    orgName: ""
+                    orgName: "",
+                    type:""
                 },
             };
         },
-        created(){
+        created() {
             this.getlist();
+            this.dictQuery()
         },
-        methods:{
+        methods: {
             handleQuery: function () {
                 this.currentPage = 1;
                 this.getlist();
@@ -130,10 +141,19 @@
                     console.log(response);
                 })
             },
-            search(){
+            search() {
                 this.handleQuery();
             },
-            handleDele(index,data){
+            //服务机构类型搜索框数据
+            handleStatus(){
+                if (this.typeObj == 0){
+                    this.query.type ="";
+                }else {
+                    this.query.type =this.typeObj;
+                }
+            },
+            //删除
+            handleDele(index, data) {
                 this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
@@ -150,17 +170,64 @@
 
                     });
             },
-            person(index,data){
-                this.$router.push({ path: "/hqgj/BasicData/service/Member", query: { id: data.id }});
+            //批量操作
+            handleCommand(command) {
+                //导入
+                if (command == 'importXls') {
+                    console.log(456)
+                }
+                //导出
+                if (command == 'exportXls') {
+                    console.log(789)
+                }
+                //删除
+                if (command == 'deleteIds') {
+                    if (this.multipleSelection.length) {
+                        this.ids = this.multipleSelection.map(item => item.id).join(",");
+                        this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                deleteByIds(this.ids).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.multipleSelection = [];
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
+                            });
+                    } else {
+                        this.$message({
+                            message: (`未选中数据`),
+                            type: "warning"
+                        });
+                    }
+                }
             },
-            create(){
-                this.$router.push({ path: "/hqgj/BasicData/service/create" });
+            //获取选中行数据
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
             },
-            edit(index,data){
-                this.$router.push({ path: "/hqgj/BasicData/service/edit", query: { id: data.id }});
+            //获取项目类型数据
+            dictQuery() {
+                getDict("53")
+                    .then(response => {
+                        this.dict = response.data['53'];
+                    })
             },
-            preview(index,data){
-                this.$router.push({ path: "/hqgj/BasicData/service/details", query: { id: data.id } });
+            person(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/service/Member", query: {id: data.id}});
+            },
+            create() {
+                this.$router.push({path: "/hqgj/BasicData/service/create"});
+            },
+            edit(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/service/edit", query: {id: data.id}});
+            },
+            preview(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/service/details", query: {id: data.id}});
             }
         }
     }
