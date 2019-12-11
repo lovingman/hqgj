@@ -40,7 +40,7 @@ public interface ServeBusinessMemberService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO create(ServeBusinessMemberVo o, UserProp userProp) throws Exception;
+    ResponseDTO create(ServeBusinessMember o, UserProp userProp) throws Exception;
 
     /**
      * @throws
