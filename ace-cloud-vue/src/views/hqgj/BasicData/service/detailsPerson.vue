@@ -63,7 +63,7 @@
 
             },
             back(){
-                this.$router.push({ path: "/hqgj/BasicData/service/Member" });
+                this.$router.push({ path: "/hqgj/BasicData/service/Member",query: { id: this.form.orgId } });
             }
         }
     }

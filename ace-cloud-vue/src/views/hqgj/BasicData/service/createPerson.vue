@@ -52,13 +52,17 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="形象照:" prop="imagePhoto">
+                        <el-form-item label="形象照:" prop="imagePhotoarr">
                             <el-upload
+                                    :before-upload="beforeAvatarUpload"
                                     :class="{hide:hideUpload}"
-                                    :on-preview="handlePictureCardPreview"
-                                    :on-progress="uploading"
-                                    :on-remove="handleRemove"
-                                    action="http://39.97.185.200:9011/zcpa-portal/www/uploadFile"
+                                    :file-list="addform.imagePhotoarr"
+                                    :http-request="uploadServerEdit"
+                                    :limit="limitImgCount"
+                                    :on-preview="unitPictureCardPreview"
+                                    :on-remove="unitPictrueRemove"
+                                    :on-success="unitPictrueUploadSuccess"
+                                    action="fakeaction"
                                     list-type="picture-card">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
@@ -67,13 +71,17 @@
                                 <img :src="dialogImageUrl" alt="" width="100%">
                             </el-dialog>
                         </el-form-item>
-                        <el-form-item label="微信二维码:" prop="wechatPhoto">
+                        <el-form-item label="微信二维码:" prop="wechatPhotoarr">
                             <el-upload
+                                    :before-upload="beforeAvatarUpload2"
                                     :class="{hide2:hideUpload2}"
-                                    :on-preview="handlePictureCardPreview2"
-                                    :on-progress="uploading2"
-                                    :on-remove="handleRemove2"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    :file-list="addform.wechatPhotoarr"
+                                    :http-request="uploadServerEdit2"
+                                    :limit="limitImgCount"
+                                    :on-preview="unitPictureCardPreview2"
+                                    :on-remove="unitPictrueRemove2"
+                                    :on-success="unitPictrueUploadSuccess2"
+                                    action="fakeaction"
                                     list-type="picture-card">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
@@ -95,26 +103,31 @@
 
 <script>
     import {createPerson} from "@/api/hqgj/service";
+    import {getAreaTree, fileUpImg} from "@/api/sys";
+
     export default {
         name: "createPerson",
         data() {
             return {
+                limitImgCount: 1, //限制文件上传数量
+                hideUpload: false, //隐藏上传形象照按钮
+                dialogVisible: false, //dialog预览形象照属性
+                dialogImageUrl: '', //显示预览的形象照
+                dialogImageUrl2: '',//显示预览的微信二维码
+                dialogVisible2: false,//dialog预览微信二维码属性
+                hideUpload2: false,//隐藏上传微信二维码按钮
                 inputVisible: false,
                 inputValue: '',
-                dialogImageUrl: '',
-                dialogVisible: false,
-                hideUpload: false,
-                dialogImageUrl2: '',
-                dialogVisible2: false,
-                hideUpload2: false,
                 addform: {
-                    orgId:"",
+                    orgId: "",
                     name: "",
                     mobile: "",
                     jobs: "",
                     speciality: [],
                     content: "",
+                    imagePhotoarr: [],
                     imagePhoto: "",
+                    wechatPhotoarr: [],
                     wechatPhoto: "",
                 },
                 addrules: {
@@ -130,6 +143,12 @@
                     content: [
                         {required: true, message: "请输入简介", trigger: "blur"},
                     ],
+                    imagePhotoarr: [
+                        {required: true, message: "请上传形象照"}
+                    ],
+                    wechatPhotoarr: [
+                        {required: true, message: "请上传形象照"}
+                    ]
                     // imagePhoto: [
                     //     {required: true, message: "请输入机构简介", trigger: "blur"},
                     // ],
@@ -162,7 +181,7 @@
             },
 
             back() {
-                this.$router.push({path: "/hqgj/BasicData/service/Member"});
+                this.$router.push({path: "/hqgj/BasicData/service/Member",query: { id: this.$route.query.id }});
             },
             handleClose(tag) {
                 this.addform.speciality.splice(this.addform.speciality.indexOf(tag), 1);
@@ -183,29 +202,325 @@
                 this.inputVisible = false;
                 this.inputValue = '';
             },
-            handleRemove(file, fileList) {
-                this.hideUpload = false;
+            //形象照上传
+            unitPictrueUploadSuccess(response, file, fileList) {
+                if (response.status == 1) {
+                    var imgArr = this.addform.imagePhotoarr;
+                    var tempArr = [];
+                    imgArr.push({
+                        url: response.data
+                    }); // push response.data进去 里面含3个字段
+                    if (imgArr.length > 0) {
+                        imgArr.forEach(item => {
+                            tempArr.push(item.url);
+                        });
+                    }
+                    this.addform.imagePhotoarr = imgArr; //更新data数据
+                    this.addform.imagePhoto = tempArr.join(",");
+                    if (imgArr.length >= this.limitImgCount) {
+                        this.hideUpload = true; //隐藏上传按钮
+                    }
+                    this.hideUpload = true; //隐藏上传按钮
+                }
             },
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url;
-                this.dialogVisible = true;
+            //编辑形象照上传服务器
+            uploadServerEdit(param) {
+                var that = this;
+                // 获取文件对象
+                let file = param.file;
+                // 创建一个HTML5的FileReader对象
+                var reader = new FileReader();
+                //创建一个img对象
+                var img = new Image();
+                let filename = param.filename;
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+                var newUrl = null;
+                reader.onload = e => {
+                    let base64Str = reader.result.split(",")[1];
+                    img.src = e.target.result;
+                    // base64地址图片加载完毕后执行
+                    img.onload = function () {
+                        // 缩放图片需要的canvas（也可以在DOM中直接定义canvas标签，这样就能把压缩完的图片不转base64也能直接显示出来）
+                        var canvas = document.createElement("canvas");
+                        var context = canvas.getContext("2d");
+                        // 图片原始尺寸
+                        var originWidth = this.width;
+                        var originHeight = this.height;
+                        // 最大尺寸限制，可通过设置宽高来实现图片压缩程度
+                        var maxWidth = that.globalData.albumWidth * 2,
+                            maxHeight = that.globalData.albumHeight * 2;
+                        // 目标尺寸
+                        var targetWidth = originWidth,
+                            targetHeight = originHeight;
+                        // 图片尺寸超过最大尺寸的限制
+                        if (originWidth > maxWidth || originHeight > maxHeight) {
+                            if (originWidth / originHeight > maxWidth / maxHeight) {
+                                // 更改宽度，按照宽度限定尺寸
+                                targetWidth = maxWidth;
+                                targetHeight = Math.round(
+                                    maxWidth * (originHeight / originWidth)
+                                );
+                            } else {
+                                targetHeight = maxHeight;
+                                targetWidth = Math.round(
+                                    maxHeight * (originWidth / originHeight)
+                                );
+                            }
+                        }
+                        //对图片进行缩放
+                        canvas.width = targetWidth;
+                        canvas.height = targetHeight;
+                        // 清除画布
+                        context.clearRect(0, 0, targetWidth, targetHeight);
+                        // 图片压缩
+                        context.drawImage(img, 0, 0, targetWidth, targetHeight);
+                        /*第一个参数是创建的img对象；第二三个参数是左上角坐标，后面两个是画布区域宽高*/
+                        //压缩后的base64文件
+                        newUrl = canvas.toDataURL("image/jpeg", 0.7);
+                        // 根据后台需求数据格式
+                        const formData = new FormData();
+                        // 文件对象
+                        let obj = {};
+                        if (that.submitType == "edit") {
+                            that.actionUrls = "";
+                            // obj.projectId = that.byIdData.id;
+                            obj.coverUrl = newUrl;
+                        } else {
+                            that.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                            obj.file = newUrl;
+                        }
+                        that.imageUpload(obj);
+                    };
+                };
             },
-            uploading(event, file, fileList) {
-                this.hideUpload = true;
-
+            //形象照上传
+            imageUpload(obj) {
+                fileUpImg(this.actionUrls, obj).then(response => {
+                    if (response.status == 1) {
+                        var imgArr = this.addform.imagePhotoarr;
+                        var tempArr = [];
+                        imgArr.push({url: response.data}); // push response.data进去 里面含3个字段
+                        if (imgArr.length > 0) {
+                            imgArr.forEach(item => {
+                                tempArr.push(item.url);
+                            });
+                        }
+                        this.addform.imagePhotoarr = imgArr; //更新data数据
+                        this.addform.imagePhoto = tempArr.join(",");
+                        if (imgArr.length >= this.limitImgCount) {
+                            this.hideUpload = true; //隐藏上传按钮
+                        }
+                    } else {
+                        this.$message({
+                            message: response.message,
+                            type: "warning"
+                        });
+                    }
+                });
             },
-            handleRemove2(file, fileList) {
-                this.hideUpload2 = false;
+            //限制用户上传的形象照格式和大小
+            beforeAvatarUpload(file) {
+                var isRightType = /^image\/(jpeg|png|jpg)$/.test(file.type);
+                var imgSize = file.size / 1024 / 1024 < 5;
+                if (!isRightType) {
+                    this.$message.warning("上传头像图片只能是 jpg、jpeg、png 格式!");
+                }
+                if (!imgSize) {
+                    this.$message.warning("上传头像图片大小不能超过 5MB!");
+                }
+                return isRightType && imgSize;
             },
-            handlePictureCardPreview2(file) {
-                this.dialogImageUrl2 = file.url;
-                this.dialogVisible2 = true;
+            // 移除形象照
+            unitPictrueRemove(file, fileList) {
+                console.log(file);
+                console.log(fileList);
+                var imgArrTemp = this.addform.imagePhotoarr;
+                if (file.status == "success") {
+                    imgArrTemp.forEach((item, i) => {
+                        var url = file.url; // 接口返回值没有逗号，加一个逗号
+                        if (item.url == url) {
+                            imgArrTemp.splice(i, 1);
+                        }
+                    });
+                    this.addform.imagePhotoarr = imgArrTemp; //更新data imgArr 数据
+                    var tempArr = [];
+                    if (imgArrTemp.length > 0) {
+                        imgArrTemp.forEach((item, i) => {
+                            tempArr.push(item.url);
+                        });
+                    }
+                    this.addform.imagePhoto = tempArr.join(","); //更新data pictureStr 数据
+                    if (imgArrTemp.length < this.limitImgCount) {
+                        this.hideUpload = false; //显示上传按钮
+                    }
+                }
             },
-            uploading2(event, file, fileList) {
-                this.hideUpload2 = true;
-
-            }
-
+            // 形象照预览
+            unitPictureCardPreview(file) {
+                this.unitImageUrl = file.url;
+                this.dialogUnitVisible = true;
+            },
+            //微信二维码上传
+            unitPictrueUploadSuccess2(response, file, fileList) {
+                if (response.status == 1) {
+                    var imgArr = this.addform.wechatPhotoarr;
+                    var tempArr = [];
+                    imgArr.push({
+                        url: response.data
+                    }); // push response.data进去 里面含3个字段
+                    if (imgArr.length > 0) {
+                        imgArr.forEach(item => {
+                            tempArr.push(item.url);
+                        });
+                    }
+                    this.addform.wechatPhotoarr = imgArr; //更新data数据
+                    this.addform.wechatPhoto = tempArr.join(",");
+                    if (imgArr.length >= this.limitImgCount) {
+                        this.hideUpload2 = true; //隐藏上传按钮
+                    }
+                }
+            },
+            //编辑微信二维码上传服务器
+            uploadServerEdit2(param) {
+                var that = this;
+                // 获取文件对象
+                let file = param.file;
+                // 创建一个HTML5的FileReader对象
+                var reader = new FileReader();
+                //创建一个img对象
+                var img = new Image();
+                let filename = param.filename;
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+                var newUrl = null;
+                reader.onload = e => {
+                    let base64Str = reader.result.split(",")[1];
+                    img.src = e.target.result;
+                    // base64地址图片加载完毕后执行
+                    img.onload = function () {
+                        // 缩放图片需要的canvas（也可以在DOM中直接定义canvas标签，这样就能把压缩完的图片不转base64也能直接显示出来）
+                        var canvas = document.createElement("canvas");
+                        var context = canvas.getContext("2d");
+                        // 图片原始尺寸
+                        var originWidth = this.width;
+                        var originHeight = this.height;
+                        // 最大尺寸限制，可通过设置宽高来实现图片压缩程度
+                        var maxWidth = that.globalData.albumWidth * 2,
+                            maxHeight = that.globalData.albumHeight * 2;
+                        // 目标尺寸
+                        var targetWidth = originWidth,
+                            targetHeight = originHeight;
+                        // 图片尺寸超过最大尺寸的限制
+                        if (originWidth > maxWidth || originHeight > maxHeight) {
+                            if (originWidth / originHeight > maxWidth / maxHeight) {
+                                // 更改宽度，按照宽度限定尺寸
+                                targetWidth = maxWidth;
+                                targetHeight = Math.round(
+                                    maxWidth * (originHeight / originWidth)
+                                );
+                            } else {
+                                targetHeight = maxHeight;
+                                targetWidth = Math.round(
+                                    maxHeight * (originWidth / originHeight)
+                                );
+                            }
+                        }
+                        //对图片进行缩放
+                        canvas.width = targetWidth;
+                        canvas.height = targetHeight;
+                        // 清除画布
+                        context.clearRect(0, 0, targetWidth, targetHeight);
+                        // 图片压缩
+                        context.drawImage(img, 0, 0, targetWidth, targetHeight);
+                        /*第一个参数是创建的img对象；第二三个参数是左上角坐标，后面两个是画布区域宽高*/
+                        //压缩后的base64文件
+                        newUrl = canvas.toDataURL("image/jpeg", 0.7);
+                        // 根据后台需求数据格式
+                        const formData = new FormData();
+                        // 文件对象
+                        let obj = {};
+                        if (that.submitType == "edit") {
+                            that.actionUrls = "";
+                            // obj.projectId = that.byIdData.id;
+                            obj.coverUrl = newUrl;
+                        } else {
+                            that.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                            obj.file = newUrl;
+                        }
+                        that.imageUpload2(obj);
+                    };
+                };
+            },
+            //微信二维码上传
+            imageUpload2(obj) {
+                fileUpImg(this.actionUrls, obj).then(response => {
+                    if (response.status == 1) {
+                        var imgArr = this.addform.wechatPhotoarr;
+                        var tempArr = [];
+                        imgArr.push({url: response.data}); // push response.data进去 里面含3个字段
+                        if (imgArr.length > 0) {
+                            imgArr.forEach(item => {
+                                tempArr.push(item.url);
+                            });
+                        }
+                        this.addform.wechatPhotoarr = imgArr; //更新data数据
+                        this.addform.wechatPhoto = tempArr.join(",");
+                        if (imgArr.length >= this.limitImgCount) {
+                            this.hideUpload2 = true; //隐藏上传按钮
+                        }
+                    } else {
+                        this.$message({
+                            message: response.message,
+                            type: "warning"
+                        });
+                    }
+                });
+            },
+            //限制用户上传的微信二维码格式和大小
+            beforeAvatarUpload2(file) {
+                var isRightType = /^image\/(jpeg|png|jpg)$/.test(file.type);
+                var imgSize = file.size / 1024 / 1024 < 5;
+                if (!isRightType) {
+                    this.$message.warning("上传头像图片只能是 jpg、jpeg、png 格式!");
+                }
+                if (!imgSize) {
+                    this.$message.warning("上传头像图片大小不能超过 5MB!");
+                }
+                return isRightType && imgSize;
+            },
+            // 移除微信二维码
+            unitPictrueRemove2(file, fileList) {
+                console.log(file);
+                console.log(fileList);
+                var imgArrTemp = this.addform.wechatPhotoarr;
+                if (file.status == "success") {
+                    imgArrTemp.forEach((item, i) => {
+                        var url = file.url; // 接口返回值没有逗号，加一个逗号
+                        if (item.url == url) {
+                            imgArrTemp.splice(i, 1);
+                        }
+                    });
+                    this.addform.wechatPhotoarr = imgArrTemp; //更新data imagePhotoarr 数据
+                    var tempArr = [];
+                    if (imgArrTemp.length > 0) {
+                        imgArrTemp.forEach((item, i) => {
+                            tempArr.push(item.url);
+                        });
+                    }
+                    this.addform.wechatPhoto = tempArr.join(","); //更新data pictureStr 数据
+                    if (imgArrTemp.length < this.limitImgCount) {
+                        this.hideUpload2 = false; //显示上传按钮
+                    }
+                }
+            },
+            // 微信二维码预览
+            unitPictureCardPreview2(file) {
+                this.unitImageUrl = file.url;
+                this.dialogUnitVisible = true;
+            },
 
         }
     }
