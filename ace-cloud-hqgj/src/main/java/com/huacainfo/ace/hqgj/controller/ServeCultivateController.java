@@ -95,8 +95,7 @@ public class ServeCultivateController extends BaseController {
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
     public ResponseDTO create(@RequestBody String jsons) throws Exception {
-        ServeCultivate obj = JSON.parseObject(jsons, ServeCultivate.class);
-        return this.serveCultivateService.create(obj, this.getCurUserProp());
+        return this.serveCultivateService.create(jsons, this.getCurUserProp());
     }
 
     /**
@@ -117,7 +116,7 @@ public class ServeCultivateController extends BaseController {
     @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
     public ResponseDTO update(@RequestBody String jsons) throws Exception {
         ServeCultivate obj = JSON.parseObject(jsons, ServeCultivate.class);
-        return this.serveCultivateService.update(obj, this.getCurUserProp());
+        return this.serveCultivateService.update(jsons, this.getCurUserProp());
     }
 
     /**
@@ -200,5 +199,21 @@ public class ServeCultivateController extends BaseController {
         //获取预览地址
         coverUrl = getResAccessUrl(storePath);
         return this.serveCultivateService.updateCoverUrl(id, coverUrl);
+    }
+
+
+    /**
+     * 修改状态 0-待审核  1-进行中 2-未通过 3-已结束',
+     * @param id
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "/updateCoverUrl", notes = "修改状态")
+    @PostMapping(value = "/updateCoverUrl", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateStatus(String id, String status){
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+     return serveCultivateService.updateStatus(id,status);
     }
 }

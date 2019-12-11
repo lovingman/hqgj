@@ -155,4 +155,13 @@
             #{id}
         </foreach>
     </delete>
+
+    <delete id="deleteByCultivateIds">
+        delete from serve_cultivate_schedule
+        where serveCultivateId =#{serveCultivateId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectScheduleId" resultType="java.lang.String">
+        select id from serve_cultivate_schedule where serveCultivateId=#{serveCultivateId,jdbcType=VARCHAR}
+    </select>
 </mapper>

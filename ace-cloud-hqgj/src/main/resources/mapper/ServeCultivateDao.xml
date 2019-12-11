@@ -165,4 +165,10 @@
       set fmUrl = #{coverUrl,jdbcType=VARCHAR}
       where id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <update id="updateStatus">
+      update serve_cultivate
+      set status = #{status,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

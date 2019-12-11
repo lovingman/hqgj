@@ -51,7 +51,7 @@ public interface ServeCultivateService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO update(ServeCultivate o, UserProp userProp) throws Exception;
+    ResponseDTO update(String jsons, UserProp userProp) throws Exception;
 
     /**
      * @throws
@@ -90,7 +90,21 @@ public interface ServeCultivateService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
-
+    /**
+     * 修改封面图片
+     * @param id
+     * @param coverUrl
+     * @return
+     */
     ResponseDTO  updateCoverUrl (String id,String coverUrl);
+
+    /**
+     * 修改状态  0-待审核  1-进行中 2-未通过 3-已结束',
+     * @param id
+     * @param status
+     * @return
+     */
+    ResponseDTO updateStatus(String id,String status);
+
 
 }
