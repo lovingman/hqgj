@@ -4,7 +4,7 @@ import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.exception.CustomException;
 import com.huacainfo.ace.common.plugin.sms.hxrt.feign.FeignTaskCmccService;
-import com.huacainfo.ace.common.security.model.Users;
+import com.huacainfo.ace.common.security.vo.UsersVo;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.web.controller.BizController;
@@ -122,7 +122,7 @@ public class WRegisterController extends BizController {
      */
     @ApiOperation(value = "/register", notes = "注册接口")
     @PostMapping(value = "/register", produces = "application/json;charset=UTF-8")
-    public ResponseDTO register(Users data) throws Exception {
+    public ResponseDTO register(UsersVo data) throws Exception {
 
         //验证码有效验证
         String code = String.valueOf(getSession("j_captcha_cmcc_" + data.getMobile()));
