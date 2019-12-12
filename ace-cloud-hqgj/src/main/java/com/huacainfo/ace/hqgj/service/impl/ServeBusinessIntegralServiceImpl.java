@@ -77,9 +77,7 @@ public class ServeBusinessIntegralServiceImpl implements ServeBusinessIntegralSe
     @Transactional
     @Log(operationObj = "积分管理", operationType = "创建", detail = "创建积分管理")
     public ResponseDTO create(ServeBusinessIntegral o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
-        }
+        o.setId(GUIDUtil.getGUID());
         if (CommonUtils.isBlank(o.getCompanyId())) {
             return new ResponseDTO(ResultCode.FAIL, "企业ID（关联base_company表id）不能为空！");
         }
