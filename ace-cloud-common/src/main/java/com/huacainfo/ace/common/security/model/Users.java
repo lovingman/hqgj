@@ -121,9 +121,9 @@ public class Users implements java.io.Serializable {
      */
     private String userType;
     /**
-     * 是否是同步数据
+     * 验证码
      */
-    private String isSync;
+    private String captcha;
 
     public String getUserType() {
         return userType;
@@ -320,11 +320,11 @@ public class Users implements java.io.Serializable {
                 '}';
     }
 
-    public String getIsSync() {
-        return isSync;
+    public String getCaptcha() {
+        return captcha;
     }
 
-    public void setIsSync(String isSync) {
-        this.isSync = isSync;
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 }

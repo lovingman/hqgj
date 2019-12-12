@@ -30,8 +30,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/www/reg")
 public class WRegisterController extends BizController {
-
-
     @Resource
     private RegisterService registerService;
 
