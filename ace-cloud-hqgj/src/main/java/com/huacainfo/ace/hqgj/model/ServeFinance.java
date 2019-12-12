@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.model;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名：serve_finance
@@ -113,6 +114,8 @@ public class ServeFinance extends BaseModel {
      * 注释：状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
      */
     private String status;
+
+    private List<ServeFinanceItem> financeItemList;
 
     public String getId() {
         return id;
@@ -248,5 +251,13 @@ public class ServeFinance extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public List<ServeFinanceItem> getFinanceItemList() {
+        return financeItemList;
+    }
+
+    public void setFinanceItemList(List<ServeFinanceItem> financeItemList) {
+        this.financeItemList = financeItemList;
     }
 }

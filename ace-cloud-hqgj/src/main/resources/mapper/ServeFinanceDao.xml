@@ -58,7 +58,6 @@
       address = #{address,jdbcType=VARCHAR},
       quota = #{quota,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
-      fmUrl = #{fmUrl,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
@@ -144,8 +143,20 @@
     <delete id="deleteByIds">
         delete from serve_finance
         where id in
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
-            #{id}
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
         </foreach>
     </delete>
+
+    <update id="updateCoverUrl">
+      update serve_finance
+      set fmUrl = #{coverUrl,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateStatus">
+      update serve_finance
+      set status = #{status,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

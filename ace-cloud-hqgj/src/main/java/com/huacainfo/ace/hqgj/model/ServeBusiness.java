@@ -126,6 +126,25 @@ public class ServeBusiness extends BaseModel {
      * 注释：状态  0-未审核  1-已审核  
      */
     private String status;
+    /**
+     * 进度标记
+     */
+    private String tab;
+    /**
+     * 审核人id
+     */
+    private String  shUserId ;
+
+    /**
+     * 审核人姓名
+     */
+    private String shUserName;
+
+    /**
+     * 字段名：serve_business.shDate
+     * 注释：审核时间
+     */
+    private Date shDate;
 
     public String getId() {
         return id;
@@ -277,5 +296,37 @@ public class ServeBusiness extends BaseModel {
 
     public void setLsNo(String lsNo) {
         this.lsNo = lsNo;
+    }
+
+    public String getTab() {
+        return tab;
+    }
+
+    public void setTab(String tab) {
+        this.tab = tab;
+    }
+
+    public String getShUserId() {
+        return shUserId;
+    }
+
+    public void setShUserId(String shUserId) {
+        this.shUserId = shUserId;
+    }
+
+    public String getShUserName() {
+        return shUserName;
+    }
+
+    public void setShUserName(String shUserName) {
+        this.shUserName = shUserName;
+    }
+
+    public Date getShDate() {
+        return shDate;
+    }
+
+    public void setShDate(Date shDate) {
+        this.shDate = shDate;
     }
 }

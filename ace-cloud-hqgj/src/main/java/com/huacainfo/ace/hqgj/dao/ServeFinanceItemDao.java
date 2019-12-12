@@ -27,4 +27,6 @@ public interface ServeFinanceItemDao {
     int isExist(ServeFinanceItem o);
 
     int deleteByIds(String[] ids);
+
+    int deleteByFinanceIds(String[] ids);
 }

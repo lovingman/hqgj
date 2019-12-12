@@ -26,4 +26,8 @@ public interface ServeFinanceDao {
     int isExist(ServeFinance o);
 
     int deleteByIds(String[] ids);
+
+    int updateCoverUrl(@Param("id") String id, @Param("coverUrl") String coverUrl);
+
+    int updateStatus(@Param("id") String id,@Param("status") String status);
 }

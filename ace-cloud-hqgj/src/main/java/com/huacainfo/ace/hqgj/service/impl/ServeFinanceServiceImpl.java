@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.ServeFinanceItemDao;
+import com.huacainfo.ace.hqgj.model.ServeFinanceItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,7 +36,8 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeFinanceDao serveFinanceDao;
-
+    @Resource
+    private ServeFinanceItemDao serveFinanceItemDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -77,22 +80,36 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     @Transactional
     @Log(operationObj = "财税服务包", operationType = "创建", detail = "创建财税服务包")
     public ResponseDTO create(ServeFinance o, UserProp userProp) throws Exception {
-        o.setId(GUIDUtil.getGUID());
-        if (CommonUtils.isBlank(o.getOrgId())) {
-            return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
+        String serveFinanceId=GUIDUtil.getGUID();
+        o.setId(serveFinanceId);
+        if (CommonUtils.isBlank(o.getType())) {
+            return new ResponseDTO(ResultCode.FAIL, "服务类型不能为空！");
         }
-
         int temp = this.serveFinanceDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "财税服务包名称重复！");
         }
-
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
+        //财税管家多个项目价格
+        if(!CommonUtils.isBlank(o.getFinanceItemList())){
+            List<ServeFinanceItem> list=o.getFinanceItemList();
+            for (ServeFinanceItem item :list){
+                item.setId(GUIDUtil.getGUID());
+                item.setFinanceId(serveFinanceId);
+                item.setCreateDate(new Date());
+                item.setStatus("1");
+                item.setCreateUserName(userProp.getName());
+                item.setCreateUserId(userProp.getUserId());
+                item.setModifyDate(new Date());
+               serveFinanceItemDao.insert(item);
+            }
+        }
         this.serveFinanceDao.insert(o);
+
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -116,10 +133,24 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }
-
         o.setModifyDate(new Date());
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
+         //财税管家多个项目价格
+        if(!CommonUtils.isBlank(o.getFinanceItemList())){
+            serveFinanceItemDao.deleteByFinanceIds(o.getId().split(","));
+            List<ServeFinanceItem> list=o.getFinanceItemList();
+            for (ServeFinanceItem item :list){
+                item.setId(GUIDUtil.getGUID());
+                item.setFinanceId(o.getId());
+                item.setCreateDate(new Date());
+                item.setStatus("1");
+                item.setCreateUserName(userProp.getName());
+                item.setCreateUserId(userProp.getUserId());
+                item.setModifyDate(new Date());
+                serveFinanceItemDao.insert(item);
+            }
+        }
         this.serveFinanceDao.updateByPrimaryKey(o);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
@@ -176,6 +207,37 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.serveFinanceDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+    /**
+     * 修改封面图片
+     * @param id
+     * @param coverUrl
+     * @return
+     */
+    @Override
+    public ResponseDTO updateCoverUrl(String id, String coverUrl) {
+
+        int i = serveFinanceDao.updateCoverUrl(id, coverUrl);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "数据更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "数据更新成功", coverUrl);
+    }
+
+    /**
+     * 修改状态 0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线',
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ResponseDTO updateStatus(String id, String status) {
+        int i=  serveFinanceDao.updateStatus(id,status);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }
 
 
