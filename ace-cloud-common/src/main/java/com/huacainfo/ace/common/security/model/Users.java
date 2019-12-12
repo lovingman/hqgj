@@ -120,10 +120,6 @@ public class Users implements java.io.Serializable {
      * 用户类型
      */
     private String userType;
-    /**
-     * 验证码
-     */
-    private String captcha;
 
     public String getUserType() {
         return userType;
@@ -318,13 +314,5 @@ public class Users implements java.io.Serializable {
                 ", corpName='" + corpName + '\'' +
                 ", parentCorpId='" + parentCorpId + '\'' +
                 '}';
-    }
-
-    public String getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
     }
 }
