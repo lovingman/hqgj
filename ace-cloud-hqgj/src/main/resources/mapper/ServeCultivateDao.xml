@@ -64,7 +64,6 @@
       startLng = #{startLng,jdbcType=DECIMAL},
       startLat = #{startLat,jdbcType=DECIMAL},
       detailedAddress = #{detailedAddress,jdbcType=VARCHAR},
-      fmUrl = #{fmUrl,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},

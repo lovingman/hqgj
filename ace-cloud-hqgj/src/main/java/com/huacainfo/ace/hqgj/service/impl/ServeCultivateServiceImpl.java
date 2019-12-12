@@ -173,7 +173,7 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
        //删除日程后新增
         List<String> list =serveCultivateScheduleDao.selectScheduleId(s.getId());
         String[] sb =new String[list.size()];
-        serveCultivateScheduleDao.deleteByCultivateIds(s.getId());
+        serveCultivateScheduleDao.deleteByCultivateIds(s.getId().split(","));
         basicAnnexDao.deleteByRelationIds(list.toArray(sb));
 
         if (!CommonUtils.isBlank(serveCultivateSchedule)) {
@@ -257,6 +257,7 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
     @Log(operationObj = "培训提升基础表", operationType = "批量删除", detail = "批量删除培训提升基础表")
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.serveCultivateDao.deleteByIds(ids);
+        serveCultivateScheduleDao.deleteByCultivateIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
