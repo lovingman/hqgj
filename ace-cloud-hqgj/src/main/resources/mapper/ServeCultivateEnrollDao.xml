@@ -77,34 +77,31 @@
         <where>
             1 = 1
             <if test="condition.serveCultivateId != null and condition.serveCultivateId != ''">
-                and t.serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR}
+                and t.serveCultivateId = #{condition.serveCultivateId,jdbcType=VARCHAR}
             </if>
             <if test="condition.companyId != null and condition.companyId != ''">
-                and t.companyId = #{companyId,jdbcType=VARCHAR}
+                and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
             </if>
             <if test="condition.companyName != null and condition.companyName != ''">
-                and t.companyName = #{companyName,jdbcType=VARCHAR}
+                and t.companyName = #{condition.companyName,jdbcType=VARCHAR}
             </if>
             <if test="condition.enrollUserId != null and condition.enrollUserId != ''">
-                and t.enrollUserId = #{enrollUserId,jdbcType=VARCHAR}
+                and t.enrollUserId = #{condition.enrollUserId,jdbcType=VARCHAR}
             </if>
             <if test="condition.enrollName != null and condition.enrollName != ''">
-                and t.enrollName = #{enrollName,jdbcType=VARCHAR}
+                and t.enrollName = #{condition.enrollName,jdbcType=VARCHAR}
             </if>
             <if test="condition.enrollMobile != null and condition.enrollMobile != ''">
-                and t.enrollMobile = #{enrollMobile,jdbcType=VARCHAR}
+                and t.enrollMobile = #{condition.enrollMobile,jdbcType=VARCHAR}
             </if>
             <if test="condition.sex != null and condition.sex != ''">
-                and t.sex = #{sex,jdbcType=VARCHAR}
+                and t.sex = #{condition.sex,jdbcType=VARCHAR}
             </if>
             <if test="condition.isSign != null and condition.isSign != ''">
-                and t.isSign = #{isSign,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.createUserId != null and condition.createUserId != ''">
-                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+                and t.isSign = #{condition.isSign,jdbcType=VARCHAR}
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
