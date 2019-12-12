@@ -56,6 +56,9 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     public PageDTO
             <ServeBusinessMemberVo> page(ServeBusinessMemberQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeBusinessMemberVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getType())){
+            condition.setTypes(condition.getType().split(","));
+        }
         List<ServeBusinessMemberVo> list = this.serveBusinessMemberDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
