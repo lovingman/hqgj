@@ -47,26 +47,26 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="注册企业名称" prop="name">
+                <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
-                <el-table-column label="申请人" prop="personName" sortable='custom' width="200">
+                <el-table-column label="申请人" prop="applyPersonName" sortable='custom' width="200">
                 </el-table-column>
-                <el-table-column label="联系电话" prop="mobile" width="250">
+                <el-table-column label="联系电话" prop="applyPersonTel" width="250">
                 </el-table-column>
-                <el-table-column label="申请日期" prop="address" sortable='custom' width="300">
+                <el-table-column label="申请日期" prop="createDate" sortable='custom' width="300">
                 </el-table-column>
                 <el-table-column label="状态" prop="status" sortable='custom' width="100">
-                    <!--<template slot-scope="scope">-->
-                    <!--<div type="text" class="green" v-if="scope.list.status==='1'">待审核</div>-->
-                    <!--<div type="text" class="red" v-if="scope.list.status==='2'">办理中</div>-->
-                    <!--<div type="text" class="orange" v-if="scope.list.status==='3'">注册成功</div>-->
-                    <!--<div type="text" class="orange" v-if="scope.list.status==='4'">驳回修改</div>-->
-                    <!--</template>-->
+                    <template slot-scope="scope">
+                        <div class="green" type="text" v-if="scope.row.status=='0'">待审核</div>
+                        <div class="blue" type="text" v-if="scope.row.status=='1'">办理中</div>
+                        <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                        <div class="orange" type="text" v-if="scope.row.status=='3'">注册成功</div>
+                    </template>
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="edit" height="40" type="text">审核</el-button>
-                        <el-button @click="progress" height="40" type="text">进度标记</el-button>
+                        <el-button @click="edit" v-if="scope.row.status=='0' || scope.row.status=='2'" height="40" type="text">审核</el-button>
+                        <el-button @click="progress" v-if="scope.row.status=='1' || scope.row.status=='3'" height="40" type="text">进度标记</el-button>
                         <!--<el-button v-if="scope.list.status=='3'" @click="" height="40" type="text" @click="edit">进度记录</el-button>-->
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
@@ -97,7 +97,7 @@
                         <!--<span v-if="item.checked">已标记</span>-->
                         <!--<span v-else="item.checked">标记</span>-->
                         <!--</el-radio>-->
-                        <el-checkbox false-label="0" true-label="1" v-model="item.checked" @change="sign">
+                        <el-checkbox @change="sign" false-label="0" true-label="1" v-model="item.checked">
                             <span v-if="item.checked">已标记</span>
                             <span v-else="item.checked">标记</span>
                         </el-checkbox>
@@ -121,11 +121,13 @@
 </template>
 
 <script>
+    import {getList, deleteById} from "@/api/hqgj/BWSService";
+
     export default {
         name: "index",
         data() {
             return {
-                checked:true,
+                checked: true,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
@@ -134,47 +136,62 @@
                     {
                         tag: '2018-01-12',
                         content: '00-资料审核已通过',
-                        checked:"1",
+                        checked: "1",
                         color: '#949fa8',
                     },
                     {
                         tag: '2018-01-13',
                         content: '01-人工到工商局窗口审核名称。确定名称100%可用',
-                        checked:"",
+                        checked: "",
                         color: '#949fa8',
                     },
                     {
                         tag: '2018-01-14',
                         content: '02-收集所有新办企业需要提供的资料',
                         class: 'fas fa-star',
-                        checked:"",
+                        checked: "",
                         color: '#949fa8',
                     }
                 ],
-                list: [
-                    {
-                        name: "湖南常德市凤天有限公司",
-                        personName: "王琦",
-                        mobile: "17688876666",
-                        address: "2019-11-21 09:31:08",
-                        status: "1"
-                    },
-                    {
-                        name: "湖南常德市凤天有限公司",
-                        personName: "王琦",
-                        mobile: "17688876666",
-                        address: "2019-11-21 09:31:08",
-                        status: "2"
-                    }
-                ],
+                list: [],
+                query: {
+
+                },
                 value: '',
                 value2: ''
             };
         },
         created() {
-
+            this.getlist();
         },
         methods: {
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
+            },
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
+            },
+            //获取列表数据
+            getlist() {
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                getList(this.query).then(response => {
+                    this.total = response.total;
+                    this.list = response.rows;
+                    console.log(response);
+                })
+            },
             edit() {
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
             },
@@ -184,7 +201,7 @@
             progress() {
                 this.progressVisible = true;
             },
-            sign(data){
+            sign(data) {
                 console.log(data);
             }
         }
@@ -195,5 +212,17 @@
     .container {
         padding: 20px;
         background-color: #fff;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+    .blue{
+        color: #1890FF;
+    }
+    .orange{
+        color: #FF9900;
     }
 </style>

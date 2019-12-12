@@ -29,13 +29,15 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="企业名称" prop="name" sortable='custom' >
+                <el-table-column label="企业名称" prop="companyName" sortable='custom' >
                 </el-table-column>
-                <el-table-column width="200" label="获得积分" prop="personName">
+                <el-table-column width="200" label="注册方式" prop="register">
                 </el-table-column>
-                <el-table-column label="剩余积分" prop="mobile" width="250">
+                <el-table-column width="150" label="获得积分" prop="getIntegral">
                 </el-table-column>
-                <el-table-column label="创建时间" prop="address" width="300">
+                <el-table-column label="剩余积分" prop="surplusIntegral" width="150">
+                </el-table-column>
+                <el-table-column label="创建时间" prop="createDate" width="250">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
@@ -62,6 +64,7 @@
 </template>
 
 <script>
+    import {getPage} from "@/api/hqgj/BWSService";
     export default {
         name: "index",
         data() {
@@ -69,23 +72,45 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                list:[
-                    {
-                        name:"湖南华彩伟业网络科技有限公司",
-                        personName:"余跃辉",
-                        mobile:"陈琳-0736-7123101",
-                        address: "武陵区互联网产业园A02-3",
-                        status:1
-                    }
-                ],
+                list:[],
+                query: {
+
+                },
                 value: '',
                 value2: ''
             };
         },
         created(){
-
+            this.getlist();
         },
         methods:{
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
+            },
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
+            },
+            //获取列表数据
+            getlist() {
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                getPage(this.query).then(response => {
+                    this.total = response.total;
+                    this.list = response.rows;
+                    console.log(response);
+                })
+            },
             create(){
                 this.$router.push({ path: "/hqgj/ServicePack/BWSService/create" });
             },

@@ -8,11 +8,9 @@
                 <tr style="height:63.45pt">
                     <td colspan="12"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:18pt; font-weight:bold"> 
-</span><span style="font-family:宋体; font-size:18pt; font-weight:bold">武陵区中小企业公共服务平台</span></p>
-                        <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:18pt; font-weight:bold">“创业服务一条龙”</span>
+                        <p style="margin:0pt; text-align:center"><span style="font-family:宋体; font-size:18pt; font-weight:bold"> </span>
+                            <span style="font-family:宋体; font-size:18pt; font-weight:bold">武陵区中小企业公共服务平台</span></p>
+                        <p style="margin:0pt; text-align:center"><span style="font-family:宋体; font-size:18pt; font-weight:bold">“创业服务一条龙”</span>
                             <span style="font-family:宋体; font-size:18pt; font-weight:bold">免费服务申请表</span></p>
                     </td>
                     <td style="vertical-align:top"></td>

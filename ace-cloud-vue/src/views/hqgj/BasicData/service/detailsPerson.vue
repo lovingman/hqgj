@@ -8,6 +8,9 @@
                         <el-form-item label="姓名:" prop="name">
                             <span>{{form.name}}</span>
                         </el-form-item>
+                        <el-form-item label="身份证号:" prop="name">
+                            <span>{{form.idCard}}</span>
+                        </el-form-item>
                         <el-form-item label="联系方式:" prop="name">
                             <span>{{form.mobile}}</span>
                         </el-form-item>

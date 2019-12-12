@@ -8,6 +8,9 @@
                         <el-form-item label="姓名:" prop="name">
                             <el-input placeholder="请输入姓名" v-model="addform.name"></el-input>
                         </el-form-item>
+                        <el-form-item label="身份证号:" prop="idCard">
+                            <el-input placeholder="请输入身份证号" v-model="addform.idCard"></el-input>
+                        </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
                             <el-input placeholder="请输入联系方式" v-model="addform.mobile"></el-input>
                         </el-form-item>
@@ -122,6 +125,7 @@
                 addform: {
                     orgId: "",
                     name: "",
+                    idCard:"",
                     mobile: "",
                     jobs: "",
                     speciality: "",
@@ -137,6 +141,9 @@
                     ],
                     mobile: [
                         {required: true, message: "请输入联系方式", trigger: "blur"},
+                    ],
+                    idCard: [
+                        {required: true, message: "请输入身份证号", trigger: "blur"},
                     ],
                     jobs: [
                         {required: true, message: "请输入职务/职称", trigger: "blur"}
