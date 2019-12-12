@@ -8,13 +8,5 @@ import java.util.List;
 
 public class ServeBusinessMemberVo extends ServeBusinessMember {
 private static final long serialVersionUID = 1L;
-    private List<BasicAnnex> basicAnnexes;
 
-    public List<BasicAnnex> getBasicAnnexes() {
-        return basicAnnexes;
-    }
-
-    public void setBasicAnnexes(List<BasicAnnex> basicAnnexes) {
-        this.basicAnnexes = basicAnnexes;
-    }
 }

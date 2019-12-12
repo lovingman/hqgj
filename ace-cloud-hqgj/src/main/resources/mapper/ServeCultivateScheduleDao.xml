@@ -156,9 +156,13 @@
         </foreach>
     </delete>
 
+
     <delete id="deleteByCultivateIds">
         delete from serve_cultivate_schedule
-        where serveCultivateId =#{serveCultivateId,jdbcType=VARCHAR}
+        where serveCultivateId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
     </delete>
 
     <select id="selectScheduleId" resultType="java.lang.String">

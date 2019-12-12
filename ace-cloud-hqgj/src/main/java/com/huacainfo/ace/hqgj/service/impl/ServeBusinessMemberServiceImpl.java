@@ -79,13 +79,12 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     @Override
     @Transactional
     @Log(operationObj = "创业服务资料清单人员表", operationType = "创建", detail = "创建创业服务资料清单人员表")
-    public ResponseDTO create(ServeBusinessMemberVo o, UserProp userProp) throws Exception {
+    public ResponseDTO create(ServeBusinessMember o, UserProp userProp) throws Exception {
         String memberId=GUIDUtil.getGUID();
         o.setId(memberId);
         if (CommonUtils.isBlank(o.getBusinessId())) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
         }
-
         int temp = this.serveBusinessMemberDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
@@ -105,6 +104,8 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
                 //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                 a.setType("3");
                 a.setRemark("培训提升日程表附件");
+                a.setCreateDate(new Date());
+                a.setStatus("1");
                 basicAnnexDao.insert(a);
             }
         }

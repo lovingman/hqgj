@@ -64,7 +64,6 @@
       startLng = #{startLng,jdbcType=DECIMAL},
       startLat = #{startLat,jdbcType=DECIMAL},
       detailedAddress = #{detailedAddress,jdbcType=VARCHAR},
-      fmUrl = #{fmUrl,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
@@ -72,6 +71,26 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateVo">
+        <collection property="scheduleList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule">
+            <id column="sid" jdbcType="VARCHAR" property="id"/>
+            <result column="sserveCultivateId" jdbcType="VARCHAR" property="serveCultivateId"/>
+            <result column="stitle" jdbcType="VARCHAR" property="title"/>
+            <result column="slecturerId" jdbcType="VARCHAR" property="lecturerId"/>
+            <result column="slecturerName" jdbcType="VARCHAR" property="lecturerName"/>
+            <result column="sstartLng" jdbcType="DECIMAL" property="startLng"/>
+            <result column="sstartLat" jdbcType="DECIMAL" property="startLat"/>
+            <result column="sdetailedAddress" jdbcType="VARCHAR" property="detailedAddress"/>
+            <result column="sstartDate" jdbcType="TIMESTAMP" property="startDate"/>
+            <result column="sendDate" jdbcType="TIMESTAMP" property="endDate"/>
+            <result column="scontent" jdbcType="VARCHAR" property="content"/>
+            <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+                <result column="baId" jdbcType="VARCHAR" property="id"/>
+                <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+                <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+                <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+                <result column="batype" jdbcType="VARCHAR" property="type"/>
+            </collection>
+        </collection>
 
     </resultMap>
     <sql id="Vo_Column_List">
@@ -121,16 +140,25 @@
             </if>
         </where>
     </sql>
+    <sql id="Vo_CultivateColumn_List">
+        ba.id baId,ba.fileURL,ba.fileType,ba.fileName,ba.type batype,
+        s.id sid, s.serveCultivateId sserveCultivateId, s.title stitle, s.lecturerId slecturerId, s.lecturerName slecturerName,
+        s.startLng sstartLng, s.startLat startLat, s.detailedAddress sdetailedAddress, s.startDate sstartDate, s.endDate sendDate,
+        s.content scontent
+        </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,
+        <include refid="Vo_CultivateColumn_List"/>
         <include refid="From_Statement"/>
+        left join serve_cultivate_schedule s on s.serveCultivateId=t.id
+        left join basic_annex ba on ba.relationId = s.id  and ba.type='1'
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
         <include refid="Vo_Column_List"/>
-        <include refid="From_Statement"/>
+         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>

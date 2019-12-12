@@ -254,7 +254,7 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+    limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
   </select>
   <select id="findCount" resultType="int">
     SELECT COUNT(*)

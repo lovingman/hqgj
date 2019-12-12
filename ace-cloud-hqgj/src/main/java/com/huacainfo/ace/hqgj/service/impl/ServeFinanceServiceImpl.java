@@ -77,9 +77,7 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     @Transactional
     @Log(operationObj = "财税服务包", operationType = "创建", detail = "创建财税服务包")
     public ResponseDTO create(ServeFinance o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
-        }
+        o.setId(GUIDUtil.getGUID());
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }
@@ -88,7 +86,7 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "财税服务包名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
+
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
