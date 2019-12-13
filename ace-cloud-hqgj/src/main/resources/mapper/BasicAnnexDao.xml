@@ -37,106 +37,7 @@
       #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
-        insert into basic_annex
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="relationId != null">
-                relationId,
-            </if>
-            <if test="fileType != null">
-                fileType,
-            </if>
-            <if test="fileName != null">
-                fileName,
-            </if>
-            <if test="fileSize != null">
-                fileSize,
-            </if>
-            <if test="fileURL != null">
-                fileURL,
-            </if>
-            <if test="remark != null">
-                remark,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
-            <if test="createDate != null">
-                createDate,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="relationId != null">
-                #{relationId,jdbcType=VARCHAR},
-            </if>
-            <if test="fileType != null">
-                #{fileType,jdbcType=VARCHAR},
-            </if>
-            <if test="fileName != null">
-                #{fileName,jdbcType=VARCHAR},
-            </if>
-            <if test="fileSize != null">
-                #{fileSize,jdbcType=DECIMAL},
-            </if>
-            <if test="fileURL != null">
-                #{fileURL,jdbcType=VARCHAR},
-            </if>
-            <if test="remark != null">
-                #{remark,jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                #{type,jdbcType=VARCHAR},
-            </if>
-            <if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
-        update basic_annex
-        <set>
-            <if test="relationId != null">
-                relationId = #{relationId,jdbcType=VARCHAR},
-            </if>
-            <if test="fileType != null">
-                fileType = #{fileType,jdbcType=VARCHAR},
-            </if>
-            <if test="fileName != null">
-                fileName = #{fileName,jdbcType=VARCHAR},
-            </if>
-            <if test="fileSize != null">
-                fileSize = #{fileSize,jdbcType=DECIMAL},
-            </if>
-            <if test="fileURL != null">
-                fileURL = #{fileURL,jdbcType=VARCHAR},
-            </if>
-            <if test="remark != null">
-                remark = #{remark,jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                type = #{type,jdbcType=VARCHAR},
-            </if>
-            <if test="createDate != null">
-                createDate = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
+
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
     update basic_annex
     set relationId = #{relationId,jdbcType=VARCHAR},
@@ -163,31 +64,19 @@
         <where>
             1 = 1
             <if test="condition.relationId != null and condition.relationId != ''">
-                and t.relationId = #{relationId,jdbcType=VARCHAR}
+                and t.relationId = #{condition.relationId,jdbcType=VARCHAR}
             </if>
             <if test="condition.fileType != null and condition.fileType != ''">
-                and t.fileType = #{fileType,jdbcType=VARCHAR}
+                and t.fileType = #{condition.fileType,jdbcType=VARCHAR}
             </if>
             <if test="condition.fileName != null and condition.fileName != ''">
-                and t.fileName = #{fileName,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.fileSize != null and condition.fileSize != ''">
-                and t.fileSize = #{fileSize,jdbcType=DECIMAL}
-            </if>
-            <if test="condition.fileURL != null and condition.fileURL != ''">
-                and t.fileURL = #{fileURL,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.remark != null and condition.remark != ''">
-                and t.remark = #{remark,jdbcType=VARCHAR}
+                and t.fileName = #{condition.fileName,jdbcType=VARCHAR}
             </if>
             <if test="condition.type != null and condition.type != ''">
-                and t.type = #{type,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.createDate != null and condition.createDate != ''">
-                and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+                and t.type = #{condition.type,jdbcType=VARCHAR}
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
