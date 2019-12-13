@@ -36,3 +36,26 @@ export function createIntegral(data) {
         data: data
     })
 }
+export function deleteIntegral(id) {
+    return request({
+        url: '/hqgj/serveBusinessIntegral/deleteById',
+        method: 'post',
+        params: {id:id}
+    })
+}
+
+export function getMember(query) {
+    return request({
+        url: '/hqgj/serveBusinessMember/page',
+        method: 'get',
+        params: query
+    })
+}
+
+export function getOther(query) {
+    return request({
+        url: '/hqgj/serveBusinessOther/page',
+        method: 'get',
+        params: query
+    })
+}

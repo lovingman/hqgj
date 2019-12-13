@@ -65,7 +65,7 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="edit" v-if="scope.row.status=='0' || scope.row.status=='2'" height="40" type="text">审核</el-button>
+                        <el-button @click="examine(scope.$index,scope.row)" v-if="scope.row.status=='0' || scope.row.status=='2'" height="40" type="text">审核</el-button>
                         <el-button @click="progress" v-if="scope.row.status=='1' || scope.row.status=='3'" height="40" type="text">进度标记</el-button>
                         <!--<el-button v-if="scope.list.status=='3'" @click="" height="40" type="text" @click="edit">进度记录</el-button>-->
                         <span class="strightline">|</span>
@@ -192,8 +192,8 @@
                     console.log(response);
                 })
             },
-            edit() {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
+            examine(index,data) {
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine",query:{id:data.id}});
             },
             preview() {
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});

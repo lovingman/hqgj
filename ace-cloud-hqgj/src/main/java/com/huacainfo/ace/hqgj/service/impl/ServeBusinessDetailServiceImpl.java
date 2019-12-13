@@ -1,8 +1,12 @@
 package com.huacainfo.ace.hqgj.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
-import com.huacainfo.ace.hqgj.dao.ServeBusinessMemberDao;
-import com.huacainfo.ace.hqgj.model.ServeBusinessMember;
-import com.huacainfo.ace.hqgj.service.ServeBusinessMemberService;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessMemberVo;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessMemberQVo;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessDetailDao;
+import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
+import com.huacainfo.ace.hqgj.service.ServeBusinessDetailService;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
 
 import javax.annotation.Resource;
 
@@ -32,10 +35,10 @@ import javax.annotation.Resource;
  * @version: 2019-12-09
  * @Description: TODO(创业服务资料清单人员表)
  */
-public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberService {
+public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
-    private ServeBusinessMemberDao serveBusinessMemberDao;
+    private ServeBusinessDetailDao serveBusinessMemberDao;
     @Resource
     private BasicAnnexDao basicAnnexDao;
     /**
@@ -54,9 +57,12 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
      */
     @Override
     public PageDTO
-            <ServeBusinessMemberVo> page(ServeBusinessMemberQVo condition, int start, int limit, String orderBy) throws Exception {
-        PageDTO<ServeBusinessMemberVo> rst = new PageDTO<>();
-        List<ServeBusinessMemberVo> list = this.serveBusinessMemberDao.findList(condition, start, limit, orderBy);
+            <ServeBusinessDetailVo> page(ServeBusinessDetailQVo condition, int start, int limit, String orderBy) throws Exception {
+        PageDTO<ServeBusinessDetailVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getType())){
+            condition.setTypes(condition.getType().split(","));
+        }
+        List<ServeBusinessDetailVo> list = this.serveBusinessMemberDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
             int allRows = this.serveBusinessMemberDao.findCount(condition);
@@ -79,34 +85,39 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     @Override
     @Transactional
     @Log(operationObj = "创业服务资料清单人员表", operationType = "创建", detail = "创建创业服务资料清单人员表")
-    public ResponseDTO create(ServeBusinessMember o, UserProp userProp) throws Exception {
-        String memberId=GUIDUtil.getGUID();
-        o.setId(memberId);
-        if (CommonUtils.isBlank(o.getBusinessId())) {
-            return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
-        }
-        int temp = this.serveBusinessMemberDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-        }
-        o.setCreateDate(new Date());
-        o.setStatus("1");
-        o.setCreateUserName(userProp.getName());
-        o.setCreateUserId(userProp.getUserId());
-        o.setModifyDate(new Date());
-        this.serveBusinessMemberDao.insert(o);
-        if(!CommonUtils.isBlank(o.getBasicAnnexes())) {
-            List<BasicAnnex> fileURL = o.getBasicAnnexes();
-            for (BasicAnnex a : fileURL) {
-                a.setId(GUIDUtil.getGUID());
-                a.setRelationId(memberId);
-                a.setFileURL(a.getFileURL());
-                //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
-                a.setType("3");
-                a.setRemark("培训提升日程表附件");
-                a.setCreateDate(new Date());
-                a.setStatus("1");
-                basicAnnexDao.insert(a);
+    public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
+        JSONObject jsonObj= JSON.parseObject(jsons);
+        List<ServeBusinessDetail> serveBusinessMembers=new ArrayList<ServeBusinessDetail>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessMember"), ServeBusinessDetail.class));
+        for(ServeBusinessDetail o:serveBusinessMembers) {
+            String memberId = GUIDUtil.getGUID();
+            o.setId(memberId);
+            if (CommonUtils.isBlank(o.getBusinessId())) {
+                return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
+            }
+            int temp = this.serveBusinessMemberDao.isExist(o);
+            if (temp > 0) {
+                return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
+            }
+            o.setCreateDate(new Date());
+            o.setStatus("1");
+            o.setCreateUserName(userProp.getName());
+            o.setCreateUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
+            this.serveBusinessMemberDao.insert(o);
+            if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
+                List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                for (BasicAnnex a : fileURL) {
+                    a.setId(GUIDUtil.getGUID());
+                    a.setRelationId(memberId);
+                    a.setFileURL(a.getFileURL());
+                    //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
+                    a.setType("3");
+                    a.setRemark("创业服务资料清单附件");
+                    a.setCreateDate(new Date());
+                    a.setStatus("1");
+                    basicAnnexDao.insert(a);
+                }
             }
         }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
@@ -125,7 +136,7 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
     @Override
     @Transactional
     @Log(operationObj = "创业服务资料清单人员表", operationType = "变更", detail = "变更创业服务资料清单人员表")
-    public ResponseDTO update(ServeBusinessMember o, UserProp userProp) throws Exception {
+    public ResponseDTO update(ServeBusinessDetail o, UserProp userProp) throws Exception {
         if (CommonUtils.isBlank(o.getId())) {
             return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
         }
@@ -152,8 +163,8 @@ public class ServeBusinessMemberServiceImpl implements ServeBusinessMemberServic
      */
     @Override
     @Transactional
-    public ResponseDTO<ServeBusinessMemberVo> getById(String id) throws Exception {
-        ResponseDTO<ServeBusinessMemberVo> rst = new ResponseDTO<>();
+    public ResponseDTO<ServeBusinessDetailVo> getById(String id) throws Exception {
+        ResponseDTO<ServeBusinessDetailVo> rst = new ResponseDTO<>();
         rst.setData(this.serveBusinessMemberDao.selectVoByPrimaryKey(id));
         return rst;
     }

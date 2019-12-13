@@ -120,10 +120,6 @@ public class Users implements java.io.Serializable {
      * 用户类型
      */
     private String userType;
-    /**
-     * 是否是同步数据
-     */
-    private String isSync;
 
     public String getUserType() {
         return userType;
@@ -318,13 +314,5 @@ public class Users implements java.io.Serializable {
                 ", corpName='" + corpName + '\'' +
                 ", parentCorpId='" + parentCorpId + '\'' +
                 '}';
-    }
-
-    public String getIsSync() {
-        return isSync;
-    }
-
-    public void setIsSync(String isSync) {
-        this.isSync = isSync;
     }
 }

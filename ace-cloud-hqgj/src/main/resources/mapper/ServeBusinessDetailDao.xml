@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeBusinessMemberDao">
-    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeBusinessDetailDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="businessId" jdbcType="VARCHAR" property="businessId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -27,15 +27,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from serve_business_member
+        from serve_business_detail
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from serve_business_member
+    delete from serve_business_detail
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
-    insert into serve_business_member (id, businessId, name, 
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
+    insert into serve_business_detail (id, businessId, name, 
       sex, idCard, mobile, 
       jobs, sharesProportion, type, `explain`,
       createUserId, createUserName, createDate, 
@@ -49,8 +49,8 @@
       #{status,jdbcType=VARCHAR})
   </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember">
-    update serve_business_member
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
+    update serve_business_detail
     set businessId = #{businessId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
@@ -66,7 +66,7 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessMemberVo">
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo">
         <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
             <result column="baId" jdbcType="VARCHAR" property="id"/>
             <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
@@ -79,7 +79,7 @@
     t.id, t.businessId, t.name, t.sex, t.idCard, t.mobile, t.jobs, t.sharesProportion, t.type,t.`explain`, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
-    FROM serve_business_member t
+    FROM serve_business_detail t
   </sql>
     <sql id="Where_Condition">
         <where>
@@ -99,11 +99,17 @@
             <if test="condition.mobile != null and condition.mobile != ''">
                 and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
             </if>
-            <if test="condition.type != null and condition.type != ''">
-                and t.type in (#{condition.type,jdbcType=VARCHAR})
+            <if test="condition.types != null and condition.type != ''">
+                and t.type in
+                <foreach collection="condition.types" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
@@ -137,13 +143,13 @@
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
     </select>
-    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessMember" resultType="int">
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail" resultType="int">
             select count(1)
-        from serve_business_member
+        from serve_business_detail
         where id = #{id,jdbcType=VARCHAR}
   </select>
     <delete id="deleteByIds">
-        delete from serve_business_member
+        delete from serve_business_detail
         where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
