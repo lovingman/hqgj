@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.TimerDao">
+
+    <select id="findEndId" resultType="java.lang.String">
+        select t.id from  serve_cultivate t where  DATE_FORMAT(t.endDate,'%Y-%m-%d') <![CDATA[ < ]]> DATE_FORMAT(NOW(),'%Y-%m-%d')
+         and t.status !='3'
+    </select>
+
+
+    <update id="batchUpdate" parameterType="java.lang.String">
+        update serve_cultivate
+        set   status = '3'
+        where  id  in
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+
+</mapper>
