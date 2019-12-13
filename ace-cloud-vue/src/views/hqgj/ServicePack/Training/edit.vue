@@ -56,7 +56,7 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <photo ref="imgUpload"></photo>
+                <photo ref="imgUpload" :getData="getData" :submitType="submitType"></photo>
               </el-col>
             </el-row>
             <el-row>
@@ -89,7 +89,10 @@
               v-for="(scheduleModel,index) in scheduleForm.scheduleModels"
               :key="scheduleModel.key"
             >
-              <div class="schedule-title">日程安排-{{index+1}}</div>
+              <div class="schedule-top">
+                <div class="schedule-title">日程安排-{{index+1}}</div>
+                <div class="rtt" @click="removeModel(scheduleModel)">删除</div>
+              </div>
               <el-row>
                 <el-col :span="12">
                   <el-form-item
@@ -215,17 +218,19 @@
 </template>
 
 <script>
-import { create } from "@/api/hqgj/training";
+import { update, getById } from "@/api/hqgj/training";
 import EditorBar from "../../publicTemplate/wangEnduit";
 import photo from "../../publicTemplate/photo";
 export default {
   components: { EditorBar, photo },
-  name: "add",
+  name: "edit",
   data() {
     return {
       tabsName: "first", //选项卡展示第几个
       noClickTabs: true, //是否可以点击选项卡
       isShow: true, //是否显示
+      getData: {}, //编辑数据
+      submitType: "edit", //类型
       //基本信息
       basicForm: {
         title: "", //标题
@@ -303,16 +308,54 @@ export default {
       }
     };
   },
+  created() {
+    this.load();
+  },
   methods: {
+    //获取数据
+    load() {
+      this.id = this.$route.query.id;
+      //请求数据接口
+      getById(this.id).then(res => {
+        if (res.status == 1) {
+          this.basicForm = res.data; //基本信息
+          this.getData = res.data; //传递给子组件的数据
+          var obj = [];
+          obj.push(res.data.startDate); //开始时间
+          obj.push(res.data.endDate); //结束时间
+          this.basicForm.timeArr = obj;
+          var scheduleModelsArr = res.data.scheduleList;
+          if (scheduleModelsArr) {
+            for (let i = 0; i < scheduleModelsArr.length; i++) {
+              var obj = [];
+              obj.push(scheduleModelsArr[i].startDate);
+              obj.push(scheduleModelsArr[i].endDate);
+              scheduleModelsArr[i].timeArr = obj;
+            }
+            this.scheduleForm = {
+              scheduleModels: scheduleModelsArr
+            };
+          }
+        } else {
+          this.$message({
+            message: res.message,
+            type: "warning"
+          });
+        }
+      });
+    },
+    //
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
     },
-    beforeAvatarUpload(file) {
-      console.log(file);
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
+    beforeAvatarUpload() {},
     //返回
     black() {
       this.$router.push({
@@ -332,9 +375,6 @@ export default {
         if (valid) {
           this.tabsName = "second";
           this.isShow = false;
-          if (this.scheduleForm.scheduleModels.length == 0) {
-            this.addSchedule();
-          }
         } else {
           return false;
         }
@@ -354,6 +394,7 @@ export default {
             title: this.basicForm.title, //标题
             cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
             fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
+            id: this.id, //基本信息表id
             startDate:
               this.basicForm.timeArr.length > 0
                 ? this.basicForm.timeArr[0]
@@ -377,7 +418,7 @@ export default {
                 : ""; //结束时间
           }
           let serveCultivateSchedule = this.scheduleForm.scheduleModels;
-          create({
+          update({
             serveCultivate: serveCultivate,
             serveCultivateSchedule: serveCultivateSchedule
           }).then(res => {
@@ -410,6 +451,13 @@ export default {
         courseware: "", //课件
         key: Date.now()
       });
+    },
+    //删除日程
+    removeModel(item) {
+      var index = this.scheduleForm.scheduleModels.indexOf(item);
+      if (index !== -1) {
+        this.scheduleForm.scheduleModels.splice(index, 1);
+      }
     },
     change(val) {
       console.log(val);
@@ -472,7 +520,26 @@ export default {
     padding: 20px 50px 0 30px;
     .schedule-title {
       font-weight: bold;
+      flex: 1;
+    }
+    .schedule-top {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      line-height: 30px;
+      border-bottom: 1px dotted #ddd;
       margin-bottom: 30px;
+      padding-bottom: 20px;
+    }
+    .rtt {
+      float: right;
+      background-color: #e8f4ff;
+      text-align: center;
+      padding: 0 15px;
+      color: #1890ff;
+      font-size: 13px;
+      height: 30px;
+      cursor: pointer;
     }
   }
   .footer {

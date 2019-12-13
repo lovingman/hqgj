@@ -11,7 +11,7 @@
 
     <parent>
         <groupId>com.huacainfo</groupId>
-        <artifactId>ace-zcpa</artifactId>
+        <artifactId>ace-hqgj</artifactId>
         <version>1.0</version>
     </parent>
     <properties>
