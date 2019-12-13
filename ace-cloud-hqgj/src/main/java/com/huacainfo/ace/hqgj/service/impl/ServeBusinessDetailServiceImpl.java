@@ -12,7 +12,9 @@ import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessDao;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
+import com.huacainfo.ace.hqgj.model.ServeBusiness;
 import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,8 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeBusinessDetailDao serveBusinessDetailDao;
+    @Resource
+    private ServeBusinessDao serveBusinessDao;
     @Resource
     private BasicAnnexDao basicAnnexDao;
     /**
@@ -217,11 +221,15 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         if (CommonUtils.isBlank(id)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
+        ServeBusiness b = serveBusinessDao.selectVoByPrimaryKey(id);
+        if (b==null) {
+            return new ResponseDTO(ResultCode.FAIL, "没有数据");
+        }
         List<AnnexVo> list =serveBusinessDetailDao.annexList(id);
         AnnexVo vo =new AnnexVo();
-        vo.setFileName("武陵区");
+        vo.setFileName("武陵区中小企业服务平台“创业服务一条龙”免费服务申请表");
         vo.setAnnexNum(1);
-        vo.setCreateDate(new Date());
+        vo.setCreateDate(b.getCreateDate());
         list.add(vo);
         if(list==null){
             return new ResponseDTO(ResultCode.FAIL, "获取失败！");
