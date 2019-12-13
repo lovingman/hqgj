@@ -65,3 +65,10 @@ export function getannexList(id) {
         params: {id:id}
     })
 }
+export function getAnnex(query) {
+    return request({
+        url: '/hqgj/basicAnnex/page',
+        method: 'get',
+        params: query
+    })
+}
