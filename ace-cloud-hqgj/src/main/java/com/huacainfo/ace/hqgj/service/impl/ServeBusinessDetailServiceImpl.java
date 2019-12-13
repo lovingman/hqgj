@@ -218,6 +218,11 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
         List<AnnexVo> list =serveBusinessDetailDao.annexList(id);
+        AnnexVo vo =new AnnexVo();
+        vo.setFileName("武陵区");
+        vo.setAnnexNum(1);
+        vo.setCreateDate(new Date());
+        list.add(vo);
         if(list==null){
             return new ResponseDTO(ResultCode.FAIL, "获取失败！");
         }
