@@ -83,7 +83,7 @@
                 and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
             </if>
             <if test="condition.companyName != null and condition.companyName != ''">
-                and t.companyName = #{condition.companyName,jdbcType=VARCHAR}
+                and (t.companyName = #{condition.companyName,jdbcType=VARCHAR} or t.enrollName = #{condition.companyName,jdbcType=VARCHAR})
             </if>
             <if test="condition.enrollUserId != null and condition.enrollUserId != ''">
                 and t.enrollUserId = #{condition.enrollUserId,jdbcType=VARCHAR}
