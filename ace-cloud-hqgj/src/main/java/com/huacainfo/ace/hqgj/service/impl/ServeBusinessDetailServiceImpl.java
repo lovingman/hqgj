@@ -13,6 +13,7 @@ import java.util.List;
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
+import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -38,7 +39,7 @@ import javax.annotation.Resource;
 public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
-    private ServeBusinessDetailDao serveBusinessMemberDao;
+    private ServeBusinessDetailDao serveBusinessDetailDao;
     @Resource
     private BasicAnnexDao basicAnnexDao;
     /**
@@ -62,10 +63,10 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         if(!CommonUtils.isBlank(condition.getType())){
             condition.setTypes(condition.getType().split(","));
         }
-        List<ServeBusinessDetailVo> list = this.serveBusinessMemberDao.findList(condition, start, limit, orderBy);
+        List<ServeBusinessDetailVo> list = this.serveBusinessDetailDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
-            int allRows = this.serveBusinessMemberDao.findCount(condition);
+            int allRows = this.serveBusinessDetailDao.findCount(condition);
             rst.setTotal(allRows);
         }
         return rst;
@@ -95,7 +96,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
             if (CommonUtils.isBlank(o.getBusinessId())) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
             }
-            int temp = this.serveBusinessMemberDao.isExist(o);
+            int temp = this.serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
             }
@@ -104,7 +105,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
             o.setCreateUserName(userProp.getName());
             o.setCreateUserId(userProp.getUserId());
             o.setModifyDate(new Date());
-            this.serveBusinessMemberDao.insert(o);
+            this.serveBusinessDetailDao.insert(o);
             if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                 List<BasicAnnex> fileURL = o.getBasicAnnexes();
                 for (BasicAnnex a : fileURL) {
@@ -147,7 +148,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         o.setModifyDate(new Date());
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
-        this.serveBusinessMemberDao.updateByPrimaryKey(o);
+        this.serveBusinessDetailDao.updateByPrimaryKey(o);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -165,7 +166,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     @Transactional
     public ResponseDTO<ServeBusinessDetailVo> getById(String id) throws Exception {
         ResponseDTO<ServeBusinessDetailVo> rst = new ResponseDTO<>();
-        rst.setData(this.serveBusinessMemberDao.selectVoByPrimaryKey(id));
+        rst.setData(this.serveBusinessDetailDao.selectVoByPrimaryKey(id));
         return rst;
     }
 
@@ -182,7 +183,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     @Override
     @Log(operationObj = "创业服务资料清单人员表", operationType = "删除", detail = "删除创业服务资料清单人员表")
     public ResponseDTO deleteById(String id) throws Exception {
-        this.serveBusinessMemberDao.deleteByPrimaryKey(id);
+        this.serveBusinessDetailDao.deleteByPrimaryKey(id);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -201,8 +202,26 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     @Transactional
     @Log(operationObj = "创业服务资料清单人员表", operationType = "批量删除", detail = "批量删除创业服务资料清单人员表")
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
-        this.serveBusinessMemberDao.deleteByIds(ids);
+        this.serveBusinessDetailDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+
+    /**
+     * 查询创业服务附件
+     * @param id 主键
+     * @return
+     */
+    @Override
+    public ResponseDTO<AnnexVo> annexList(String id) {
+        if (CommonUtils.isBlank(id)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        List<AnnexVo> list =serveBusinessDetailDao.annexList(id);
+        if(list==null){
+            return new ResponseDTO(ResultCode.FAIL, "获取失败！");
+        }
+        return  new ResponseDTO(ResultCode.SUCCESS, "获取成功！" ,list);
     }
 
 

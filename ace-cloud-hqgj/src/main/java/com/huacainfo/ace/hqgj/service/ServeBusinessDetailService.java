@@ -4,8 +4,11 @@ import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
+import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
+
+import java.util.List;
 
 /**
  * @author: 何双
@@ -90,5 +93,13 @@ public interface ServeBusinessDetailService {
      * @version: 2019-12-09
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
+
+
+    /**
+     * 查询创业服务附件
+     * @param id 主键
+     * @return
+     */
+    ResponseDTO<AnnexVo> annexList(String id);
 
 }

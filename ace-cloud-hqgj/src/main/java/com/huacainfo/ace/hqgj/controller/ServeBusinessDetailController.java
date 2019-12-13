@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -159,6 +160,19 @@ public class ServeBusinessDetailController extends BaseController {
     @PostMapping(value = "/deleteByIds", produces = "application/json;charset=UTF-8")
     public ResponseDTO deleteByIds(String ids) throws Exception {
         return this.serveBusinessDetailService.deleteByIds(ids.split(","));
+    }
+
+
+    /**
+     * 查询附件列表
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "/annexList", notes = "根据主键查询附件列表")
+    @GetMapping(value = "/annexList", produces = "application/json;charset=UTF-8")
+    public ResponseDTO<AnnexVo> annexList(String id) {
+
+        return  this.serveBusinessDetailService.annexList(id);
     }
 
 }

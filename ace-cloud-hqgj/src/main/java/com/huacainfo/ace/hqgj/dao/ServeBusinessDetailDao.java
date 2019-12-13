@@ -1,6 +1,8 @@
 package com.huacainfo.ace.hqgj.dao;
 
 import java.util.List;
+
+import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import org.apache.ibatis.annotations.Param;
 import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
@@ -26,4 +28,6 @@ public interface ServeBusinessDetailDao {
     int isExist(ServeBusinessDetail o);
 
     int deleteByIds(String[] ids);
+
+    List<AnnexVo> annexList(@Param("id") String id);
 }

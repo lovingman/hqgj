@@ -136,7 +136,7 @@
             </otherwise>
         </choose>
         limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL})v
-        left join basic_annex ba on ba.relationId = v.id  and ba.type='3'
+        left join basic_annex ba on ba.relationId = v.id and ba.type='3'
     </select>
     <select id="findCount" resultType="int">
         SELECT COUNT(*)
@@ -155,4 +155,36 @@
             #{id}
         </foreach>
     </delete>
+
+    <resultMap id="annexResultMap" type="com.huacainfo.ace.hqgj.vo.AnnexVo">
+            <result column="id" jdbcType="VARCHAR" property="id"/>
+            <result column="dtype" jdbcType="VARCHAR" property="dtype"/>
+            <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+            <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="annexNum" jdbcType="INTEGER" property="annexNum"/>
+    </resultMap>
+
+    <select id="annexList" parameterType="java.lang.String" resultMap="annexResultMap">
+  SELECT DISTINCT
+	d.id,
+	d.type dtype,
+	d.createDate,
+	ba.fileName,
+	(
+		SELECT
+			count(1)
+		FROM
+			`basic_annex` ba
+		LEFT JOIN serve_business_detail d ON ba.relationId = d.id
+		LEFT JOIN serve_business b ON b.id = d.businessId
+		WHERE
+			b.id = #{id,jdbcType=VARCHAR}
+		AND d.type = dtype
+	) AS annexNum
+FROM
+	`basic_annex` ba
+LEFT JOIN serve_business_detail d ON ba.relationId = d.id
+WHERE
+	ba.type = '3'
+    </select>
 </mapper>
