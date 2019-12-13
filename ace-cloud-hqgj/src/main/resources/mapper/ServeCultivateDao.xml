@@ -3,6 +3,7 @@
 <mapper namespace="com.huacainfo.ace.hqgj.dao.ServeCultivateDao">
     <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeCultivate">
         <id column="id" jdbcType="VARCHAR" property="id"/>
+        <id column="orgId" jdbcType="VARCHAR" property="orgId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="maxPersonNumber" jdbcType="INTEGER" property="maxPersonNumber"/>
         <result column="enrollPersopnNumber" jdbcType="INTEGER" property="enrollPersopnNumber"/>
@@ -23,7 +24,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, title, maxPersonNumber, enrollPersopnNumber, cultivatePersonNumber, startDate, 
+    id,orgId, title, maxPersonNumber, enrollPersopnNumber, cultivatePersonNumber, startDate,
     endDate, startLng, startLat, detailedAddress, fmUrl, content, createUserId, createUserName, 
     createDate, modifyUserId, modifyUserName, modifyDate, status
   </sql>
@@ -38,14 +39,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivate">
-    insert into serve_cultivate (id, title, maxPersonNumber, 
+    insert into serve_cultivate (id,orgId, title, maxPersonNumber,
       enrollPersopnNumber, cultivatePersonNumber, 
       startDate, endDate, startLng, 
       startLat, detailedAddress, fmUrl, 
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
       modifyDate, status)
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{maxPersonNumber,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{maxPersonNumber,jdbcType=INTEGER},
       #{enrollPersopnNumber,jdbcType=INTEGER}, #{cultivatePersonNumber,jdbcType=INTEGER}, 
       #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{startLng,jdbcType=DECIMAL}, 
       #{startLat,jdbcType=DECIMAL}, #{detailedAddress,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR}, 
@@ -56,6 +57,7 @@
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivate">
     update serve_cultivate
     set title = #{title,jdbcType=VARCHAR},
+      orgId=#{orgId,jdbcType=VARCHAR}
       maxPersonNumber = #{maxPersonNumber,jdbcType=INTEGER},
       enrollPersopnNumber = #{enrollPersopnNumber,jdbcType=INTEGER},
       cultivatePersonNumber = #{cultivatePersonNumber,jdbcType=INTEGER},
@@ -94,7 +96,9 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.title, t.maxPersonNumber, t.enrollPersopnNumber, t.cultivatePersonNumber, t.startDate, t.endDate, t.startLng, t.startLat, t.detailedAddress, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.title, t.maxPersonNumber, t.enrollPersopnNumber, t.cultivatePersonNumber, t.startDate, t.endDate, t.startLng, t.startLat,
+    t.detailedAddress, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate,
+    t.status,t.orgId
   </sql>
     <sql id="From_Statement">
     FROM serve_cultivate t

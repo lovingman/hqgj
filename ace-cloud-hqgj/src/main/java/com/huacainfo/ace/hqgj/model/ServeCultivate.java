@@ -20,6 +20,12 @@ public class ServeCultivate extends BaseModel {
      */
     private String id;
 
+
+    /**
+     * 服务机构ID
+     */
+    private String orgId;
+
     /**
      * 字段名：serve_cultivate.title
      * 注释：标题
@@ -280,5 +286,13 @@ public class ServeCultivate extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 }

@@ -26,6 +26,7 @@ import com.huacainfo.ace.hqgj.vo.BaseCompanyQVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +180,7 @@ public class BaseCompanyController extends BaseController {
      */
     @PostMapping(value = "/importXls", produces = "application/json;charset=UTF-8")
     public ResponseDTO importXls(@RequestParam MultipartFile file) throws Exception {
-        List<Object> list = EasyExcelFactory.read(file.getInputStream(), new Sheet(1,1, BaseCompanyExcelVo.class));
+        List<Object> list = EasyExcelFactory.read(new BufferedInputStream(file.getInputStream()), new Sheet(1,1, BaseCompanyExcelVo.class));
         return this.baseCompanyService.importXls(list,this.getCurUserProp());
     }
 

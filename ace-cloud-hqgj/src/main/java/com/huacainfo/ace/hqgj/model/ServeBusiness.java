@@ -146,6 +146,11 @@ public class ServeBusiness extends BaseModel {
      */
     private Date shDate;
 
+    /**
+     * 基本信息审核状态
+     */
+    private String basicStatus;
+
     public String getId() {
         return id;
     }
@@ -328,5 +333,13 @@ public class ServeBusiness extends BaseModel {
 
     public void setShDate(Date shDate) {
         this.shDate = shDate;
+    }
+
+    public String getBasicStatus() {
+        return basicStatus;
+    }
+
+    public void setBasicStatus(String basicStatus) {
+        this.basicStatus = basicStatus;
     }
 }
