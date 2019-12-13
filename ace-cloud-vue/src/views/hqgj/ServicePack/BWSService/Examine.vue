@@ -27,7 +27,8 @@
                             <template slot-scope="scope">
                                 <el-button @click="" type="text">下载</el-button>
                                 <span class="strightline">|</span>
-                                <el-button type="text">
+                                <el-button v-if="scope.row.id != null"  @click="looking(scope.$index,scope.row)" type="text">预览</el-button>
+                                <el-button v-else="scope.row.id != null" type="text">
                                     <router-link target="_blank" to="/application">预览</router-link>
                                 </el-button>
                             </template>
@@ -276,22 +277,45 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
+        <el-dialog
+                :before-close="handleClose"
+                :visible.sync="lookingVisible"
+                title="预览"
+                width="60%">
+            <div class="dialog-main">
+                <viewer :images="fileList">
+                    <img :key="attach.fileURL" :src="attach.fileURL"
+                         class="head_pics" v-for="attach in fileList"/>
+                </viewer>
+            </div>
+            <span class="dialog-footer" slot="footer">
+    <el-button @click="lookingVisible = false">取 消</el-button>
+    <el-button @click="sign" type="primary">确 定</el-button>
+  </span>
+        </el-dialog>
     </div>
 
 </template>
 
 <script>
-    import {getById, getMember,getannexList} from "@/api/hqgj/BWSService";
+    import {getById, getMember,getannexList,getAnnex} from "@/api/hqgj/BWSService";
 
     export default {
         name: "Examine",
         data() {
             return {
+                lookingVisible:false,
                 activeName: '1',
+                multipleSelection:[],
                 form: {},
                 list: [],
+                fileList:[],
                 query: {
                     type: ""
+                },
+                query2: {
+                    type: "",
+                    relationId:""
                 },
                 lists: [],
             };
@@ -317,7 +341,30 @@
             getannexList(){
                 this.id = this.$route.query.id;
                 getannexList(this.id).then(response =>{
-                    this.lists = response.data;
+                    // response.data;
+                    this.lists = this.istop(response.data)
+
+                })
+            },
+            //申请表置顶
+            istop(data){
+                for(var i = 0; i< data.length;i++){
+                    if (data[i].id== null){
+                        var index = i;
+                    }
+                }
+                data[0] = data.splice(index, 1, data[0])[0];
+               return data;
+
+            },
+
+            //预览
+            looking(index,data){
+                this.lookingVisible = true;
+                this.query2.relationId =data.id;
+                this.query2.type = 3;
+                getAnnex(this.query2).then(response=>{
+                    this.fileList=response.rows;
                 })
             },
             handleClick(tab, event) {
@@ -367,9 +414,13 @@
     .elrow {
         margin-bottom: 0;
     }
-
     .head_pic {
         max-height: 25px;
+        vertical-align: middle;
+    }
+    .head_pics {
+        max-height: 200px;
+        margin-left: 20px;
         vertical-align: middle;
     }
 </style>
