@@ -7,7 +7,7 @@
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
                 <el-tab-pane label="资料清单" name="1">
                     <el-table
-                            :data="list"
+                            :data="lists"
                             @selection-change="handleSelectionChange"
                             @sort-change="handleSort"
                             border
@@ -17,11 +17,11 @@
                             v-loading="loading">
                         <el-table-column align="center" type="selection" width="55"></el-table-column>
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="名称" prop="name" sortable='custom'>
+                        <el-table-column label="名称" prop="fileName" sortable='custom'>
                         </el-table-column>
-                        <el-table-column label="提交时间" prop="creatdata" width="300">
+                        <el-table-column label="提交时间" prop="createDate" width="300">
                         </el-table-column>
-                        <el-table-column label="附件数" prop="number" width="250">
+                        <el-table-column label="附件数" prop="annexNum" width="250">
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
@@ -225,7 +225,7 @@
                     </div>
                     <el-divider></el-divider>
                     <el-table
-                            :data="list2"
+                            :data="list"
                             @selection-change="handleSelectionChange"
                             border
                             class="table"
@@ -281,7 +281,7 @@
 </template>
 
 <script>
-    import {getById, getMember, getOther} from "@/api/hqgj/BWSService";
+    import {getById, getMember,getannexList} from "@/api/hqgj/BWSService";
 
     export default {
         name: "Examine",
@@ -293,11 +293,12 @@
                 query: {
                     type: ""
                 },
-                list2: [],
+                lists: [],
             };
         },
         created() {
             this.getDetails();
+            this.getannexList();
         },
         methods: {
             getDetails() {
@@ -313,9 +314,10 @@
                     this.list = response.rows;
                 })
             },
-            getOtherlist() {
-                getOther().then(response => {
-                    this.list2 = response.rows;
+            getannexList(){
+                this.id = this.$route.query.id;
+                getannexList(this.id).then(response =>{
+                    this.lists = response.data;
                 })
             },
             handleClick(tab, event) {
@@ -332,7 +334,8 @@
                     this.getMemberlist();
                 }
                 if(tab.name == 7){
-                    this.getOtherlist();
+                    this.query.type = "5,6,7,8";
+                    this.getMemberlist();
                 }
 
 

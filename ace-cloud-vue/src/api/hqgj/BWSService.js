@@ -21,7 +21,13 @@ export function deleteById(id) {
         params: {id:id}
     })
 }
-
+export function update(data) {
+    return request({
+        url: '/hqgj/serveBusiness/update',
+        method: 'post',
+        data: data
+    })
+}
 export function getPage(query) {
     return request({
         url: '/hqgj/serveBusinessIntegral/page',
@@ -46,16 +52,16 @@ export function deleteIntegral(id) {
 
 export function getMember(query) {
     return request({
-        url: '/hqgj/serveBusinessMember/page',
+        url: '/hqgj/serveBusinessDetail/page',
         method: 'get',
         params: query
     })
 }
 
-export function getOther(query) {
+export function getannexList(id) {
     return request({
-        url: '/hqgj/serveBusinessOther/page',
+        url: '/hqgj/serveBusinessDetail/annexList',
         method: 'get',
-        params: query
+        params: {id:id}
     })
 }
