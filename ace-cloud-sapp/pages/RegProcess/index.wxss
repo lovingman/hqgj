@@ -1,0 +1,169 @@
+/* pages/RegProcess/index.wxss */
+
+page {
+    height: 100%;
+}
+
+.index {
+    background: #f7f9fc;
+    min-height: 100%;
+}
+
+.index .van-tabs--line .van-tabs__wrap {
+    height: 188rpx;
+    padding: 50rpx 0 20rpx;
+    background: #2e88f2;
+}
+
+.index .van-tabs__scroll--line {
+    height: auto;
+    background: #2e88f2;
+}
+
+.van-tabs__wrap--scrollable .van-tab {
+    color: rgba(255, 255, 255, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+}
+
+.van-tabs__line {
+    background: transparent !important;
+}
+
+.van-tabs__line::before {
+    width: 22rpx;
+    height: 22rpx;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: -94rpx;
+    border: 4rpx #91d5ff solid;
+}
+
+.van-tabs__wrap--scrollable .van-tab {
+    border-top: 8rpx solid rgba(0, 0, 0, 0.04);
+    margin-top: 20rpx;
+    position: relative;
+    height: 88rpx;
+}
+
+.van-tabs__wrap--scrollable .van-tab::before {
+    width: 16rpx;
+    height: 16rpx;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: -12rpx;
+    z-index: 999;
+}
+
+.van-tabs__wrap--scrollable .van-tab.van-ellipsis {
+    overflow: visible;
+}
+
+.van-tabs__wrap--scrollable .van-tab[data-index="0"]::after {
+    width: 50%;
+    height: 16rpx;
+    content: "";
+    display: block;
+    background: #2e88f2;
+    /* background: red; */
+    position: absolute;
+    left: 0;
+    top: -12rpx;
+}
+
+.van-tabs__wrap--scrollable .van-tab[data-index="5"]::after {
+    width: 50%;
+    height: 16rpx;
+    content: "";
+    display: block;
+    background: #2e88f2;
+    position: absolute;
+    right: 0;
+    top: -12rpx;
+}
+
+.van-cell-group {
+    width: 100%;
+    padding: 0 25rpx;
+    background: #fff;
+    margin-bottom: 24rpx;
+}
+
+.van-cell-group .van-cell {
+    padding-left: 0px;
+    padding-right: 0;
+}
+
+.van-cell-group .van-cell::after {
+    left: 0;
+}
+
+.van-cell-group .van-cell van-button {
+    color: #1c2843;
+}
+
+.textarea .van-cell {
+    min-height: 180rpx;
+}
+
+.button_1 {
+    width: 660rpx;
+    margin: 100rpx auto 0;
+    padding-bottom: 50rpx;
+}
+
+.model .title {
+    height: 94rpx;
+    padding: 0 30rpx;
+    line-height: 100rpx;
+    color: rgba(0, 0, 0, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.model .van-cell-group {
+    margin: 0;
+}
+
+.model .idCard {
+    padding: 0 30rpx;
+    background: #fff;
+}
+
+.model .idCard .text {
+    display: flex;
+    justify-content: space-between;
+    height: 94rpx;
+    align-items: center;
+    color: rgba(0, 0, 0, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+}
+.model .idCard .text .tip{
+    color: rgba(46, 136, 242, 1);
+}
+.model .idCard .imgs{
+    padding: 46rpx 20rpx;
+    display: flex;
+    justify-content: space-between;
+}
+.model .idCard .img{
+    width: 292rpx;
+}
+.model .idCard .img image{
+    width: 292rpx;
+    height: 188rpx;
+    background: blue;
+    display: block;
+}
