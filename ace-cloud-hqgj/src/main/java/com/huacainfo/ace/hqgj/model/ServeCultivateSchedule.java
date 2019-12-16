@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.math.BigDecimal;
@@ -66,12 +67,14 @@ public class ServeCultivateSchedule extends BaseModel {
      * 字段名：serve_cultivate_schedule.startDate
      * 注释：开始时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date startDate;
 
     /**
      * 字段名：serve_cultivate_schedule.endDate
      * 注释：结束时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date endDate;
 
     /**
