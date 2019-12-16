@@ -30,4 +30,6 @@ public interface ServeBusinessDetailDao {
     int deleteByIds(String[] ids);
 
     List<AnnexVo> annexList(@Param("id") String id);
+
+    int deleteByBusinessIds(String[] ids);
 }

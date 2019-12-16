@@ -64,10 +64,7 @@
 
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeBusiness">
     update serve_business
-    set applyPersonName = #{applyPersonName,jdbcType=VARCHAR},
-      applyPersonTel = #{applyPersonTel,jdbcType=VARCHAR},
-      idCard = #{idCard,jdbcType=VARCHAR},
-      companyName = #{companyName,jdbcType=VARCHAR},
+    set companyName = #{companyName,jdbcType=VARCHAR},
       readyName = #{readyName,jdbcType=VARCHAR},
       legalPerson = #{legalPerson,jdbcType=VARCHAR},
       regBonus = #{regBonus,jdbcType=VARCHAR},
@@ -174,12 +171,19 @@
     </delete>
 
     <resultMap extends="BaseResultMap" id="previewResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessVo">
-        <collection property="businessDetailList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
+        <collection property="businessDetailList" column="id" ofType="com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo">
             <result column="did" jdbcType="VARCHAR" property="id"/>
             <result column="name" jdbcType="VARCHAR" property="name"/>
             <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
             <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
             <result column="type" jdbcType="VARCHAR" property="type"/>
+            <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+                <result column="anId" jdbcType="VARCHAR" property="id"/>
+                <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+                <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+                <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+                <result column="relationId" jdbcType="VARCHAR" property="relationId"/>
+            </collection>
         </collection>
         <collection property="businessAppendList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
             <result column="appendId" jdbcType="VARCHAR" property="id"/>
@@ -192,10 +196,12 @@
     <select id="previewInfo" parameterType="java.lang.String" resultMap="previewResultMap">
          select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress,
          d.id did,d.name,d.mobile,d.type,
-         a.id appendId, a.type appendType,a.`option`,a.content
+         a.id appendId, a.type appendType,a.`option`,a.content,
+         an.id anid,an.fileName,an.fileType,an.fileURL,an.relationId
          from serve_business s
          left join serve_business_detail d on s.id=d.businessId
          left join serve_business_append a on a.businessId=s.id
+         left join basic_annex an on an.relationId=d.id
          where s.id=#{id,jdbcType=VARCHAR}
     </select>
 

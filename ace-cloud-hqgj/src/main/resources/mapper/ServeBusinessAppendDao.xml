@@ -18,7 +18,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, businessId, type, name, option, optionName, content, createUserId, createUserName, 
+    id, businessId, type, name, `option`, optionName, content, createUserId, createUserName,
     createDate, modifyUserId, modifyUserName, modifyDate, status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -33,7 +33,7 @@
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
     insert into serve_business_append (id, businessId, type, 
-      name, option, optionName, 
+      name, `option`, optionName,
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
       modifyDate, status)
@@ -65,7 +65,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.businessId, t.type, t.name, t.option, t.optionName, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.businessId, t.type, t.name, t.`option`, t.optionName, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_business_append t
@@ -137,4 +137,13 @@
             #{id}
         </foreach>
     </delete>
+
+    <delete id="deleteByBusinessIds">
+        delete from serve_business_append
+        where businessId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -9,14 +9,14 @@ import java.util.List;
 
 public class ServeBusinessVo extends ServeBusiness {
 private static final long serialVersionUID = 1L;
- private List<ServeBusinessDetail> businessDetailList;
+ private List<ServeBusinessDetailVo> businessDetailList;
  private List<ServeBusinessAppend> businessAppendList;
 
-    public List<ServeBusinessDetail> getBusinessDetailList() {
+    public List<ServeBusinessDetailVo> getBusinessDetailList() {
         return businessDetailList;
     }
 
-    public void setBusinessDetailList(List<ServeBusinessDetail> businessDetailList) {
+    public void setBusinessDetailList(List<ServeBusinessDetailVo> businessDetailList) {
         this.businessDetailList = businessDetailList;
     }
 

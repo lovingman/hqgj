@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.service.impl;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -77,12 +78,25 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     @Transactional
     @Log(operationObj = "财税服务订单评价表", operationType = "创建", detail = "创建财税服务订单评价表")
     public ResponseDTO create(ServeFinanceEvaluate o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
+        o.setId(GUIDUtil.getGUID());
+        if (CommonUtils.isBlank(o.getType())) {
+            return new ResponseDTO(ResultCode.FAIL, "类型不能为空！");
         }
-        if (CommonUtils.isBlank(o.getOrderNo())) {
-            return new ResponseDTO(ResultCode.FAIL, "订单号不能为空！");
+       String orderNo="";
+        switch (o.getType()){
+            case "1":
+                orderNo ="JZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            case "2":
+                orderNo = "CS"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            case "3":
+                orderNo = "WZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            default:
+                orderNo=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
         }
+
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }
@@ -94,7 +108,7 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "财税服务订单评价表名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
+
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
