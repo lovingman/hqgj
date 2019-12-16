@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.GUIDUtil;
-import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
-import com.huacainfo.ace.hqgj.dao.ServeBusinessAppendDao;
-import com.huacainfo.ace.hqgj.dao.ServeBusinessDetailDao;
+import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
 import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
@@ -27,7 +26,6 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
-import com.huacainfo.ace.hqgj.dao.ServeBusinessDao;
 import com.huacainfo.ace.hqgj.model.ServeBusiness;
 import com.huacainfo.ace.hqgj.service.ServeBusinessService;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessVo;
@@ -51,6 +49,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     private BasicAnnexDao basicAnnexDao;
     @Resource
     private ServeBusinessAppendDao serveBusinessAppendDao;
+    @Resource
+    private RegisterDao registerDao;
 
     /**
      * @throws
@@ -103,14 +103,15 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                 JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
         List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
+        Users user =registerDao.selectUserInfo(userProp.getUserId());
         //基础信息
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
         String businessId=GUIDUtil.getGUID();
         serveBusiness.setId(businessId);
         serveBusiness.setLsNo("CY"+sdf.format(new Date()));
         serveBusiness.setApplyPersonName(userProp.getName());
-        serveBusiness.setApplyPersonTel(userProp.getAccount());
-        serveBusiness.setIdCard("123");
+        serveBusiness.setApplyPersonTel(user.getMobile());
+        serveBusiness.setIdCard(user.getIdCard());
         serveBusiness.setCreateDate(new Date());
         serveBusiness.setStatus("0");
         serveBusiness.setCreateUserName(userProp.getName());
