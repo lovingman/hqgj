@@ -6,15 +6,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessAppendDao;
 import com.huacainfo.ace.hqgj.dao.ServeBusinessDao;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import com.huacainfo.ace.hqgj.model.ServeBusiness;
+import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
 import com.huacainfo.ace.hqgj.vo.AnnexVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +49,8 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     private ServeBusinessDao serveBusinessDao;
     @Resource
     private BasicAnnexDao basicAnnexDao;
+    @Resource
+    private ServeBusinessAppendDao serveBusinessAppendDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -92,14 +97,19 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     @Log(operationObj = "创业服务资料清单人员表", operationType = "创建", detail = "创建创业服务资料清单人员表")
     public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
         JSONObject jsonObj= JSON.parseObject(jsons);
+        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessMember")) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
         List<ServeBusinessDetail> serveBusinessMembers=new ArrayList<ServeBusinessDetail>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessMember"), ServeBusinessDetail.class));
+        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
+
+        //人员信息
         for(ServeBusinessDetail o:serveBusinessMembers) {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
-            if (CommonUtils.isBlank(o.getBusinessId())) {
-                return new ResponseDTO(ResultCode.FAIL, "创业服务表ID不能为空！");
-            }
+            o.setBusinessId(o.getBusinessId());
             int temp = this.serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
@@ -110,6 +120,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
             o.setCreateUserId(userProp.getUserId());
             o.setModifyDate(new Date());
             this.serveBusinessDetailDao.insert(o);
+            //人员资料附件
             if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                 List<BasicAnnex> fileURL = o.getBasicAnnexes();
                 for (BasicAnnex a : fileURL) {

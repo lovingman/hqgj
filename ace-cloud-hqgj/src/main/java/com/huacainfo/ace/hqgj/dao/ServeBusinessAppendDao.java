@@ -26,4 +26,6 @@ public interface ServeBusinessAppendDao {
     int isExist(ServeBusinessAppend o);
 
     int deleteByIds(String[] ids);
+
+    int deleteByBusinessIds(String [] ids);
 }

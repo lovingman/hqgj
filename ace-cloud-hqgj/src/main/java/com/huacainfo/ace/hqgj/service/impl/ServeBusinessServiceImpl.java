@@ -1,13 +1,23 @@
 package com.huacainfo.ace.hqgj.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessAppendDao;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessDetailDao;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
+import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
+import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,7 +44,13 @@ import javax.annotation.Resource;
 public class ServeBusinessServiceImpl implements ServeBusinessService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
+    private ServeBusinessDetailDao serveBusinessDetailDao;
+    @Resource
     private ServeBusinessDao serveBusinessDao;
+    @Resource
+    private BasicAnnexDao basicAnnexDao;
+    @Resource
+    private ServeBusinessAppendDao serveBusinessAppendDao;
 
     /**
      * @throws
@@ -77,20 +93,78 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Override
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "创建", detail = "创建创业服务包")
-    public ResponseDTO create(ServeBusiness o, UserProp userProp) throws Exception {
-        o.setId(GUIDUtil.getGUID());
-        int temp = this.serveBusinessDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "创业服务包名称重复！");
+    public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
+        JSONObject jsonObj= JSON.parseObject(jsons);
+        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessDetail")) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
+        ServeBusiness serveBusiness=JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
+        List<ServeBusinessDetail> serveBusinessDetails=new ArrayList<ServeBusinessDetail>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
+        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
+        //基础信息
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
-        o.setLsNo("CY"+sdf.format(new Date()));
-        o.setCreateDate(new Date());
-        o.setStatus("1");
-        o.setCreateUserName(userProp.getName());
-        o.setCreateUserId(userProp.getUserId());
-        o.setModifyDate(new Date());
-        this.serveBusinessDao.insert(o);
+        String businessId=GUIDUtil.getGUID();
+        serveBusiness.setId(businessId);
+        serveBusiness.setLsNo("CY"+sdf.format(new Date()));
+        serveBusiness.setApplyPersonName(userProp.getName());
+        serveBusiness.setApplyPersonTel(userProp.getAccount());
+        serveBusiness.setIdCard("123");
+        serveBusiness.setCreateDate(new Date());
+        serveBusiness.setStatus("0");
+        serveBusiness.setCreateUserName(userProp.getName());
+        serveBusiness.setCreateUserId(userProp.getUserId());
+        serveBusiness.setModifyDate(new Date());
+        serveBusiness.setBasicStatus("0");
+        this.serveBusinessDao.insert(serveBusiness);
+
+        //人员信息
+        for(ServeBusinessDetail o:serveBusinessDetails) {
+            String memberId = GUIDUtil.getGUID();
+            o.setId(memberId);
+            o.setBusinessId(businessId);
+            int temp = serveBusinessDetailDao.isExist(o);
+            if (temp > 0) {
+                return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
+            }
+            o.setCreateDate(new Date());
+            o.setStatus("1");
+            o.setCreateUserName(userProp.getName());
+            o.setCreateUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
+            //人员资料附件
+            if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
+                List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                for (BasicAnnex a : fileURL) {
+                    a.setId(GUIDUtil.getGUID());
+                    a.setRelationId(memberId);
+                    a.setFileURL(a.getFileURL());
+                    //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
+                    a.setType("3");
+                    a.setRemark("创业服务资料清单附件");
+                    a.setCreateDate(new Date());
+                    a.setStatus("1");
+                    basicAnnexDao.insert(a);
+                }
+            }
+            serveBusinessDetailDao.insert(o);
+        }
+        //其他选项
+        if(appends!=null){
+            for(ServeBusinessAppend append:appends){
+                append.setId(GUIDUtil.getGUID());
+                append.setBusinessId(businessId);
+                append.setCreateDate(new Date());
+                append.setStatus("1");
+                append.setCreateDate(new Date());
+                append.setCreateUserName(userProp.getName());
+                append.setCreateUserId(userProp.getUserId());
+                append.setModifyDate(new Date());
+                serveBusinessAppendDao.insert(append);
+            }
+        }
+
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -107,15 +181,76 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Override
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "变更", detail = "变更创业服务包")
-    public ResponseDTO update(ServeBusiness o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
+    public ResponseDTO update(String jsons, UserProp userProp) throws Exception {
+        JSONObject jsonObj= JSON.parseObject(jsons);
+        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessDetail")) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        ServeBusiness serveBusiness=JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
+        List<ServeBusinessDetail> serveBusinessDetails=new ArrayList<ServeBusinessDetail>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
+        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
+                JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
+
+        if (CommonUtils.isBlank(serveBusiness.getId())) {
+            return new ResponseDTO(ResultCode.FAIL, "主键不能为空！");
+        }
+        serveBusiness.setBasicStatus("0");
+        serveBusiness.setStatus("0");
+        serveBusiness.setModifyDate(new Date());
+        serveBusiness.setModifyUserName(userProp.getName());
+        serveBusiness.setModifyUserId(userProp.getUserId());
+        this.serveBusinessDao.updateByPrimaryKey(serveBusiness);
+        String businessId=serveBusiness.getId();
+        //清除人员后新增
+        serveBusinessDetailDao.deleteByBusinessIds(businessId.split(","));
+        serveBusinessAppendDao.deleteByBusinessIds(businessId.split(","));
+        //人员信息
+        for(ServeBusinessDetail o:serveBusinessDetails) {
+            String memberId = GUIDUtil.getGUID();
+            o.setId(memberId);
+            o.setBusinessId(businessId);
+            int temp = serveBusinessDetailDao.isExist(o);
+            if (temp > 0) {
+                return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
+            }
+            o.setCreateDate(new Date());
+            o.setStatus("1");
+            o.setCreateUserName(userProp.getName());
+            o.setCreateUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
+            //人员资料附件
+            if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
+                List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                for (BasicAnnex a : fileURL) {
+                    a.setId(GUIDUtil.getGUID());
+                    a.setRelationId(memberId);
+                    a.setFileURL(a.getFileURL());
+                    //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
+                    a.setType("3");
+                    a.setRemark("创业服务资料清单附件");
+                    a.setCreateDate(new Date());
+                    a.setStatus("1");
+                    basicAnnexDao.insert(a);
+                }
+            }
+            serveBusinessDetailDao.insert(o);
+        }
+        //其他选项
+        if(appends!=null){
+            for(ServeBusinessAppend append:appends){
+                append.setId(GUIDUtil.getGUID());
+                append.setBusinessId(businessId);
+                append.setCreateDate(new Date());
+                append.setStatus("1");
+                append.setCreateDate(new Date());
+                append.setCreateUserName(userProp.getName());
+                append.setCreateUserId(userProp.getUserId());
+                append.setModifyDate(new Date());
+                serveBusinessAppendDao.insert(append);
+            }
         }
 
-        o.setModifyDate(new Date());
-        o.setModifyUserName(userProp.getName());
-        o.setModifyUserId(userProp.getUserId());
-        this.serveBusinessDao.updateByPrimaryKey(o);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
