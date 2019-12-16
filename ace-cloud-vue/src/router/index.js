@@ -73,6 +73,7 @@ export const constantRoutes = [
   },
   {
     path: '/application',
+    name:'application',
     component: () => import('@/views/hqgj/ServicePack/BWSService/Application'),
     hidden: true
   },
