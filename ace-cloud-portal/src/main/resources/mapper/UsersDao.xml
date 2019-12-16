@@ -5,7 +5,7 @@
           parameterType="java.lang.String"
           resultType="com.huacainfo.ace.portal.vo.UsersVo">
     select
-      t.user_id userId, t.account, t.password, t.sex, t.idCard, t.name, t.corpId, t.areaCode,
+      t.user_id userId, t.account, t.password, t.sex, t.idCard,t.type, t.name, t.corpId, t.areaCode,
       t.birthday, t.status,
       t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked, t.lockedTime,a.name corpName,b.name areaName,t.deptId,c.name deptName
     from users t
@@ -23,14 +23,14 @@
   <insert id="insert"
           parameterType="com.huacainfo.ace.portal.model.Users">
     insert into users (user_id, account, password,
-                       sex, idCard, name,
+                       sex, idCard, type, name,
                        corpId, areaCode, birthday,
                        status, lastLoginTime, mobile,
                        email, createTime, curSyid,
                        locked, lockedTime,deptId)
     values (#{userId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR},
             #{password,jdbcType=VARCHAR},
-            #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
             #{corpId,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
             #{birthday,jdbcType=DATE},
             #{status,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR},
@@ -47,6 +47,9 @@
     </if>
     <if test="idCard != null and idCard != ''">
       idCard = #{idCard,jdbcType=VARCHAR},
+    </if>
+    <if test="type != null and type != ''">
+      type = #{type,jdbcType=VARCHAR},
     </if>
 
     <if test="birthday != null">
@@ -109,7 +112,7 @@
   <select id="findList"
           resultType="com.huacainfo.ace.portal.vo.UsersVo">
     select
-    t.user_id userId, t.account, t.password, t.sex, t.idCard, t.name, t.corpId,
+    t.user_id userId, t.account, t.password, t.sex, t.idCard, t.type, t.name, t.corpId,
     t.deptId, t.areaCode, t.birthday, t.status,
     t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked,
     t.lockedTime,a.name corpName,b.name areaName,c.name deptName
