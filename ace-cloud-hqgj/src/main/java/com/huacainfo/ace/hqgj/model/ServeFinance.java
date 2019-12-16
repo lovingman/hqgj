@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
@@ -89,6 +90,7 @@ public class ServeFinance extends BaseModel {
      * 字段名：serve_finance.createDate
      * 注释：创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
     /**

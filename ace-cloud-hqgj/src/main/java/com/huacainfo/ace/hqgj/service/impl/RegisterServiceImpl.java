@@ -107,6 +107,23 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public ResponseDTO<Users> selectUserInfo(String userId) {
+        if (CommonUtils.isBlank(userId)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误!");
+        }
+        Users users=registerDao.selectUserInfo(userId);
+        if (users==null) {
+            return new ResponseDTO(ResultCode.FAIL, "信息错误!");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功!",users);
+    }
+
+    /**
      * 校验手机号码是否已注册过
      *
      * @param mobile 手机号码

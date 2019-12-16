@@ -36,4 +36,11 @@ public interface RegisterService {
      */
     ResponseDTO resetPassword(String mobile, String newPassword);
 
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    ResponseDTO<Users> selectUserInfo(String userId);
+
 }
