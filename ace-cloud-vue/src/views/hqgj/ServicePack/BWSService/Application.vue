@@ -1,16 +1,18 @@
 <template>
     <div class="container">
         <div class="button">
-            <el-button style="margin-bottom: 20px" @click="backLook">推出预览</el-button>
+            <el-button @click="backLook" style="margin-bottom: 20px">推出预览</el-button>
         </div>
         <div class="table">
             <table cellpadding="0" cellspacing="0" style="border-collapse:collapse; float:left; margin:0pt 9pt">
                 <tr style="height:63.45pt">
                     <td colspan="12"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; text-align:center"><span style="font-family:宋体; font-size:18pt; font-weight:bold"> </span>
+                        <p style="margin:0pt; text-align:center"><span
+                                style="font-family:宋体; font-size:18pt; font-weight:bold"> </span>
                             <span style="font-family:宋体; font-size:18pt; font-weight:bold">武陵区中小企业公共服务平台</span></p>
-                        <p style="margin:0pt; text-align:center"><span style="font-family:宋体; font-size:18pt; font-weight:bold">“创业服务一条龙”</span>
+                        <p style="margin:0pt; text-align:center"><span
+                                style="font-family:宋体; font-size:18pt; font-weight:bold">“创业服务一条龙”</span>
                             <span style="font-family:宋体; font-size:18pt; font-weight:bold">免费服务申请表</span></p>
                     </td>
                     <td style="vertical-align:top"></td>
@@ -23,13 +25,16 @@
                     <td colspan="6"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:justify"><span
-                                style="font-family:宋体; font-size:10.5pt">         /身份证号：</span></p></td>
+                                style="font-family:宋体; font-size:10.5pt"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.applyPersonName}}</span>        /身份证号： <span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.idCard}}</span></span>
+                        </p></td>
                     <td colspan="4"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:justify"><span
-                                style="font-family:宋体; font-size:10.5pt">申请日期： </span><span
-                                style="font-family:宋体; font-size:10.5pt">   </span><span
-                                style="font-family:宋体; font-size:10.5pt"> 年   月   日</span></p>
+                                style="font-family:宋体; font-size:10.5pt">申请日期： </span>
+                            <span style="font-family:宋体; font-size:10.5pt">   </span>
+                            <span style="font-family:宋体; font-size:10.5pt;color:#1890FF"> {{list.createDate}}</span></p>
                         <p style="margin:0pt; text-align:justify"><span
                                 style="font-family:宋体; font-size:10.5pt">编    号：</span><span
                                 style="font-family:宋体; font-size:10.5pt">NO：</span></p></td>
@@ -44,14 +49,23 @@
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">服务项目</span></p></td>
                     <td colspan="10"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; text-align:justify"><span
-                                style="font-family:宋体; font-size:10.5pt">□ 工商</span><span
-                                style="font-family:宋体; font-size:10.5pt">注册</span><span
-                                style="font-family:宋体; font-size:10.5pt">代办服务（含公章一套）□ 银行基本户开户</span><span
-                                style="font-family:宋体; font-size:10.5pt">代办服务</span><span
-                                style="font-family:宋体; font-size:10.5pt"> </span><span
-                                style="font-family:宋体; font-size:10.5pt">□ </span><span
-                                style="font-family:宋体; font-size:10.5pt">银行开户费、小额账户管理费</span></p></td>
+                        <div style="margin:0pt; text-align:justify"
+                             >
+                            <el-checkbox-group v-model="option">
+                                <el-checkbox :label="1">工商注册代办服务（含公章一套）</el-checkbox>
+                                <el-checkbox :label="2">银行基本户开户</el-checkbox>
+                                <el-checkbox :label="3">银行开户费、小额账户管理费</el-checkbox>
+                            </el-checkbox-group>
+                            <!--<span-->
+                            <!--style="font-family:宋体; font-size:10.5pt">□ 工商</span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt">注册</span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt">代办服务（含公章一套）□ 银行基本户开户</span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt">代办服务</span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt"> </span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt">□ </span><span-->
+                            <!--style="font-family:宋体; font-size:10.5pt"></span>-->
+                        </div>
+                    </td>
                     <td style="vertical-align:top"></td>
                 </tr>
                 <tr style="height:25.6pt">
@@ -74,7 +88,8 @@
                     <td colspan="4"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF;float: left">{{list.companyName}}</span>
+                        </p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
@@ -82,14 +97,17 @@
                     <td colspan="3"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:justify"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.readyName}}</span>
+                        </p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">注册资金</span></p></td>
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">注册资金</span></p>
+                    </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.regBonus}}</span>
+                        </p>
                     </td>
                     <td style="vertical-align:top"></td>
                 </tr>
@@ -100,15 +118,17 @@
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">法人代表</span></p></td>
                     <td colspan="2"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; text-align:center" v-for="item in list.businessDetailList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 1">{{item.name}}</span></p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">联系电话</span></p></td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; text-align:center"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; text-align:center" v-for="item in list.businessDetailList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 1">{{item.mobile}}</span></p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; text-align:center"><span
@@ -117,16 +137,20 @@
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">事</span></p></td>
                     <td colspan="2"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"
+                           v-for="item in list.businessDetailList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 2">{{item.name}}</span></p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; orphans:0; text-align:center; widows:0"><span
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">联系电话</span></p></td>
                     <td colspan="2"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"
+                           v-for="item in list.businessDetailList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 2">{{item.mobile}}</span></p>
                     </td>
                     <td style="vertical-align:top"></td>
                 </tr>
@@ -138,16 +162,20 @@
                     </td>
                     <td colspan="4"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; orphans:0; text-align:center; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; orphans:0; text-align:center; widows:0"
+                           v-for="item in list.businessDetailList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 3">{{item.name}}:{{item.sharesProportion}}</span></p>
                     </td>
                     <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                         <p style="margin:0pt; orphans:0; text-align:center; widows:0"><span
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">特殊说明</span></p></td>
                     <td colspan="5"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">&#xa0;</span></p>
+                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"
+                           v-for="item in list.businessAppendList"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
+                                v-if="item.type == 5">{{item.content}}</span></p>
                     </td>
                     <td style="padding-left:5.4pt; padding-right:5.4pt; vertical-align:middle"><p
                             style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
@@ -159,9 +187,10 @@
                         <p style="margin:0pt; text-align:center"><span
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">经营范围</span></p></td>
                     <td colspan="10"
-                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:bottom">
-                        <p style="margin:0pt; orphans:0; text-align:center; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt">&#xa0;</span></p></td>
+                        style="border-bottom-color:#000000;border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="margin:0pt; text-align:center"><span
+                                style="font-family:宋体; font-size:10.5pt;color:#1890FF;float: left">{{list.manageExtent}}</span>
+                        </p></td>
                     <td style="vertical-align:top"></td>
                 </tr>
                 <tr style="height:32.85pt">
@@ -171,25 +200,10 @@
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">注册地址</span></p></td>
                     <td colspan="10"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt"><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">   </span><span
-                                style="font-family:宋体; font-size:10.5pt">县（市、区）</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">     </span><span
-                                style="font-family:宋体; font-size:10.5pt">乡镇（办事处）</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">     </span><span
-                                style="font-family:宋体; font-size:10.5pt">村（居委会、社区）</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">     </span><span
-                                style="font-family:宋体; font-size:10.5pt">组</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">     </span><span
-                                style="font-family:宋体; font-size:10.5pt">（街、道、路）</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">    </span><span
-                                style="font-family:宋体; font-size:10.5pt">号（</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">　　　　</span><span
-                                style="font-family:宋体; font-size:10.5pt">小区</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">   </span><span
-                                style="font-family:宋体; font-size:10.5pt">栋</span><span
-                                style="font-family:宋体; font-size:10.5pt; text-decoration:underline">     </span><span
-                                style="font-family:宋体; font-size:10.5pt">楼）。</span></p></td>
+                        <p style="margin:0pt">
+                            <span
+                                    style="font-family:宋体; font-size:10.5pt;color:#1890FF">{{list.companyAddress}}</span>
+                        </p></td>
                     <td style="vertical-align:top"></td>
                 </tr>
                 <tr style="height:25.6pt">
@@ -216,20 +230,25 @@
                                 style="font-family:宋体; font-size:10.5pt; font-weight:bold">意向</span></p></td>
                     <td colspan="11"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                        <p style="margin:0pt; orphans:0; text-align:justify; text-indent:315pt; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt">&#xa0;</span></p>
-                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt"> □</span><span
-                                style="font-family:宋体; font-size:10.5pt">是否愿意参加创业培训</span><span
-                                style="font-family:宋体; font-size:10.5pt">    　　</span><span
-                                style="font-family:宋体; font-size:10.5pt">　</span><span
-                                style="font-family:宋体; font-size:10.5pt">□</span><span
-                                style="font-family:宋体; font-size:10.5pt">是否愿意加入创业孵化基地</span><span
-                                style="font-family:宋体; font-size:10.5pt">                                        </span><span
-                                style="font-family:宋体; font-size:10.5pt"> </span></p>
-                        <p style="margin:0pt; orphans:0; text-align:justify; text-indent:315pt; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt">    </span><span
-                                style="font-family:宋体; font-size:10.5pt">申请人签名确认：</span></p></td>
+                        <div style="margin:0pt; orphans:0; text-align:justify; widows:0"
+                              >
+                            <el-checkbox-group v-model="option2" >
+                                <el-checkbox :label="1">是否愿意参加创业培训</el-checkbox>
+                                <el-checkbox :label="2">是否愿意加入创业孵化基地</el-checkbox>
+                            </el-checkbox-group>
+                        </div>
+                        <!--<span-->
+                        <!--style="font-family:宋体; font-size:10.5pt"> </span><span-->
+                        <!--style="font-family:宋体; font-size:10.5pt"> □是否愿意参加创业培训</span>-->
+                        <!--<span style="font-family:宋体; font-size:10.5pt">    　　</span>-->
+                        <!--<span style="font-family:宋体; font-size:10.5pt">　</span>-->
+                        <!--<span style="font-family:宋体; font-size:10.5pt"></span>-->
+                        <!--<span style="font-family:宋体; font-size:10.5pt"> □是否愿意加入创业孵化基地</span>-->
+                        <!--<span style="font-family:宋体; font-size:10.5pt"></span><span style="font-family:宋体; font-size:10.5pt"> </span>-->
+                        <p style="margin:0pt; orphans:0; text-align:justify; text-indent:315pt; widows:0">
+                            <span style="font-family:宋体; font-size:10.5pt">    </span>
+                            <span style="font-family:宋体; font-size:10.5pt">申请人签名确认：</span>
+                        </p></td>
                     <td style="vertical-align:top"></td>
                 </tr>
                 <tr style="height:28.65pt">
@@ -250,8 +269,15 @@
                         <p style="margin:0pt; orphans:0; text-align:justify; text-indent:10.5pt; widows:0"><span
                                 style="font-family:宋体; font-size:10.5pt">银行开户费、小额账户管理费免费</span><span
                                 style="font-family:宋体; font-size:10.5pt">服务，暂限以下合作银行：</span></p>
-                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
-                                style="font-family:宋体; font-size:10.5pt">□兴业银行各分行  □交通银行德景园分行  □建设银行紫陵路分行 □ 长沙银行柳叶大道总行 </span>
+                        <p style="margin:0pt; orphans:0; text-align:justify; widows:0">
+                            <el-checkbox-group v-model="option3" >
+                                <el-checkbox :label="1">兴业银行各分行</el-checkbox>
+                                <el-checkbox :label="2">交通银行德景园分行</el-checkbox>
+                                <el-checkbox :label="3">建设银行紫陵路分行</el-checkbox>
+                                <el-checkbox :label="4">长沙银行柳叶大道总行</el-checkbox>
+                            </el-checkbox-group>
+                            <!--<span-->
+                                <!--style="font-family:宋体; font-size:10.5pt">□兴业银行各分行  □交通银行德景园分行  □建设银行紫陵路分行 □ 长沙银行柳叶大道总行 </span>-->
                         </p>
                         <p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span
                                 style="font-family:宋体; font-size:10.5pt; font-weight:normal"> </span><span
@@ -281,19 +307,12 @@
                     </td>
                     <td colspan="9"
                         style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:bottom">
-                        <p style="margin:0pt"><span style="font-family:宋体; font-size:10.5pt">□选择</span><span
-                                style="font-family:宋体; font-size:10.5pt">武陵区中小企业公共服务平台推荐的代理记账</span><span
-                                style="font-family:宋体; font-size:10.5pt">机构</span><span
-                                style="font-family:宋体; font-size:10.5pt">，</span><span
-                                style="font-family:宋体; font-size:10.5pt">合作条款及收费</span><span
-                                style="font-family:宋体; font-size:10.5pt">详见合同；</span></p>
-                        <p style="margin:0pt"><span style="font-family:宋体; font-size:10.5pt">□</span><span
-                                style="font-family:宋体; font-size:10.5pt">有关会计及报税工作自行负责</span><span
-                                style="font-family:宋体; font-size:10.5pt">，</span><span
-                                style="font-family:宋体; font-size:10.5pt">如产生税务申报逾期等相关</span><span
-                                style="font-family:宋体; font-size:10.5pt">责任</span><span
-                                style="font-family:宋体; font-size:10.5pt">自行承担。</span><span
-                                style="font-family:宋体; font-size:10.5pt">                    </span></p>
+                        <p style="margin:0pt">
+                            <el-checkbox-group v-model="option4" >
+                                <el-checkbox :label="1">选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</el-checkbox>
+                                <el-checkbox :label="2">有关会计及报税工作自行负责，如产生税务申报逾期等相关责任自行承担。</el-checkbox>
+                            </el-checkbox-group>
+                        </p>
                         <p style="margin:0pt; text-indent:241.5pt"><span
                                 style="font-family:宋体; font-size:10.5pt">             </span><span
                                 style="font-family:宋体; font-size:10.5pt">申请人签名确认：</span></p></td>
@@ -385,10 +404,31 @@
 </template>
 
 <script>
+    // import previewInfo
+    import {previewInfo} from "@/api/hqgj/BWSService";
+
     export default {
         name: "Application",
-        methods:{
-            backLook(){
+        data() {
+            return {
+                list: {},
+                option:[1,2,3],
+                option2:[1],
+                option3:[1],
+                option4:[1],
+            };
+        },
+        created() {
+            this.getdata();
+        },
+        methods: {
+            getdata() {
+                this.id = this.$route.query.id;
+                previewInfo(this.id).then(response => {
+                    this.list = response.data;
+                })
+            },
+            backLook() {
                 window.close();
             }
         }
@@ -401,6 +441,6 @@
         height: 1200px;
         padding: 20px;
         background-color: #fff;
-        margin:0 auto;
+        margin: 0 auto;
     }
 </style>
