@@ -90,4 +90,12 @@ public interface ServeBusinessService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+
+    /**
+     *创业服务包免费服务申请表
+     * @param id 主键
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO<ServeBusinessVo> previewInfo(String id)throws Exception;
 }

@@ -159,4 +159,19 @@ public class ServeBusinessController extends BaseController {
         return this.serveBusinessService.deleteByIds(ids.split(","));
     }
 
+    /**
+     * 创业服务包免费服务申请表
+     * @param id 主键
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/previewInfo", notes = "创业服务包免费服务申请表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @GetMapping(value = "/previewInfo", produces = "application/json;charset=UTF-8")
+    public ResponseDTO<ServeBusinessVo> previewInfo(String id) throws Exception {
+        return this.serveBusinessService.previewInfo(id);
+    }
+
 }

@@ -174,4 +174,23 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     }
 
 
+    /**
+     *创业服务包免费服务申请表
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO<ServeBusinessVo> previewInfo(String id) throws Exception {
+        if(CommonUtils.isBlank(id)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        ServeBusinessVo vo =serveBusinessDao.previewInfo(id);
+        if(vo==null){
+            return new ResponseDTO(ResultCode.FAIL, "查无数据！");
+        }
+        return  new ResponseDTO(ResultCode.SUCCESS, "成功！",vo);
+    }
+
+
 }
