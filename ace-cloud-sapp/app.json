@@ -1,17 +1,18 @@
 {
-	"pages": [
-		
-		"pages/forum/index",
-		"pages/index/index",
-		"pages/logs/logs",
-		"pages/body/index"
-		
-	],
-	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
-		"navigationBarTitleText": "WeChat",
-		"navigationBarTextStyle": "black"
-	},
-	"sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/forum/index",
+        "pages/index/index",
+        "pages/logs/logs",
+        "pages/body/index",
+        "pages/EnterpriseReg/index",
+        "pages/RegAgreement/index",
+        "pages/RegProcess/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    },
+    "sitemapLocation": "sitemap.json"
 }

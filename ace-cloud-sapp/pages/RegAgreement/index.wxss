@@ -1,0 +1,72 @@
+/* pages/RegAgreement/index.wxss */
+
+.index {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    width: 100%;
+    color: rgba(16, 16, 16, 1);
+    font-size: 36rpx;
+    text-align: center;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 1.5em;
+}
+
+.header {
+    padding: 20px 0;
+}
+
+.header .subTitle {
+    font-size: 28rpx;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 24rpx 30rpx;
+}
+
+.footer .cancel {
+    width: 268rpx;
+}
+
+.footer .agree {
+    width: 400rpx;
+}
+
+.footer  .van-button {
+    font-size: 36rpx;
+    text-align: center;
+    font-family: PingFangSC-regular;
+}
+
+.footer .cancel .van-button {
+    color: rgba(38, 33, 70, 1);
+    width: 100%;
+}
+
+.footer .agree .van-button {
+    color: rgba(255, 255, 255, 1);
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+.content .text {
+    line-height: 2em;
+    color: rgba(136, 136, 136, 1);
+    font-size: 28rpx;
+    font-family: Microsoft Yahei;
+    padding: 30px;
+}

@@ -57,10 +57,10 @@
                 </el-table-column>
                 <el-table-column label="状态" prop="status" sortable='custom' width="100">
                     <template slot-scope="scope">
-                        <div class="green" type="text" v-if="scope.row.status=='0'">待审核</div>
+                        <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                         <div class="blue" type="text" v-if="scope.row.status=='1'">办理中</div>
                         <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
-                        <div class="orange" type="text" v-if="scope.row.status=='3'">注册成功</div>
+                        <div class="green" type="text" v-if="scope.row.status=='3'">注册成功</div>
                     </template>
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">

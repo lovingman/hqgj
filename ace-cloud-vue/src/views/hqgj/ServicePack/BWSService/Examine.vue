@@ -9,7 +9,6 @@
                     <el-table
                             :data="lists"
                             @selection-change="handleSelectionChange"
-                            @sort-change="handleSort"
                             border
                             class="table"
                             max-height="475"
@@ -142,6 +141,11 @@
                             </template>
                         </el-table-column>
                         <el-table-column label="状态" prop="status" width="80">
+                            <template slot-scope="scope">
+                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                            </template>
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
@@ -415,12 +419,23 @@
         margin-bottom: 0;
     }
     .head_pic {
-        max-height: 25px;
+        max-height: 30px;
         vertical-align: middle;
     }
     .head_pics {
         max-height: 200px;
         margin-left: 20px;
         vertical-align: middle;
+    }
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .orange {
+        color: #FF9900;
     }
 </style>
