@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeFinanceItemDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="financeId" jdbcType="VARCHAR" property="financeId"/>
+        <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, financeId, itemName, price, createUserId, createUserName, createDate, modifyUserId, 
+    modifyUserName, modifyDate, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from serve_finance_item
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serve_finance_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
+    insert into serve_finance_item (id, financeId, itemName, 
+      price, createUserId, createUserName, 
+      createDate, modifyUserId, modifyUserName, 
+      modifyDate, status)
+    values (#{id,jdbcType=VARCHAR}, #{financeId,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
+    update serve_finance_item
+    set financeId = #{financeId,jdbcType=VARCHAR},
+      itemName = #{itemName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceItemVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.financeId, t.itemName, t.price, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+    <sql id="From_Statement">
+    FROM serve_finance_item t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.financeId != null and condition.financeId != ''">
+                and t.financeId = #{financeId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.itemName != null and condition.itemName != ''">
+                and t.itemName = #{itemName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.price != null and condition.price != ''">
+                and t.price = #{price,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeFinanceItem" resultType="int">
+            select count(1)
+        from serve_finance_item
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from serve_finance_item
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByFinanceIds">
+        delete from serve_finance_item
+        where financeId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>

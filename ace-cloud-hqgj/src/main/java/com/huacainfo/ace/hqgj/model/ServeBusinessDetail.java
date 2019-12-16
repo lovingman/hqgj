@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.model;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名：serve_business_member
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author heshuang
  * @date 2019-12-09
  */
-public class ServeBusinessMember extends BaseModel {
+public class ServeBusinessDetail extends BaseModel {
     /**
      * 字段名：serve_business_member.id
      * 注释：主键ID
@@ -112,6 +113,17 @@ public class ServeBusinessMember extends BaseModel {
      * 注释：状态  0-待审  1-通过 2-驳回修改
      */
     private String status;
+
+    //附件
+    private List<BasicAnnex> basicAnnexes ;
+
+    public List<BasicAnnex> getBasicAnnexes() {
+        return basicAnnexes;
+    }
+
+    public void setBasicAnnexes(List<BasicAnnex> basicAnnexes) {
+        this.basicAnnexes = basicAnnexes;
+    }
 
     public String getId() {
         return id;

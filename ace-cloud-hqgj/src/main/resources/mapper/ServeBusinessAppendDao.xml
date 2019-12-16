@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.ServeBusinessAppendDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="businessId" jdbcType="VARCHAR" property="businessId"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="option" jdbcType="VARCHAR" property="option"/>
+        <result column="optionName" jdbcType="VARCHAR" property="optionName"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, businessId, type, name, option, optionName, content, createUserId, createUserName, 
+    createDate, modifyUserId, modifyUserName, modifyDate, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from serve_business_append
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serve_business_append
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
+    insert into serve_business_append (id, businessId, type, 
+      name, option, optionName, 
+      content, createUserId, createUserName, 
+      createDate, modifyUserId, modifyUserName, 
+      modifyDate, status)
+    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{option,jdbcType=VARCHAR}, #{optionName,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
+    update serve_business_append
+    set businessId = #{businessId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      option = #{option,jdbcType=VARCHAR},
+      optionName = #{optionName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessAppendVo">
+
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.businessId, t.type, t.name, t.option, t.optionName, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+  </sql>
+    <sql id="From_Statement">
+    FROM serve_business_append t
+  </sql>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.businessId != null and condition.businessId != ''">
+                and t.businessId = #{businessId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.type != null and condition.type != ''">
+                and t.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.name != null and condition.name != ''">
+                and t.name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.option != null and condition.option != ''">
+                and t.option = #{option,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.optionName != null and condition.optionName != ''">
+                and t.optionName = #{optionName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.content != null and condition.content != ''">
+                and t.content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend" resultType="int">
+            select count(1)
+        from serve_business_append
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from serve_business_append
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

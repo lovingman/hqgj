@@ -21,11 +21,17 @@
         <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
         <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="tab" jdbcType="VARCHAR" property="tab"/>
+        <result column="shUserId" jdbcType="VARCHAR" property="shUserId"/>
+        <result column="shUserName" jdbcType="VARCHAR" property="shUserName"/>
+        <result column="shDate" jdbcType="TIMESTAMP" property="shDate"/>
+        <result column="basicStatus" jdbcType="VARCHAR" property="basicStatus"/>
+
     </resultMap>
     <sql id="Base_Column_List">
     id, applyPersonName, applyPersonTel, idCard, companyName, readyName, legalPerson, 
     regBonus, areaCode, companyAddress, manageExtent, createUserId, createUserName, createDate, 
-    modifyUserId, modifyUserName, modifyDate, status,lsNo
+    modifyUserId, modifyUserName, modifyDate, status,lsNo,tab,shUserId,shUserName,shDate,basicStatus
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -43,14 +49,16 @@
       legalPerson, regBonus, areaCode, 
       companyAddress, manageExtent, createUserId, 
       createUserName, createDate, modifyUserId, 
-      modifyUserName, modifyDate, status
+      modifyUserName, modifyDate, status,tab,shUserId,shUserName,shDate,basicStatus
       )
     values (#{id,jdbcType=VARCHAR},#{lsNo,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, #{applyPersonTel,jdbcType=VARCHAR},
       #{idCard,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{readyName,jdbcType=VARCHAR}, 
       #{legalPerson,jdbcType=VARCHAR}, #{regBonus,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
       #{companyAddress,jdbcType=VARCHAR}, #{manageExtent,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
       #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
-      #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
+      #{tab,jdbcType=VARCHAR}, #{shUserId,jdbcType=VARCHAR},
+      #{shUserName,jdbcType=VARCHAR}, #{shDate,jdbcType=TIMESTAMP},#{basicStatus,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -69,14 +77,21 @@
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=VARCHAR}
+      status = #{status,jdbcType=VARCHAR},
+      tab = #{tab,jdbcType=VARCHAR},
+      shUserId = #{shUserId,jdbcType=VARCHAR},
+      shUserName = #{shUserName,jdbcType=VARCHAR},
+      shDate = #{shDate,jdbcType=TIMESTAMP},
+      basicStatus= #{basicStatus,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessVo">
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id,t.lsNo, t.applyPersonName, t.applyPersonTel, t.idCard, t.companyName, t.readyName, t.legalPerson, t.regBonus, t.areaCode, t.companyAddress, t.manageExtent, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id,t.lsNo, t.applyPersonName, t.applyPersonTel, t.idCard, t.companyName, t.readyName, t.legalPerson, t.regBonus, t.areaCode,
+    t.companyAddress, t.manageExtent, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate,
+    t.status,t.tab,t.shUserId,t.shUserName,t.shDate,t.basicStatus
   </sql>
     <sql id="From_Statement">
     FROM serve_business t
@@ -157,4 +172,29 @@
             #{ids}
         </foreach>
     </delete>
+
+    <resultMap extends="BaseResultMap" id="previewResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessVo">
+        <collection property="businessDetailList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+            <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        </collection>
+        <collection property="businessAppendList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
+            <result column="type" jdbcType="VARCHAR" property="type"/>
+            <result column="option" jdbcType="VARCHAR" property="option"/>
+            <result column="content" jdbcType="VARCHAR" property="content"/>
+        </collection>
+    </resultMap>
+
+    <select id="previewInfo" parameterType="java.lang.String" resultMap="previewResultMap">
+         select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress,
+         d.name,d.mobile,d.type,
+         a.type,a.`option`,a.content
+         from serve_business s
+         left join serve_business_detail d on s.id=d.businessId
+         left join serve_business_append a on a.businessId=s.id
+         where s.id=#{id,jdbcType=VARCHAR}
+    </select>
+
+
 </mapper>

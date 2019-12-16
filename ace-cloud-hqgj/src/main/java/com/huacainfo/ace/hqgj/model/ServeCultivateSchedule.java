@@ -4,6 +4,7 @@ import com.huacainfo.ace.common.model.BaseModel;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名：serve_cultivate_schedule
@@ -120,6 +121,16 @@ public class ServeCultivateSchedule extends BaseModel {
      * 注释：状态  1-生效 0-失效
      */
     private String status;
+
+    private List<BasicAnnex> basicAnnexes ;
+
+    public List<BasicAnnex> getBasicAnnexes() {
+        return basicAnnexes;
+    }
+
+    public void setBasicAnnexes(List<BasicAnnex> basicAnnexes) {
+        this.basicAnnexes = basicAnnexes;
+    }
 
     public String getId() {
         return id;

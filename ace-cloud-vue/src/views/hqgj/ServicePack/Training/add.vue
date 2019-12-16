@@ -25,16 +25,20 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="人数：" prop="peopleNumber">
-                  <el-input v-model="basicForm.peopleNumber" clearable placeholder="请输入最多可报名人数"></el-input>
+                <el-form-item label="人数：" prop="cultivatePersonNumber">
+                  <el-input
+                    v-model="basicForm.cultivatePersonNumber"
+                    clearable
+                    placeholder="请输入最多可报名人数"
+                  ></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="时间：" prop="time">
+                <el-form-item label="时间：" prop="timeArr">
                   <el-date-picker
-                    v-model="basicForm.time"
+                    v-model="basicForm.timeArr"
                     type="datetimerange"
                     range-separator="至"
                     start-placeholder="开始日期"
@@ -52,25 +56,18 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="封面：" prop="photo">
-                  <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove"
-                  >
-                    <i class="el-icon-plus"></i>
-                    <div class="el-upload__tip" slot="tip">支持jpg.png，大小不超过10M</div>
-                  </el-upload>
-                  <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt />
-                  </el-dialog>
-                </el-form-item>
+                <photo ref="imgUpload"></photo>
               </el-col>
             </el-row>
             <el-row>
               <el-form-item label="内容" prop="content">
-                <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar>
+                <el-input
+                  type="textarea"
+                  :rows="8"
+                  placeholder="请输入详细内容"
+                  v-model="basicForm.content"
+                ></el-input>
+                <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
               </el-form-item>
             </el-row>
           </el-form>
@@ -97,8 +94,8 @@
                 <el-col :span="12">
                   <el-form-item
                     :label="'名称：'"
-                    :prop="'scheduleModels.'+index+'.name'"
-                    :rules="scheduleRules.name"
+                    :prop="'scheduleModels.'+index+'.title'"
+                    :rules="scheduleRules.title"
                     :key="scheduleModel.key"
                   >
                     <el-input
@@ -106,14 +103,14 @@
                       maxlength="50"
                       show-word-limit
                       placeholder="请输入培训名称"
-                      v-model="scheduleModel.name"
+                      v-model="scheduleModel.title"
                     ></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
                   <el-form-item
                     :label="'讲师：'"
-                    :prop="'scheduleModels.'+index+'.lecturer'"
+                    :prop="'scheduleModels.'+index+'.lecturerName'"
                     :key="scheduleModel.key"
                   >
                     <el-button class="get-address">
@@ -126,8 +123,8 @@
                 <el-col :span="12">
                   <el-form-item
                     :label="'地点：'"
-                    :prop="'scheduleModels.'+index+'.address'"
-                    :rules="scheduleRules.address"
+                    :prop="'scheduleModels.'+index+'.detailedAddress'"
+                    :rules="scheduleRules.detailedAddress"
                     :key="scheduleModel.key"
                   >
                     <el-input
@@ -135,19 +132,19 @@
                       maxlength="50"
                       show-word-limit
                       placeholder="请输入详细地址"
-                      v-model="scheduleModel.address"
+                      v-model="scheduleModel.detailedAddress"
                     ></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
                   <el-form-item
                     :label="'时间：'"
-                    :prop="'scheduleModels.'+index+'.time'"
-                    :rules="scheduleRules.time"
+                    :prop="'scheduleModels.'+index+'.timeArr'"
+                    :rules="scheduleRules.timeArr"
                     :key="scheduleModel.key"
                   >
                     <el-date-picker
-                      v-model="scheduleModel.time"
+                      v-model="scheduleModel.timeArr"
                       type="datetimerange"
                       range-separator="至"
                       start-placeholder="开始日期"
@@ -169,7 +166,7 @@
                     show-word-limit
                     :rows="8"
                     placeholder="简要概述培训内容，不超过200字"
-                    v-model="scheduleForm.content"
+                    v-model="scheduleModel.content"
                   ></el-input>
                 </el-form-item>
               </el-row>
@@ -177,9 +174,11 @@
                 <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
                   <el-upload
                     class="upload-demo"
+                    accept="*, *"
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
+                    :before-upload="beforeAvatarUpload"
                     multiple
                   >
                     <el-button size="small" type="primary">上传课件</el-button>
@@ -204,11 +203,11 @@
       <div class="footer-flex">
         <div v-if="isShow">
           <el-button @click="black">取消</el-button>
-          <el-button @click="nextClick" type="primary">下一步</el-button>
+          <el-button @click="nextClick('basicForm')" type="primary">下一步</el-button>
         </div>
         <div v-if="!isShow">
           <el-button @click="prevClick">上一步</el-button>
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="totalSubmit('scheduleForm')">提交</el-button>
         </div>
       </div>
     </div>
@@ -216,25 +215,24 @@
 </template>
 
 <script>
+import { create } from "@/api/hqgj/training";
 import EditorBar from "../../publicTemplate/wangEnduit";
+import photo from "../../publicTemplate/photo";
 export default {
-  components: { EditorBar },
+  components: { EditorBar, photo },
   name: "add",
   data() {
     return {
       tabsName: "first", //选项卡展示第几个
       noClickTabs: true, //是否可以点击选项卡
       isShow: true, //是否显示
-      dialogVisible: false, //预览弹窗是否显示
-      dialogImageUrl: "", //是否显示预览图片
       //基本信息
       basicForm: {
         title: "", //标题
-        peopleNumber: "", //人数
-        time: "", //时间
+        cultivatePersonNumber: "", //人数
         address: "", //地点
-        photo: "", //封面
-        content: "" //内容
+        content: "", //内容
+        timeArr: [] //基本时间数组
       },
       isClear: false,
       //基本信息验证
@@ -246,47 +244,49 @@ export default {
             trigger: "blur"
           }
         ],
-        time: [
+        timeArr: [
           {
             required: true,
-            message: "请选择开始结束时间",
+            message: "请选择时间",
             trigger: "change"
           }
         ],
-        peopleNumber: [
+        cultivatePersonNumber: [
           {
             required: true,
             message: "请输入最多可报名人数",
             trigger: "blur"
-          }
+          },
+          { validator: this.globalMethods.checkIntegerP, trigger: "blur" }
         ],
         content: [
           {
             required: true,
-            message: "请输入内容",
+            message: "请输入详细内容",
             trigger: "blur"
           }
         ]
       },
       //日程管理
       scheduleForm: {
-        name: "", //名称
-        address: "", //地点
-        time: "", //时间
+        title: "", //名称
+        detailedAddress: "", //地点
+        lecturerName: "", //讲师
+        timeArr: [], //时间
         content: "", //简介
         courseware: "", //课件
         scheduleModels: [] //日程数组
       },
       //日程管理验证
       scheduleRules: {
-        name: [
+        title: [
           {
             required: true,
             message: "请输入培训名称,字数在50字以内",
             trigger: "blur"
           }
         ],
-        time: [
+        timeArr: [
           {
             required: true,
             message: "请选择时间",
@@ -310,9 +310,8 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+    beforeAvatarUpload(file) {
+      console.log(file);
     },
     //返回
     black() {
@@ -321,23 +320,92 @@ export default {
       });
     },
     //基本信息下一步
-    nextClick() {
-      this.tabsName = "second";
-      this.isShow = false;
+    nextClick(formName) {
+      //验证子组件图片是否有上传照片
+      this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
+        if (valid) {
+        } else {
+          return;
+        }
+      });
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.tabsName = "second";
+          this.isShow = false;
+          if (this.scheduleForm.scheduleModels.length == 0) {
+            this.addSchedule();
+          }
+        } else {
+          return false;
+        }
+      });
     },
     //上一步
     prevClick() {
       this.tabsName = "first";
       this.isShow = true;
     },
-
+    //提交数据
+    totalSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          //基本信息
+          let serveCultivate = {
+            title: this.basicForm.title, //标题
+            cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
+            fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
+            startDate:
+              this.basicForm.timeArr.length > 0
+                ? this.basicForm.timeArr[0]
+                : "", //开始时间
+            endDate:
+              this.basicForm.timeArr.length > 0
+                ? this.basicForm.timeArr[1]
+                : "", //结束时间
+            content: this.basicForm.content //内容
+          };
+          //日程
+          //日程开始时间和结束时间
+          for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+            this.scheduleForm.scheduleModels[i].startDate =
+              this.scheduleForm.scheduleModels[i].timeArr.length > 0
+                ? this.scheduleForm.scheduleModels[i].timeArr[0]
+                : ""; //开始时间
+            this.scheduleForm.scheduleModels[i].endDate =
+              this.scheduleForm.scheduleModels[i].timeArr.length > 0
+                ? this.scheduleForm.scheduleModels[i].timeArr[1]
+                : ""; //结束时间
+          }
+          let serveCultivateSchedule = this.scheduleForm.scheduleModels;
+          create({
+            serveCultivate: serveCultivate,
+            serveCultivateSchedule: serveCultivateSchedule
+          }).then(res => {
+            if (res.status == 1) {
+              this.$confirm(res.message + " 是否返回？", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "success",
+                center: true
+              })
+                .then(() => {
+                  this.black();
+                })
+                .catch(() => {});
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
     //添加日程
     addSchedule() {
       this.scheduleForm.scheduleModels.push({
-        name: "", //名称
-        lecturer: "", //讲师
-        address: "", //地点
-        time: "", //时间
+        title: "", //名称
+        lecturerName: "", //讲师
+        detailedAddress: "", //地点
+        timeArr: [], //时间
         content: "", //简介
         courseware: "", //课件
         key: Date.now()

@@ -3,16 +3,19 @@ package com.huacainfo.ace.hqgj.service;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.vo.UserProp;
-import com.huacainfo.ace.hqgj.model.ServeBusinessMember;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessMemberVo;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessMemberQVo;
+import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
+import com.huacainfo.ace.hqgj.vo.AnnexVo;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
+
+import java.util.List;
 
 /**
  * @author: 何双
  * @version: 2019-12-09
  * @Description: TODO(创业服务资料清单人员表)
  */
-public interface ServeBusinessMemberService {
+public interface ServeBusinessDetailService {
     /**
      * @throws
      * @Title:page
@@ -28,7 +31,7 @@ public interface ServeBusinessMemberService {
      * @version: 2019-12-09
      */
     PageDTO
-            <ServeBusinessMemberVo> page(ServeBusinessMemberQVo condition, int start, int limit, String orderBy) throws Exception;
+            <ServeBusinessDetailVo> page(ServeBusinessDetailQVo condition, int start, int limit, String orderBy) throws Exception;
 
     /**
      * @throws
@@ -40,7 +43,7 @@ public interface ServeBusinessMemberService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO create(ServeBusinessMemberVo o, UserProp userProp) throws Exception;
+    ResponseDTO create(String jsons, UserProp userProp) throws Exception;
 
     /**
      * @throws
@@ -52,7 +55,7 @@ public interface ServeBusinessMemberService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO update(ServeBusinessMember o, UserProp userProp) throws Exception;
+    ResponseDTO update(ServeBusinessDetail o, UserProp userProp) throws Exception;
 
     /**
      * @throws
@@ -64,7 +67,7 @@ public interface ServeBusinessMemberService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO<ServeBusinessMemberVo> getById(String id) throws Exception;
+    ResponseDTO<ServeBusinessDetailVo> getById(String id) throws Exception;
 
     /**
      * @throws
@@ -90,5 +93,13 @@ public interface ServeBusinessMemberService {
      * @version: 2019-12-09
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
+
+
+    /**
+     * 查询创业服务附件
+     * @param id 主键
+     * @return
+     */
+    ResponseDTO<AnnexVo> annexList(String id);
 
 }

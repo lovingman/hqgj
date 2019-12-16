@@ -7,7 +7,7 @@
                         <el-button @click="create" icon="el-icon-plus" style="float: left" type="primary">创建</el-button>
                     </el-col>
                     <el-col :span="14">
-                        <el-dropdown style="line-height: 35px;" trigger="click">
+                        <el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">
                             <el-button>
                                 批量操作<i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-    import {getList,deleteById} from "@/api/hqgj/enterprise";
+    import {getList,deleteById,deleteByIds} from "@/api/hqgj/enterprise";
 
     export default {
         name: "index",
@@ -88,6 +88,7 @@
                 pagesize: 10, //  每页的数据
                 total: 0,
                 list: [],
+                multipleSelection: [],//选中行数据
                 //搜索
                 query: {
                     companyName: ""
@@ -130,6 +131,46 @@
             search(){
                 this.handleQuery();
             },
+            //批量操作
+            handleCommand(command){
+                //批量导入
+                if (command == 'importXls' ) {
+                    console.log(456)
+                }
+                //批量导出
+                if (command == 'exportXls' ) {
+                    console.log(789)
+                }
+                //批量删除
+                if (command == 'deleteIds' ) {
+                    if (this.multipleSelection.length) {
+                        this.ids = this.multipleSelection.map(item => item.id).join(",");
+                        this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                deleteByIds(this.ids).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.multipleSelection = [];
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
+                            });
+                    } else {
+                        this.$message({
+                            message: (`未选中数据`),
+                            type: "warning"
+                        });
+                    }
+                }
+            },
+            //获取选中行数据
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
             person(index, data) {
                 this.$router.push({path: "/hqgj/BasicData/enterprise/Member", query: { id: data.id }});
             },
@@ -142,6 +183,7 @@
             preview(index, data) {
                 this.$router.push({path: "/hqgj/BasicData/enterprise/details", query: { id: data.id }});
             },
+            //删除
             handleDelete(index, data) {
                 this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
                     confirmButtonText: "确定",

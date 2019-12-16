@@ -47,26 +47,30 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="注册企业名称" prop="name">
+                <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
-                <el-table-column label="申请人" prop="personName" sortable='custom' width="200">
+                <el-table-column label="申请人" prop="applyPersonName" sortable='custom' width="200">
                 </el-table-column>
-                <el-table-column label="联系电话" prop="mobile" width="250">
+                <el-table-column label="联系电话" prop="applyPersonTel" width="250">
                 </el-table-column>
-                <el-table-column label="申请日期" prop="address" sortable='custom' width="300">
+                <el-table-column label="申请日期" prop="createDate" sortable='custom' width="300">
                 </el-table-column>
                 <el-table-column label="状态" prop="status" sortable='custom' width="100">
-                    <!--<template slot-scope="scope">-->
-                    <!--<div type="text" class="green" v-if="scope.list.status==='1'">待审核</div>-->
-                    <!--<div type="text" class="red" v-if="scope.list.status==='2'">办理中</div>-->
-                    <!--<div type="text" class="orange" v-if="scope.list.status==='3'">注册成功</div>-->
-                    <!--<div type="text" class="orange" v-if="scope.list.status==='4'">驳回修改</div>-->
-                    <!--</template>-->
+                    <template slot-scope="scope">
+                        <div class="green" type="text" v-if="scope.row.status=='0'">待审核</div>
+                        <div class="blue" type="text" v-if="scope.row.status=='1'">办理中</div>
+                        <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                        <div class="orange" type="text" v-if="scope.row.status=='3'">注册成功</div>
+                    </template>
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="edit" height="40" type="text">审核</el-button>
-                        <el-button @click="progress" height="40" type="text">进度标记</el-button>
+                        <el-button @click="examine(scope.$index,scope.row)"
+                                   height="40" type="text" v-if="scope.row.status=='0' || scope.row.status=='2'">审核
+                        </el-button>
+                        <el-button @click="progress(scope.$index,scope.row)" height="40" type="text"
+                                   v-if="scope.row.status=='1' || scope.row.status=='3'">进度标记
+                        </el-button>
                         <!--<el-button v-if="scope.list.status=='3'" @click="" height="40" type="text" @click="edit">进度记录</el-button>-->
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
@@ -93,100 +97,181 @@
             <div class="dialog-main">
                 <light-timeline :items='items'>
                     <template slot='tag' slot-scope='{ item }'>
-                        <!--<el-radio v-model="item.checked" label="1" @click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'">-->
+                        <!--@click.native.prevent="item.checked == '1' ? item.checked = '' : item.checked = '1'"-->
+                        <div v-if="item.code!= '0'">
+                            <el-radio v-model="item.checked" @click.native.prevent="clickitem(1,item.code)"
+                                      label="1">
+                                <span v-if="item.checked =='1'">已标记</span>
+                                <span v-else="item.checked">标记</span>
+                            </el-radio>
+                        </div>
+                        <!--<el-checkbox @change="sign(item.code)" false-label="0" true-label="1" v-model="item.checked">-->
                         <!--<span v-if="item.checked">已标记</span>-->
                         <!--<span v-else="item.checked">标记</span>-->
-                        <!--</el-radio>-->
-                        <el-checkbox false-label="0" true-label="1" v-model="item.checked" @change="sign">
-                            <span v-if="item.checked">已标记</span>
-                            <span v-else="item.checked">标记</span>
-                        </el-checkbox>
+                        <!--</el-checkbox>-->
                     </template>
                     <template slot='content' slot-scope='{ item }'>
                         <div>
-                            {{item.content}}
-                        </div>
-                        <div>
-                            {{item.tag}}
+                            0{{item.code}}-{{item.name}}
                         </div>
                     </template>
                 </light-timeline>
             </div>
             <span class="dialog-footer" slot="footer">
     <el-button @click="progressVisible = false">取 消</el-button>
-    <el-button @click="progressVisible = false" type="primary">确 定</el-button>
+    <el-button @click="sign" type="primary">确 定</el-button>
   </span>
         </el-dialog>
     </div>
 </template>
 
 <script>
+    import {getList, deleteById, getById,update} from "@/api/hqgj/BWSService";
+    import {getAreaTree, getDict} from "@/api/sys";
+
     export default {
         name: "index",
         data() {
             return {
-                checked:true,
+                checked: true,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
                 progressVisible: false,
                 items: [
-                    {
-                        tag: '2018-01-12',
-                        content: '00-资料审核已通过',
-                        checked:"1",
-                        color: '#949fa8',
-                    },
-                    {
-                        tag: '2018-01-13',
-                        content: '01-人工到工商局窗口审核名称。确定名称100%可用',
-                        checked:"",
-                        color: '#949fa8',
-                    },
-                    {
-                        tag: '2018-01-14',
-                        content: '02-收集所有新办企业需要提供的资料',
-                        class: 'fas fa-star',
-                        checked:"",
-                        color: '#949fa8',
-                    }
+                    // {
+                    //     tag: '2018-01-12',
+                    //     content: '00-资料审核已通过',
+                    //     checked: "1",
+                    //     color: '#949fa8',
+                    // },
+                    // {
+                    //     tag: '2018-01-13',
+                    //     content: '01-人工到工商局窗口审核名称。确定名称100%可用',
+                    //     checked: "",
+                    //     color: '#949fa8',
+                    // },
+                    // {
+                    //     tag: '2018-01-14',
+                    //     content: '02-收集所有新办企业需要提供的资料',
+                    //     class: 'fas fa-star',
+                    //     checked: "",
+                    //     color: '#949fa8',
+                    // }
                 ],
-                list: [
-                    {
-                        name: "湖南常德市凤天有限公司",
-                        personName: "王琦",
-                        mobile: "17688876666",
-                        address: "2019-11-21 09:31:08",
-                        status: "1"
-                    },
-                    {
-                        name: "湖南常德市凤天有限公司",
-                        personName: "王琦",
-                        mobile: "17688876666",
-                        address: "2019-11-21 09:31:08",
-                        status: "2"
-                    }
-                ],
+                byid: {
+                    tab:"",
+                    status:""
+                },
+                list: [],
+                query: {},
                 value: '',
                 value2: ''
             };
         },
         created() {
-
+            this.getlist();
         },
         methods: {
-            edit() {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
+            handleQuery: function () {
+                this.currentPage = 1;
+                this.getlist();
+            },
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                //每页下拉显示数据
+                this.getlist();
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                //点击第几页
+                this.getlist();
+            },
+            //获取列表数据
+            getlist() {
+                this.query = Object.assign(this.query, {
+                    pageNum: this.currentPage,
+                    pageSize: this.pagesize,
+                    totalRecord: this.total
+                });
+                getList(this.query).then(response => {
+                    this.total = response.total;
+                    this.list = response.rows;
+                    console.log(response);
+                })
+            },
+            //获取企业注册步骤数据
+            dictQuery() {
+                getDict("54")
+                    .then(response => {
+                        // response.data['54'];
+                        this.items = this.handling(response.data['54']);
+                        console.log(this.items)
+                    })
+            },
+            //进度标记
+            handling(data) {
+                for (var j = 0; j < data.length; j++) {
+                    for (var i = 0; i <= this.byid.tab; i++) {
+                        data[i].checked = "1";
+                    }
+                    if (data[j].checked == "1") {
+                        data[j].color = '#1890FF';
+                    } else {
+                        data[j].color = '#949fa8';
+                    }
+                }
+
+                return data;
+            },
+            //根据id获取数据
+            getdata(data) {
+                this.id = data;
+                getById(this.id).then(response => {
+                    this.byid = response.data;
+                    this.dictQuery();
+                })
+            },
+            examine(index, data) {
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id}});
             },
             preview() {
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
             },
-            progress() {
+            progress(index, data) {
+                this.getdata(data.id);
                 this.progressVisible = true;
             },
-            sign(data){
-                console.log(data);
-            }
+            sign() {
+                if(this.byid.tab == '7'){
+                    this.byid.status = 3;
+                }else {
+                    this.byid.status = 1;
+                }
+                update(this.byid).then(response => {
+                    if (response.status == 1){
+                        this.$message.success("标记成功");
+                        this.getlist();
+                    }
+                })
+
+                this.progressVisible = false;
+
+            },
+            clickitem(e,x) {
+                console.log(e,x);
+                e === this.items[x].checked ? this.items[x].checked = '' : this.items[x].checked = e;
+                console.log(e,x);
+                if(e == '1'){
+                    this.byid.tab = x;
+                    this.dictQuery();
+                }
+
+                // console.log(e,x);
+
+                // console.log(e,x);
+                // console.log(this.items);
+            },
         }
     }
 </script>
@@ -195,5 +280,21 @@
     .container {
         padding: 20px;
         background-color: #fff;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .blue {
+        color: #1890FF;
+    }
+
+    .orange {
+        color: #FF9900;
     }
 </style>

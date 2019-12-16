@@ -17,11 +17,11 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, companyId, companyName, getIntegral, surplusIntegral, register, createUserId, 
+    id, companyId, companyName, getIntegral, surplusIntegral, register, createUserId,
     createUserName, createDate, modifyUserId, modifyUserName, modifyDate, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from serve_business_integral
     where id = #{id,jdbcType=VARCHAR}
@@ -31,15 +31,15 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessIntegral">
-    insert into serve_business_integral (id, companyId, companyName, 
-      getIntegral, surplusIntegral, register, 
-      createUserId, createUserName, createDate, 
-      modifyUserId, modifyUserName, modifyDate, 
+    insert into serve_business_integral (id, companyId, companyName,
+      getIntegral, surplusIntegral, register,
+      createUserId, createUserName, createDate,
+      modifyUserId, modifyUserName, modifyDate,
       status)
-    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
-      #{getIntegral,jdbcType=INTEGER}, #{surplusIntegral,jdbcType=INTEGER}, #{register,jdbcType=VARCHAR}, 
-      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
+      #{getIntegral,jdbcType=INTEGER}, #{surplusIntegral,jdbcType=INTEGER}, #{register,jdbcType=VARCHAR},
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessIntegral">
@@ -186,7 +186,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessIntegralVo">
-     
+
   </resultMap>
   <sql id="Vo_Column_List">
     t.id, t.companyId, t.companyName, t.getIntegral, t.surplusIntegral, t.register, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -198,40 +198,40 @@
     <where>
       1 = 1
       <if test="condition.companyId != null and condition.companyId != ''">
-         and t.companyId = #{companyId,jdbcType=VARCHAR}
+         and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
       </if>
       <if test="condition.companyName != null and condition.companyName != ''">
-         and t.companyName = #{companyName,jdbcType=VARCHAR}
+         and t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
       </if>
       <if test="condition.getIntegral != null and condition.getIntegral != ''">
-         and t.getIntegral = #{getIntegral,jdbcType=INTEGER}
+         and t.getIntegral = #{condition.getIntegral,jdbcType=INTEGER}
       </if>
       <if test="condition.surplusIntegral != null and condition.surplusIntegral != ''">
-         and t.surplusIntegral = #{surplusIntegral,jdbcType=INTEGER}
+         and t.surplusIntegral = #{condition.surplusIntegral,jdbcType=INTEGER}
       </if>
       <if test="condition.register != null and condition.register != ''">
-         and t.register = #{register,jdbcType=VARCHAR}
+         and t.register = #{condition.register,jdbcType=VARCHAR}
       </if>
       <if test="condition.createUserId != null and condition.createUserId != ''">
-         and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+         and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
       </if>
       <if test="condition.createUserName != null and condition.createUserName != ''">
-         and t.createUserName = #{createUserName,jdbcType=VARCHAR}
+         and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
       </if>
       <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{createDate,jdbcType=TIMESTAMP}
+         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
-         and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
+         and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
       </if>
       <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
-         and t.modifyUserName = #{modifyUserName,jdbcType=VARCHAR}
+         and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
       </if>
       <if test="condition.modifyDate != null and condition.modifyDate != ''">
-         and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+         and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.status != null and condition.status != ''">
-         and t.status = #{status,jdbcType=VARCHAR}
+         and t.status = #{condition.status,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>
@@ -254,7 +254,7 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+    limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
   </select>
   <select id="findCount" resultType="int">
     SELECT COUNT(*)

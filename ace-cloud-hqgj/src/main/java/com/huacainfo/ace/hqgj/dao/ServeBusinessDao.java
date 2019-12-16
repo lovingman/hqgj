@@ -26,4 +26,6 @@ public interface ServeBusinessDao {
     int isExist(ServeBusiness o);
 
     int deleteByIds(String[] ids);
+
+    ServeBusinessVo previewInfo(String id);
 }

@@ -8,6 +8,9 @@
                         <el-form-item label="姓名:" prop="name">
                             <el-input placeholder="请输入姓名" v-model="addform.name"></el-input>
                         </el-form-item>
+                        <el-form-item label="身份证号:" prop="idCard">
+                            <el-input placeholder="请输入身份证号" v-model="addform.idCard"></el-input>
+                        </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
                             <el-input placeholder="请输入联系方式" v-model="addform.mobile"></el-input>
                         </el-form-item>
@@ -20,7 +23,7 @@
                                     :key="tag"
                                     @close="handleClose(tag)"
                                     closable
-                                    v-for="tag in addform.speciality">
+                                    v-for="tag in specialityarr">
                                 {{tag}}
                             </el-tag>
                             <el-input
@@ -118,12 +121,14 @@
                 hideUpload2: false,//隐藏上传微信二维码按钮
                 inputVisible: false,
                 inputValue: '',
+                specialityarr: [],//擅闯领域数组
                 addform: {
                     orgId: "",
                     name: "",
+                    idCard:"",
                     mobile: "",
                     jobs: "",
-                    speciality: [],
+                    speciality: "",
                     content: "",
                     imagePhotoarr: [],
                     imagePhoto: "",
@@ -137,6 +142,9 @@
                     mobile: [
                         {required: true, message: "请输入联系方式", trigger: "blur"},
                     ],
+                    idCard: [
+                        {required: true, message: "请输入身份证号", trigger: "blur"},
+                    ],
                     jobs: [
                         {required: true, message: "请输入职务/职称", trigger: "blur"}
                     ],
@@ -148,13 +156,7 @@
                     ],
                     wechatPhotoarr: [
                         {required: true, message: "请上传形象照"}
-                    ]
-                    // imagePhoto: [
-                    //     {required: true, message: "请输入机构简介", trigger: "blur"},
-                    // ],
-                    // wechatPhoto: [
-                    //     {required: true, message: "请选择机构类型", trigger: "change"}
-                    // ],
+                    ],
                 },
 
             };
@@ -168,6 +170,7 @@
                     if (valid) {
                         console.log(this.$route.query.id)
                         this.addform.orgId = this.$route.query.id;
+                        this.addform.speciality= this.specialityarr.join();
                         createPerson(this.addform).then(response => {
                             if (response.status == 1) {
                                 this.$message.success("创建成功");
@@ -184,7 +187,7 @@
                 this.$router.push({path: "/hqgj/BasicData/service/Member",query: { id: this.$route.query.id }});
             },
             handleClose(tag) {
-                this.addform.speciality.splice(this.addform.speciality.indexOf(tag), 1);
+                this.specialityarr.splice(this.specialityarr.indexOf(tag), 1);
             },
 
             showInput() {
@@ -197,7 +200,7 @@
             handleInputConfirm() {
                 let inputValue = this.inputValue;
                 if (inputValue) {
-                    this.addform.speciality.push(inputValue);
+                    this.specialityarr.push(inputValue);
                 }
                 this.inputVisible = false;
                 this.inputValue = '';
@@ -442,14 +445,14 @@
                         const formData = new FormData();
                         // 文件对象
                         let obj = {};
-                        if (that.submitType == "edit") {
-                            that.actionUrls = "";
-                            // obj.projectId = that.byIdData.id;
-                            obj.coverUrl = newUrl;
-                        } else {
+                        // if (that.submitType == "edit") {
+                        //     that.actionUrls = "";
+                        //     // obj.projectId = that.byIdData.id;
+                        //     obj.coverUrl = newUrl;
+                        // } else {
                             that.actionUrls = "/hqgj-portal/www/uploadFileBase";
                             obj.file = newUrl;
-                        }
+                        // }
                         that.imageUpload2(obj);
                     };
                 };

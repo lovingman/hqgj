@@ -4,10 +4,11 @@
             <div class="handle-box">
                 <el-row>
                     <el-col :span="2">
-                        <el-button @click="createPerson" icon="el-icon-plus" style="float: left" type="primary">添加</el-button>
+                        <el-button @click="createPerson" icon="el-icon-plus" style="float: left" type="primary">添加
+                        </el-button>
                     </el-col>
                     <el-col :span="14">
-                        <el-dropdown style="line-height: 35px;" trigger="click">
+                        <el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">
                             <el-button>
                                 批量操作<i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
@@ -28,7 +29,8 @@
                         ></el-input>
                     </el-col>
                     <el-col :span="2">
-                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索</el-button>
+                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
+                        </el-button>
                     </el-col>
                 </el-row>
 
@@ -51,7 +53,7 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="150">
                     <template slot-scope="scope">
-                        <el-button @click="editPerson(scope.$index,scope.row)" height="40" type="text" >编辑</el-button>
+                        <el-button @click="editPerson(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="Delete(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
@@ -60,31 +62,33 @@
                 </el-table-column>
             </el-table>
             <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
                     :current-page="currentPage"
                     :page-size="pagesize"
+                    :total="total"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
                     background
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
+                    layout="total, sizes, prev, pager, next, jumper">
             </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
-    import {personPage,deletePerson} from "@/api/hqgj/service";
+    import {personPage, deletePerson, deletePersons} from "@/api/hqgj/service";
+
     export default {
         name: "Member",
         data() {
             return {
-                orgId:"",//机构id
+                orgId: "",//机构id
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                rows:[],
+                multipleSelection: [],//选中行数据
+                rows: [],
                 query: {
-                    orgId:"",
+                    orgId: "",
                     name: ""
                 },
             };
@@ -93,7 +97,7 @@
             this.getlist();
             // this.AreaCodeQuery();
         },
-        methods:{
+        methods: {
             handleQuery: function () {
                 this.currentPage = 1;
                 this.getlist();
@@ -108,7 +112,7 @@
                 //点击第几页
                 this.getlist();
             },
-            getlist(){
+            getlist() {
                 this.query.orgId = this.$route.query.id;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
@@ -116,12 +120,12 @@
                     totalRecord: this.total
                 });
                 personPage(this.query).then(response => {
-                    this.total= response.total;
+                    this.total = response.total;
                     this.rows = response.rows;
                     console.log(response);
                 })
             },
-            Delete(index,data){
+            Delete(index, data) {
                 console.log(data)
                 this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
                     confirmButtonText: "确定",
@@ -139,15 +143,56 @@
 
                     });
             },
-            createPerson(){
+
+            //批量操作
+            handleCommand(command) {
+                //导入
+                if (command == 'importXls') {
+                    console.log(456)
+                }
+                //导出
+                if (command == 'exportXls') {
+                    console.log(789)
+                }
+                //删除
+                if (command == 'deleteIds') {
+                    if (this.multipleSelection.length) {
+                        this.ids = this.multipleSelection.map(item => item.id).join(",");
+                        this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                deletePersons(this.ids).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.multipleSelection = [];
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
+                            });
+                    } else {
+                        this.$message({
+                            message: (`未选中数据`),
+                            type: "warning"
+                        });
+                    }
+                }
+            },
+            //获取选中行数据
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            createPerson() {
                 console.log(this.$route.query.id);
-                this.$router.push({ path: "/hqgj/BasicData/service/createPerson",query:{id:this.$route.query.id} });
+                this.$router.push({path: "/hqgj/BasicData/service/createPerson", query: {id: this.$route.query.id}});
             },
-            editPerson(index,data){
-                this.$router.push({ path: "/hqgj/BasicData/service/editPerson" ,query:{id:data.id}});
+            editPerson(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/service/editPerson", query: {id: data.id}});
             },
-            previewPerson(index,data){
-                this.$router.push({ path: "/hqgj/BasicData/service/detailsPerson",query:{id:data.id} });
+            previewPerson(index, data) {
+                this.$router.push({path: "/hqgj/BasicData/service/detailsPerson", query: {id: data.id}});
             }
         }
     }

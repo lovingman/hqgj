@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.lang.reflect.Array;
 import java.security.Guard;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +16,7 @@ import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
 import com.huacainfo.ace.hqgj.dao.ServeCultivateScheduleDao;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
+import com.huacainfo.ace.hqgj.model.ServeCultivateSchedule;
 import com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,23 +92,27 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
     @Log(operationObj = "培训提升基础表", operationType = "创建", detail = "创建培训提升基础表")
     public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
         JSONObject jsonObj = JSON.parseObject(jsons);
+        if(!jsonObj.containsKey("serveCultivate")||!jsonObj.containsKey("serveCultivateSchedule")) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
         ServeCultivate s = JSON.parseObject(jsonObj.getString("serveCultivate"), ServeCultivate.class);
+        List<ServeCultivateScheduleVo> serveCultivateSchedule = new ArrayList<ServeCultivateScheduleVo>(
+                JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateScheduleVo.class));
         String  cultivateId= GUIDUtil.getGUID();
         s.setId(cultivateId);
         int temp = this.serveCultivateDao.isExist(s);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表名称重复！");
         }
+        s.setStatus("0");//未审核
         s.setCreateDate(new Date());
         s.setCreateUserName(userProp.getName());
         s.setCreateUserId(userProp.getUserId());
         s.setModifyDate(new Date());
         this.serveCultivateDao.insert(s);
 
-        List<ServeCultivateScheduleVo> serveCultivateSchedule = new ArrayList<ServeCultivateScheduleVo>(
-                JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateScheduleVo.class));
         if (!CommonUtils.isBlank(serveCultivateSchedule)) {
-            for (ServeCultivateScheduleVo o : serveCultivateSchedule) {
+            for (ServeCultivateSchedule o : serveCultivateSchedule) {
                 String cultivateScheduleId = GUIDUtil.getGUID();
                 o.setId(cultivateScheduleId);
                 o.setServeCultivateId(cultivateId);
@@ -117,7 +123,7 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
                 o.setModifyDate(new Date());
                 this.serveCultivateScheduleDao.insert(o);
                 //课程附件
-                if (o.getBasicAnnexes().size()>0) {
+                if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                     List<BasicAnnex> fileURL = o.getBasicAnnexes();
                     for (BasicAnnex a : fileURL) {
                         a.setId(GUIDUtil.getGUID());
@@ -125,6 +131,8 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
                         a.setFileURL(a.getFileURL());
                         a.setType("1");
                         a.setRemark("培训提升日程表附件");
+                        a.setCreateDate(new Date());
+                        a.setStatus("1");
                         basicAnnexDao.insert(a);
                     }
                 }
@@ -146,15 +154,55 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
     @Override
     @Transactional
     @Log(operationObj = "培训提升基础表", operationType = "变更", detail = "变更培训提升基础表")
-    public ResponseDTO update(ServeCultivate o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
+    public ResponseDTO update(String jsons, UserProp userProp) throws Exception {
+        JSONObject jsonObj = JSON.parseObject(jsons);
+        if(!jsonObj.containsKey("serveCultivate")|| !jsonObj.containsKey("serveCultivateSchedule")) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
+        ServeCultivate s = JSON.parseObject(jsonObj.getString("serveCultivate"), ServeCultivate.class);
+        List<ServeCultivateSchedule> serveCultivateSchedule = new ArrayList<ServeCultivateSchedule>(
+                JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateSchedule.class));
 
-        o.setModifyDate(new Date());
-        o.setModifyUserName(userProp.getName());
-        o.setModifyUserId(userProp.getUserId());
-        this.serveCultivateDao.updateByPrimaryKey(o);
+        if(CommonUtils.isBlank(s.getId())){
+            return new ResponseDTO(ResultCode.FAIL, "培训提升id不能为空！");
+        }
+        s.setModifyDate(new Date());
+        s.setModifyUserName(userProp.getName());
+        s.setModifyUserId(userProp.getUserId());
+        this.serveCultivateDao.updateByPrimaryKey(s);
+       //删除日程后新增
+        List<String> list =serveCultivateScheduleDao.selectScheduleId(s.getId());
+        String[] sb =new String[list.size()];
+        serveCultivateScheduleDao.deleteByCultivateIds(s.getId().split(","));
+        basicAnnexDao.deleteByRelationIds(list.toArray(sb));
+
+        if (!CommonUtils.isBlank(serveCultivateSchedule)) {
+            for (ServeCultivateSchedule o : serveCultivateSchedule) {
+                String cultivateScheduleId = GUIDUtil.getGUID();
+                o.setId(cultivateScheduleId);
+                o.setServeCultivateId(s.getId());
+                o.setCreateDate(new Date());
+                o.setStatus("1");
+                o.setCreateUserName(userProp.getName());
+                o.setCreateUserId(userProp.getUserId());
+                o.setModifyDate(new Date());
+                 this.serveCultivateScheduleDao.insert(o);
+                //课程附件
+                if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
+                    List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                    for (BasicAnnex a : fileURL) {
+                        a.setId(GUIDUtil.getGUID());
+                        a.setRelationId(cultivateScheduleId);
+                        a.setFileURL(a.getFileURL());
+                        a.setType("1");
+                        a.setRemark("培训提升日程表附件");
+                        a.setCreateDate(new Date());
+                        a.setStatus("1");
+                        basicAnnexDao.insert(a);
+                    }
+                }
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -209,6 +257,7 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
     @Log(operationObj = "培训提升基础表", operationType = "批量删除", detail = "批量删除培训提升基础表")
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.serveCultivateDao.deleteByIds(ids);
+        serveCultivateScheduleDao.deleteByCultivateIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -226,6 +275,22 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
             return new ResponseDTO(ResultCode.FAIL, "数据更新失败");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "数据更新成功", coverUrl);
+    }
+
+
+    /**
+     * 修改状态  0-待审核  1-进行中 2-未通过 3-已结束',
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ResponseDTO updateStatus(String id, String status) {
+       int i=  serveCultivateDao.updateStatus(id,status);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }
 
 

@@ -27,4 +27,8 @@ public interface ServeCultivateScheduleDao {
     int isExist(ServeCultivateSchedule o);
 
     int deleteByIds(String[] ids);
+
+    int deleteByCultivateIds(String[] ids);
+
+    List<String> selectScheduleId(String scheduleId);
 }

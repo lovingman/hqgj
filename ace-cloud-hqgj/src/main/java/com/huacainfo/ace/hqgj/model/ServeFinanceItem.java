@@ -2,79 +2,80 @@ package com.huacainfo.ace.hqgj.model;
 
 import com.huacainfo.ace.common.model.BaseModel;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 表名：serve_business_other
- * 注释：创业服务资料清单其它资料表
+ * 表名：serve_finance_item
+ * 注释：财税管家服务项目表
  *
  * @author heshuang
- * @date 2019-12-09
+ * @date 2019-12-11
  */
-public class ServeBusinessOther extends BaseModel {
+public class ServeFinanceItem extends BaseModel {
     /**
-     * 字段名：serve_business_other.id
+     * 字段名：serve_finance_item.id
      * 注释：主键ID
      */
     private String id;
 
     /**
-     * 字段名：serve_business_other.businessId
-     * 注释：创业服务表ID（关联serve_business表ID）
+     * 字段名：serve_finance_item.financeId
+     * 注释：财税服务表ID（关联serve_finance表id）
      */
-    private String businessId;
+    private String financeId;
 
     /**
-     * 字段名：serve_business_other.name
-     * 注释：名称
+     * 字段名：serve_finance_item.itemName
+     * 注释：服务项目
      */
-    private String name;
+    private String itemName;
 
     /**
-     * 字段名：serve_business_other.type
-     * 注释：类别（1-租赁合同复印件 2-房产证复印件 3-房东营业执照 4-房屋无偿提供使用证明）
+     * 字段名：serve_finance_item.price
+     * 注释：价格
      */
-    private String type;
+    private BigDecimal price;
 
     /**
-     * 字段名：serve_business_other.createUserId
+     * 字段名：serve_finance_item.createUserId
      * 注释：创建人ID
      */
     private String createUserId;
 
     /**
-     * 字段名：serve_business_other.createUserName
+     * 字段名：serve_finance_item.createUserName
      * 注释：创建人姓名
      */
     private String createUserName;
 
     /**
-     * 字段名：serve_business_other.createDate
+     * 字段名：serve_finance_item.createDate
      * 注释：创建时间
      */
     private Date createDate;
 
     /**
-     * 字段名：serve_business_other.modifyUserId
+     * 字段名：serve_finance_item.modifyUserId
      * 注释：更新人ID
      */
     private String modifyUserId;
 
     /**
-     * 字段名：serve_business_other.modifyUserName
+     * 字段名：serve_finance_item.modifyUserName
      * 注释：更新人姓名
      */
     private String modifyUserName;
 
     /**
-     * 字段名：serve_business_other.modifyDate
+     * 字段名：serve_finance_item.modifyDate
      * 注释：修改时间
      */
     private Date modifyDate;
 
     /**
-     * 字段名：serve_business_other.status
-     * 注释：状态  0-待审  1-通过 2-驳回修改
+     * 字段名：serve_finance_item.status
+     * 注释：状态  1-生效 0-失效
      */
     private String status;
 
@@ -86,28 +87,28 @@ public class ServeBusinessOther extends BaseModel {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getBusinessId() {
-        return businessId;
+    public String getFinanceId() {
+        return financeId;
     }
 
-    public void setBusinessId(String businessId) {
-        this.businessId = businessId == null ? null : businessId.trim();
+    public void setFinanceId(String financeId) {
+        this.financeId = financeId == null ? null : financeId.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setItemName(String itemName) {
+        this.itemName = itemName == null ? null : itemName.trim();
     }
 
-    public String getType() {
-        return type;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getCreateUserId() {
