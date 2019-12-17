@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +29,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -176,25 +178,30 @@ public class BasicAnnexController extends BaseController {
     /**
      * 下载文件
      * @param relationId
-     * @param path
      * @param res
      * @throws Exception
      */
     @RequestMapping(value = "/download")
-    public void downloadExcel(String relationId, String path, HttpServletResponse res) throws Exception {
-        if(CommonUtils.isBlank(relationId)||CommonUtils.isBlank(path)){
-            return;
+    public ResponseDTO downloadExcel(String relationId, HttpServletResponse res) throws Exception {
+        if(CommonUtils.isBlank(relationId)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
         BasicAnnexQVo condition=new BasicAnnexQVo();
         condition.setRelationId(relationId);
         PageDTO<BasicAnnexVo> rst = this.basicAnnexService.page(condition, 0,1000,null);
-        try {
+      /*  try {*/
+            String[] list=new String[rst.getTotal()];
+
             //多个图片下载地址
-            for(BasicAnnexVo vo:rst.getRows()){
-                //根据图片地址构建URL
+            for(int i=0;i<rst.getTotal();i++ ) {
+                 BasicAnnexVo vo =rst.getRows().get(i);
                 URL url= new URL(vo.getFileURL());
+                String base64=CommonUtils.encodeImageToBase64(url);
+                list[i]=base64;
+
+                /*//根据图片地址构建URL
                 URLConnection conn = url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(10000);
@@ -215,6 +222,7 @@ public class BasicAnnexController extends BaseController {
                     file.createNewFile();
                 }
                 //通过流复制图片
+                res.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(ext, "UTF-8"));
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
@@ -230,8 +238,10 @@ public class BasicAnnexController extends BaseController {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        }*/
+            }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
+            }
 
 
 }

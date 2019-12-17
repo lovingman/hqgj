@@ -112,8 +112,11 @@
             <if test="condition.content != null and condition.content != ''">
                 and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
-            <if test="condition.createDate != null and condition.createDate != ''">
-                and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+            <if test="condition.startTime != null and condition.startTime != ''">
+                and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.endTime != null and condition.endTime != ''">
+                and t.createDate  <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
             </if>
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
