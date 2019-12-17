@@ -57,9 +57,7 @@
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivate">
     update serve_cultivate
     set title = #{title,jdbcType=VARCHAR},
-      orgId=#{orgId,jdbcType=VARCHAR}
-      maxPersonNumber = #{maxPersonNumber,jdbcType=INTEGER},
-      enrollPersopnNumber = #{enrollPersopnNumber,jdbcType=INTEGER},
+      orgId=#{orgId,jdbcType=VARCHAR},
       cultivatePersonNumber = #{cultivatePersonNumber,jdbcType=INTEGER},
       startDate = #{startDate,jdbcType=TIMESTAMP},
       endDate = #{endDate,jdbcType=TIMESTAMP},
