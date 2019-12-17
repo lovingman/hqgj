@@ -23,9 +23,9 @@ import com.huacainfo.ace.hqgj.vo.BaseOrganizationQVo;
 /**
 * @author: 豆文国
 * @version: 2019-12-09
-* @Description:  TODO(企业管理)
+* @Description:  TODO(服务机构管理)
 */
-@Api(value = "/baseOrganization",tags = "企业管理")
+@Api(value = "/baseOrganization",tags = "服务机构管理")
 @RestController
 @RequestMapping("/baseOrganization")
 public class BaseOrganizationController extends BaseController {

@@ -76,7 +76,7 @@ public class ServeBusinessController extends BaseController {
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
     public ResponseDTO create(@RequestBody String jsons) throws Exception {
         ServeBusiness obj = JSON.parseObject(jsons, ServeBusiness.class);
-        return this.serveBusinessService.create(obj, this.getCurUserProp());
+        return this.serveBusinessService.create(jsons, this.getCurUserProp());
     }
 
     /**
@@ -97,7 +97,7 @@ public class ServeBusinessController extends BaseController {
     @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
     public ResponseDTO update(@RequestBody String jsons) throws Exception {
         ServeBusiness obj = JSON.parseObject(jsons, ServeBusiness.class);
-        return this.serveBusinessService.update(obj, this.getCurUserProp());
+        return this.serveBusinessService.update(jsons, this.getCurUserProp());
     }
 
     /**
@@ -157,6 +157,21 @@ public class ServeBusinessController extends BaseController {
     @PostMapping(value = "/deleteByIds", produces = "application/json;charset=UTF-8")
     public ResponseDTO deleteByIds(String ids) throws Exception {
         return this.serveBusinessService.deleteByIds(ids.split(","));
+    }
+
+    /**
+     * 创业服务包免费服务申请表
+     * @param id 主键
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/previewInfo", notes = "创业服务包免费服务申请表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @GetMapping(value = "/previewInfo", produces = "application/json;charset=UTF-8")
+    public ResponseDTO<ServeBusinessVo> previewInfo(String id) throws Exception {
+        return this.serveBusinessService.previewInfo(id);
     }
 
 }

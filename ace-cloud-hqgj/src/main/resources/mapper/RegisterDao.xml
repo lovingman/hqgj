@@ -104,5 +104,10 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
-
+    <select id="selectUserInfo" resultType="com.huacainfo.ace.common.security.model.Users">
+      select t.user_id userId, t.account, t.password, t.sex, t.idCard, t.userType, t.name, t.corpId,
+    t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime
+        from portal_hqgj.users t
+        where t.user_id = #{userId}
+    </select>
 </mapper>

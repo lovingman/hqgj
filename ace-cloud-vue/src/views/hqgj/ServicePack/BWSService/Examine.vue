@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div style="width: 100%">
-            <el-button size="small" type="primary " style="float: right">完成审核</el-button>
+            <el-button size="small" style="float: right" type="primary ">完成审核</el-button>
         </div>
         <div class="tab-pane">
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
@@ -9,7 +9,6 @@
                     <el-table
                             :data="lists"
                             @selection-change="handleSelectionChange"
-                            @sort-change="handleSort"
                             border
                             class="table"
                             max-height="475"
@@ -27,9 +26,11 @@
                             <template slot-scope="scope">
                                 <el-button @click="" type="text">下载</el-button>
                                 <span class="strightline">|</span>
-                                <el-button v-if="scope.row.id != null"  @click="looking(scope.$index,scope.row)" type="text">预览</el-button>
-                                <el-button v-else="scope.row.id != null" type="text">
-                                    <router-link target="_blank" to="/application">预览</router-link>
+                                <el-button @click="looking(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.id != null">预览
+                                </el-button>
+                                <el-button type="text" v-else="scope.row.id != null">
+                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览</router-link>
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -77,7 +78,12 @@
                 <el-tab-pane label="基本信息" name="3">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
-                        <el-button @click="" style="float: right;margin-right: 25px;padding-top: 1px" type="text">审核
+                        <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
+                                   type="text">审核
+                        </el-button>
+                        <el-button @click="" style="float: right;margin-right: 25px;padding-top: 1px" type="text">通过
+                        </el-button>
+                        <el-button @click="" style="float: right;margin-right: 25px;padding-top: 1px" type="text">驳回修改
                         </el-button>
                     </div>
                     <el-divider></el-divider>
@@ -142,6 +148,11 @@
                             </template>
                         </el-table-column>
                         <el-table-column label="状态" prop="status" width="80">
+                            <template slot-scope="scope">
+                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                            </template>
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
@@ -277,6 +288,7 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
+        <!--预览弹窗-->
         <el-dialog
                 :before-close="handleClose"
                 :visible.sync="lookingVisible"
@@ -288,34 +300,52 @@
                          class="head_pics" v-for="attach in fileList"/>
                 </viewer>
             </div>
-            <span class="dialog-footer" slot="footer">
-    <el-button @click="lookingVisible = false">取 消</el-button>
-    <el-button @click="sign" type="primary">确 定</el-button>
-  </span>
+            <div class="dialog-footer" slot="footer">
+                <el-button @click="lookingVisible = false">取 消</el-button>
+                <el-button @click="sign" type="primary">确 定</el-button>
+            </div>
+        </el-dialog>
+        <!--基础信息审核弹窗-->
+        <el-dialog
+                :before-close="handleClose"
+                :visible.sync="reviewVisible"
+                title="审核"
+                width="60%">
+            <div class="dialog-main">
+                <viewer :images="fileList">
+                    <img :key="attach.fileURL" :src="attach.fileURL"
+                         class="head_pics" v-for="attach in fileList"/>
+                </viewer>
+            </div>
+            <div class="dialog-footer" slot="footer">
+                <el-button @click="lookingVisible = false">取 消</el-button>
+                <el-button @click="sign" type="primary">确 定</el-button>
+            </div>
         </el-dialog>
     </div>
 
 </template>
 
 <script>
-    import {getById, getMember,getannexList,getAnnex} from "@/api/hqgj/BWSService";
+    import {getById, getMember, getannexList, getAnnex} from "@/api/hqgj/BWSService";
 
     export default {
         name: "Examine",
         data() {
             return {
-                lookingVisible:false,
+                lookingVisible: false,
+                reviewVisible: false,
                 activeName: '1',
-                multipleSelection:[],
+                multipleSelection: [],
                 form: {},
                 list: [],
-                fileList:[],
+                fileList: [],
                 query: {
                     type: ""
                 },
                 query2: {
                     type: "",
-                    relationId:""
+                    relationId: ""
                 },
                 lists: [],
             };
@@ -338,33 +368,33 @@
                     this.list = response.rows;
                 })
             },
-            getannexList(){
+            getannexList() {
                 this.id = this.$route.query.id;
-                getannexList(this.id).then(response =>{
+                getannexList(this.id).then(response => {
                     // response.data;
                     this.lists = this.istop(response.data)
 
                 })
             },
             //申请表置顶
-            istop(data){
-                for(var i = 0; i< data.length;i++){
-                    if (data[i].id== null){
+            istop(data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].id == null) {
                         var index = i;
                     }
                 }
                 data[0] = data.splice(index, 1, data[0])[0];
-               return data;
+                return data;
 
             },
 
             //预览
-            looking(index,data){
+            looking(index, data) {
                 this.lookingVisible = true;
-                this.query2.relationId =data.id;
+                this.query2.relationId = data.id;
                 this.query2.type = 3;
-                getAnnex(this.query2).then(response=>{
-                    this.fileList=response.rows;
+                getAnnex(this.query2).then(response => {
+                    this.fileList = response.rows;
                 })
             },
             handleClick(tab, event) {
@@ -380,7 +410,7 @@
                     this.query.type = "4";
                     this.getMemberlist();
                 }
-                if(tab.name == 7){
+                if (tab.name == 7) {
                     this.query.type = "5,6,7,8";
                     this.getMemberlist();
                 }
@@ -388,6 +418,10 @@
 
                 // console.log(tab.label);
                 // console.log(tab.name);
+            },
+            //基础信息审核
+            reviewBasic() {
+                this.reviewVisible = true;
             },
             //获取选中行数据
             handleSelectionChange(val) {
@@ -414,13 +448,27 @@
     .elrow {
         margin-bottom: 0;
     }
+
     .head_pic {
-        max-height: 25px;
+        max-height: 30px;
         vertical-align: middle;
     }
+
     .head_pics {
         max-height: 200px;
         margin-left: 20px;
         vertical-align: middle;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .orange {
+        color: #FF9900;
     }
 </style>

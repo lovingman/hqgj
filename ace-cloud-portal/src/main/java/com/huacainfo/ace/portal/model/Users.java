@@ -45,6 +45,12 @@ public class Users extends BaseModel {
     private String idCard;
 
     /**
+     * 字段名：users.type
+     * 注释：用户类型
+     */
+    private String type;
+
+    /**
      * 字段名：users.name
      * 注释：姓名
      */
@@ -129,7 +135,7 @@ public class Users extends BaseModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date lockedTime;
-    
+
     /**
      * 字段名：users.identity
      * 注释：身份证号，作为关联person表的依据
@@ -289,4 +295,12 @@ public class Users extends BaseModel {
 	public void setIdentity(String identity) {
 		 this.identity = identity == null ? null : identity.trim();
 	}
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

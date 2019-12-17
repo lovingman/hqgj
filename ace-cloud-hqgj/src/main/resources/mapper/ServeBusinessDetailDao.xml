@@ -156,6 +156,14 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByBusinessIds">
+        delete from serve_business_detail
+        where businessId in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
     <resultMap id="annexResultMap" type="com.huacainfo.ace.hqgj.vo.AnnexVo">
             <result column="id" jdbcType="VARCHAR" property="id"/>
             <result column="dtype" jdbcType="VARCHAR" property="dtype"/>

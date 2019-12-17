@@ -39,7 +39,7 @@ public interface ServeBusinessService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO create(ServeBusiness o, UserProp userProp) throws Exception;
+    ResponseDTO create(String jsons, UserProp userProp) throws Exception;
 
     /**
      * @throws
@@ -51,7 +51,7 @@ public interface ServeBusinessService {
      * @author: 何双
      * @version: 2019-12-09
      */
-    ResponseDTO update(ServeBusiness o, UserProp userProp) throws Exception;
+    ResponseDTO update(String jsons, UserProp userProp) throws Exception;
 
     /**
      * @throws
@@ -90,4 +90,12 @@ public interface ServeBusinessService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+
+    /**
+     *创业服务包免费服务申请表
+     * @param id 主键
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO<ServeBusinessVo> previewInfo(String id)throws Exception;
 }
