@@ -334,19 +334,24 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     /**
      * 审核基础信息
      * @param id
-     * @param basicStatus
+     * @param status
      * @return
      */
     @Override
-    public ResponseDTO updateBasicStatus(String id, String basicStatus) {
-        if(CommonUtils.isBlank(id)||CommonUtils.isBlank(basicStatus)){
+    public ResponseDTO updateBasicStatus(String id, String status,String type) {
+        if(CommonUtils.isBlank(id)||CommonUtils.isBlank(status)||CommonUtils.isBlank(type)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        int i=  serveBusinessDao.updateBasicStatus(id,basicStatus);
+        if(type.equals("1")){
+            type="basicStatus";
+        }else{
+            type="status";
+        }
+        int i=  serveBusinessDao.updateBasicStatus(id,status,type);
         if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "更新失败");
         }
-        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", basicStatus);
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }
 
     /**

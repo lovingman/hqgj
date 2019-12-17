@@ -179,14 +179,13 @@ public class ServeBusinessController extends BaseController {
     /**
      * 修改状态 基本信息审核状态（0-待审核  1-审核通过 2-驳回修改）
      * @param id
-     * @param basicStatus
+     * @param status
      * @return
      */
     @ApiOperation(value = "/updateBasicStatus", notes = "修改状态")
     @PostMapping(value = "/updateBasicStatus", produces = "application/json;charset=UTF-8")
-    public ResponseDTO updateBasicStatus(String id, String basicStatus){
-
-        return serveBusinessService.updateBasicStatus(id,basicStatus);
+    public ResponseDTO updateBasicStatus(String id, String status,String type){
+        return serveBusinessService.updateBasicStatus(id,status,type);
     }
 
 

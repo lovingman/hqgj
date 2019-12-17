@@ -207,7 +207,7 @@
 
     <update id="updateBasicStatus">
       update serve_business
-      set basicStatus = #{basicStatus,jdbcType=VARCHAR}
+      set ${type} = #{status,jdbcType=VARCHAR}
       where id = #{id,jdbcType=VARCHAR}
     </update>
 
