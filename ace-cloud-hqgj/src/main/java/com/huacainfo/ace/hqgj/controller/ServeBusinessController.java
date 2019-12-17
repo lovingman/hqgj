@@ -1,5 +1,7 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.constant.ResultCode;
+import com.huacainfo.ace.common.tools.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -172,6 +174,31 @@ public class ServeBusinessController extends BaseController {
     @GetMapping(value = "/previewInfo", produces = "application/json;charset=UTF-8")
     public ResponseDTO<ServeBusinessVo> previewInfo(String id) throws Exception {
         return this.serveBusinessService.previewInfo(id);
+    }
+
+    /**
+     * 修改状态 基本信息审核状态（0-待审核  1-审核通过 2-驳回修改）
+     * @param id
+     * @param basicStatus
+     * @return
+     */
+    @ApiOperation(value = "/updateBasicStatus", notes = "修改状态")
+    @PostMapping(value = "/updateBasicStatus", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateBasicStatus(String id, String basicStatus){
+
+        return serveBusinessService.updateBasicStatus(id,basicStatus);
+    }
+
+
+    /**
+     * 查询审核状态
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "/selectBasicStatus", notes = "查询审核状态")
+    @GetMapping(value = "/selectBasicStatus", produces = "application/json;charset=UTF-8")
+    public ResponseDTO selectBasicStatus(String id){
+        return serveBusinessService.selectBasicStatus(id);
     }
 
 }

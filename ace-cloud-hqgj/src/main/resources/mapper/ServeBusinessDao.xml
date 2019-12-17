@@ -205,4 +205,33 @@
          where s.id=#{id,jdbcType=VARCHAR}
     </select>
 
+    <update id="updateBasicStatus">
+      update serve_business
+      set basicStatus = #{basicStatus,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectBasicStatus" parameterType="java.lang.String" resultType="java.lang.String">
+      (
+	SELECT
+		'9' AS type
+	FROM
+		serve_business b
+	WHERE
+		b.basicStatus != '1'
+	AND b.id = #{id,jdbcType=VARCHAR}
+     )
+           UNION
+	(
+		SELECT
+			d.type
+		FROM
+			serve_business_detail d
+		WHERE
+			d.`status` != '2'
+		AND d.businessId = #{id,jdbcType=VARCHAR}
+	)
+    </select>
+
+
 </mapper>

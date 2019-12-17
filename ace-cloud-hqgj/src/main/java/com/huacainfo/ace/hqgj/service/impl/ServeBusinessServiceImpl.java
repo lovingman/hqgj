@@ -331,5 +331,37 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         return  new ResponseDTO(ResultCode.SUCCESS, "成功！",vo);
     }
 
+    /**
+     * 审核基础信息
+     * @param id
+     * @param basicStatus
+     * @return
+     */
+    @Override
+    public ResponseDTO updateBasicStatus(String id, String basicStatus) {
+        if(CommonUtils.isBlank(id)||CommonUtils.isBlank(basicStatus)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        int i=  serveBusinessDao.updateBasicStatus(id,basicStatus);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", basicStatus);
+    }
+
+    /**
+     * 是否完成审核
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseDTO selectBasicStatus(String id) {
+        if(CommonUtils.isBlank(id)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        List<String> count=serveBusinessDao.selectBasicStatus(id);
+        return   new ResponseDTO(ResultCode.SUCCESS, "成功！",count);
+    }
+
 
 }
