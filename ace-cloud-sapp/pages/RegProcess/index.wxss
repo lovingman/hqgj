@@ -116,32 +116,41 @@ page {
     min-height: 180rpx;
 }
 
-.button_1 {
-    width: 660rpx;
-    margin: 100rpx auto 0;
-    padding-bottom: 50rpx;
-}
-
 .model .title {
-    height: 94rpx;
-    padding: 0 30rpx;
-    line-height: 100rpx;
+    padding: 30rpx 30rpx;
+    line-height: 1.5em;
     color: rgba(0, 0, 0, 1);
     font-size: 28rpx;
     font-family: PingFangSC-bold;
     font-weight: bold;
 }
 
+.model .title .subtitle {
+    color: rgba(16, 16, 16, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+}
+
+.model .title .text{
+color: rgba(0, 0, 0, 1);
+font-size: 28rpx;
+font-family: PingFangSC-bold;
+}
+.model .title .text .tip {
+    float: right;
+    color: rgba(46, 136, 242, 1);
+}
+
 .model .van-cell-group {
     margin: 0;
 }
 
-.model .idCard {
+.model .upload {
     padding: 0 30rpx;
     background: #fff;
 }
 
-.model .idCard .text {
+.model .upload .text {
     display: flex;
     justify-content: space-between;
     height: 94rpx;
@@ -150,20 +159,56 @@ page {
     font-size: 28rpx;
     font-family: PingFangSC-regular;
 }
-.model .idCard .text .tip{
+.model .upload .van-checkbox__label{
+  text-align: left;   
+}
+.model .title .remark{
+color: rgba(46, 136, 242, 1);
+font-size: 28rpx;
+font-family: PingFangSC-bold;
+line-height: 60rpx;
+}
+.model .title .option{
+    color: #798092;
+}
+
+.model .upload .text .tip {
     color: rgba(46, 136, 242, 1);
 }
-.model .idCard .imgs{
+
+.model .upload .imgs {
     padding: 46rpx 20rpx;
     display: flex;
     justify-content: space-between;
 }
-.model .idCard .img{
+
+.model .upload .img {
     width: 292rpx;
 }
-.model .idCard .img image{
+
+.model .upload .img image {
     width: 292rpx;
     height: 188rpx;
     background: blue;
     display: block;
+}
+
+.button_2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button_2 .btn {
+    width: 320rpx;
+}
+
+.button_3, .button_2, .button_1 {
+    width: 660rpx;
+    margin: 100rpx auto 0;
+    padding-bottom: 50rpx;
+}
+
+.button_3 .van-button__text {
+    color: rgba(46, 136, 242, 1);
+    font-size: 32rpx;
 }

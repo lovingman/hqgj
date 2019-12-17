@@ -4,9 +4,14 @@
         "pages/index/index",
         "pages/logs/logs",
         "pages/body/index",
-        "pages/EnterpriseReg/index",
+        "pages/RegEnterprise/index",
         "pages/RegAgreement/index",
-        "pages/RegProcess/index"
+        "pages/RegProcess/index",
+        "pages/RegProgress/index",
+        "pages/FinanceTax/index",
+        "pages/FinanceEnterprise/index",
+        "pages/ExpertConsultation/index",
+        "pages/ExpertAppointment/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

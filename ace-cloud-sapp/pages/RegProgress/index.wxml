@@ -1,0 +1,9 @@
+<!--pages/RegProgress/index.wxml-->
+<view>
+    <view class="content">
+        <van-steps steps="{{ steps }}" direction="vertical" active="{{ active }}" />
+    </view>
+    <view class="btn">
+        <van-button round type="info" size="large">确定</van-button>
+    </view>
+</view>

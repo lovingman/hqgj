@@ -1,0 +1,95 @@
+/* pages/ExpertConsultation/index.wxss */
+
+.banner {
+    width: 680rpx;
+    padding: 60rpx 0;
+    margin: auto;
+    border-radius: 20rpx;
+    background-color: rgba(46, 136, 242, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 32rpx;
+    text-align: center;
+    font-family: Arial;
+}
+
+.banner .title {
+    font-family: PingFangSC-regular;
+    line-height: 1.5em;
+}
+
+.banner .subTitle {
+    font-family: 方正综艺体-标准;
+    line-height: 1.5em;
+}
+
+.title1 {
+    padding: 0 30rpx;
+    margin: auto;
+    height: 100rpx;
+    color: rgba(38, 33, 70, 1);
+    font-size: 30rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 100rpx;
+    background: #fff;
+}
+
+.list .item {
+    padding: 24rpx;
+    width: 710rpx;
+    margin: 0 auto 28rpx;
+    border-radius: 12rpx;
+    background-color: rgba(247, 249, 252, 0.37);
+    display: flex;
+    justify-content: space-between;
+}
+
+.list .item .img {
+    width: 124rpx;
+    height: 124rpx;
+}
+
+.list .item .info {
+    width: 520rpx;
+}
+
+.item .info .info1 .name {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 35rpx;
+}   
+
+.item .info .info1 .sign {
+    color: rgba(255, 125, 24, 1);
+    font-size: 20rpx;
+    font-family: Arial;
+}
+
+.item .info .info1 .num {
+    display: inline-block;
+    float: right;
+    padding: 0 20rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    border-radius: 4rpx;
+    background-color: rgba(255, 232, 220, 0.42);
+    color: #FF7D18; 
+    font-size: 20rpx;
+    font-family: Arial;
+}
+
+.item .info .info2 {
+    color: rgba(46, 136, 242, 1);
+    font-size: 22rpx;
+    font-family: PingFangSC-regular;
+    line-height: 1.6em;
+}
+
+.item .info .info3 {
+    color: rgba(160, 167, 182, 1);
+    font-size: 22rpx;
+    font-family: PingFangSC-regular;
+    line-height: 1.5em;
+}

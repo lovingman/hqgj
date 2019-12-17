@@ -1,12 +1,12 @@
-// pages/RegProcess/index.js
+// pages/FinanceEnterprise/index.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        active:5,   
-        result: ['a', 'b']
+        show:true,
+        radio:1,
     },
 
     /**

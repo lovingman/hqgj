@@ -1,12 +1,11 @@
-// pages/RegProcess/index.js
+// pages/FinanceTax/index.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        active:5,   
-        result: ['a', 'b']
+        active:0
     },
 
     /**

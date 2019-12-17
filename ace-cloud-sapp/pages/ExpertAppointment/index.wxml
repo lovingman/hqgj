@@ -1,0 +1,16 @@
+<view>
+    <view class="org">
+        <view class="img">
+            <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        </view>
+        <view class="info">
+            <view class="info1">
+                <text class="name">王麒霖</text>
+                <text class="sign">已认证</text>
+            </view>
+            <view class="info2 van-ellipsis">
+                常德市武陵区会计事务所·投资顾问
+            </view>
+        </view>
+    </view>
+</view>
