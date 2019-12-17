@@ -29,7 +29,7 @@ public interface ServeBusinessDao {
 
     ServeBusinessVo previewInfo(String id);
 
-    int updateBasicStatus(@Param("id") String id,@Param("basicStatus") String basicStatus);
+    int updateBasicStatus(@Param("id") String id,@Param("status") String status,@Param("type") String type);
 
     List<String> selectBasicStatus(@Param("id") String id);
 }

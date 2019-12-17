@@ -105,10 +105,10 @@ public interface ServeBusinessService {
     /**
      * 修改状态  基本信息审核状态（0-待审核  1-审核通过 2-驳回修改）
      * @param id
-     * @param basicStatus
+     * @param status
      * @return
      */
-    ResponseDTO updateBasicStatus(String id,String basicStatus);
+    ResponseDTO updateBasicStatus(String id,String status,String type);
 
     /**
      * 查询是否都完成审核
