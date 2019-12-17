@@ -138,6 +138,9 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                 List<BasicAnnex> fileURL = o.getBasicAnnexes();
                 for (BasicAnnex a : fileURL) {
+                    if(CommonUtils.isBlank(a.getFileName())){
+                        return new ResponseDTO(ResultCode.FAIL, "文件名称不能为空！");
+                    }
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
