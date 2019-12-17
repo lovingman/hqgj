@@ -1,0 +1,9 @@
+/* pages/RegProgress/index.wxss */
+
+.content{
+    padding: 40rpx 30rpx;
+}
+.btn{
+    width: 660rpx;
+    margin:50rpx  auto 40rpx
+}

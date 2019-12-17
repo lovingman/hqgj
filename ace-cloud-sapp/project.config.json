@@ -9,8 +9,17 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
-		"coverView": true
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
@@ -31,13 +40,77 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "pages/EnterpriseReg/index",
+					"pathName": "pages/RegEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/RegAgreement/index",
+					"pathName": "pages/RegAgreement/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/RegProcess/index",
+					"pathName": "pages/RegProcess/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/RegProgress/index",
+					"pathName": "pages/RegProgress/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税",
+					"pathName": "pages/FinanceTax/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税单位信息",
+					"pathName": "pages/FinanceEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "专家问诊index",
+					"pathName": "pages/ExpertConsultation/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "专家预约",
+					"pathName": "pages/ExpertAppointment/index",
+					"scene": null
+				}
+			]
 		}
 	}
 }
