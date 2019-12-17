@@ -342,10 +342,18 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         if(CommonUtils.isBlank(id)||CommonUtils.isBlank(status)||CommonUtils.isBlank(type)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
+        //基础信息审核状态
         if(type.equals("1")){
             type="basicStatus";
-        }else{
+        }
+        else if(type.equals("2")){
             type="status";
+        }
+        //标记修改
+        else if(type.equals("3")){
+            type="tab";
+        }else{
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
         if (i <= 0) {
