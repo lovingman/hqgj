@@ -175,4 +175,15 @@ public class ServeBusinessDetailController extends BaseController {
         return  this.serveBusinessDetailService.annexList(id);
     }
 
+    /**
+     * 修改创业服务资料清单表状态
+     * @param serveBusinessDetail
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/updateState", notes = "根据主键修改创业服务资料清单表状态")
+    @PostMapping(value = "/updateState", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateProjectState(@RequestBody  ServeBusinessDetail serveBusinessDetail)throws Exception {
+        return  this.serveBusinessDetailService.updateState(serveBusinessDetail);
+    }
 }
