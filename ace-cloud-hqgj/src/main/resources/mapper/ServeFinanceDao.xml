@@ -61,8 +61,8 @@
       content = #{content,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
-      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=VARCHAR}
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
