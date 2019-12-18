@@ -121,8 +121,6 @@ public class Users implements java.io.Serializable {
      */
     private String userType;
 
-    private String orgName;
-
     public String getUserType() {
         return userType;
     }
@@ -318,11 +316,4 @@ public class Users implements java.io.Serializable {
                 '}';
     }
 
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
 }
