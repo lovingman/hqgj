@@ -356,7 +356,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
-        if(type.equals("3") && status.equals("7")){
+        if(type.equals("tab") && status.equals("7")){
             serveBusinessDao.updateBasicStatus(id,"3","status");
         }
         if (i <= 0) {
