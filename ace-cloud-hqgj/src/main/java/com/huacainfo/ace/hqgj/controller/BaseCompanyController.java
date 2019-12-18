@@ -198,7 +198,7 @@ public class BaseCompanyController extends BaseController {
         Sheet sheet=new Sheet(1,1,BaseCompanyExcelVo.class);
 
         BaseCompanyQVo condition=new BaseCompanyQVo();
-        PageDTO<BaseCompanyVo> rst = this.baseCompanyService.page(condition, 1, 10000, null);
+        PageDTO<BaseCompanyVo> rst = this.baseCompanyService.page(condition, 0, 10000, null);
         List<BaseCompanyExcelVo> data=new ArrayList();
         for(BaseCompanyVo o:rst.getRows()){
             BaseCompanyExcelVo obj=new BaseCompanyExcelVo();
