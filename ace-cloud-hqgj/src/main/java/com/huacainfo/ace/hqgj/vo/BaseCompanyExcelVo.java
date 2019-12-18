@@ -24,6 +24,26 @@ public class BaseCompanyExcelVo extends BaseRowModel implements java.io.Serializ
     @ExcelProperty(value ={"法定代表人"},index=2)
     private String legalPerson;
 
+    /**
+     * 字段名：contactPersonName
+     * 注释：联系人姓名
+     */
+    @ExcelProperty(value ={"联系人姓名"},index=2)
+    private String contactPersonName;
+
+    /**
+     * 字段名：contactPersonTel
+     * 注释：联系人电话
+     */
+    @ExcelProperty(value ={"联系人电话"},index=2)
+    private String contactPersonTel;
+
+    /**
+     * 字段名：companyAddress
+     * 注释：企业详细地址
+     */
+    @ExcelProperty(value ={"企业详细地址"},index=2)
+    private String companyAddress;
 
     public String getCompanyName() {
         return companyName;
@@ -47,5 +67,29 @@ public class BaseCompanyExcelVo extends BaseRowModel implements java.io.Serializ
 
     public void setLegalPerson(String legalPerson) {
         this.legalPerson = legalPerson;
+    }
+
+    public String getContactPersonName() {
+        return contactPersonName;
+    }
+
+    public void setContactPersonName(String contactPersonName) {
+        this.contactPersonName = contactPersonName;
+    }
+
+    public String getContactPersonTel() {
+        return contactPersonTel;
+    }
+
+    public void setContactPersonTel(String contactPersonTel) {
+        this.contactPersonTel = contactPersonTel;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
 }
