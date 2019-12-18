@@ -32,15 +32,15 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessAppend">
-    insert into serve_business_append (id, businessId, type, 
+    insert into serve_business_append (id, businessId, type,
       name, `option`, optionName,
-      content, createUserId, createUserName, 
-      createDate, modifyUserId, modifyUserName, 
+      content, createUserId, createUserName,
+      createDate, modifyUserId, modifyUserName,
       modifyDate, status)
-    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{option,jdbcType=VARCHAR}, #{optionName,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{option,jdbcType=VARCHAR}, #{optionName,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR},
       #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
   </insert>
 
@@ -74,28 +74,28 @@
         <where>
             1 = 1
             <if test="condition.businessId != null and condition.businessId != ''">
-                and t.businessId = #{businessId,jdbcType=VARCHAR}
+                and t.businessId = #{condition.businessId,jdbcType=VARCHAR}
             </if>
             <if test="condition.type != null and condition.type != ''">
-                and t.type = #{type,jdbcType=VARCHAR}
+                and t.type = #{condition.type,jdbcType=VARCHAR}
             </if>
             <if test="condition.name != null and condition.name != ''">
-                and t.name = #{name,jdbcType=VARCHAR}
+                and t.name = #{condition.name,jdbcType=VARCHAR}
             </if>
             <if test="condition.option != null and condition.option != ''">
-                and t.option = #{option,jdbcType=VARCHAR}
+                and t.option = #{condition.option,jdbcType=VARCHAR}
             </if>
             <if test="condition.optionName != null and condition.optionName != ''">
-                and t.optionName = #{optionName,jdbcType=VARCHAR}
+                and t.optionName = #{condition.optionName,jdbcType=VARCHAR}
             </if>
             <if test="condition.content != null and condition.content != ''">
-                and t.content = #{content,jdbcType=VARCHAR}
+                and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
             <if test="condition.createUserId != null and condition.createUserId != ''">
-                and t.createUserId = #{createUserId,jdbcType=VARCHAR}
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
