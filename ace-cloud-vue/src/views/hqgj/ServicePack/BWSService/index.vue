@@ -284,11 +284,6 @@
                     this.byid.tab = x;
                     this.dictQuery();
                 }
-
-                // console.log(e,x);
-
-                // console.log(e,x);
-                // console.log(this.items);
             },
         }
     }

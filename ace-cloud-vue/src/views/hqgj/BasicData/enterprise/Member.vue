@@ -74,7 +74,7 @@
 </template>
 
 <script>
-    import {personPage,deletePerson,deletePersons} from "@/api/hqgj/enterprise";
+    import {personPage,deletePerson,deletePersons,exportXlsPerson} from "@/api/hqgj/enterprise";
     export default {
         name: "Member",
         data() {
@@ -88,6 +88,10 @@
                     companyId:"",
                     name: ""
                 },
+                exportDatas:{
+                    companyId:"",
+                    name: ""
+                }
             };
         },
         created() {
@@ -150,6 +154,27 @@
                 }
                 //导出
                 if (command == 'exportXls') {
+                    this.exportDatas.companyId = this.query.companyId;
+                    this.exportDatas.name = this.query.name;
+                    exportXlsPerson(this.exportDatas).then(response => {
+                        const blob = new Blob([response], {type: 'application/vnd.ms-excel'});
+                        const fileName = '企业成员信息.xlsx';
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            navigator.msSaveBlob(blob, fileName)
+                        } else {
+                            const a = document.createElement('a');
+                            a.href = URL.createObjectURL(blob);
+                            a.download = fileName;
+                            a.style.display = 'none';
+                            document.body.appendChild(a);
+                            a.click();
+                            URL.revokeObjectURL(a.href);
+                            document.body.removeChild(a)
+                        }
+                    }).catch((error) => {
+                        this.$message.error(error)
+                    })
+
                     console.log(789)
                 }
                 //删除

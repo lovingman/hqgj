@@ -43,11 +43,27 @@ export function deleteByIds(ids) {
         params: {ids:ids}
     })
 }
+export function exportXls(query) {
+    return request({
+        url: '/hqgj/baseCompany/exportXls',
+        method: 'get',
+        params: query,
+        responseType: 'blob'
+    })
+}
 export function personPage(query) {
     return request({
         url: '/hqgj/baseCompanyMember/page',
         method: 'get',
         params: query
+    })
+}
+export function exportXlsPerson(query) {
+    return request({
+        url: '/hqgj/baseCompanyMember/exportXls',
+        method: 'get',
+        params: query,
+        responseType: 'blob'
     })
 }
 export function deletePerson(id) {
