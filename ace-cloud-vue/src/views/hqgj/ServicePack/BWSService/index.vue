@@ -7,15 +7,16 @@
                         <el-date-picker
                                 :default-time="['12:00:00', '08:00:00']"
                                 align="right"
+                                value-format="yyyy-MM-dd HH:mm:ss"
                                 end-placeholder="结束时间"
                                 start-placeholder="开始时间"
                                 style="float: right"
                                 type="datetimerange"
-                                v-model="value2">
+                                v-model="times">
                         </el-date-picker>
                     </el-col>
                     <el-col :span="4">
-                        <el-select placeholder="状态" style="float: right;margin-right: 20px" v-model="value">
+                        <el-select placeholder="状态" style="float: right;margin-right: 20px" clearable v-model="statusObj" @change="handleStatus">
                             <el-option
                                     :key="item.value"
                                     :label="item.label"
@@ -30,10 +31,11 @@
                                 class="input-with-select"
                                 placeholder="请输入公司名称、申请人姓名"
                                 style="float: right;width: 250px"
+                                v-model="query.applyPersonName"
                         ></el-input>
                     </el-col>
                     <el-col :span="2">
-                        <el-button @click="" icon="el-icon-search" style="float: right" type="primary">搜索
+                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
                         </el-button>
                     </el-col>
                 </el-row>
@@ -138,35 +140,39 @@
                 pagesize: 10, //  每页的数据
                 total: 0,
                 progressVisible: false,
-                items: [
-                    // {
-                    //     tag: '2018-01-12',
-                    //     content: '00-资料审核已通过',
-                    //     checked: "1",
-                    //     color: '#949fa8',
-                    // },
-                    // {
-                    //     tag: '2018-01-13',
-                    //     content: '01-人工到工商局窗口审核名称。确定名称100%可用',
-                    //     checked: "",
-                    //     color: '#949fa8',
-                    // },
-                    // {
-                    //     tag: '2018-01-14',
-                    //     content: '02-收集所有新办企业需要提供的资料',
-                    //     class: 'fas fa-star',
-                    //     checked: "",
-                    //     color: '#949fa8',
-                    // }
+                items: [],
+                options:[
+                    {
+                        value: '4',
+                        label: '全部'
+                    }, {
+                        value: '0',
+                        label: '待审核'
+                    }, {
+                        value: '1',
+                        label: '办理中'
+                    }, {
+                        value: '2',
+                        label: '驳回修改'
+                    }, {
+                        value: '3',
+                        label: '注册成功'
+                    }
                 ],
                 byid: {
                     tab:"",
                     status:""
                 },
                 list: [],
-                query: {},
+                statusObj:"",
+                query: {
+                    // endtime:"",
+                    // starttime:"",
+                    status:"",
+                    applyPersonName:""
+                },
                 value: '',
-                value2: ''
+                times: []
             };
         },
         created() {
@@ -199,6 +205,18 @@
                     this.list = response.rows;
                     console.log(response);
                 })
+            },
+            //搜索
+            search(){
+                this.handleQuery();
+            },
+            //企业注册状态搜索框数据
+            handleStatus(){
+                if (this.statusObj == 4){
+                    this.query.status ="";
+                }else {
+                    this.query.status =this.statusObj;
+                }
             },
             //获取企业注册步骤数据
             dictQuery() {
