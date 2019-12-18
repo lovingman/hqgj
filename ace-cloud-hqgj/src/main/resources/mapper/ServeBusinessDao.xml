@@ -228,7 +228,7 @@
 		FROM
 			serve_business_detail d
 		WHERE
-			d.`status` != '2'
+			d.`status` != '1'
 		AND d.businessId = #{id,jdbcType=VARCHAR}
 	)
     </select>
