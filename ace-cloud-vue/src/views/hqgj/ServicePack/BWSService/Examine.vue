@@ -442,8 +442,8 @@
             Auditing() {
                 this.id = this.$route.query.id;
                 selectBasicStatus(this.id).then(response => {
-                    if (response.data) {
-                        this.type
+                    if (response.data!='') {
+                        this.type=[];
                         for (var i = 0; i < response.data.length; i++) {
                             if (response.data[i] == 1) {
                                 this.type.push("法人");
@@ -462,11 +462,30 @@
 
                             }
                         }
+
                         var str = this.type.join();
-                        console.log(str);
                         this.$message({
-                            message: str+ '未审核',
+                            message: str + '未审核',
                             type: 'warning'
+                        });
+                    } else {
+                        this.$confirm("审核通过后，将发送审核通过通知，是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        }).then(() => {
+                            this.id = this.$route.query.id;
+                            updateBasicStatus(this.id, 1,2).then(response => {
+                                if (response.status == 1) {
+                                    this.$message.success(`审核通过`);
+                                } else {
+                                    this.$message({
+                                        message: response.message,
+                                        type: "warning"
+                                    });
+                                }
+                            })
+                        }).catch(() => {
                         });
                     }
 
@@ -532,13 +551,13 @@
             reviewBasic() {
                 this.reviewVisible = true;
             },
-            //确认审核
+            //确认基础信息审核
             handleReview() {
                 if (this.review.basicStatus == "") {
                     this.$message(`未选择状态`);
                 } else {
                     this.review.id = this.$route.query.id;
-                    updateBasicStatus(this.review.id, this.review.basicStatus).then(response => {
+                    updateBasicStatus(this.review.id, this.review.basicStatus,1).then(response => {
                         if (response.status == 1) {
                             this.$message.success(`审核成功`);
                             this.getDetails();

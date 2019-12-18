@@ -28,11 +28,11 @@ export function update(data) {
         data: data
     })
 }
-export function updateBasicStatus(id,basicStatus ) {
+export function updateBasicStatus(id,status,type) {
     return request({
         url: '/hqgj/serveBusiness/updateBasicStatus',
         method: 'post',
-        params: {id: id, basicStatus: basicStatus}
+        params: {id: id, status: status,type:type}
     })
 }
 export function selectBasicStatus(id) {
