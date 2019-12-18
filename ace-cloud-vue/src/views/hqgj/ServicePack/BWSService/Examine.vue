@@ -586,7 +586,7 @@
                         if (response.status == 1) {
                             this.$message.success(`审核成功`);
                             this.getMemberlist();
-                            this.reviewVisible = false;
+                            this.reviewDetailVisible = false;
                         } else {
                             this.$message({
                                 message: response.message,
