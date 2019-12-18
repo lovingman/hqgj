@@ -128,7 +128,7 @@
 </template>
 
 <script>
-    import {getList, deleteById, getById,update} from "@/api/hqgj/BWSService";
+    import {getList, deleteById, getById,update,updateBasicStatus} from "@/api/hqgj/BWSService";
     import {getAreaTree, getDict} from "@/api/sys";
 
     export default {
@@ -159,10 +159,7 @@
                         label: '注册成功'
                     }
                 ],
-                byid: {
-                    tab:"",
-                    status:""
-                },
+                byid: {},
                 list: [],
                 statusObj:"",
                 query: {
@@ -224,7 +221,6 @@
                     .then(response => {
                         // response.data['54'];
                         this.items = this.handling(response.data['54']);
-                        console.log(this.items)
                     })
             },
             //进度标记
@@ -262,11 +258,11 @@
             },
             sign() {
                 if(this.byid.tab == '7'){
-                    this.byid.status = 3;
+                    this.status = 3;
                 }else {
-                    this.byid.status = 1;
+                    this.status = 1;
                 }
-                update(this.byid).then(response => {
+                updateBasicStatus(this.byid.id,this.byid.tab,3).then(response => {
                     if (response.status == 1){
                         this.$message.success("标记成功");
                         this.getlist();
