@@ -1,5 +1,10 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.Sheet;
+import com.huacainfo.ace.common.tools.CommonBeanUtils;
+import com.huacainfo.ace.hqgj.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -16,8 +21,11 @@ import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.web.controller.BaseController;
 import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
 import com.huacainfo.ace.hqgj.service.BaseOrganizationMemberService;
-import com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo;
-import com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberQVo;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -167,4 +175,32 @@ private BaseOrganizationMemberService baseOrganizationMemberService;
                     return this.baseOrganizationMemberService.deleteByIds(ids.split(","));
                 }
 
+    /**
+     * 导出
+     *
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/exportXls", method = RequestMethod.GET)
+    public void exportXls(HttpServletResponse response) throws Exception {
+
+        response.setContentType("multipart/form-data");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=default.xlsx");
+        Sheet sheet = new Sheet(1, 1, BaseOrganizationMemberExcelVo.class);
+
+        BaseOrganizationMemberQVo condition = new BaseOrganizationMemberQVo();
+        PageDTO<BaseOrganizationMemberVo> rst = this.baseOrganizationMemberService.page(condition, 0, 10000, null);
+        List<BaseOrganizationMemberExcelVo> data = new ArrayList();
+        for (BaseOrganizationMemberVo o : rst.getRows()) {
+            BaseOrganizationMemberExcelVo obj = new BaseOrganizationMemberExcelVo();
+            CommonBeanUtils.copyProperties(obj, o);
+            data.add(obj);
+        }
+        OutputStream outputStream = response.getOutputStream();
+        ExcelWriter writer = EasyExcelFactory.getWriter(outputStream);
+        writer.write(data, sheet);
+        writer.finish();
+        outputStream.flush();
+    }
 }
