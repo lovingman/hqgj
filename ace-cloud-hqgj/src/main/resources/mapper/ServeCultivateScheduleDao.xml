@@ -71,7 +71,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleVo">
-
+        <association property="baseOrganizationMember" javaType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+            <id column="mId" jdbcType="VARCHAR" property="id"/>
+            <result column="mName" jdbcType="VARCHAR" property="name"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+            <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+            <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+        </association>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.serveCultivateId, t.title, t.lecturerId, t.lecturerName, t.startLng, t.startLat, t.detailedAddress, t.startDate, t.endDate, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -83,44 +90,21 @@
         <where>
             1 = 1
             <if test="condition.serveCultivateId != null and condition.serveCultivateId != ''">
-                and t.serveCultivateId = #{serveCultivateId,jdbcType=VARCHAR}
+                and t.serveCultivateId = #{condition.serveCultivateId,jdbcType=VARCHAR}
             </if>
             <if test="condition.title != null and condition.title != ''">
-                and t.title = #{title,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.lecturerId != null and condition.lecturerId != ''">
-                and t.lecturerId = #{lecturerId,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.lecturerName != null and condition.lecturerName != ''">
-                and t.lecturerName = #{lecturerName,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.startLng != null and condition.startLng != ''">
-                and t.startLng = #{startLng,jdbcType=DECIMAL}
-            </if>
-            <if test="condition.startLat != null and condition.startLat != ''">
-                and t.startLat = #{startLat,jdbcType=DECIMAL}
-            </if>
-            <if test="condition.detailedAddress != null and condition.detailedAddress != ''">
-                and t.detailedAddress = #{detailedAddress,jdbcType=VARCHAR}
-            </if>
-            <if test="condition.startDate != null and condition.startDate != ''">
-                and t.startDate = #{startDate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="condition.endDate != null and condition.endDate != ''">
-                and t.endDate = #{endDate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="condition.content != null and condition.content != ''">
-                and t.content = #{content,jdbcType=VARCHAR}
+                and t.title = #{condition.title,jdbcType=VARCHAR}
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,m.id mid,m.`name`mName,m.content mContent,m.speciality,m.imagePhoto
         <include refid="From_Statement"/>
+        left join base_organization_member m on m.id=t.lecturerId
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">

@@ -17,6 +17,7 @@ import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
 import com.huacainfo.ace.hqgj.dao.ServeCultivateScheduleDao;
 import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import com.huacainfo.ace.hqgj.model.ServeCultivateSchedule;
+import com.huacainfo.ace.hqgj.vo.ServeCultivateDetail;
 import com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +105,7 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表名称重复！");
         }
+        s.setEnrollPersopnNumber(0);
         s.setStatus("0");//未审核
         s.setCreateDate(new Date());
         s.setCreateUserName(userProp.getName());
@@ -291,6 +293,24 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
             return new ResponseDTO(ResultCode.FAIL, "更新失败");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
+    }
+
+
+    /**
+     * 手机端培训详情页
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseDTO selectByIdDetails(String id) {
+        if(CommonUtils.isBlank(id)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        ServeCultivateDetail detail=serveCultivateDao.selectByIdDetails(id);
+        if(detail==null){
+            return new ResponseDTO(ResultCode.FAIL, "数据错误");
+        }
+        return   new ResponseDTO(ResultCode.SUCCESS, "成功",detail);
     }
 
 

@@ -68,15 +68,26 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
-        <result column="orgAreaCode" jdbcType="VARCHAR" property="orgAreaCode"/>
-        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
-        <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
-        <result column="orgContent" jdbcType="VARCHAR" property="orgContent"/>
-        <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
-        <result column="mName" jdbcType="VARCHAR" property="mName"/>
-        <result column="mContent" jdbcType="VARCHAR" property="mContent"/>
-        <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
         <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
+        <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+            <id column="orgId" jdbcType="VARCHAR" property="id"/>
+            <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+            <result column="orgfmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+            <result column="creditCode" jdbcType="VARCHAR" property="creditCode"/>
+            <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
+            <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
+            <result column="orgAreaCode" jdbcType="VARCHAR" property="areaCode"/>
+            <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
+            <result column="orgContent" jdbcType="VARCHAR" property="content"/>
+        </association>
+        <association property="baseOrganizationMember" javaType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+            <id column="mId" jdbcType="VARCHAR" property="id"/>
+            <result column="mName" jdbcType="VARCHAR" property="name"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+            <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+            <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+        </association>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
@@ -109,8 +120,9 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,m.`name`mName,m.content mContent,m.speciality,
-        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId='2' and type='3') )as surplusQuota,
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
         case p.type
         when '4' then   '常德市'
         when '3' then   concat_ws(">",'常德市',p.name)
@@ -133,8 +145,9 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,m.`name`mName,m.content mContent,m.speciality,
-        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId='2' and type='3') )as surplusQuota,
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
         case p.type
         when '4' then   '常德市'
         when '3' then   CONCAT('常德市',p.name)
