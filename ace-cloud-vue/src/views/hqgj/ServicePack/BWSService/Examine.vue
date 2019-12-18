@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div style="width: 100%;height: 20px">
-            <el-button @click="Auditing" size="small" style="float: right" type="primary">完成审核</el-button>
+            <el-button @click="Auditing" v-if="this.$route.query.word=='examine'" size="small" style="float: right" type="primary">完成审核</el-button>
         </div>
         <div class="tab-pane" style="width: 100%">
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
@@ -79,12 +79,12 @@
                 <el-tab-pane label="基本信息" name="3">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
-                        <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
+                        <el-button  @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
                                    type="text"
-                                   v-if="form.basicStatus!='1'">审核
+                                   v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
                         </el-button>
                         <div class="green" style="float: right;margin-right: 25px;padding-top: 1px" type="text"
-                             v-if="form.basicStatus=='1'">通过
+                             v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
                         </div>
 
                     </div>
@@ -129,7 +129,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -149,14 +148,14 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="100">
+                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -173,7 +172,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -191,14 +189,14 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="100">
+                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -215,7 +213,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -233,14 +230,14 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="100">
+                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -257,7 +254,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -273,14 +269,14 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="100">
+                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -289,7 +285,7 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="其他" name="8">
+                <el-tab-pane  v-if="this.$route.query.word=='preview'" label="其他" name="8">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">其他</span>
                     </div>

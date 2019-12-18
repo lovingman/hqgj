@@ -77,7 +77,7 @@
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="preview" type="text">详情</el-button>
+                        <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -247,10 +247,10 @@
                 })
             },
             examine(index, data) {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id}});
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'examine'}});
             },
-            preview() {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine"});
+            preview(index, data) {
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'preview'}});
             },
             progress(index, data) {
                 this.getdata(data.id);
