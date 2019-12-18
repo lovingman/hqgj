@@ -107,4 +107,5 @@ public interface ServeCultivateService {
     ResponseDTO updateStatus(String id,String status);
 
 
+    ResponseDTO selectByIdDetails(String id);
 }

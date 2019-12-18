@@ -71,7 +71,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateVo">
-           <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
+
         <collection property="scheduleList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeCultivateSchedule">
             <id column="sid" jdbcType="VARCHAR" property="id"/>
             <result column="sserveCultivateId" jdbcType="VARCHAR" property="serveCultivateId"/>
@@ -106,7 +108,7 @@
         <where>
             1 = 1
             <if test="condition.title != null and condition.title != ''">
-                and t.title like  concat('%',#{condition.areaCode,jdbcType=VARCHAR},'%')
+                and t.title like concat('%',#{condition.areaCode,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.maxPersonNumber != null and condition.maxPersonNumber != ''">
                 and t.maxPersonNumber = #{condition.maxPersonNumber,jdbcType=INTEGER}
@@ -156,17 +158,17 @@
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
         left join serve_cultivate_schedule s on s.serveCultivateId=t.id
-        left join basic_annex ba on ba.relationId = s.id  and ba.type='1'
+        left join basic_annex ba on ba.relationId = s.id and ba.type='1'
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
-         <include refid="From_Statement"/>
+        <include refid="Vo_Column_List"/>,(t.cultivatePersonNumber-t.enrollPersopnNumber) as surplusQuota
+        <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
-                ORDER BY ${orderBy}
+                ORDER BY t.${orderBy}
             </when>
             <otherwise>
                 ORDER BY t.createDate desc
@@ -203,4 +205,47 @@
       set status = #{status,jdbcType=VARCHAR}
       where id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <update id="addEnrollNum" parameterType="java.lang.String">
+		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber+1 where  id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <resultMap extends="BaseResultMap" id="DetailsResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateDetail">
+        <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
+       <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+           <id column="orgId" jdbcType="VARCHAR" property="id"/>
+           <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+           <result column="orgfmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+           <result column="creditCode" jdbcType="VARCHAR" property="creditCode"/>
+           <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
+           <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
+           <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+           <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
+           <result column="content" jdbcType="VARCHAR" property="content"/>
+       </association>
+        <collection property="cultivateEnrollList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll">
+            <result column="enrollName" jdbcType="VARCHAR" property="enrollName"/>
+        </collection>
+       <collection property="basicAnnexList" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+                <result column="baId" jdbcType="VARCHAR" property="id"/>
+                <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+                <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+                <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+                <result column="batype" jdbcType="VARCHAR" property="type"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectByIdDetails" parameterType="java.lang.String" resultMap="DetailsResultMap">
+    SELECT  <include refid="Vo_Column_List"/>,
+       e.`enrollName` enrollName,o.id orgId,o.orgName,o.fmUrl orgfmUrl,o.areaCode,o.content,o.orgAddress,
+       a.id baId,a.fileName,a.fileURL,(t.cultivatePersonNumber-t.enrollPersopnNumber) as surplusQuota
+    from serve_cultivate t
+    left join serve_cultivate_enroll e on e.serveCultivateId=t.id
+    left join portal_hqgj.users u on e.enrollUserId=u.user_id
+    left join base_organization o on o.id=t.orgId
+    left join serve_cultivate_schedule s on s.serveCultivateId=t.id
+    left join basic_annex a on a.relationId=s.id and a.type='1'
+    where t.id=#{id,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

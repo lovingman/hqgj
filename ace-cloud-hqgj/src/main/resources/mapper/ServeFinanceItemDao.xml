@@ -51,7 +51,8 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceItemVo">
-
+        <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice" />
+        <result column="maxPrice" jdbcType="VARCHAR" property="minPrice" />
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.financeId, t.itemName, t.price, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -63,13 +64,13 @@
         <where>
             1 = 1
             <if test="condition.financeId != null and condition.financeId != ''">
-                and t.financeId = #{financeId,jdbcType=VARCHAR}
+                and t.financeId = #{condition.financeId,jdbcType=VARCHAR}
             </if>
             <if test="condition.itemName != null and condition.itemName != ''">
-                and t.itemName = #{itemName,jdbcType=VARCHAR}
+                and t.itemName = #{condition.itemName,jdbcType=VARCHAR}
             </if>
             <if test="condition.price != null and condition.price != ''">
-                and t.price = #{price,jdbcType=DECIMAL}
+                and t.price = #{condition.price,jdbcType=DECIMAL}
             </if>
         </where>
     </sql>
@@ -81,7 +82,7 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,MIN(price)minPrice,MAX(price)maxPrice
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
         <choose>

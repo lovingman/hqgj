@@ -216,4 +216,15 @@ public class ServeCultivateController extends BaseController {
         }
      return serveCultivateService.updateStatus(id,status);
     }
+
+    /**
+     * 手机端培训服务详情
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "/selectByIdDetails", notes = "修改状态")
+    @GetMapping(value = "/selectByIdDetails", produces = "application/json;charset=UTF-8")
+    public ResponseDTO selectByIdDetails(String id) {
+        return serveCultivateService.selectByIdDetails(id);
+    }
 }
