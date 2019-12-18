@@ -106,7 +106,7 @@
 
     <select id="selectUserInfo" resultType="com.huacainfo.ace.common.security.model.Users">
       select t.user_id userId, t.account, t.password, t.sex, t.idCard, t.userType, t.name, t.corpId,
-    t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName
+      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName
         from portal_hqgj.users t
         left join hqgj.base_organization o on t.corpId=o.id
         where t.user_id = #{userId}
