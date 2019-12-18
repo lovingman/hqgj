@@ -29,8 +29,8 @@
 
     </resultMap>
     <sql id="Base_Column_List">
-    id, applyPersonName, applyPersonTel, idCard, companyName, readyName, legalPerson, 
-    regBonus, areaCode, companyAddress, manageExtent, createUserId, createUserName, createDate, 
+    id, applyPersonName, applyPersonTel, idCard, companyName, readyName, legalPerson,
+    regBonus, areaCode, companyAddress, manageExtent, createUserId, createUserName, createDate,
     modifyUserId, modifyUserName, modifyDate, status,lsNo,tab,shUserId,shUserName,shDate,basicStatus
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -45,17 +45,17 @@
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusiness">
     insert into serve_business (id,lsNo, applyPersonName, applyPersonTel,
-      idCard, companyName, readyName, 
-      legalPerson, regBonus, areaCode, 
-      companyAddress, manageExtent, createUserId, 
-      createUserName, createDate, modifyUserId, 
+      idCard, companyName, readyName,
+      legalPerson, regBonus, areaCode,
+      companyAddress, manageExtent, createUserId,
+      createUserName, createDate, modifyUserId,
       modifyUserName, modifyDate, status,tab,shUserId,shUserName,shDate,basicStatus
       )
     values (#{id,jdbcType=VARCHAR},#{lsNo,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, #{applyPersonTel,jdbcType=VARCHAR},
-      #{idCard,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{readyName,jdbcType=VARCHAR}, 
-      #{legalPerson,jdbcType=VARCHAR}, #{regBonus,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
-      #{companyAddress,jdbcType=VARCHAR}, #{manageExtent,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
-      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{readyName,jdbcType=VARCHAR},
+      #{legalPerson,jdbcType=VARCHAR}, #{regBonus,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
+      #{companyAddress,jdbcType=VARCHAR}, #{manageExtent,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR},
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
       #{tab,jdbcType=VARCHAR}, #{shUserId,jdbcType=VARCHAR},
       #{shUserName,jdbcType=VARCHAR}, #{shDate,jdbcType=TIMESTAMP},#{basicStatus,jdbcType=VARCHAR}
@@ -97,7 +97,8 @@
         <where>
             1 = 1
             <if test="condition.applyPersonName != null and condition.applyPersonName != ''">
-                and t.applyPersonName = #{condition.applyPersonName,jdbcType=VARCHAR}
+                and (t.applyPersonName like concat('%',#{condition.applyPersonName,jdbcType=VARCHAR},'%')
+                or t.companyName like concat('%',#{condition.applyPersonName,jdbcType=VARCHAR},'%') )
             </if>
             <if test="condition.applyPersonTel != null and condition.applyPersonTel != ''">
                 and t.applyPersonTel = #{condition.applyPersonTel,jdbcType=VARCHAR}
