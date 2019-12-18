@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ServeCultivateVo extends ServeCultivate {
 private static final long serialVersionUID = 1L;
+private String orgName;
  private List<ServeCultivateSchedule> scheduleList;
 
     public List<ServeCultivateSchedule> getScheduleList() {
@@ -16,5 +17,13 @@ private static final long serialVersionUID = 1L;
 
     public void setScheduleList(List<ServeCultivateSchedule> scheduleList) {
         this.scheduleList = scheduleList;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

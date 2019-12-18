@@ -69,9 +69,14 @@
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
         <result column="orgAreaCode" jdbcType="VARCHAR" property="orgAreaCode"/>
+        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
         <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
         <result column="orgContent" jdbcType="VARCHAR" property="orgContent"/>
         <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="mName" jdbcType="VARCHAR" property="mName"/>
+        <result column="mContent" jdbcType="VARCHAR" property="mContent"/>
+        <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+        <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
@@ -94,11 +99,9 @@
             <if test="condition.contactPersonTel != null and condition.contactPersonTel != ''">
                 and t.contactPersonTel = #{condition.contactPersonTel,jdbcType=VARCHAR}
             </if>
-
             <if test="condition.type != null and condition.type != ''">
                 and t.type = #{condition.type,jdbcType=VARCHAR}
             </if>
-
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
@@ -106,15 +109,50 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,m.`name`mName,m.content mContent,m.speciality,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId='2' and type='3') )as surplusQuota,
+        case p.type
+        when '4' then   '常德市'
+        when '3' then   concat_ws(">",'常德市',p.name)
+        when '2' then   concat_ws(">", ppp.ppNames,pp.pName,p.name)
+        when '1' then   concat_ws(">",'常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
+        left join base_organization_member m on m.id=t.contactId
+        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,m.`name`mName,m.content mContent,m.speciality,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId='2' and type='3') )as surplusQuota,
+        case p.type
+        when '4' then   '常德市'
+        when '3' then   CONCAT('常德市',p.name)
+        when '2' then   CONCAT(ppp.ppNames,pp.pName,p.name)
+        when '1' then   CONCAT('常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
         <include refid="From_Statement"/>
+        left join base_organization o on o.id=t.orgId
+        left join base_organization_member m on m.id=t.contactId
+        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
