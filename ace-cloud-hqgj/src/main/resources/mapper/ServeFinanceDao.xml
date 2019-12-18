@@ -5,6 +5,7 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="orgId" jdbcType="VARCHAR" property="orgId"/>
         <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="contactId" jdbcType="VARCHAR" property="contactId"/>
         <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
         <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
@@ -23,7 +24,7 @@
     <sql id="Base_Column_List">
     id, orgId, orgName, contactPersonName, contactPersonTel, address, quota, type, fmUrl, 
     content, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
-    modifyDate, status
+    modifyDate, status,contactId
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -36,13 +37,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeFinance">
-    insert into serve_finance (id, orgId, orgName, 
+    insert into serve_finance (id, orgId, orgName, contactId,
       contactPersonName, contactPersonTel, address, 
       quota, type, fmUrl, 
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
       modifyDate, status)
-    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{contactId,jdbcType=VARCHAR},
       #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{quota,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
@@ -53,6 +54,7 @@
     update serve_finance
     set orgId = #{orgId,jdbcType=VARCHAR},
       orgName = #{orgName,jdbcType=VARCHAR},
+      contactId= #{contactId,jdbcType=VARCHAR},
       contactPersonName = #{contactPersonName,jdbcType=VARCHAR},
       contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
@@ -72,7 +74,7 @@
         <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
   </sql>
     <sql id="From_Statement">
     FROM serve_finance t
@@ -84,7 +86,7 @@
                 and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
             </if>
             <if test="condition.orgName != null and condition.orgName != ''">
-                and t.orgName = #{condition.orgName,jdbcType=VARCHAR}
+                and t.orgName like  concat('%',#{condition.orgName,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.contactPersonName != null and condition.contactPersonName != ''">
                 and t.contactPersonName = #{condition.contactPersonName,jdbcType=VARCHAR}
