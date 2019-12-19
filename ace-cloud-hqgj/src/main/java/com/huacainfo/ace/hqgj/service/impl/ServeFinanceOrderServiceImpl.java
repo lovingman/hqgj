@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.service.impl;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +54,16 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
     public PageDTO
             <ServeFinanceOrderVo> page(ServeFinanceOrderQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeFinanceOrderVo> rst = new PageDTO<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (!CommonUtils.isBlank(condition.getEndTime())) {
+            String endTime = sdf.format(condition.getEndTime()) + " 23:59:59 ";
+            condition.setEndTime(sdf2.parse(endTime));
+        }
+        if (!CommonUtils.isBlank(condition.getStartTime())) {
+            String startTime = sdf.format(condition.getStartTime()) + " 00:00:00 ";
+            condition.setStartTime(sdf2.parse(startTime));
+        }
         List<ServeFinanceOrderVo> list = this.serveFinanceOrderDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {

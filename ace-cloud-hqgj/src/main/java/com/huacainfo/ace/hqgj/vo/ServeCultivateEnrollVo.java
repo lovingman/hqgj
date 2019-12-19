@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.hqgj.model.ServeCultivateEnroll;
 
 import java.util.Date;
@@ -8,7 +9,9 @@ import java.util.Date;
 public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
     private static final long serialVersionUID = 1L;
     private String title;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date startDate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date endDate;
     private String fmUrl;
 
