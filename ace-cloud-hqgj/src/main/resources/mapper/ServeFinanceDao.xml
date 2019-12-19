@@ -70,7 +70,7 @@
         <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
         <result column="minPrice" jdbcType="VARCHAR" property="minPrice"/>
         <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice"/>
-        <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.model.BaseOrganization">
+        <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.vo.BaseOrganizationVo">
             <id column="orgId" jdbcType="VARCHAR" property="id"/>
             <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
             <result column="orgfmUrl" jdbcType="VARCHAR" property="fmUrl"/>
@@ -80,6 +80,7 @@
             <result column="orgAreaCode" jdbcType="VARCHAR" property="areaCode"/>
             <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
             <result column="orgContent" jdbcType="VARCHAR" property="content"/>
+            <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
         </association>
         <association property="baseOrganizationMember" javaType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
             <id column="mId" jdbcType="VARCHAR" property="id"/>
