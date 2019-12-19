@@ -172,5 +172,23 @@ public class LawPolicyServiceImpl implements LawPolicyService {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
+    /**
+     * 审核基础信息
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ResponseDTO updateStatus(String id, String status) {
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        int i = lawPolicyDao.updateStatus(id, status);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
+    }
 
 }

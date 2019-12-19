@@ -167,4 +167,16 @@ private LawPolicyService lawPolicyService;
                     return this.lawPolicyService.deleteByIds(ids.split(","));
                 }
 
+
+    /**
+     * 修改状态 政策服务发布状态（1-待发布 2-已发布）
+     * @param id
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "/updateStatus", notes = "修改状态")
+    @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateStatus(String id, String status){
+        return lawPolicyService.updateStatus(id,status);
+    }
 }
