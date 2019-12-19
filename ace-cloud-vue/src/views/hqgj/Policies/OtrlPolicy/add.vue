@@ -54,7 +54,7 @@
     <div class="footer">
       <div class="footer-flex">
         <el-button @click="back">取消</el-button>
-        <el-button @click="handleAdd" type="primary">确定</el-button>
+        <el-button @click="handleAdd('serviceForm')" type="primary">确定</el-button>
       </div>
     </div>
   </div>
@@ -95,13 +95,19 @@ export default {
     };
   },
   methods: {
-    handleAdd(){
-      createPolicy(this.serviceForm).then(response=>{
-        if (response.status == 1) {
-          this.$message.success("创建成功");
-          this.back();
+    handleAdd(formName){
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          createPolicy(this.serviceForm).then(response=>{
+            if (response.status == 1) {
+              this.$message.success("创建成功");
+              this.back();
+            }
+          })
+        } else {
+          return false;
         }
-      })
+      });
     },
     back() {
       this.$router.push({
