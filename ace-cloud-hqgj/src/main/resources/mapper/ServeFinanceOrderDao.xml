@@ -88,7 +88,11 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceOrderVo">
-
+        <result column="fmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+        <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="mName" jdbcType="VARCHAR" property="mName"/>
+        <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orderNo, t.financeId, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId,  t.companyPersonName,
@@ -135,10 +139,12 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,co.companyName
+        <include refid="Vo_Column_List"/>,o.orgName,o.fmUrl,co.companyName,f.itemName,f.price,m.id contactId,m.name mName,m.imagePhoto
         <include refid="From_Statement"/>
-        left join   base_organization o on o.id=t.orgId
-        left join   base_company co on  co.id=t.companyId
+        left join  base_organization o on o.id=t.orgId
+        left join  base_company co on  co.id=t.companyId
+        left join  serve_finance_item f on f.id=itemId
+        left join  base_organization_member m on m.id=t.contactId
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>

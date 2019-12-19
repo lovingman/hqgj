@@ -5,4 +5,13 @@ import com.huacainfo.ace.hqgj.model.ServeFinance;
 
 public class ServeFinanceQVo extends ServeFinance {
 private static final long serialVersionUID = 1L;
+    private String[] types;
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
 }

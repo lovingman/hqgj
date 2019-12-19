@@ -56,6 +56,9 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     public PageDTO
             <ServeFinanceVo> page(ServeFinanceQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeFinanceVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getType())){
+            condition.setTypes(condition.getType().split(","));
+        }
         List<ServeFinanceVo> list = this.serveFinanceDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
