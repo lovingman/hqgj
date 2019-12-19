@@ -91,7 +91,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orderNo, t.financeId, t.type, t.orgId, t.orgName, t.orgPersonName, t.orgPersonTel, t.companyId, t.companyName, t.companyPersonName,
+    t.id, t.orderNo, t.financeId, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId,  t.companyPersonName,
      t.companyPersonTel, t.address, t.quota, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName,
       t.modifyDate, t.status,t.itemId
   </sql>
@@ -106,6 +106,9 @@
             </if>
             <if test="condition.type != null and condition.type != ''">
                 and t.type = #{condition.type,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.content != null and condition.content != ''">
+                and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
             <if test="condition.orgPersonTel != null and condition.orgPersonTel != ''">
                 and t.orgPersonTel = #{condition.orgPersonTel,jdbcType=VARCHAR}
@@ -132,8 +135,10 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,o.orgName,co.companyName
         <include refid="From_Statement"/>
+        left join   base_organization o on o.id=t.orgId
+        left join   base_company co on  co.id=t.companyId
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
