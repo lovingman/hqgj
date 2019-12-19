@@ -24,17 +24,29 @@
                         <el-form-item label="身份证号" prop="idCard">
                             <el-input v-model="form.idCard"></el-input>
                         </el-form-item>
-                        <el-form-item label="组织" prop="corpId">
+                        <el-form-item label="用户类型" prop="userType">
+                            <el-select placeholder="请选择用户类型"
+                                       style="width:100%"
+                                       v-model="form.userType">
+                                <el-option
+                                        :key="item.code"
+                                        :label="item.name"
+                                        :value="item.code"
+                                        v-for="item in dicttype">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="单位" prop="corpId">
                             <el-select :loading="loading" :remote-method="corpQuery" filterable
-                                       placeholder="请选择所在组织"
+                                       placeholder="请选择所在单位"
                                        remote
                                        reserve-keyword
                                        style="width:100%"
                                        v-model="form.corpId">
                                 <el-option
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
+                                        :key="item.id"
+                                        :label="item.orgName"
+                                        :value="item.id"
                                         v-for="item in corps">
                                 </el-option>
                             </el-select>
@@ -74,14 +86,16 @@
 
 <script>
     import {create} from "@/api/sys/user";
+    import {getList} from "@/api/hqgj/service";
     import {getDict} from "@/api/sys";
     import {mapGetters} from 'vuex';
-    import {getList} from "@/api/sys/corp";
+    // import {getList} from "@/api/sys/corp";
 
     export default {
         data() {
             return {
                 dict: {},
+                dicttype:[],
                 corps: [],
                 loading: false,
                 form: {
@@ -91,6 +105,7 @@
                     deptId: "",
                     account: "",
                     password: "",
+                    userType:"",
                     mobile: "",
                     email: "",
                     sex: "",
@@ -102,6 +117,9 @@
                     name: [
                         {required: true, message: "请输入姓名", trigger: "blur"},
                         {min: 2, max: 50, message: "长度在 2 到 20 个字符", trigger: "blur"}
+                    ],
+                    userType: [
+                        {required: true, message: "请选择用户类型", trigger: "change"}
                     ],
                     corpId: [
                         {required: true, message: "请选择所属单位", trigger: "change"}
@@ -133,6 +151,7 @@
         created() {
             this.dictQuery();
             this.corpQuery();
+            this.dicttypeQuery();
         },
         methods: {
             dictQuery() {
@@ -141,10 +160,16 @@
                         this.dict = response.data;
                     })
             },
+            dicttypeQuery(){
+                getDict("61")
+                    .then(response => {
+                        this.dicttype = response.data[61];
+                    })
+            },
             corpQuery(query) {
                 getList(query)
                     .then(response => {
-                        this.corps = response.data;
+                        this.corps = response.rows;
                     })
             },
             submitForm(formName) {
