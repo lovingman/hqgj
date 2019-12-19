@@ -109,8 +109,11 @@
             <if test="condition.contactPersonTel != null and condition.contactPersonTel != ''">
                 and t.contactPersonTel = #{condition.contactPersonTel,jdbcType=VARCHAR}
             </if>
-            <if test="condition.type != null and condition.type != ''">
-                and t.type = #{condition.type,jdbcType=VARCHAR}
+            <if test="condition.types != null and condition.types != ''">
+                and t.type in
+                <foreach collection="condition.types" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
