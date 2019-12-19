@@ -54,6 +54,16 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     public PageDTO
             <ServeFinanceEvaluateVo> page(ServeFinanceEvaluateQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeFinanceEvaluateVo> rst = new PageDTO<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (!CommonUtils.isBlank(condition.getEndTime())) {
+            String endTime = sdf.format(condition.getEndTime()) + " 23:59:59 ";
+            condition.setEndTime(sdf2.parse(endTime));
+        }
+        if (!CommonUtils.isBlank(condition.getStartTime())) {
+            String startTime = sdf.format(condition.getStartTime()) + " 00:00:00 ";
+            condition.setStartTime(sdf2.parse(startTime));
+        }
         List<ServeFinanceEvaluateVo> list = this.serveFinanceEvaluateDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {

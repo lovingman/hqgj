@@ -2,16 +2,17 @@ package com.huacainfo.ace.hqgj.vo;
 
 
 import com.huacainfo.ace.hqgj.model.ServeFinanceEvaluate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 
 public class ServeFinanceEvaluateQVo extends ServeFinanceEvaluate {
-private static final long serialVersionUID = 1L;
-
-private Date startTime;
-
-private Date endTime;
+    private static final long serialVersionUID = 1L;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endTime;
 
     public Date getStartTime() {
         return startTime;

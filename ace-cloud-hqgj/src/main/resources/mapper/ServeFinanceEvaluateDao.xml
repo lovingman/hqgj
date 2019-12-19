@@ -112,10 +112,10 @@
             <if test="condition.content != null and condition.content != ''">
                 and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
-            <if test="condition.startTime != null and condition.startTime != ''">
+            <if test="condition.startTime != null">
                 and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="condition.endTime != null and condition.endTime != ''">
+            <if test="condition.endTime != null">
                 and t.createDate  <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
             </if>
             <if test="condition.status != null and condition.status != ''">

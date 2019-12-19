@@ -106,6 +106,9 @@
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
@@ -118,7 +121,7 @@
         select
         <include refid="Vo_Column_List"/>,c.title,c.startDate,c.endDate,c.fmUrl
         <include refid="From_Statement"/>
-        left  join serve_cultivate c c.id=t.serveCultivateId
+        left  join serve_cultivate c on c.id=t.serveCultivateId
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
