@@ -35,9 +35,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="20">
+          <el-col :span="24">
             <el-form-item label="内容:" prop="content">
-              <editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>
+              <el-input
+                      type="textarea"
+                      placeholder="请输入内容"
+                      v-model="serviceForm.content"
+                      rows="20"
+                      show-word-limit
+              ></el-input>
+              <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->
             </el-form-item>
           </el-col>
         </el-row>
@@ -46,8 +53,8 @@
     <!-- 底部按钮 -->
     <div class="footer">
       <div class="footer-flex">
-        <el-button @click="black">取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button @click="back">取消</el-button>
+        <el-button @click="handleAdd" type="primary">确定</el-button>
       </div>
     </div>
   </div>
@@ -55,6 +62,7 @@
 
 
 <script>
+  import {createPolicy} from "@/api/hqgj/Policies";
 import EditorBar from "../../publicTemplate/wangEnduit";
 export default {
   name: "add",
@@ -83,19 +91,26 @@ export default {
             trigger: "blur"
           }
         ]
-      },
-      isClear: false
+      }
     };
   },
   methods: {
-    black() {
+    handleAdd(){
+      createPolicy(this.serviceForm).then(response=>{
+        if (response.status == 1) {
+          this.$message.success("创建成功");
+          this.back();
+        }
+      })
+    },
+    back() {
       this.$router.push({
-        path: "/hqgj/Policies/legalService"
+        path: "/hqgj/Policies/OtrlPolicy"
       });
     },
-    change(val) {
-      console.log(val);
-    }
+    // change(val) {
+    //   console.log(val);
+    // }
   }
 };
 </script>
