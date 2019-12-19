@@ -48,9 +48,6 @@
     <if test="idCard != null and idCard != ''">
       idCard = #{idCard,jdbcType=VARCHAR},
     </if>
-    <if test="type != null and type != ''">
-      type = #{type,jdbcType=VARCHAR},
-    </if>
 
     <if test="birthday != null">
       birthday = #{birthday,jdbcType=DATE},
