@@ -38,8 +38,8 @@
                         <el-button v-if="scope.row.status=='1'" type="text">发布</el-button>
                         <!--<el-button v-if="scope.row.status=='2'" type="text">发布</el-button>-->
                         <el-button @click="edit(scope.$index,scope.row)" type="text">编辑</el-button>
-                        <el-button type="text">删除</el-button>
-                        <el-button type="text">详情</el-button>
+                        <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
+                        <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-    import {getPolicy} from "@/api/hqgj/Policies";
+    import {getPolicy,deletePolicyById} from "@/api/hqgj/Policies";
 
     export default {
         name: "index",
@@ -136,6 +136,24 @@
                     this.query.status =this.statusObj;
                 }
             },
+            //删除
+            handleDele(index, data) {
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deletePolicyById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+                        this.$message.error('error')
+                    });
+            },
             //选择tableSize事件
             handleTableSize() {
             },
@@ -149,6 +167,10 @@
             //编辑
             edit(index,data){
                 this.$router.push({path: "/hqgj/Policies/OtrlPolicy/edit",query:{id:data.id}});
+            },
+            //详情
+            preview(index, data) {
+                this.$router.push({path: "/hqgj/Policies/OtrlPolicy/details", query: {id: data.id}});
             }
         }
     };
