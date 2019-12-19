@@ -196,5 +196,20 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
+    /**
+     * 修改状态
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO updateStatus(String id,String status) throws Exception {
+        int i=  serveFinanceOrderDao.updateStatus(id,status);
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
+    }
+
 
 }
