@@ -89,6 +89,11 @@
             <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
             <result column="mContent" jdbcType="VARCHAR" property="content"/>
         </association>
+        <collection property="financeItemList"  column="id" ofType="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
+            <result column="itId" jdbcType="VARCHAR" property="id"/>
+            <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+            <result column="itemPrice" jdbcType="DECIMAL" property="price"/>
+        </collection>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orgId, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
@@ -134,11 +139,12 @@
         when '3' then   concat_ws(">",'常德市',p.name)
         when '2' then   concat_ws(">", ppp.ppNames,pp.pName,p.name)
         when '1' then   concat_ws(">",'常德市', ppp.ppNames,pp.pName,p.name)
-        end  areaName
+        end  areaName,it.id itId,it.itemName,it.price itemPrice
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
         left join base_organization_member m on m.id=t.contactId
         left join  portal_zcpa.province p on p.code=o.areaCode
+        left join  serve_finance_item it on it.financeId=t.id
         left join (	select
         name as pName, p.`code` as pCode, parent_code as ppCode
         from portal_zcpa.province p

@@ -110,7 +110,7 @@
                 and t.type = #{condition.type,jdbcType=VARCHAR}
             </if>
             <if test="condition.evaluateContent != null and condition.evaluateContent != ''">
-                and t.evaluateContent like  concat('%',#{condition.evaluateContent,jdbcType=VARCHAR},'%')
+                and t.evaluateContent like concat('%',#{condition.evaluateContent,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.startTime != null">
                 and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}

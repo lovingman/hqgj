@@ -106,7 +106,7 @@
         <where>
             1 = 1
             <if test="condition.orderNo != null and condition.orderNo != ''">
-                and t.orderNo = #{condition.orderNo,jdbcType=VARCHAR}
+                and t.orderNo like concat('%',#{condition.orderNo,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.type != null and condition.type != ''">
                 and t.type = #{condition.type,jdbcType=VARCHAR}
