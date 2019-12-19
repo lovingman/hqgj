@@ -92,6 +92,13 @@ export function getannexList(id) {
         params: {id:id}
     })
 }
+export function getAppend(query) {
+    return request({
+        url: '/hqgj/serveBusinessAppend/page',
+        method: 'get',
+        params: query
+    })
+}
 export function getAnnex(query) {
     return request({
         url: '/hqgj/basicAnnex/page',

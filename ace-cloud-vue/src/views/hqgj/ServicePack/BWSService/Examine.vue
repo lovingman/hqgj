@@ -1,7 +1,9 @@
 <template>
     <div class="container">
         <div style="width: 100%;height: 20px">
-            <el-button @click="Auditing" v-if="this.$route.query.word=='examine'" size="small" style="float: right" type="primary">完成审核</el-button>
+            <el-button @click="Auditing" size="small" style="float: right" type="primary"
+                       v-if="this.$route.query.word=='examine'">完成审核
+            </el-button>
         </div>
         <div class="tab-pane" style="width: 100%">
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
@@ -79,7 +81,7 @@
                 <el-tab-pane label="基本信息" name="3">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
-                        <el-button  @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
+                        <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
                                    type="text"
                                    v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
                         </el-button>
@@ -148,14 +150,15 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -189,14 +192,15 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -230,14 +234,15 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -269,14 +274,15 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" label="状态" prop="status" width="100">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column v-if="this.$route.query.word=='examine'" align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.status!= '1'">审核
@@ -285,7 +291,7 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane  v-if="this.$route.query.word=='preview'" label="其他" name="8">
+                <el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">其他</span>
                     </div>
@@ -372,8 +378,10 @@
         selectBasicStatus,
         updateState,
         getannexList,
-        getAnnex
+        getAnnex,
+        getAppend
     } from "@/api/hqgj/BWSService";
+    import {getAreaTree, getDict} from "@/api/sys";
 
     export default {
         name: "Examine",
@@ -398,12 +406,16 @@
                 list: [],
                 fileList: [],
                 type: [],
+                others: [],
                 query: {
                     type: ""
                 },
                 query2: {
                     type: "",
                     relationId: ""
+                },
+                query3: {
+                    businessId: ""
                 },
                 lists: [],
             };
@@ -438,8 +450,8 @@
             Auditing() {
                 this.id = this.$route.query.id;
                 selectBasicStatus(this.id).then(response => {
-                    if (response.data!='') {
-                        this.type=[];
+                    if (response.data != '') {
+                        this.type = [];
                         for (var i = 0; i < response.data.length; i++) {
                             if (response.data[i] == 1) {
                                 this.type.push("法人");
@@ -455,7 +467,6 @@
                             }
                             if (response.data[i] == 5) {
                                 this.type.push("房屋证明");
-
                             }
                         }
 
@@ -471,7 +482,7 @@
                             type: "warning"
                         }).then(() => {
                             this.id = this.$route.query.id;
-                            updateBasicStatus(this.id, 1,2).then(response => {
+                            updateBasicStatus(this.id, 1, 2).then(response => {
                                 if (response.status == 1) {
                                     this.$message.success(`审核通过`);
                                 } else {
@@ -525,6 +536,7 @@
 
                 })
             },
+            //标签页查看
             handleClick(tab, event) {
                 if (tab.name == 4) {
                     this.query.type = "1,2";
@@ -542,6 +554,13 @@
                     this.query.type = "5,6,7,8";
                     this.getMemberlist();
                 }
+                if (tab.name == 8) {
+                    this.query3.businessId = this.$route.query.id
+                    getAppend(this.query3).then(response => {
+                        console.log(response.rows);
+
+                    })
+                }
             },
             //基础信息审核弹窗
             reviewBasic() {
@@ -553,7 +572,7 @@
                     this.$message(`未选择状态`);
                 } else {
                     this.review.id = this.$route.query.id;
-                    updateBasicStatus(this.review.id, this.review.basicStatus,1).then(response => {
+                    updateBasicStatus(this.review.id, this.review.basicStatus, 1).then(response => {
                         if (response.status == 1) {
                             this.$message.success(`审核成功`);
                             this.getDetails();
