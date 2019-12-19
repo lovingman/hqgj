@@ -140,6 +140,7 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
          //财税管家多个项目价格
+
         if(!CommonUtils.isBlank(o.getFinanceItemList())){
             serveFinanceItemDao.deleteByFinanceIds(o.getId().split(","));
             List<ServeFinanceItem> list=o.getFinanceItemList();

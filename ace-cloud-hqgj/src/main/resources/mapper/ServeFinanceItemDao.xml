@@ -51,8 +51,6 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceItemVo">
-        <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice" />
-        <result column="maxPrice" jdbcType="VARCHAR" property="minPrice" />
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.financeId, t.itemName, t.price, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
