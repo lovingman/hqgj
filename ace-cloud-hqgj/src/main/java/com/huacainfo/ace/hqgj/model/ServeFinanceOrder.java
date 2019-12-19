@@ -150,6 +150,8 @@ public class ServeFinanceOrder extends BaseModel {
      */
     private String status;
 
+    private String itemId;
+
     public String getId() {
         return id;
     }
@@ -332,5 +334,13 @@ public class ServeFinanceOrder extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 }

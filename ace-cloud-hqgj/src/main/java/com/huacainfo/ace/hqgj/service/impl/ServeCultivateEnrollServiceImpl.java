@@ -89,8 +89,9 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升-报名管理名称重复！");
         }
+        o.setIsSign("n");
         o.setCreateDate(new Date());
-        o.setStatus("1");
+        o.setStatus("0");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());

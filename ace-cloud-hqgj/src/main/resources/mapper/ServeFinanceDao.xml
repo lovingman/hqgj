@@ -64,7 +64,6 @@
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
-
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
@@ -90,7 +89,7 @@
         </association>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
+    t.id, t.orgId, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
   </sql>
     <sql id="From_Statement">
     FROM serve_finance t

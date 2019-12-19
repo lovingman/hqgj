@@ -26,4 +26,6 @@ public interface ServeFinanceOrderDao {
     int isExist(ServeFinanceOrder o);
 
     int deleteByIds(String[] ids);
+
+    int updateStatus(String id);
 }
