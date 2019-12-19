@@ -131,6 +131,12 @@ public class Users extends BaseModel {
     private Date lockedTime;
 
     /**
+     * 字段名：users.userType
+     * 注释：用户类型1-律师事务所 2-会计事务所 3-培训机构  4-工信局
+     */
+    private String userType;
+
+    /**
      * 字段名：users.identity
      * 注释：身份证号，作为关联person表的依据
      */
@@ -289,4 +295,12 @@ public class Users extends BaseModel {
 	public void setIdentity(String identity) {
 		 this.identity = identity == null ? null : identity.trim();
 	}
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 }
