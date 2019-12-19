@@ -5,7 +5,7 @@
                 <el-button @click="create" style="float:left;" type="primary">创建</el-button>
                 <el-col :span="10" class="selectSearch">
                     <el-col :span="7" style="margin-right:20px;">
-                        <el-select placeholder="请选择" clearable v-model="statusObj" @change="handleStatus">
+                        <el-select @change="handleStatus" clearable placeholder="请选择" v-model="statusObj">
                             <el-option
                                     :key="item.value"
                                     :label="item.label"
@@ -35,7 +35,9 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="240">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.status=='1'" type="text">发布</el-button>
+                        <el-button @click="release(scope.$index,scope.row)" type="text" v-if="scope.row.status=='1'">
+                            发布
+                        </el-button>
                         <!--<el-button v-if="scope.row.status=='2'" type="text">发布</el-button>-->
                         <el-button @click="edit(scope.$index,scope.row)" type="text">编辑</el-button>
                         <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
@@ -57,7 +59,7 @@
 </template>
 
 <script>
-    import {getPolicy,deletePolicyById} from "@/api/hqgj/Policies";
+    import {getPolicy, deletePolicyById, updateStatus} from "@/api/hqgj/Policies";
 
     export default {
         name: "index",
@@ -73,19 +75,19 @@
                 //状态容器
                 stautsArr: [
                     {
-                        value:'0',
-                        label:'全部'
+                        value: '0',
+                        label: '全部'
                     },
                     {
-                        value:'1',
-                        label:'待发布'
+                        value: '1',
+                        label: '待发布'
                     },
                     {
-                        value:'2',
-                        label:'已发布'
+                        value: '2',
+                        label: '已发布'
                     }
                 ],
-                statusObj:"",
+                statusObj: "",
                 query: {
                     title: "",
                     status: ""
@@ -121,19 +123,19 @@
                 });
                 getPolicy(this.query).then(response => {
                     this.total = response.total;
-                   this.tableData = response.rows
+                    this.tableData = response.rows
                 })
             },
             //搜索
-            search(){
+            search() {
                 this.handleQuery();
             },
             //政策服务状态搜索框数据
-            handleStatus(){
-                if (this.statusObj == 0){
-                    this.query.status ="";
-                }else {
-                    this.query.status =this.statusObj;
+            handleStatus() {
+                if (this.statusObj == 0) {
+                    this.query.status = "";
+                } else {
+                    this.query.status = this.statusObj;
                 }
             },
             //删除
@@ -154,6 +156,28 @@
                         this.$message.error('error')
                     });
             },
+            //发布
+            release(index, data) {
+                this.$confirm("发布成功后，将发送发布成功通知，是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    this.id = data.id;
+                    updateStatus(this.id, 2).then(response => {
+                        if (response.status == 1) {
+                            this.$message.success(`发布成功`);
+                            this.getlist();
+                        } else {
+                            this.$message({
+                                message: response.message,
+                                type: "warning"
+                            });
+                        }
+                    })
+                }).catch(() => {
+                });
+            },
             //选择tableSize事件
             handleTableSize() {
             },
@@ -165,8 +189,8 @@
                 this.$router.push({path: "/hqgj/Policies/OtrlPolicy/add"});
             },
             //编辑
-            edit(index,data){
-                this.$router.push({path: "/hqgj/Policies/OtrlPolicy/edit",query:{id:data.id}});
+            edit(index, data) {
+                this.$router.push({path: "/hqgj/Policies/OtrlPolicy/edit", query: {id: data.id}});
             },
             //详情
             preview(index, data) {
@@ -203,9 +227,11 @@
         .orange {
             color: #FF9900;
         }
+
         .green {
             color: green;
         }
+
         .table-box {
             padding: 0 30px 30px 30px;
 

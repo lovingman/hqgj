@@ -2,7 +2,7 @@
     <div class="container">
         <div class="title">政策服务详情</div>
         <div class="handle-box">
-            <el-form :model="serviceForm" class="demo-ruleForm" label-width="600px">
+            <el-form :model="serviceForm" class="demo-ruleForm" label-width="100px">
                 <el-form-item label="标题名称:" prop="title">
                     <span>{{serviceForm.title}}</span>
                 </el-form-item>

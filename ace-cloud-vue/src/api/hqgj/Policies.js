@@ -35,3 +35,10 @@ export function deletePolicyById(id) {
         params: {id:id}
     })
 }
+export function updateStatus(id,status) {
+    return request({
+        url: '/hqgj/lawPolicy/updateStatus',
+        method: 'post',
+        params: {id: id, status: status}
+    })
+}
