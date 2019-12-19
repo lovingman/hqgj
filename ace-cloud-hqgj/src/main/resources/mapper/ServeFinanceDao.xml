@@ -68,6 +68,8 @@
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
         <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
+        <result column="minPrice" jdbcType="VARCHAR" property="minPrice"/>
+        <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice"/>
         <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.model.BaseOrganization">
             <id column="orgId" jdbcType="VARCHAR" property="id"/>
             <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
@@ -125,6 +127,8 @@
         <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
         m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
         (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
+        (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
+        (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
         case p.type
         when '4' then   '常德市'
         when '3' then   concat_ws(">",'常德市',p.name)

@@ -27,5 +27,5 @@ public interface ServeFinanceOrderDao {
 
     int deleteByIds(String[] ids);
 
-    int updateStatus(String id);
+    int updateStatus(String id,String status);
 }
