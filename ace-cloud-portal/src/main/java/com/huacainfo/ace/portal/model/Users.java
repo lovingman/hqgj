@@ -45,12 +45,6 @@ public class Users extends BaseModel {
     private String idCard;
 
     /**
-     * 字段名：users.type
-     * 注释：用户类型
-     */
-    private String type;
-
-    /**
      * 字段名：users.name
      * 注释：姓名
      */
@@ -295,12 +289,4 @@ public class Users extends BaseModel {
 	public void setIdentity(String identity) {
 		 this.identity = identity == null ? null : identity.trim();
 	}
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }
