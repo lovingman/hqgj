@@ -7,9 +7,9 @@
     select
       t.user_id userId, t.account, t.password, t.sex, t.idCard, t.name, t.corpId, t.areaCode,
       t.birthday, t.status,
-      t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked, t.lockedTime,a.name corpName,b.name areaName,t.deptId,c.name deptName
+      t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked, t.lockedTime,a.orgName corpName,b.name areaName,t.deptId,c.name deptName
     from users t
-           inner join corp a on t.corpId=a.id
+           inner join hqgj.base_organization a on t.corpId=a.id
            inner join province b on t.areaCode=b.code
 
            left join dept c on t.deptId=c.id
@@ -82,7 +82,7 @@
 
   <sql id="whereCondition">
     from users t
-    inner join corp a on t.corpId=a.id
+    inner join hqgj.base_organization a on t.corpId=a.id
     inner join province b on a.areaCode=b.code
     left  join dept c on t.deptId=c.id
     where 0=0
@@ -112,7 +112,7 @@
     t.user_id userId, t.account, t.password, t.sex, t.idCard, t.name, t.corpId,
     t.deptId, t.areaCode, t.birthday, t.status,
     t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked,
-    t.lockedTime,a.name corpName,b.name areaName,c.name deptName
+    t.lockedTime,a.orgName corpName,b.name areaName,c.name deptName
     <include refid="whereCondition" />
     <choose>
       <when test='orderBy!=null and orderBy!=""'>
@@ -180,7 +180,7 @@
 
   <select id="getList" resultType="map">
     select t.name label,t.user_id value from users t
-    inner join corp a on t.corpId=a.id
+    inner join hqgj.base_organization a on t.corpId=a.id
     where 0=0
     <if test='areaCode!=null and areaCode!=""'>
       and a.areaCode like concat(#{areaCode,jdbcType=VARCHAR},'%')
