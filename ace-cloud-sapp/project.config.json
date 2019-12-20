@@ -208,6 +208,20 @@
 					"pathName": "pages/LawFirm/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "政策服务",
+					"pathName": "pages/PolicyService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "政策服务详情",
+					"pathName": "pages/PolicyServiceDetail/index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

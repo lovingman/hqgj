@@ -26,6 +26,25 @@
             </view>
         </van-tab>
         <van-tab title="律师成员">
+
+
+            <view class="item">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="info1">
+                        <view class="name">王麒霖</view>
+                        <view class="sign"><icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+                    </view>
+                    <view class="info2 van-ellipsis">
+                        <icon class="iconfont icon-credentials_icon"></icon>常德市武陵区会计事务所·投资顾问
+                    </view>
+                    <view class="info3 van-multi-ellipsis--l2">
+                        中国注册会计师。具有从事财务管理与筹划、注册会计师审计工作三十多年，曾任广州中联会计师…中国注册
+                    </view>
+                </view>
+            </view>
         </van-tab>
     </van-tabs>
 </view>
