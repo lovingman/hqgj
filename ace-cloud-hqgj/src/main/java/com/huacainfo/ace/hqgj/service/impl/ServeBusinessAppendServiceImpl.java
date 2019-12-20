@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.hqgj.dao.ServeBusinessAppendDao;
 import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
@@ -77,9 +76,7 @@ public class ServeBusinessAppendServiceImpl implements ServeBusinessAppendServic
     @Transactional
     @Log(operationObj = "创业服务资料其它附加信息", operationType = "创建", detail = "创建创业服务资料其它附加信息")
     public ResponseDTO create(ServeBusinessAppend o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
-            return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
-        }
+        o.setId(GUIDUtil.getGUID());
         if (CommonUtils.isBlank(o.getBusinessId())) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务表ID（关联serve_business表ID）不能为空！");
         }
@@ -97,7 +94,6 @@ public class ServeBusinessAppendServiceImpl implements ServeBusinessAppendServic
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务资料其它附加信息名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
