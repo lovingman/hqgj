@@ -68,6 +68,12 @@ public class BaseOrganization extends BaseModel {
     private String type;
 
     /**
+     * 字段名：base_organization.fmUrl
+     * 注释：机构封面URL地址
+     */
+    private String fmUrl;
+
+    /**
      * 字段名：base_organization.createUserId
      * 注释：创建人ID
      */
@@ -236,5 +242,13 @@ public class BaseOrganization extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getFmUrl() {
+        return fmUrl;
+    }
+
+    public void setFmUrl(String fmUrl) {
+        this.fmUrl = fmUrl;
     }
 }

@@ -26,4 +26,6 @@ public interface LawPolicyDao {
     int isExist(LawPolicy o);
 
     int deleteByIds(String[] ids);
+
+    int updateStatus(String id, String status);
 }

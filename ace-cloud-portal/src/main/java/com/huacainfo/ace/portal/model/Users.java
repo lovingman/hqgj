@@ -45,12 +45,6 @@ public class Users extends BaseModel {
     private String idCard;
 
     /**
-     * 字段名：users.type
-     * 注释：用户类型
-     */
-    private String type;
-
-    /**
      * 字段名：users.name
      * 注释：姓名
      */
@@ -135,6 +129,12 @@ public class Users extends BaseModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date lockedTime;
+
+    /**
+     * 字段名：users.userType
+     * 注释：用户类型1-律师事务所 2-会计事务所 3-培训机构  4-工信局
+     */
+    private String userType;
 
     /**
      * 字段名：users.identity
@@ -296,11 +296,11 @@ public class Users extends BaseModel {
 		 this.identity = identity == null ? null : identity.trim();
 	}
 
-    public String getType() {
-        return type;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

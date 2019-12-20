@@ -89,7 +89,7 @@
 </template>
 
 <script>
-    import {getList, deleteById, deleteByIds} from "@/api/hqgj/service";
+    import {getList, deleteById, deleteByIds,exportXls} from "@/api/hqgj/service";
     import {getAreaTree, getDict} from "@/api/sys";
 
     export default {
@@ -107,6 +107,10 @@
                     orgName: "",
                     type:""
                 },
+                exportDatas:{
+                    orgName: "",
+                    type:""
+                }
             };
         },
         created() {
@@ -178,7 +182,26 @@
                 }
                 //导出
                 if (command == 'exportXls') {
-                    console.log(789)
+                    this.exportDatas.orgName = this.query.orgName;
+                    this.exportDatas.type = this.query.type;
+                    exportXls(this.exportDatas).then(response => {
+                        const blob = new Blob([response], {type: 'application/vnd.ms-excel'});
+                        const fileName = '服务机构信息.xlsx';
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            navigator.msSaveBlob(blob, fileName)
+                        } else {
+                            const a = document.createElement('a');
+                            a.href = URL.createObjectURL(blob);
+                            a.download = fileName;
+                            a.style.display = 'none';
+                            document.body.appendChild(a);
+                            a.click();
+                            URL.revokeObjectURL(a.href);
+                            document.body.removeChild(a)
+                        }
+                    }).catch((error) => {
+                        this.$message.error(error)
+                    })
                 }
                 //删除
                 if (command == 'deleteIds') {

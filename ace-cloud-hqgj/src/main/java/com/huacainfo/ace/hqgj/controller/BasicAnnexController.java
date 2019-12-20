@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +29,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -176,62 +178,30 @@ public class BasicAnnexController extends BaseController {
     /**
      * 下载文件
      * @param relationId
-     * @param path
      * @param res
      * @throws Exception
      */
     @RequestMapping(value = "/download")
-    public void downloadExcel(String relationId, String path, HttpServletResponse res) throws Exception {
-        if(CommonUtils.isBlank(relationId)||CommonUtils.isBlank(path)){
-            return;
+    public ResponseDTO downloadExcel(String relationId, HttpServletResponse res) throws Exception {
+        if(CommonUtils.isBlank(relationId)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
         BasicAnnexQVo condition=new BasicAnnexQVo();
         condition.setRelationId(relationId);
         PageDTO<BasicAnnexVo> rst = this.basicAnnexService.page(condition, 0,1000,null);
-        try {
+        String[] list=new String[rst.getTotal()];
             //多个图片下载地址
-            for(BasicAnnexVo vo:rst.getRows()){
-                //根据图片地址构建URL
+            for(int i=0;i<rst.getTotal();i++ ) {
+                 BasicAnnexVo vo =rst.getRows().get(i);
                 URL url= new URL(vo.getFileURL());
-                URLConnection conn = url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(10000);
-                conn.connect();
-                DataInputStream dataInputStream = new DataInputStream(conn.getInputStream());
+                String base64=CommonUtils.encodeImageToBase64(url);
+                list[i]=base64;
 
-                String filename = vo.getFileURL();
-                // 取得文件名。
-                String ext = filename.substring(filename.lastIndexOf("/") + 1).toUpperCase();
-                //创建目录和图片
-                File pathFile=new File(path+"\\"+vo.getFileName());
-                File file=new File(path+"\\"+vo.getFileName()+"\\"+ext);
-                if(!pathFile.exists()) {
-                    pathFile.mkdirs();
-                    file.createNewFile();
-                }
-                if(!file.exists()) {
-                    file.createNewFile();
-                }
-                //通过流复制图片
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                ByteArrayOutputStream output = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = dataInputStream.read(buffer)) > 0) {
-                    output.write(buffer, 0, length);
-                }
-                fileOutputStream.write(output.toByteArray());
-                dataInputStream.close();
-                fileOutputStream.close();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
+            }
 
 
 }

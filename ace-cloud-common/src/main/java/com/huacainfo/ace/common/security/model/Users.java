@@ -315,4 +315,5 @@ public class Users implements java.io.Serializable {
                 ", parentCorpId='" + parentCorpId + '\'' +
                 '}';
     }
+
 }

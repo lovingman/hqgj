@@ -1,5 +1,7 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.constant.ResultCode;
+import com.huacainfo.ace.common.tools.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -164,4 +166,19 @@ public class ServeFinanceOrderController extends BaseController {
         return this.serveFinanceOrderService.deleteByIds(ids.split(","));
     }
 
+
+    /**
+     * 修改状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "/updateStatus", notes = "修改状态")
+    @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateStatus(String id, String status)throws Exception {
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        return serveFinanceOrderService.updateStatus(id,status);
+    }
 }

@@ -1,8 +1,10 @@
 package com.huacainfo.ace.hqgj.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名：law_serve
@@ -40,6 +42,7 @@ public class LawServe extends BaseModel {
      * 字段名：law_serve.createDate
      * 注释：创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss ",timezone = "GMT+8")
     private Date createDate;
 
     /**
@@ -58,6 +61,7 @@ public class LawServe extends BaseModel {
      * 字段名：law_serve.modifyDate
      * 注释：修改时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss ",timezone = "GMT+8")
     private Date modifyDate;
 
     /**
@@ -65,7 +69,11 @@ public class LawServe extends BaseModel {
      * 注释：状态  1-生效  0-失效
      */
     private String status;
+    private List<BasicAnnex> basicAnnexes ;
 
+    public List<BasicAnnex> getBasicAnnexes() {
+        return basicAnnexes;
+    }
     public String getId() {
         return id;
     }

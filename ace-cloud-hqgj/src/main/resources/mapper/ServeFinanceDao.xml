@@ -5,6 +5,7 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="orgId" jdbcType="VARCHAR" property="orgId"/>
         <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="contactId" jdbcType="VARCHAR" property="contactId"/>
         <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
         <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
@@ -23,7 +24,7 @@
     <sql id="Base_Column_List">
     id, orgId, orgName, contactPersonName, contactPersonTel, address, quota, type, fmUrl, 
     content, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
-    modifyDate, status
+    modifyDate, status,contactId
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -36,13 +37,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeFinance">
-    insert into serve_finance (id, orgId, orgName, 
+    insert into serve_finance (id, orgId, orgName, contactId,
       contactPersonName, contactPersonTel, address, 
       quota, type, fmUrl, 
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
       modifyDate, status)
-    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{contactId,jdbcType=VARCHAR},
       #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{quota,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
@@ -53,6 +54,7 @@
     update serve_finance
     set orgId = #{orgId,jdbcType=VARCHAR},
       orgName = #{orgName,jdbcType=VARCHAR},
+      contactId= #{contactId,jdbcType=VARCHAR},
       contactPersonName = #{contactPersonName,jdbcType=VARCHAR},
       contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
@@ -62,17 +64,40 @@
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
-
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceVo">
-        <result column="orgAreaCode" jdbcType="VARCHAR" property="orgAreaCode"/>
-        <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
-        <result column="orgContent" jdbcType="VARCHAR" property="orgContent"/>
-        <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="surplusQuota" jdbcType="VARCHAR" property="surplusQuota"/>
+        <result column="minPrice" jdbcType="VARCHAR" property="minPrice"/>
+        <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice"/>
+        <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.vo.BaseOrganizationVo">
+            <id column="orgId" jdbcType="VARCHAR" property="id"/>
+            <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
+            <result column="orgfmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+            <result column="creditCode" jdbcType="VARCHAR" property="creditCode"/>
+            <result column="contactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
+            <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
+            <result column="orgAreaCode" jdbcType="VARCHAR" property="areaCode"/>
+            <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
+            <result column="orgContent" jdbcType="VARCHAR" property="content"/>
+            <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
+        </association>
+        <association property="baseOrganizationMember" javaType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+            <id column="mId" jdbcType="VARCHAR" property="id"/>
+            <result column="mName" jdbcType="VARCHAR" property="name"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+            <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+            <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
+            <result column="mContent" jdbcType="VARCHAR" property="content"/>
+        </association>
+        <collection property="financeItemList"  column="id" ofType="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
+            <result column="itId" jdbcType="VARCHAR" property="id"/>
+            <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+            <result column="itemPrice" jdbcType="DECIMAL" property="price"/>
+        </collection>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orgId, t.orgName, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.orgId, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
   </sql>
     <sql id="From_Statement">
     FROM serve_finance t
@@ -84,7 +109,7 @@
                 and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
             </if>
             <if test="condition.orgName != null and condition.orgName != ''">
-                and t.orgName = #{condition.orgName,jdbcType=VARCHAR}
+                and t.orgName like  concat('%',#{condition.orgName,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.contactPersonName != null and condition.contactPersonName != ''">
                 and t.contactPersonName = #{condition.contactPersonName,jdbcType=VARCHAR}
@@ -92,11 +117,12 @@
             <if test="condition.contactPersonTel != null and condition.contactPersonTel != ''">
                 and t.contactPersonTel = #{condition.contactPersonTel,jdbcType=VARCHAR}
             </if>
-
-            <if test="condition.type != null and condition.type != ''">
-                and t.type = #{condition.type,jdbcType=VARCHAR}
+            <if test="condition.types != null and condition.types != ''">
+                and t.type in
+                <foreach collection="condition.types" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
-
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
@@ -104,15 +130,55 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
+        (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
+        (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
+        case p.type
+        when '4' then   '常德市'
+        when '3' then   concat_ws(">",'常德市',p.name)
+        when '2' then   concat_ws(">", ppp.ppNames,pp.pName,p.name)
+        when '1' then   concat_ws(">",'常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName,it.id itId,it.itemName,it.price itemPrice
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
+        left join base_organization_member m on m.id=t.contactId
+        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join  serve_finance_item it on it.financeId=t.id
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
+        case p.type
+        when '4' then   '常德市'
+        when '3' then   CONCAT('常德市',p.name)
+        when '2' then   CONCAT(ppp.ppNames,pp.pName,p.name)
+        when '1' then   CONCAT('常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
         <include refid="From_Statement"/>
+        left join base_organization o on o.id=t.orgId
+        left join base_organization_member m on m.id=t.contactId
+        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_zcpa.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_zcpa.province p
+        )ppp on ppp.pppcode = pp.ppCode
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>

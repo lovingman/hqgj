@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
@@ -124,6 +125,7 @@ public class ServeFinanceOrder extends BaseModel {
      * 字段名：serve_finance_order.createDate
      * 注释：创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
     /**
@@ -149,6 +151,8 @@ public class ServeFinanceOrder extends BaseModel {
      * 注释：状态  0-待完成 1-已完成 2-已取消
      */
     private String status;
+
+    private String itemId;
 
     public String getId() {
         return id;
@@ -332,5 +336,13 @@ public class ServeFinanceOrder extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 }

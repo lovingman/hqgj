@@ -22,10 +22,10 @@
                     <el-col :span="6">
                         <el-input
                                 @change="toggleChange"
-                                v-model="query.companyName"
                                 class="input-with-select"
                                 placeholder="请输入企业名称或统一社会信用代码"
                                 style="float: right"
+                                v-model="query.companyName"
                         ></el-input>
                     </el-col>
                     <el-col :span="2">
@@ -54,9 +54,9 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button  @click="person(scope.$index,scope.row)" height="40" type="text">员工管理</el-button>
+                        <el-button @click="person(scope.$index,scope.row)" height="40" type="text">员工管理</el-button>
                         <span class="strightline">|</span>
-                        <el-button  @click="edit(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
+                        <el-button @click="edit(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="handleDelete(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-    import {getList,deleteById,deleteByIds} from "@/api/hqgj/enterprise";
+    import {getList, deleteById, deleteByIds, exportXls} from "@/api/hqgj/enterprise";
 
     export default {
         name: "index",
@@ -93,6 +93,9 @@
                 query: {
                     companyName: ""
                 },
+                exportDatas:{
+                    companyName: ""
+                }
 
             };
         },
@@ -128,21 +131,39 @@
                 })
             },
             //搜索
-            search(){
+            search() {
                 this.handleQuery();
             },
             //批量操作
-            handleCommand(command){
+            handleCommand(command) {
                 //批量导入
-                if (command == 'importXls' ) {
+                if (command == 'importXls') {
                     console.log(456)
                 }
                 //批量导出
-                if (command == 'exportXls' ) {
-                    console.log(789)
+                if (command == 'exportXls') {
+                    this.exportDatas.companyName = this.query.companyName;
+                    exportXls(this.exportDatas).then(response => {
+                        const blob = new Blob([response], {type: 'application/vnd.ms-excel'});
+                        const fileName = '企业信息.xlsx';
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            navigator.msSaveBlob(blob, fileName)
+                        } else {
+                            const a = document.createElement('a');
+                            a.href = URL.createObjectURL(blob);
+                            a.download = fileName;
+                            a.style.display = 'none';
+                            document.body.appendChild(a);
+                            a.click();
+                            URL.revokeObjectURL(a.href);
+                            document.body.removeChild(a)
+                        }
+                    }).catch((error) => {
+                        this.$message.error(error)
+                    })
                 }
                 //批量删除
-                if (command == 'deleteIds' ) {
+                if (command == 'deleteIds') {
                     if (this.multipleSelection.length) {
                         this.ids = this.multipleSelection.map(item => item.id).join(",");
                         this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示", {
@@ -172,16 +193,16 @@
                 this.multipleSelection = val;
             },
             person(index, data) {
-                this.$router.push({path: "/hqgj/BasicData/enterprise/Member", query: { id: data.id }});
+                this.$router.push({path: "/hqgj/BasicData/enterprise/Member", query: {id: data.id}});
             },
             create() {
                 this.$router.push({path: "/hqgj/BasicData/enterprise/create"});
             },
             edit(index, data) {
-                this.$router.push({path: "/hqgj/BasicData/enterprise/edit", query: { id: data.id }});
+                this.$router.push({path: "/hqgj/BasicData/enterprise/edit", query: {id: data.id}});
             },
             preview(index, data) {
-                this.$router.push({path: "/hqgj/BasicData/enterprise/details", query: { id: data.id }});
+                this.$router.push({path: "/hqgj/BasicData/enterprise/details", query: {id: data.id}});
             },
             //删除
             handleDelete(index, data) {
@@ -201,7 +222,7 @@
 
                     });
             },
-            handleSelectionChange(){
+            handleSelectionChange() {
 
             }
         }

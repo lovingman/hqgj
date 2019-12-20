@@ -28,4 +28,8 @@ public interface ServeBusinessDao {
     int deleteByIds(String[] ids);
 
     ServeBusinessVo previewInfo(String id);
+
+    int updateBasicStatus(@Param("id") String id,@Param("status") String status,@Param("type") String type);
+
+    List<String> selectBasicStatus(@Param("id") String id);
 }

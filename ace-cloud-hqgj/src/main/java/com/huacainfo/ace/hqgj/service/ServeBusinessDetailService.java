@@ -102,4 +102,5 @@ public interface ServeBusinessDetailService {
      */
     ResponseDTO<AnnexVo> annexList(String id);
 
+    ResponseDTO updateState(ServeBusinessDetail serveBusinessDetail) throws Exception;
 }

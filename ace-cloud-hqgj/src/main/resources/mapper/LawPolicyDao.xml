@@ -96,6 +96,11 @@
         <include refid="From_Statement"/>
         where t.id = #{id,jdbcType=VARCHAR}
   </select>
+    <update id="updateStatus">
+      update law_policy
+      set status = #{status,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
   <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
             select
         <include refid="Vo_Column_List"/>
@@ -109,7 +114,7 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+      limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
   </select>
   <select id="findCount" resultType="int">
     SELECT COUNT(*)

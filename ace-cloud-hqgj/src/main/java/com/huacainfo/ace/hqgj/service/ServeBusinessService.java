@@ -7,6 +7,8 @@ import com.huacainfo.ace.hqgj.model.ServeBusiness;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessQVo;
 
+import java.util.List;
+
 /**
  * @author: 何双
  * @version: 2019-12-09
@@ -98,4 +100,19 @@ public interface ServeBusinessService {
      * @throws Exception
      */
     ResponseDTO<ServeBusinessVo> previewInfo(String id)throws Exception;
+
+
+    /**
+     * 修改状态  基本信息审核状态（0-待审核  1-审核通过 2-驳回修改）
+     * @param id
+     * @param status
+     * @return
+     */
+    ResponseDTO updateBasicStatus(String id,String status,String type);
+
+    /**
+     * 查询是否都完成审核
+     */
+    ResponseDTO selectBasicStatus(String id);
+
 }

@@ -56,6 +56,9 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
     public PageDTO
             <ServeFinanceVo> page(ServeFinanceQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeFinanceVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getType())){
+            condition.setTypes(condition.getType().split(","));
+        }
         List<ServeFinanceVo> list = this.serveFinanceDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
@@ -90,7 +93,7 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
             return new ResponseDTO(ResultCode.FAIL, "财税服务包名称重复！");
         }
         o.setCreateDate(new Date());
-        o.setStatus("1");
+        o.setStatus("0");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
@@ -137,6 +140,7 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
          //财税管家多个项目价格
+
         if(!CommonUtils.isBlank(o.getFinanceItemList())){
             serveFinanceItemDao.deleteByFinanceIds(o.getId().split(","));
             List<ServeFinanceItem> list=o.getFinanceItemList();

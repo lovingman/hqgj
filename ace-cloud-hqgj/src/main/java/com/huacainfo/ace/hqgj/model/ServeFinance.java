@@ -33,6 +33,11 @@ public class ServeFinance extends BaseModel {
     private String orgName;
 
     /**
+     * 联系人id
+     */
+    private String contactId;
+
+    /**
      * 字段名：serve_finance.contactPersonName
      * 注释：联系人姓名（如是专家问诊，则是专家姓名）
      */
@@ -261,5 +266,13 @@ public class ServeFinance extends BaseModel {
 
     public void setFinanceItemList(List<ServeFinanceItem> financeItemList) {
         this.financeItemList = financeItemList;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -16,6 +17,8 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
+import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import com.huacainfo.ace.hqgj.dao.LawServeDao;
 import com.huacainfo.ace.hqgj.model.LawServe;
 import com.huacainfo.ace.hqgj.service.LawServeService;
@@ -34,7 +37,8 @@ public class LawServeServiceImpl implements LawServeService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private LawServeDao lawServeDao;
-
+    @Resource
+    private BasicAnnexDao basicAnnexDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -77,8 +81,8 @@ public class LawServeServiceImpl implements LawServeService {
     @Transactional
     @Log(operationObj = "法律服务", operationType = "创建", detail = "创建法律服务")
     public ResponseDTO create(LawServe o, UserProp userProp) throws Exception {
-        o.setId(GUIDUtil.getGUID());
-
+        String cultivateId = GUIDUtil.getGUID();
+        o.setId(cultivateId);
         int temp = this.lawServeDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "法律服务名称重复！");
@@ -90,6 +94,17 @@ public class LawServeServiceImpl implements LawServeService {
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.lawServeDao.insert(o);
+        if (o.getBasicAnnexes().size()>0) {
+            List<BasicAnnex> fileURL = o.getBasicAnnexes();
+            for (BasicAnnex a : fileURL) {
+                a.setId(GUIDUtil.getGUID());
+                a.setRelationId(cultivateId);
+                a.setFileURL(a.getFileURL());
+                a.setType("2");
+                a.setRemark("法律服务附件");
+                basicAnnexDao.insert(a);
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

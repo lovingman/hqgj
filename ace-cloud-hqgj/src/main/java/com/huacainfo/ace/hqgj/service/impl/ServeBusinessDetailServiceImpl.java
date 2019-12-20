@@ -248,5 +248,22 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         return  new ResponseDTO(ResultCode.SUCCESS, "获取成功！" ,list);
     }
 
-
+    /**
+     * 修改创业服务资料清单表状态
+     *
+     * @param serveBusinessDetail
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO updateState(ServeBusinessDetail serveBusinessDetail) throws Exception {
+        if (CommonUtils.isBlank(serveBusinessDetail.getId())) {
+            return new ResponseDTO(ResultCode.FAIL, "主键不能为空！");
+        }
+        if (CommonUtils.isBlank(serveBusinessDetail.getStatus())) {
+            return new ResponseDTO(ResultCode.FAIL, "状态不能为空！");
+        }
+        this.serveBusinessDetailDao.updateState(serveBusinessDetail);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功");
+    }
 }

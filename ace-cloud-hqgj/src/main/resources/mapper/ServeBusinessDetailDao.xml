@@ -35,17 +35,17 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail">
-    insert into serve_business_detail (id, businessId, name, 
-      sex, idCard, mobile, 
+    insert into serve_business_detail (id, businessId, name,
+      sex, idCard, mobile,
       jobs, sharesProportion, type, `explain`,
-      createUserId, createUserName, createDate, 
-      modifyUserId, modifyUserName, modifyDate, 
+      createUserId, createUserName, createDate,
+      modifyUserId, modifyUserName, modifyDate,
       status)
-    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
       #{jobs,jdbcType=VARCHAR}, #{sharesProportion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{explain,jdbcType=VARCHAR},
-      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
   </insert>
 
@@ -99,7 +99,7 @@
             <if test="condition.mobile != null and condition.mobile != ''">
                 and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
             </if>
-            <if test="condition.types != null and condition.type != ''">
+            <if test="condition.types != null and condition.types != ''">
                 and t.type in
                 <foreach collection="condition.types" item="item" open="(" separator="," close=")">
                     #{item}
@@ -172,6 +172,11 @@
             <result column="annexNum" jdbcType="INTEGER" property="annexNum"/>
     </resultMap>
 
+    <update id="updateState" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessDetail"  >
+     update serve_business_detail
+     set status = #{status,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=VARCHAR}
+    </update>
     <select id="annexList" parameterType="java.lang.String" resultMap="annexResultMap">
   SELECT DISTINCT
 	d.id,

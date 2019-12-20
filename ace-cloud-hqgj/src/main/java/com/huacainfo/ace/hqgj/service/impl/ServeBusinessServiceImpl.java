@@ -331,5 +331,53 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         return  new ResponseDTO(ResultCode.SUCCESS, "成功！",vo);
     }
 
+    /**
+     * 审核基础信息
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ResponseDTO updateBasicStatus(String id, String status,String type) {
+        if(CommonUtils.isBlank(id)||CommonUtils.isBlank(status)||CommonUtils.isBlank(type)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        //基础信息审核状态
+        if(type.equals("1")){
+            type="basicStatus";
+        }
+        else if(type.equals("2")){
+            type="status";
+        }
+        //标记修改
+        else if(type.equals("3")){
+            type="tab";
+        }else{
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        int i=  serveBusinessDao.updateBasicStatus(id,status,type);
+        if(type.equals("tab") && status.equals("7")){
+            serveBusinessDao.updateBasicStatus(id,"3","status");
+        }
+        if (i <= 0) {
+            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
+    }
+
+    /**
+     * 是否完成审核
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseDTO selectBasicStatus(String id) {
+        if(CommonUtils.isBlank(id)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        List<String> count=serveBusinessDao.selectBasicStatus(id);
+        return   new ResponseDTO(ResultCode.SUCCESS, "成功！",count);
+    }
+
 
 }

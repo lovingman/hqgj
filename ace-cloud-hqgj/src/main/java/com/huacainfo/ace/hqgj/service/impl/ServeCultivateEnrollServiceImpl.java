@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.ServeCultivateDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,6 +35,8 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeCultivateEnrollDao serveCultivateEnrollDao;
+    @Resource
+    private ServeCultivateDao serveCultivateDao;
 
     /**
      * @throws
@@ -77,7 +80,8 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
     @Log(operationObj = "培训提升-报名管理", operationType = "创建", detail = "创建培训提升-报名管理")
     public ResponseDTO create(ServeCultivateEnroll o, UserProp userProp) throws Exception {
         o.setId(GUIDUtil.getGUID());
-        if (CommonUtils.isBlank(o.getServeCultivateId())) {
+        String serveCultivateId=o.getServeCultivateId();
+        if (CommonUtils.isBlank(serveCultivateId)) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID（关联serve_cultivate表id）不能为空！");
         }
 
@@ -85,13 +89,16 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升-报名管理名称重复！");
         }
-
+        o.setIsSign("n");
         o.setCreateDate(new Date());
-        o.setStatus("1");
+        o.setStatus("0");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.serveCultivateEnrollDao.insert(o);
+        //培训基础信息 报名人数+1
+       int i = serveCultivateDao.addEnrollNum(serveCultivateId);
+
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

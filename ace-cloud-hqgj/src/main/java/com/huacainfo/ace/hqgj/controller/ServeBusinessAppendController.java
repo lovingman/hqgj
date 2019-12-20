@@ -14,27 +14,27 @@ import com.huacainfo.ace.common.vo.PageParam;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.web.controller.BaseController;
-import com.huacainfo.ace.hqgj.model.LawPolicy;
-import com.huacainfo.ace.hqgj.service.LawPolicyService;
-import com.huacainfo.ace.hqgj.vo.LawPolicyVo;
-import com.huacainfo.ace.hqgj.vo.LawPolicyQVo;
+import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
+import com.huacainfo.ace.hqgj.service.ServeBusinessAppendService;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessAppendVo;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessAppendQVo;
 
 
 /**
 * @author: 豆文国
-* @version: 2019-12-10
-* @Description:  TODO(政策服务)
+* @version: 2019-12-18
+* @Description:  TODO(创业服务资料其它附加信息)
 */
-@Api(value = "/lawPolicy",tags = "政策服务")
+@Api(value = "/serveBusinessAppend",tags = "创业服务资料其它附加信息")
 @RestController
-@RequestMapping("/lawPolicy")
-public class LawPolicyController extends BaseController {
+@RequestMapping("/serveBusinessAppend")
+public class ServeBusinessAppendController extends BaseController {
 
 
 private static final long serialVersionUID = 1L;
 Logger logger = LoggerFactory.getLogger(this.getClass());
 @Autowired
-private LawPolicyService lawPolicyService;
+private ServeBusinessAppendService serveBusinessAppendService;
 
 
 /**
@@ -46,17 +46,17 @@ private LawPolicyService lawPolicyService;
 * @param:        @return
 * @param:        @throws Exception
 * @return:       NewPageDTO
-<LawPolicyVo>
+<ServeBusinessAppendVo>
     * @throws
     * @author: 豆文国
-    * @version: 2019-12-10
+    * @version: 2019-12-18
     */
-    @ApiOperation(value = "/page", notes = "获取政策服务数据集合，支持分页查询")
+    @ApiOperation(value = "/page", notes = "获取创业服务资料其它附加信息数据集合，支持分页查询")
     @GetMapping(value = "/page", produces = "application/json;charset=UTF-8")
     public PageDTO
-    <LawPolicyVo> page(LawPolicyQVo condition, PageParam page) throws Exception {
+    <ServeBusinessAppendVo> page(ServeBusinessAppendQVo condition, PageParam page) throws Exception {
 
-        PageDTO<LawPolicyVo> rst =this.lawPolicyService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        PageDTO<ServeBusinessAppendVo> rst =this.serveBusinessAppendService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
             if (page.getStart() > 1) {
             rst.setTotal(page.getTotalRecord());
             }
@@ -65,118 +65,106 @@ private LawPolicyService lawPolicyService;
 
             /**
             *
-            * @Title:insertLawPolicy
-            * @Description: TODO(创建政策服务)
+            * @Title:insertServeBusinessAppend
+            * @Description: TODO(创建创业服务资料其它附加信息)
             * @param: @param jsons
             * @return: ResponseDTO
             * @author: 豆文国
-            * @version: 2019-12-10
+            * @version: 2019-12-18
             */
-        @ApiOperation(value ="/create",notes = "创建政策服务")
+        @ApiOperation(value ="/create",notes = "创建创业服务资料其它附加信息")
         @ApiImplicitParams({
-        @ApiImplicitParam(name = "jsons", value = "LawPolicy的json化对象", required = true, dataType = "String",
+        @ApiImplicitParam(name = "jsons", value = "ServeBusinessAppend的json化对象", required = true, dataType = "String",
         paramType = "form"),
         })
         @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
             public ResponseDTO create(@RequestBody String jsons) throws Exception {
-            LawPolicy obj = JSON.parseObject(jsons, LawPolicy.class);
-            return this.lawPolicyService.create(obj,this.getCurUserProp());
+            ServeBusinessAppend obj = JSON.parseObject(jsons, ServeBusinessAppend.class);
+            return this.serveBusinessAppendService.create(obj,this.getCurUserProp());
             }
 
             /**
             *
-            * @Title:updateLawPolicy
-            * @Description: TODO(更新政策服务)
+            * @Title:updateServeBusinessAppend
+            * @Description: TODO(更新创业服务资料其它附加信息)
             * @param: @param jsons
             * @param: @throws Exception
             * @return: ResponseDTO
             * @throws
             * @author: 豆文国
-            * @version: 2019-12-10
+            * @version: 2019-12-18
             */
-        @ApiOperation(value ="/update",notes = "更新政策服务")
+        @ApiOperation(value ="/update",notes = "更新创业服务资料其它附加信息")
         @ApiImplicitParams({
-        @ApiImplicitParam(name = "jsons", value = "LawPolicy的json化对象", required = true, dataType = "String",
+        @ApiImplicitParam(name = "jsons", value = "ServeBusinessAppend的json化对象", required = true, dataType = "String",
         paramType = "form"),
         })
         @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
             public ResponseDTO update(@RequestBody String jsons) throws Exception {
-            LawPolicy obj = JSON.parseObject(jsons, LawPolicy.class);
-            return this.lawPolicyService.update(obj,this.getCurUserProp());
+            ServeBusinessAppend obj = JSON.parseObject(jsons, ServeBusinessAppend.class);
+            return this.serveBusinessAppendService.update(obj,this.getCurUserProp());
             }
 
             /**
             *
             * @Title:getById
-            * @Description: TODO(获取政策服务)
+            * @Description: TODO(获取创业服务资料其它附加信息)
             * @param: @param id
             * @param: @throws Exception
-            * @return: ResponseDTO<LawPolicy>
+            * @return: ResponseDTO<ServeBusinessAppend>
             * @throws
             * @author: 豆文国
-            * @version: 2019-12-10
+            * @version: 2019-12-18
             */
-        @ApiOperation(value ="/getById",notes = "根据主键获取 政策服务")
+        @ApiOperation(value ="/getById",notes = "根据主键获取 创业服务资料其它附加信息")
         @ApiImplicitParams({
         @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
         })
         @GetMapping(value = "/getById", produces = "application/json;charset=UTF-8")
-            public ResponseDTO<LawPolicyVo> getById(String id)throws Exception {
-                return this.lawPolicyService.getById(id);
+            public ResponseDTO<ServeBusinessAppendVo> getById(String id)throws Exception {
+                return this.serveBusinessAppendService.getById(id);
                 }
 
                 /**
                 *
-                * @Title:deleteLawPolicyByLawPolicyId
-                * @Description: TODO(删除政策服务)
+                * @Title:deleteServeBusinessAppendByServeBusinessAppendId
+                * @Description: TODO(删除创业服务资料其它附加信息)
                 * @param: @param jsons
                 * @param: @throws Exception
                 * @return: ResponseDTO
                 * @throws
                 * @author: 豆文国
-                * @version: 2019-12-10
+                * @version: 2019-12-18
                 */
-            @ApiOperation(value ="/deleteById",notes = "根据主键删除 政策服务")
+            @ApiOperation(value ="/deleteById",notes = "根据主键删除 创业服务资料其它附加信息")
             @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
             })
             @PostMapping(value = "/deleteById", produces = "application/json;charset=UTF-8")
                 public ResponseDTO deleteById(String id) throws Exception {
-                return this.lawPolicyService.deleteById(id);
+                return this.serveBusinessAppendService.deleteById(id);
                 }
 
 
                 /**
                 *
                 * @Title:deleteByIds
-                * @Description: TODO(批量删除政策服务)
+                * @Description: TODO(批量删除创业服务资料其它附加信息)
                 * @param: @param ids
                 * @param: @throws Exception
                 * @return: ResponseDTO
                 * @throws
                 * @author: 豆文国
-                * @version: 2019-12-10
+                * @version: 2019-12-18
                 */
-            @ApiOperation(value ="/deleteByIds",notes = "根据主键批量删除 政策服务")
+            @ApiOperation(value ="/deleteByIds",notes = "根据主键批量删除 创业服务资料其它附加信息")
             @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", value = "多个ID以','分开", required = true, dataType = "String", paramType =
             "form"),
             })
             @PostMapping(value = "/deleteByIds", produces = "application/json;charset=UTF-8")
                 public ResponseDTO deleteByIds(String ids) throws Exception {
-                    return this.lawPolicyService.deleteByIds(ids.split(","));
+                    return this.serveBusinessAppendService.deleteByIds(ids.split(","));
                 }
 
-
-    /**
-     * 修改状态 政策服务发布状态（1-待发布 2-已发布）
-     * @param id
-     * @param status
-     * @return
-     */
-    @ApiOperation(value = "/updateStatus", notes = "修改状态")
-    @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
-    public ResponseDTO updateStatus(String id, String status){
-        return lawPolicyService.updateStatus(id,status);
-    }
 }

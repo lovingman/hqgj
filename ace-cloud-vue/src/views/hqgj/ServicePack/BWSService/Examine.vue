@@ -1,9 +1,11 @@
 <template>
     <div class="container">
-        <div style="width: 100%">
-            <el-button size="small" style="float: right" type="primary ">完成审核</el-button>
+        <div style="width: 100%;height: 20px">
+            <el-button @click="Auditing" size="small" style="float: right" type="primary"
+                       v-if="this.$route.query.word=='examine'">完成审核
+            </el-button>
         </div>
-        <div class="tab-pane">
+        <div class="tab-pane" style="width: 100%">
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
                 <el-tab-pane label="资料清单" name="1">
                     <el-table
@@ -24,13 +26,14 @@
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="" type="text">下载</el-button>
+                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
-                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览</router-link>
+                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览
+                                    </router-link>
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -79,12 +82,13 @@
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
                         <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
-                                   type="text">审核
+                                   type="text"
+                                   v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
                         </el-button>
-                        <el-button @click="" style="float: right;margin-right: 25px;padding-top: 1px" type="text">通过
-                        </el-button>
-                        <el-button @click="" style="float: right;margin-right: 25px;padding-top: 1px" type="text">驳回修改
-                        </el-button>
+                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px" type="text"
+                             v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
+                        </div>
+
                     </div>
                     <el-divider></el-divider>
                     <el-form :model="form" class="demo-ruleForm" label-width="150px">
@@ -127,7 +131,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -147,16 +150,19 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="80">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
                                 <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                                 <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
-                                <el-button @click="preview" type="text">审核</el-button>
+                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.status!= '1'">审核
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -169,7 +175,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -187,11 +192,19 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="80">
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="preview" type="text">审核</el-button>
+                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                            <template slot-scope="scope">
+                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.status!= '1'">审核
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -204,7 +217,6 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
@@ -222,11 +234,19 @@
                                 </viewer>
                             </template>
                         </el-table-column>
-                        <el-table-column label="状态" prop="status" width="80">
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="preview" type="text">审核</el-button>
+                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                            <template slot-scope="scope">
+                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.status!= '1'">审核
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -239,31 +259,39 @@
                     <el-table
                             :data="list"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
-                            v-loading="loading">
+                    >
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="名称" prop="name" sortable='custom' width="250">
                         </el-table-column>
                         <el-table-column label="附件" prop="file">
-                            <!--<template slot-scope="scope">-->
-                            <!--<viewer  :images="scope.list2.file">-->
-                            <!--<img v-for="attach in scope.list2.file" :src="attach.fileurl" :key="attach.fileurl" style="line-height: 48px" class="head_pic"/>-->
-                            <!--</viewer>-->
-                            <!--</template>-->
-                        </el-table-column>
-                        <el-table-column label="状态" prop="status" width="80">
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="60">
                             <template slot-scope="scope">
-                                <el-button @click="preview" type="text">审核</el-button>
+                                <viewer :images="scope.row.basicAnnexes">
+                                    <img :key="attach.fileURL" :src="attach.fileURL"
+                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
+                                </viewer>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
+                            <template slot-scope="scope">
+                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="right" fixed="right" header-align="center"
+                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                            <template slot-scope="scope">
+                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.status!= '1'">审核
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="其他" name="8">
+                <el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">其他</span>
                     </div>
@@ -290,7 +318,6 @@
         </div>
         <!--预览弹窗-->
         <el-dialog
-                :before-close="handleClose"
                 :visible.sync="lookingVisible"
                 title="预览"
                 width="60%">
@@ -302,24 +329,39 @@
             </div>
             <div class="dialog-footer" slot="footer">
                 <el-button @click="lookingVisible = false">取 消</el-button>
-                <el-button @click="sign" type="primary">确 定</el-button>
+                <el-button @click="lookingVisible = false" type="primary">确 定</el-button>
             </div>
         </el-dialog>
         <!--基础信息审核弹窗-->
         <el-dialog
-                :before-close="handleClose"
                 :visible.sync="reviewVisible"
                 title="审核"
-                width="60%">
-            <div class="dialog-main">
-                <viewer :images="fileList">
-                    <img :key="attach.fileURL" :src="attach.fileURL"
-                         class="head_pics" v-for="attach in fileList"/>
-                </viewer>
+                width="30%">
+            <div style="text-align: center">
+                <el-radio-group v-model="this.review.basicStatus">
+                    <el-radio :label="1" @click.native.prevent="clickitem(1)">通过</el-radio>
+                    <el-radio :label="2" @click.native.prevent="clickitem(2)">不通过</el-radio>
+                </el-radio-group>
             </div>
             <div class="dialog-footer" slot="footer">
-                <el-button @click="lookingVisible = false">取 消</el-button>
-                <el-button @click="sign" type="primary">确 定</el-button>
+                <el-button @click="reviewVisible = false">取 消</el-button>
+                <el-button @click="handleReview" type="primary">确 定</el-button>
+            </div>
+        </el-dialog>
+        <!--资料清单审核弹窗-->
+        <el-dialog
+                :visible.sync="reviewDetailVisible"
+                title="审核"
+                width="30%">
+            <div style="text-align: center">
+                <el-radio-group v-model="this.reviewdata.status">
+                    <el-radio :label="1" @click.native.prevent="clickitem1(1)">通过</el-radio>
+                    <el-radio :label="2" @click.native.prevent="clickitem1(2)">不通过</el-radio>
+                </el-radio-group>
+            </div>
+            <div class="dialog-footer" slot="footer">
+                <el-button @click="reviewDetailVisible = false">取 消</el-button>
+                <el-button @click="handleDetail" type="primary">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -327,7 +369,19 @@
 </template>
 
 <script>
-    import {getById, getMember, getannexList, getAnnex} from "@/api/hqgj/BWSService";
+    import {
+        getById,
+        update,
+        getMember,
+        downloadimg,
+        updateBasicStatus,
+        selectBasicStatus,
+        updateState,
+        getannexList,
+        getAnnex,
+        getAppend
+    } from "@/api/hqgj/BWSService";
+    import {getAreaTree, getDict} from "@/api/sys";
 
     export default {
         name: "Examine",
@@ -335,17 +389,33 @@
             return {
                 lookingVisible: false,
                 reviewVisible: false,
+                reviewDetailVisible: false,
+                loading: false,
                 activeName: '1',
                 multipleSelection: [],
                 form: {},
+                review: {
+                    id: "",
+                    basicStatus: ""
+                },
+                reviewdata: {
+                    id: "",
+                    businessId: "",
+                    status: ""
+                },
                 list: [],
                 fileList: [],
+                type: [],
+                others: [],
                 query: {
                     type: ""
                 },
                 query2: {
                     type: "",
                     relationId: ""
+                },
+                query3: {
+                    businessId: ""
                 },
                 lists: [],
             };
@@ -376,6 +446,58 @@
 
                 })
             },
+            //完成审核
+            Auditing() {
+                this.id = this.$route.query.id;
+                selectBasicStatus(this.id).then(response => {
+                    if (response.data != '') {
+                        this.type = [];
+                        for (var i = 0; i < response.data.length; i++) {
+                            if (response.data[i] == 1) {
+                                this.type.push("法人");
+                            }
+                            if (response.data[i] == 2) {
+                                this.type.push("监事");
+                            }
+                            if (response.data[i] == 3) {
+                                this.type.push("股东");
+                            }
+                            if (response.data[i] == 4) {
+                                this.type.push("财务");
+                            }
+                            if (response.data[i] == 5) {
+                                this.type.push("房屋证明");
+                            }
+                        }
+
+                        var str = this.type.join();
+                        this.$message({
+                            message: str + '未审核',
+                            type: 'warning'
+                        });
+                    } else {
+                        this.$confirm("审核通过后，将发送审核通过通知，是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        }).then(() => {
+                            this.id = this.$route.query.id;
+                            updateBasicStatus(this.id, 1, 2).then(response => {
+                                if (response.status == 1) {
+                                    this.$message.success(`审核通过`);
+                                } else {
+                                    this.$message({
+                                        message: response.message,
+                                        type: "warning"
+                                    });
+                                }
+                            })
+                        }).catch(() => {
+                        });
+                    }
+
+                })
+            },
             //申请表置顶
             istop(data) {
                 for (var i = 0; i < data.length; i++) {
@@ -390,6 +512,7 @@
 
             //预览
             looking(index, data) {
+                console.log(data)
                 this.lookingVisible = true;
                 this.query2.relationId = data.id;
                 this.query2.type = 3;
@@ -397,6 +520,23 @@
                     this.fileList = response.rows;
                 })
             },
+            //下载
+            FileDownload(index, data) {
+                console.log(data);
+                this.relationId = data.id;
+                console.log(this.relationId);
+                downloadimg(this.relationId).then(response => {
+                    for (var i = 0; i < response.data.length; i++) {
+                        let link = document.createElement('a')
+                        link.href = 'data:image/png;base64,' + response.data[i]
+                        link.download = data.fileName + '.png'
+                        link.click()
+                    }
+
+
+                })
+            },
+            //标签页查看
             handleClick(tab, event) {
                 if (tab.name == 4) {
                     this.query.type = "1,2";
@@ -414,14 +554,68 @@
                     this.query.type = "5,6,7,8";
                     this.getMemberlist();
                 }
+                if (tab.name == 8) {
+                    this.query3.businessId = this.$route.query.id
+                    getAppend(this.query3).then(response => {
+                        console.log(response.rows);
 
-
-                // console.log(tab.label);
-                // console.log(tab.name);
+                    })
+                }
             },
-            //基础信息审核
+            //基础信息审核弹窗
             reviewBasic() {
                 this.reviewVisible = true;
+            },
+            //确认基础信息审核
+            handleReview() {
+                if (this.review.basicStatus == "") {
+                    this.$message(`未选择状态`);
+                } else {
+                    this.review.id = this.$route.query.id;
+                    updateBasicStatus(this.review.id, this.review.basicStatus, 1).then(response => {
+                        if (response.status == 1) {
+                            this.$message.success(`审核成功`);
+                            this.getDetails();
+                            this.reviewVisible = false;
+                        } else {
+                            this.$message({
+                                message: response.message,
+                                type: "warning"
+                            });
+                        }
+                    })
+                }
+            },
+            //资料清单审核弹窗
+            reviewDetail(index, data) {
+                this.reviewdata.id = data.id;
+                this.reviewDetailVisible = true;
+            },
+            //资料清单确认审核
+            handleDetail() {
+                if (this.reviewdata.status == "") {
+                    this.$message(`未选择状态`);
+                } else {
+                    this.reviewdata.businessId = this.$route.query.id;
+                    updateState(this.reviewdata).then(response => {
+                        if (response.status == 1) {
+                            this.$message.success(`审核成功`);
+                            this.getMemberlist();
+                            this.reviewDetailVisible = false;
+                        } else {
+                            this.$message({
+                                message: response.message,
+                                type: "warning"
+                            });
+                        }
+                    })
+                }
+            },
+            clickitem(e) {
+                e === this.review.basicStatus ? this.review.basicStatus = '' : this.review.basicStatus = e
+            },
+            clickitem1(e) {
+                e === this.reviewdata.status ? this.reviewdata.status = '' : this.reviewdata.status = e
             },
             //获取选中行数据
             handleSelectionChange(val) {

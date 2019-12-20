@@ -51,7 +51,6 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceItemVo">
-
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.financeId, t.itemName, t.price, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -63,13 +62,13 @@
         <where>
             1 = 1
             <if test="condition.financeId != null and condition.financeId != ''">
-                and t.financeId = #{financeId,jdbcType=VARCHAR}
+                and t.financeId = #{condition.financeId,jdbcType=VARCHAR}
             </if>
             <if test="condition.itemName != null and condition.itemName != ''">
-                and t.itemName = #{itemName,jdbcType=VARCHAR}
+                and t.itemName = #{condition.itemName,jdbcType=VARCHAR}
             </if>
             <if test="condition.price != null and condition.price != ''">
-                and t.price = #{price,jdbcType=DECIMAL}
+                and t.price = #{condition.price,jdbcType=DECIMAL}
             </if>
         </where>
     </sql>
@@ -92,7 +91,7 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
     </select>
     <select id="findCount" resultType="int">
         SELECT COUNT(*)
