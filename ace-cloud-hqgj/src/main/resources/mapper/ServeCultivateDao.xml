@@ -107,6 +107,9 @@
     <sql id="Where_Condition">
         <where>
             1 = 1
+            <if test="condition.orgId != null and condition.orgId != ''">
+                and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
+            </if>
             <if test="condition.title != null and condition.title != ''">
                 and t.title like concat('%',#{condition.areaCode,jdbcType=VARCHAR},'%')
             </if>
