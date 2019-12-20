@@ -1,13 +1,153 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<view class="index">
+    <view class="banner hat">
+        <view class="left van-hairline--right">
+            <van-image width="76rpx" height="76rpx" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />慧企管家
+        </view>
+        <view class="right">
+            <view>
+                常德市武陵区中小企业服务平台
+            </view>
+            <view>
+                常德市武陵区工信局指定平台
+            </view>
+        </view>
+    </view>
+    <view class="entrance">
+        <block wx:for="{{navigates}}" wx:key="index">
+            <navigator class="item" url="{{item.path}}">
+                <van-image round width="76rpx" height="76rpx" fit="cover" src="{{item.imgUrl}}" />
+                <view class="title">
+                    {{item.text}}
+                </view>
+            </navigator>
+        </block>
+    </view>
+    <view class="popular">
+        <view class="headTitle">
+            热门培训
+            <van-icon name="fire" />
+        </view>
+        <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}">
+            <swiper-item>
+                <view class="swiper-content">
+                    <view class="title van-multi-ellipsis--l2">
+                        《全面提升逻辑思维能力--结构化思维及在企业《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德 2019.5.23-24
+                    </view>
+                    <view class="remark">
+                        <view class="base">
+                            <van-icon name="manager" />王麒麟
+                            <van-icon name="clock-o" />10.18 14:00-16:00</view>
+                        <view class="num">仅剩5个名额</view>
+                    </view>
+                </view>
+            </swiper-item>
+            <swiper-item>
+                <view class="swiper-content">
+                    <view class="title van-multi-ellipsis--l2">
+                        《全面提升逻辑思维能力--结构化思维及在
+                    </view>
+                    <view class="remark">
+                        <view>王麒麟10.18 14:00-16:00</view>
+                        <view>仅剩5个名额</view>
+                    </view>
+                </view>
+            </swiper-item>
+        </swiper>
+    </view>
+    <view class="news" id="container">
+        <van-sticky container="{{ container }}">
+            <view class="title">
+                最新政策
+            </view>
+        </van-sticky>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+        <view class="list">
+            <view class="text">
+                工业和信息化部办公厅关于做好2019-2020年度中小企业经营管理领军人才培训工作的通知
+            </view>
+            <view class="time">
+                2019-10-10
+            </view>
+        </view>
+    </view>
 </view>

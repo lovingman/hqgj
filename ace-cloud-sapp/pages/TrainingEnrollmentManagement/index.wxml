@@ -1,0 +1,234 @@
+<view>
+    <van-sticky>
+        <view class="header">
+            已报名(25)
+            <view class="contor">
+                <van-checkbox value="{{ checked }}" bind:change="onChange">全选</van-checkbox>
+                <button class="button">签到</button>
+            </view>
+        </view>
+    </van-sticky>
+    <van-checkbox-group value="{{ result }}" bind:change="onChange">
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+        <view class="modal van-hairline--bottom">
+            <view class="select">
+                <van-checkbox name="a" />
+            </view>
+            <view class="card">
+                <view class="img">
+                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="info">
+                    <view class="name">王麒霖</view>
+                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
+                </view>
+            </view>
+            <view class="phone">
+                <van-icon name="phone-circle-o" />
+            </view>
+        </view>
+    </van-checkbox-group>
+</view>

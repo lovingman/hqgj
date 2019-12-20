@@ -1,0 +1,21 @@
+<view>
+    <van-dropdown-menu>
+        <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
+        <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+    </van-dropdown-menu>
+
+    <view class="modal">
+        <view class="card">
+            <view class="img">
+                <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+            </view>
+            <view class="info">
+                <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
+                <view class="org">
+                    <van-icon name="clock-o" />10.18 14:00-16:00
+                    <view class="state">仅剩名额5个</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

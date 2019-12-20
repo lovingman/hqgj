@@ -1,13 +1,15 @@
 /* pages/FinanceTax/index.wxss */
-.index{
-    background: #FFFFFF ;
+
+.index {
+    background: #fff;
 }
-.van-tabs__scroll--line {
-    background: #4b90ff !important;
+
+.van-tabs__nav {
+    background: #4b90ff;
 }
 
 .van-tabs__line {
-    bottom: 4px !important;
+    bottom: 10rpx !important;
 }
 
 .wrap {
@@ -58,4 +60,10 @@
     color: rgba(255, 125, 24, 1);
     font-size: 24rpx;
     font-family: Arial;
+    display: flex;
+    align-items: center;
+}
+
+.wrap .bottom .sign .iconfont {
+    margin-right: 6rpx;
 }

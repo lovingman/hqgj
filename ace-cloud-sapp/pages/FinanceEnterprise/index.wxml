@@ -55,7 +55,7 @@
             </view>
         </view>
         <view class="btn">
-            <van-button round type="info" size="large">立即下载</van-button>
+            <van-button round type="info" size="large">立即下单</van-button>
         </view>
     </view>
     <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">

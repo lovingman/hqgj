@@ -1,0 +1,25 @@
+<view class="index">
+    <view class="banner hat">
+        <van-image width="120rpx" height="120rpx" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        <view>慧企管家</view>
+    </view>
+    <view class="content">
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ value }}" clearable placeholder="手机号码" border="{{ false }}" bind:change="onChange" />
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ value }}" clearable type="password" placeholder="输入6位密码" border="{{ false }}" bind:change="onChange" />
+        </view>
+        <view class="btn">
+            <van-button round type="info" size="large">登录</van-button>
+        </view>
+        <view class="other">
+            <button>注册</button>
+            <button>忘记密码</button>
+        </view>
+    </view>
+
+    <view class="wechat">
+        <icon class="van-icon" class="iconfont icon-weixin"  ></icon>
+    </view>
+</view>

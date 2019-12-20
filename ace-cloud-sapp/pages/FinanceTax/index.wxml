@@ -14,7 +14,7 @@
                         专业代理记账高效办理平台
                     </view>
                     <view class="bottom">
-                        <text class="sign">已认证</text>
+                        <view class="sign"><icon class="iconfont icon-yirenzheng"></icon>已认证</view>
                         <text class="fine">免费咨询</text>
                     </view>
                 </view>

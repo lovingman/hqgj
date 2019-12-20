@@ -108,6 +108,105 @@
 					"id": -1,
 					"name": "专家预约",
 					"pathName": "pages/ExpertAppointment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "服务企业",
+					"pathName": "pages/ServiceEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训机构",
+					"pathName": "pages/TrainingInstitutions/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训机构",
+					"pathName": "pages/TrainingInstitutions/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训报名管理",
+					"pathName": "pages/TrainingEnrollmentManagement/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/ SignIn/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/Register/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "注册验证",
+					"pathName": "pages/RegisterVerifies/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/PersonalCenter/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训记录",
+					"pathName": "pages/RecordTrain/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训服务",
+					"pathName": "pages/TrainingService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训服务详情",
+					"pathName": "pages/TrainingServiceInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训日程安排详情",
+					"pathName": "pages/TrainingScheduleDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "律师服务",
+					"pathName": "pages/LawyerService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "律师事务所",
+					"pathName": "pages/LawFirm/index",
+					"query": "",
 					"scene": null
 				}
 			]

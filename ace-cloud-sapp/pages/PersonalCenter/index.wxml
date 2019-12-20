@@ -1,0 +1,53 @@
+<view class="index">
+    <view class="baseInfo hat">
+        <view class="left">
+            <view class="headImg">
+                <van-image width="100%" height="100%" round fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+            </view>
+            <view>
+                <view class="name">
+                    王麒麟
+                </view>
+                <view class="tip">
+                    实名认证
+                </view>
+            </view>
+        </view>
+        <view class="right">
+            <view class="coin">500</view>
+            <view class="center">我的积分
+                <van-icon name="arrow" />
+            </view>
+        </view>
+    </view>
+    <view class="column">
+        我的服务
+    </view>
+    <view class="entrance">
+        <block wx:for="{{navigates}}" wx:key="index">
+            <navigator class="item" url="{{item.path}}">
+                <van-image round width="60rpx" height="60rpx" fit="cover" src="{{item.imgUrl}}" />
+                <view class="title">
+                    {{item.text}}
+                </view>
+            </navigator>
+        </block>
+    </view>
+    <view class="column">
+        绑定企业
+    </view>
+    <view class="binding">
+        <view>暂未绑定企业</view>
+        <view class="btn">
+            <van-button round type="info" size="large">绑定</van-button>
+        </view>
+    </view>
+    <view class="other">
+        <van-cell icon="lock" is-link border="{{false}}" title="修改密码" link-type="navigateTo" url="/pages/dashboard/index" />
+        <van-cell icon="chat" is-link border="{{false}}" title="解绑微信" link-type="navigateTo" url="/pages/dashboard/index" />
+    </view>
+
+    <view class="signOut">
+        <van-button round plain hairline size="large">退出登录</van-button>
+    </view>
+</view>

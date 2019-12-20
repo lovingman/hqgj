@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/forum/index",
         "pages/index/index",
+        "pages/forum/index",
         "pages/logs/logs",
         "pages/body/index",
         "pages/RegEnterprise/index",
@@ -11,7 +11,20 @@
         "pages/FinanceTax/index",
         "pages/FinanceEnterprise/index",
         "pages/ExpertConsultation/index",
-        "pages/ExpertAppointment/index"
+        "pages/ExpertAppointment/index",
+        "pages/ServiceEnterprise/index",
+        "pages/TrainingInstitutions/index",
+        "pages/TrainingEnrollmentManagement/index",
+        "pages/ServiceAccounting/index",
+        "pages/ SignIn/index",
+        "pages/Register/index",
+        "pages/PersonalCenter/index",
+        "pages/RecordTrain/index",
+        "pages/TrainingService/index",
+        "pages/TrainingServiceInfo/index",
+        "pages/TrainingScheduleDetails/index",
+        "pages/LawyerService/index",
+        "pages/LawFirm/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

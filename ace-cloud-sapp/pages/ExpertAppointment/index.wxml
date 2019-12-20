@@ -5,12 +5,89 @@
         </view>
         <view class="info">
             <view class="info1">
-                <text class="name">王麒霖</text>
-                <text class="sign">已认证</text>
+                <view class="name">王麒霖</view>
+                <view class="sign" ><icon class="iconfont icon-yirenzheng"></icon>已认证</view>
             </view>
             <view class="info2 van-ellipsis">
                 常德市武陵区会计事务所·投资顾问
             </view>
+        </view>
+    </view>
+    <view class="mod">
+        <view class="title">
+            专家介绍
+        </view>
+        <view class="title">
+            擅长领域
+        </view>
+        <view class="goodList">
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+            <view class="item">
+                四个字字
+            </view>
+        </view>
+        <view class="title">
+            简介
+        </view>
+        <view class="text">
+            10多年高新技术企业产品管理、研发管理和项目管理经验，先后担任过产品创新战略经理、产品经理、产品总监、技术管理总监、项目管理部总经理、常务副总裁等职位，在长期的管理实践中积累了丰富的产品与研发创新思想与理念。 　曾先后担任GE集团产品创新战略经理、02-04年创办江西互联科技有限公司任总经理、知名物联网(医疗、交通、税务、纺织智能信息化)企业(上市)产品经理、产品总监。某大型软件及系统集成设备企业技术管理总监、IPMT秘书、IPD咨询项目经理、研发任职资格小组组长、项目管理部总经理。中美合资知名智能识别系统设备企业常务副总裁。
+        </view>
+    </view>
+
+    <view class="mod">
+        <view class="title">
+            预约时段
+        </view>
+        <view class="text textColor">
+            具体服务时间预约前请先联系专家，因名额有限，先到先得。
+        </view>
+    </view>
+
+    <view class="mod last">
+        <view class="title">
+            地点
+        </view>
+        <view class="text textColor">
+            常德市武陵区常德市武陵区正信大厦六楼
+        </view>
+    </view>
+        <view class="footer">
+        <view class="phone">
+            <view>
+                <van-icon name="phone" />
+            </view>
+            <view>
+                免费咨询
+            </view>
+        </view>
+        <view class="btn">
+            <van-button round type="info" size="large">预约专家 <text class="remark">仅剩2个名额</text></van-button>
         </view>
     </view>
 </view>

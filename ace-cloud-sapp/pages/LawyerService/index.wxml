@@ -1,0 +1,86 @@
+<!--pages/FinanceTax/index.wxml-->
+<view class="index">
+    <van-tabs border="{{false}}" line-width="30" color="#ffffff" sticky animated swipeable active="{{ active }}">
+        <van-tab title-style="color:#ffffff" title="律师事务所">
+            <view class="wrap">
+                <view class="img">
+                    <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                </view>
+                <view class="text">
+                    <view class="title van-ellipsis">
+                        常德市正信会计服务公司
+                    </view>
+                    <view class="subTitle van-ellipsis">
+                        专业代理记账高效办理平台
+                    </view>
+                    <view class="bottom">
+                        <view class="sign">
+                            <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+                    </view>
+                </view>
+            </view>
+        </van-tab>
+        <van-tab title-style="color:#ffffff" title="法律模板">
+            <view class="search">
+                <view class="title">大家都在下载的法律合同模板</view>
+                <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索模板名称" bind:change="onChange" bind:search="onSearch">
+                </van-search>
+            </view>
+            <view class="files">
+                <view class="title">
+                    全部模板（206）
+                </view>
+                <view class="file">
+                    <view class="name">
+                        最新租赁经营合同书范文
+                    </view>
+                    <view class="other">
+                        <view>2019-10-10 </view>
+                        <view class="download">下载</view>
+                    </view>
+                </view>
+
+
+                <view class="file">
+                    <view class="name">
+                        最新租赁经营合同书范文
+                    </view>
+                    <view class="other">
+                        <view>2019-10-10 </view>
+                        <view class="download">下载</view>
+                    </view>
+                </view>
+
+                <view class="file">
+                    <view class="name">
+                        最新租赁经营合同书范文
+                    </view>
+                    <view class="other">
+                        <view>2019-10-10 </view>
+                        <view class="download">下载</view>
+                    </view>
+                </view>
+
+                <view class="file">
+                    <view class="name">
+                        最新租赁经营合同书范文
+                    </view>
+                    <view class="other">
+                        <view>2019-10-10 </view>
+                        <view class="download">下载</view>
+                    </view>
+                </view>
+
+                <view class="file">
+                    <view class="name">
+                        最新租赁经营合同书范文
+                    </view>
+                    <view class="other">
+                        <view>2019-10-10 </view>
+                        <view class="download">下载</view>
+                    </view>
+                </view>
+            </view>
+        </van-tab>
+    </van-tabs>
+</view>

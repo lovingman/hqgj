@@ -4,10 +4,38 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+      navigates:[
+          {
+              text:'创业服务包',
+              imgUrl:'https://img.yzcdn.cn/vant/cat.jpeg',
+              path:'/'
+          },
+          {
+              text: '财税服务包',
+              imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+              path: '/'
+          },
+          {
+              text: '财税专家问诊',
+              imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+              path: '/'
+          },
+          {
+              text: '培训提升服务',
+              imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+              path: '/'
+          },
+          {
+              text: '法律服务',
+              imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+              path: '/'
+          },
+          {
+              text: '政策服务',
+              imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+              path: '/'
+          }
+      ]
   },
   //事件处理函数
   bindViewTap: function() {

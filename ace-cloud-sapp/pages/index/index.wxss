@@ -1,21 +1,161 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.banner {
+    width: 100%;
+    height: 256rpx;
+    background-color: rgba(46, 136, 242, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 1);
+    font-size: 26rpx;
+    font-family: PingFangSC-regular;
+    padding-bottom: 40rpx;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.banner .left {
+    height: 42rpx;
+    display: flex;
+    align-items: center;
+    padding-right: 34rpx;
+    color: rgba(255, 255, 255, 1);
+    font-size: 40rpx;
+    text-align: left;
+    font-family: PingFangSC-bold;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.banner .left .van-image {
+    margin-right: 14rpx;
 }
 
-.usermotto {
-  margin-top: 200px;
+.van-hairline--right::after {
+    border-color: #fff !important;
+}
+
+.banner .right {
+    margin-left: 34rpx;
+    line-height: 1.5em;
+}
+
+.entrance {
+    padding: 14rpx 36rpx 36rpx;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.entrance .item {
+    width: 150rpx;
+    display: flex;
+    margin-right: 26rpx;
+    margin-bottom: 30rpx;
+    align-items: center;
+    flex-direction: column;
+    color: rgba(28, 40, 67, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+}
+
+.entrance .item:nth-child(4n+4) {
+    margin-right: 0;
+}
+
+.entrance .item .title {
+    margin-top: 6rpx;
+}
+
+.popular {
+    background: #f7f9fc;
+}
+
+.popular .swiper {
+    height: 240rpx;
+}
+
+.popular .swiper .swiper-content {
+    width: 700rpx;
+    height: 176rpx;
+    border-radius: 12rpx;
+    margin: 0rpx auto 0;
+    background: #fff;
+    box-shadow: 0px 2px 6px 0px rgba(228, 232, 238, 1);
+    padding: 24rpx 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popular .headTitle, .news .title {
+    padding: 0 30rpx;
+    height: 100rpx;
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-weight: bold;
+    font-family: PingFangSC-bold;
+    display: flex;
+    align-items: center;
+}
+
+.popular .headTitle .van-icon {
+    margin-left: 14rpx;
+    color: #f40;
+    font-size: 32rpx;
+}
+
+.swiper-content .title {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.swiper-content .remark {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(160, 167, 182, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+}
+
+.swiper-content .remark .van-icon {
+    margin: 0 10rpx;
+}
+
+.swiper-content .remark .base {
+    display: flex;
+    align-items: center;
+}
+
+.swiper-content .remark .num {
+    color: rgba(46, 136, 242, 1);
+    font-size: 22rpx;
+    font-family: PingFangSC-regular;
+}
+
+.news {
+    background: #fff;
+    padding-bottom: 40rpx;
+}
+.news .title{
+    background: #fff;
+}
+.news .list {
+    padding: 24rpx;
+    width: 700rpx;
+    margin: 0 auto 28rpx;
+    border-radius: 12rpx;
+    box-shadow: 0px 4rpx 12rpx 0px rgba(0, 0, 0, 0.04);
+}
+
+.news .list .text {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+    line-height: 1.5em;
+}
+
+.news .list .time {
+    color: rgba(121, 128, 146, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+    margin-top: 14rpx;
 }

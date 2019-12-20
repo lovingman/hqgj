@@ -1,0 +1,31 @@
+<view>
+    <view class="wrap">
+        <view class="img">
+            <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        </view>
+        <view class="text">
+            <view class="title van-ellipsis">
+                常德市正信会计服务公司
+            </view>
+            <view class="subTitle van-ellipsis">
+                <van-icon name="location" />湖南省常德市柳叶大道1003号柳城印象13楼
+            </view>
+            <view class="bottom">
+                <view class="sign">
+                    <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+            </view>
+        </view>
+    </view>
+    <van-tabs class="content" border="{{false}}" line-width="30" color="#2E88F2" sticky animated swipeable>
+        <van-tab title="简介">
+            <view class="title">
+                <icon class="iconfont icon-jieshao"></icon>机构简介
+            </view>
+            <view class="text">
+                湖南云济律师事务所始于1979年，其前身为“常德地区法律顾问处”、“常德市第一律师事务所”。云济作为一所历史悠久的综合性合伙制律师事务所，在常德律师业发展过程中的先锋作用为业内所共知。 2010年，云济乔迁标准化写字楼时代广场，率先拥有了我国中西部地区领先的律师办公平台。明年云济将入驻常德市标志性建筑欢乐城10楼，1000余平方米的自有办公场所已然成为常德律师行业的标杆。 云济倡导有效资源整合，外部与会计师事务所等其他服务机构建立了良好的合作关系，能够为客户提供全方位的法律服务。同时，内部采用公司化运作模式，专设管理机构，以专业分工、团队合作为基础，OA平台管理为依托，建立了完善的协同服务机制与疑难案件决策机制，实现了服务流程的规范化、精细化管理，能够确保每一项法律服务得以快速响应、高效进行、高质完成。
+            </view>
+        </van-tab>
+        <van-tab title="律师成员">
+        </van-tab>
+    </van-tabs>
+</view>

@@ -1,0 +1,17 @@
+<!--pages/Register/index.wxml-->
+<view>
+    <view class="title">
+        实名认证
+    </view>
+    <view class="content">
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ value }}" clearable placeholder="真实姓名" border="{{ false }}" bind:change="onChange" />
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ value }}" clearable placeholder="身份证号码" border="{{ false }}" bind:change="onChange" />
+        </view>
+        <view class="btn">
+            <van-button round type="info" size="large">确定</van-button>
+        </view>
+    </view>
+</view>

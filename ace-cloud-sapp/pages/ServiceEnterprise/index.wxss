@@ -1,0 +1,89 @@
+/* pages/Service/index.wxss */
+.index{
+    min-height: 100vh;
+    background: #FBFBFB;
+    padding-top: 34rpx
+}
+
+.modal {
+    width: 700rpx;
+    padding: 0 36rpx;
+    margin: 0 auto 34rpx;
+    border-radius: 20rpx;
+    box-shadow: 0px 5rpx 12rpx 0px rgba(228, 232, 238, 0.4);
+    background: #fff;
+}
+
+.modal .header {
+    height: 96rpx;
+    color: rgba(38, 33, 70, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    line-height: 96rpx;
+    font-weight: bold;
+}
+
+.modal .header .right {
+    float: right;
+    color: #2e88f2;
+    display: flex;
+    justify-items: center;
+}
+
+.modal .content {
+    padding: 36rpx 0;
+}
+
+.modal .content .title {
+    color: rgba(38, 33, 70, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+    line-height: 50rpx;
+}
+
+.modal .content  .footer {
+    color: rgba(160, 167, 182, 1);
+    font-size: 22rpx;
+    font-family: PingFangSC-regular;
+    line-height: 40rpx;
+    display: flex;
+    justify-items: center;
+}
+
+.modal .content .state {
+    display: inline-block;
+    padding: 0 40rpx;
+    color: #2e88f2;
+    margin-left: auto;
+}
+
+.modal .card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30rpx;
+}
+
+.modal .card .img {
+    width: 124rpx;
+    height: 124rpx;
+}
+
+.modal .card .info {
+    width: 480rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal .card .name {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.modal .card .org {
+    color: rgba(121, 128, 146, 1);
+    font-size: 22rpx;
+    font-family: PingFangSC-regular;
+}

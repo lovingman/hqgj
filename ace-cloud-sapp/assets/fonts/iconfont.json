@@ -1,0 +1,44 @@
+{
+  "id": "1570727",
+  "name": "工信局",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1382584",
+      "name": "微信 (1)",
+      "font_class": "weixin",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "2150786",
+      "name": "身份证",
+      "font_class": "credentials_icon",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
+      "icon_id": "2681695",
+      "name": "介绍",
+      "font_class": "jieshao",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "3216607",
+      "name": "已认证",
+      "font_class": "yirenzheng",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "6842466",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    }
+  ]
+}

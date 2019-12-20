@@ -84,7 +84,6 @@
     color: rgba(46, 136, 242, 1);
     font-size: 22rpx;
     font-family: PingFangSC-regular;
-    line-height: 1.6em;
 }
 
 .item .info .info3 {

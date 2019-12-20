@@ -1,0 +1,67 @@
+<view class="index">
+    <view class="modal">
+        <view class="header van-hairline--bottom">
+            <text>预约咨询</text>
+        </view>
+        <view class="content">
+            <view class="title">预约人：王1吉 17699899516</view>
+            <view class="footer">
+                <text>申请时间：2019-10-11 12:00:00</text>
+                <van-button plain round type="info" size="small">确定完成
+                </van-button>
+            </view>
+        </view>
+    </view>
+    <view class="modal">
+        <view class="header van-hairline--bottom">
+            <text>预约咨询</text>
+        </view>
+        <view class="content">
+            <view class="title">预约人：王1吉 17699899516</view>
+            <view class="footer">
+                <text>申请时间：2019-10-11 12:00:00</text>
+                <van-button plain round type="info" size="small">确定完成
+                </van-button>
+            </view>
+        </view>
+    </view>
+    <view class="modal">
+        <view class="header van-hairline--bottom">
+            <text>预约咨询</text>
+        </view>
+        <view class="content">
+            <view class="title">预约人：王1吉 17699899516</view>
+            <view class="footer">
+                <text>申请时间：2019-10-11 12:00:00</text>
+                <van-button plain round type="info" size="small">确定完成
+                </van-button>
+            </view>
+        </view>
+    </view>
+    <view class="modal">
+        <view class="header van-hairline--bottom">
+            <text>预约咨询</text>
+        </view>
+        <view class="content">
+            <view class="title">预约人：王1吉 17699899516</view>
+            <view class="footer">
+                <text>申请时间：2019-10-11 12:00:00</text>
+                <van-button plain round type="info" size="small">确定完成
+                </van-button>
+            </view>
+        </view>
+    </view>
+    <view class="modal">
+        <view class="header van-hairline--bottom">
+            <text>预约咨询</text>
+        </view>
+        <view class="content">
+            <view class="title">预约人：王1吉 17699899516</view>
+            <view class="footer">
+                <text>申请时间：2019-10-11 12:00:00</text>
+                <van-button plain round type="info" size="small">确定完成
+                </van-button>
+            </view>
+        </view>
+    </view>
+</view>

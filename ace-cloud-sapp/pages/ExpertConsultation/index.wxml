@@ -20,7 +20,7 @@
                     <text class="num">仅剩2个名额</text>
                 </view>
                 <view class="info2 van-ellipsis">
-                    常德市武陵区会计事务所·投资顾问
+                    <icon class="iconfont icon-credentials_icon"></icon>常德市武陵区会计事务所·投资顾问
                 </view>
                 <view class="info3 van-multi-ellipsis--l2">
                     中国注册会计师。具有从事财务管理与筹划、注册会计师审计工作三十多年，曾任广州中联会计师…中国注册

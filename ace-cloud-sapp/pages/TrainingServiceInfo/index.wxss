@@ -1,0 +1,222 @@
+/* pages/TrainingServiceInfo/index.wxss */
+
+.index {
+    padding-bottom: 200rpx;
+}
+
+.subject {
+    padding: 34rpx 30rpx;
+}
+
+.subject .title {
+    color: rgba(28, 40, 67, 1);
+    font-size: 32rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 1.5em;
+}
+
+.subject .adress {
+    color: rgba(160, 167, 182, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+    margin-top: 14rpx;
+    display: flex;
+    align-items: center;
+}
+
+.subject .adress .van-icon {
+    margin-right: 10rpx;
+    font-size: 28rpx;
+}
+
+.organization {
+    width: 700rpx;
+    padding: 26rpx;
+    background: #fcfdfe;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.organization .image {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 8rpx;
+    margin-right: 26rpx;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.organization .text {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+    height: 120rpx;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.organization .text .tip {
+    width: 140rpx;
+    height: 50rpx;
+    display: flex;
+    align-items: center;
+    border-radius: 4rpx;
+    color: #ff8d35;
+    background-color: rgba(255, 232, 220, 1);
+    font-size: 24rpx;
+    text-align: center;
+    font-family: Arial;
+    justify-content: center;
+}
+
+.organization .text .tip .iconfont {
+    margin-right: 4rpx;
+}
+
+.entry {
+    padding: 0 30rpx 30rpx;
+    border-bottom: #f7f9fc solid 20rpx;
+    background: #fff;
+}
+
+.entry .title {
+    height: 100rpx;
+    line-height: 100rpx;
+    color: rgba(28, 40, 67, 1);
+    font-size: 32rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.entry .list {
+    display: flex;
+}
+
+.entry .list .van-image {
+    margin-right: 10rpx;
+}
+
+.entry .list .right-icon {
+    margin-left: auto;
+    color: #798092;
+    line-height: 72rpx;
+}
+
+.content {
+    padding: 30rpx;
+}
+
+.content .title {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    height: 100rpx;
+    font-weight: bold;
+    line-height: 100rpx;
+}
+
+.content .title .iconfont {
+    color: #2e88f2;
+    display: initial;
+    font-size: 32rpx;
+    margin-right: 6rpx;
+}
+
+.content .title .remark {
+    color: rgba(255, 125, 24, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+}
+
+.content .subtitle {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 60rpx;
+    height: 60rpx;
+}
+
+.content .text {
+    color: #838a9a;
+    font-size: 26rpx;
+    line-height: 1.5em;
+}
+
+.content .files .file {
+    width: 680rpx;
+    margin: 0 auto 28rpx;
+    padding: 30rpx;
+    background: #fcfdfe;
+    border-radius: 12rpx;
+}
+
+.content  .file .name {
+    color: rgba(38, 33, 70, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-regular;
+    line-height: 1.5em;
+}
+
+.content  .file .downBtn {
+    color: rgba(46, 136, 242, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+    padding: 10rpx 0rpx;
+    width: 80rpx;
+}
+
+.btn {
+    width: 700rpx;
+    position: fixed;
+    bottom: 80rpx;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.btn .remark {
+    font-size: 24rpx;
+    float: right;
+}
+
+.calendar {
+    width: 700rpx;
+    padding: 30rpx;
+    background: #fcfdfe;
+    border-radius: 12rpx;
+    margin:40rpx auto 0;
+}
+
+.calendar .title {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.calendar .other {
+    color: rgba(160, 167, 182, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+    display: flex;
+    align-items: center;
+    margin-top: 10rpx;
+}
+
+.calendar .other .van-icon {
+    margin-right: 10rpx;
+}
+
+.calendar .other .icon1 {
+    margin-left: 30rpx;
+}
+
+.calendar .other .tip {
+    margin-left: auto;
+    color: rgba(46, 136, 242, 1);
+}

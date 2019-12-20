@@ -1,0 +1,86 @@
+/* pages/TrainingEnrollmentManagement/index.wxss */
+
+.header {
+    display: flex;
+    padding: 0 30rpx;
+    justify-content: space-between;
+    height: 100rpx;
+    align-items: center;
+    color: rgba(0, 0, 0, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    background: #fff;
+}
+
+.header .contor {
+    display: flex;
+    align-items: center;
+}
+
+.header .contor .button {
+    margin-left: 40rpx;
+    background: transparent;
+    color: rgba(46, 136, 242, 1);
+    font-size: 28rpx;
+    border-width: 0px;
+    outline: none;
+}
+
+.header .contor .button::after {
+    border: none;
+}
+
+.modal {
+    display: flex;
+    width: 690rpx;
+    padding: 30rpx 0;
+    margin: auto;
+}
+
+.modal .card {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal .card .img {
+    width: 96rpx;
+    height: 96rpx;
+}
+
+.modal .card .info {
+    width: 440rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal .card .name {
+    color: rgba(28, 40, 67, 1);
+    font-size: 28rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    line-height: 2em;
+}
+
+.modal .card .org {
+    color: rgba(121, 128, 146, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+    line-height: 2em;
+}
+
+.modal .select {
+    margin-right: 30rpx;
+    display: flex;
+    align-items: center;
+}
+
+.modal .phone {
+    color: #4b90ff;
+    font-size: 60rpx;
+    display: flex;
+    align-items: center;
+}
