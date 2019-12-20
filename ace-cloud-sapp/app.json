@@ -24,7 +24,9 @@
         "pages/TrainingServiceInfo/index",
         "pages/TrainingScheduleDetails/index",
         "pages/LawyerService/index",
-        "pages/LawFirm/index"
+        "pages/LawFirm/index",
+        "pages/PolicyService/index",
+        "pages/PolicyServiceDetail/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
