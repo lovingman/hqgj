@@ -117,6 +117,9 @@
             <if test="condition.orgPersonTel != null and condition.orgPersonTel != ''">
                 and t.orgPersonTel = #{condition.orgPersonTel,jdbcType=VARCHAR}
             </if>
+            <if test="condition.contactId != null and condition.contactId != ''">
+                and t.contactId = #{condition.contactId,jdbcType=VARCHAR}
+            </if>
             <if test="condition.createUserId != null and condition.createUserId != ''">
                 and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>

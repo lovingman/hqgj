@@ -207,6 +207,9 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         this.serveBusinessDao.updateByPrimaryKey(serveBusiness);
         String businessId=serveBusiness.getId();
         //清除人员后新增
+        List<String> list =serveBusinessDao.selectBusinessId(businessId);
+        String[] sb =new String[list.size()];
+        basicAnnexDao.deleteByRelationIds(list.toArray(sb));
         serveBusinessDetailDao.deleteByBusinessIds(businessId.split(","));
         serveBusinessAppendDao.deleteByBusinessIds(businessId.split(","));
         //人员信息

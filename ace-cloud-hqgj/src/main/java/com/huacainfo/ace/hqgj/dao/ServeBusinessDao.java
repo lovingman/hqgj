@@ -32,4 +32,6 @@ public interface ServeBusinessDao {
     int updateBasicStatus(@Param("id") String id,@Param("status") String status,@Param("type") String type);
 
     List<String> selectBasicStatus(@Param("id") String id);
+
+    List<String> selectBusinessId(String businessId);
 }

@@ -235,4 +235,8 @@
     </select>
 
 
+    <select id="selectBusinessId" resultType="java.lang.String">
+        select id from serve_business_detail where businessId=#{businessId,jdbcType=VARCHAR}
+    </select>
+
 </mapper>
