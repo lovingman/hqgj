@@ -145,4 +145,8 @@ public class LawServe extends BaseModel {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
+
+    public void setBasicAnnexes(List<BasicAnnex> basicAnnexes) {
+        this.basicAnnexes = basicAnnexes;
+    }
 }
