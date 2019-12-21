@@ -1,6 +1,6 @@
 <template>
     <div class="main-box">
-        <div class="title">创建</div>
+        <div class="title">编辑</div>
         <div class="conetnet-box">
             <el-form
                     :inline="true"
@@ -31,6 +31,7 @@
                                     :file-list="fileList"
                                     :http-request="uploadServer"
                                     :on-error="uploadError"
+                                    :on-remove="fileRemove"
                                     :on-success="uploadSuccess"
                                     action="none"
                                     class="upload-demo"
@@ -52,8 +53,8 @@
         <!-- 底部按钮 -->
         <div class="footer">
             <div class="footer-flex">
-                <el-button @click="black">取消</el-button>
-                <el-button @click="handleAdd('serviceForm')" type="primary">确定</el-button>
+                <el-button @click="back">取消</el-button>
+                <el-button @click="handleEdit('serviceForm')" type="primary">确定</el-button>
             </div>
         </div>
     </div>
@@ -61,13 +62,15 @@
 
 <script>
     import {fileUpload} from "@/api/sys";
-    import {createServe} from "@/api/hqgj/Policies";
+    import {getServeById, updateServe} from "@/api/hqgj/Policies";
+
     export default {
-        name: "add",
+        name: "edit",
         data() {
             return {
                 fileList: [],
                 //数据
+                basicAnnexesArr:[],
                 serviceForm: {
                     title: "",
                     basicAnnexes: []
@@ -79,13 +82,35 @@
                 }
             };
         },
+        created() {
+            this.getDetails();
+        },
         methods: {
-            handleAdd(formName){
+            getDetails() {
+                this.id = this.$route.query.id;
+                getServeById(this.id)
+                    .then(response => {
+                        this.serviceForm = response.data;
+                        //显示文件列表
+                        this.chenge(response.data.basicAnnexes);
+                    })
+
+            },
+            //显示文件列表
+            chenge(data) {
+                for (var i = 0; i < data.length; i++) {
+                    this.fileList.push({
+                        name: data[i].fileName + "." + data[i].fileURL.substr(data[i].fileURL.lastIndexOf(".") + 1),
+                        url: data[i].fileURL
+                    })
+                }
+            },
+            handleEdit(formName) {
                 this.$refs[formName].validate(valid => {
                     if (valid) {
-                        createServe(this.serviceForm).then(response=>{
+                        updateServe(this.serviceForm).then(response => {
                             if (response.status == 1) {
-                                this.$message.success("创建成功");
+                                this.$message.success("编辑成功");
                                 this.back();
                             }
                         })
@@ -99,7 +124,6 @@
                 this.actionUrls = "/hqgj-portal/www/uploadFile";
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
-                        this.serviceForm.basicAnnexes.push({fileName:obj.file.name.substring(0,obj.file.name.indexOf(".")),fileURL:response.data})
                         this.fileList.push({name: obj.file.name, url: response.data})
                         this.uploadSuccess(response, obj.file, this.fileList);
                     } else {
@@ -120,9 +144,29 @@
                 this.FileUpload(obj);
                 return true
             },
-            uploadSuccess(response, file, fileList) {
+            //文件移除
+            fileRemove(file, fileList) {
+                for (var i = 0; i < fileList.length; i++) {
+                    this.basicAnnexesArr.push({
+                        fileName: fileList[i].name.substring(0, fileList[i].name.indexOf(".")),
+                        fileURL: fileList[i].url
+                    })
+                }
+                this.serviceForm.basicAnnexes=this.basicAnnexesArr;
                 this.fileList = fileList;
             },
+            //文件上传成功
+            uploadSuccess(response, file, fileList) {
+                for (var i = 0; i < fileList.length; i++) {
+                    this.basicAnnexesArr.push({
+                        fileName: fileList[i].name.substring(0, fileList[i].name.indexOf(".")),
+                        fileURL: fileList[i].url
+                    })
+                }
+                this.serviceForm.basicAnnexes=this.basicAnnexesArr;
+                this.fileList = fileList;
+            },
+            //文件上传失败
             uploadError(response, file, fileList) {
                 this.$message.error('上传失败')
             },
@@ -139,22 +183,24 @@
                 if (!isLt2M) {
                     this.$message.warning('上传模板大小不能超过 10MB!')
                 }
-                console.log(extension, extension2, extension3, extension4, isLt2M)
                 return (extension || extension2 || extension3 || extension4) && isLt2M
             },
             back() {
                 this.$router.push({
                     path: "/hqgj/Policies/legalService"
                 });
-            }
+            },
         }
     }
-    ;
 </script>
 
 <style lang="less" scoped>
     .main-box {
         background: #fff;
+
+        .formBox {
+            padding-right: 50px;
+        }
 
         .title {
             font-size: 16px;

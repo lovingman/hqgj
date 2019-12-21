@@ -68,10 +68,6 @@
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
-                query: {
-                    name: "", //搜索
-                    status: "" //状态
-                },
                 //状态容器
                 stautsArr: [
                     {
@@ -92,7 +88,6 @@
                     title: "",
                     status: ""
                 },
-
                 tableData: []
             };
         },

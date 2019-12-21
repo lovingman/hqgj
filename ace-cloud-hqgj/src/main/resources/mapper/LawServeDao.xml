@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huacainfo.ace.hqgj.dao.LawServeDao">
-  <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.LawServe">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
-    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
-    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
-    <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
-    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.LawServe">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, title, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
     modifyDate, status
   </sql>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from law_serve
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.LawServe">
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.LawServe">
     insert into law_serve (id, title, createUserId,
       createUserName, createDate, modifyUserId,
       modifyUserName, modifyDate, status
@@ -30,7 +30,7 @@
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.LawServe">
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.LawServe">
     update law_serve
     set title = #{title,jdbcType=VARCHAR},
       createUserId = #{createUserId,jdbcType=VARCHAR},
@@ -42,52 +42,59 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.LawServeVo">
-
-  </resultMap>
-  <sql id="Vo_Column_List">
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.LawServeVo">
+        <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+            <result column="baId" jdbcType="VARCHAR" property="id"/>
+            <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+            <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+            <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+            <result column="batype" jdbcType="VARCHAR" property="type"/>
+        </collection>
+    </resultMap>
+    <sql id="Vo_Column_List">
     t.id, t.title, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
-  <sql id="From_Statement">
+    <sql id="From_Statement">
     FROM law_serve t
   </sql>
-  <sql id="Where_Condition">
-    <where>
-      1 = 1
-      <if test="condition.title != null and condition.title != ''">
-         and t.title = #{condition.title,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserId != null and condition.createUserId != ''">
-         and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserName != null and condition.createUserName != ''">
-         and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
-         and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
-         and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyDate != null and condition.modifyDate != ''">
-         and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="condition.status != null and condition.status != ''">
-         and t.status = #{condition.status,jdbcType=VARCHAR}
-      </if>
-    </where>
-  </sql>
-  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
-      select
-        <include refid="Vo_Column_List"/>
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.title != null and condition.title != ''">
+                and t.title = #{condition.title,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserName != null and condition.createUserName != ''">
+                and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null and condition.createDate != ''">
+                and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
+                and t.modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
+                and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyDate != null and condition.modifyDate != ''">
+                and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>,ba.id baId,ba.fileURL,ba.fileType,ba.fileName,ba.type batype
         <include refid="From_Statement"/>
+        left join basic_annex ba on ba.relationId = t.id and ba.type='2'
         where t.id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
-            select
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
         <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
@@ -99,23 +106,23 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-      limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
-  </select>
-  <select id="findCount" resultType="int">
-    SELECT COUNT(*)
-<include refid="From_Statement"/>
-<include refid="Where_Condition"/>
-  </select>
-  <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.LawServe" resultType="int">
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.LawServe" resultType="int">
             select count(1)
         from law_serve
         where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByIds">
-     delete from law_serve
- where id in
- <foreach collection="ids" item="id" open="(" separator="," close=")">
-    #{id}
- </foreach>
-  </delete>
+    <delete id="deleteByIds">
+        delete from law_serve
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

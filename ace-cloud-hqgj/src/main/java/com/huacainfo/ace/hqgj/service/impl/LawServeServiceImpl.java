@@ -87,7 +87,6 @@ public class LawServeServiceImpl implements LawServeService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "法律服务名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
@@ -132,6 +131,20 @@ public class LawServeServiceImpl implements LawServeService {
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
         this.lawServeDao.updateByPrimaryKey(o);
+        basicAnnexDao.deleteByRelationIds(o.getId().split(","));
+        if (o.getBasicAnnexes().size()>0) {
+            List<BasicAnnex> fileURL = o.getBasicAnnexes();
+            for (BasicAnnex a : fileURL) {
+                a.setId(GUIDUtil.getGUID());
+                a.setRelationId(o.getId());
+                a.setFileURL(a.getFileURL());
+                a.setType("2");
+                a.setStatus("1");
+                a.setCreateDate(new Date());
+                a.setRemark("法律服务附件");
+                basicAnnexDao.insert(a);
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

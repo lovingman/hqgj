@@ -42,3 +42,39 @@ export function updateStatus(id,status) {
         params: {id: id, status: status}
     })
 }
+export function getServe(query) {
+    return request({
+        url: '/hqgj/lawServe/page',
+        method: 'get',
+        params: query
+    })
+}
+export function createServe(data) {
+    return request({
+        url: '/hqgj/lawServe/create',
+        method: 'post',
+        data: data
+    })
+}
+export function getServeById(id) {
+    return request({
+        url: '/hqgj/lawServe/getById',
+        method: 'get',
+        params: {id:id}
+    })
+}
+export function updateServe(data) {
+    return request({
+        url: '/hqgj/lawServe/update',
+        method: 'post',
+        data: data
+    })
+}
+export function deleteServeById(id) {
+    return request({
+        url: '/hqgj/lawServe/deleteById',
+        method: 'post',
+        params: {id:id}
+    })
+}
+
