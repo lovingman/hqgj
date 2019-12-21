@@ -5,7 +5,7 @@ import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.CommonUtils;
-import com.huacainfo.ace.common.tools.GUIDUtil;
+
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.dao.BaseCompanyMemberDao;
 import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
@@ -14,10 +14,15 @@ import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 
+/**
+ * 个人中心
+ */
+@Service
 public class PersonalCenterServiceImpl implements PersonalCenterService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource

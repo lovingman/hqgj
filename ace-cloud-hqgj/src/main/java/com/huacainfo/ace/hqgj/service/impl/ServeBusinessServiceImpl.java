@@ -14,9 +14,9 @@ import java.util.List;
 import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.*;
-import com.huacainfo.ace.hqgj.model.BasicAnnex;
-import com.huacainfo.ace.hqgj.model.ServeBusinessAppend;
-import com.huacainfo.ace.hqgj.model.ServeBusinessDetail;
+import com.huacainfo.ace.hqgj.model.*;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
+import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -24,9 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
-import com.huacainfo.ace.hqgj.model.ServeBusiness;
 import com.huacainfo.ace.hqgj.service.ServeBusinessService;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessQVo;
@@ -51,6 +49,10 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     private ServeBusinessAppendDao serveBusinessAppendDao;
     @Resource
     private RegisterDao registerDao;
+    @Resource
+    private BaseCompanyDao baseCompanyDao;
+    @Resource
+    private ServeBusinessIntegralDao serveBusinessIntegralDao;
 
     /**
      * @throws
@@ -341,7 +343,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
      * @return
      */
     @Override
-    public ResponseDTO updateBasicStatus(String id, String status,String type) {
+    @Transactional
+    public ResponseDTO updateBasicStatus(String id, String status,String type,UserProp userProp) {
         if(CommonUtils.isBlank(id)||CommonUtils.isBlank(status)||CommonUtils.isBlank(type)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
@@ -361,6 +364,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
         if(type.equals("tab") && status.equals("7")){
             serveBusinessDao.updateBasicStatus(id,"3","status");
+            //新增企业和积分
+            insertCompany(id,userProp);
         }
         if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "更新失败");
@@ -381,6 +386,62 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         List<String> count=serveBusinessDao.selectBasicStatus(id);
         return   new ResponseDTO(ResultCode.SUCCESS, "成功！",count);
     }
+
+    /**
+     * 创建企业
+     * @param id
+     */
+
+    private ResponseDTO insertCompany(String id,UserProp userProp) {
+        ServeBusiness s = serveBusinessDao.selectVoByPrimaryKey(id);
+        ServeBusinessDetailQVo qVo=new ServeBusinessDetailQVo();
+        qVo.setType("1");
+        qVo.setBusinessId(id);
+        List<ServeBusinessDetailVo> list=serveBusinessDetailDao.findList(qVo,0,10,null);
+        if (s == null || list.size()<=0) {
+            return new ResponseDTO(ResultCode.FAIL, "数据错误！");
+        }
+        ServeBusinessDetailVo  vo=list.get(0);
+        BaseCompany o = new BaseCompany();
+        String companyId=GUIDUtil.getGUID();
+        o.setId(companyId);
+        o.setCompanyName(s.getCompanyName());
+        int temp = this.baseCompanyDao.isExist(o);
+        if (temp > 0) {
+            return new ResponseDTO(ResultCode.FAIL, "企业管理名称重复！");
+        }
+        o.setLegalPerson(vo.getName());
+        o.setAreaCode(s.getAreaCode());
+        o.setCompanyAddress(s.getCompanyAddress());
+        o.setCreateDate(new Date());
+        o.setStatus("1");
+        o.setCreateUserName(userProp.getName());
+        o.setCreateUserId(userProp.getUserId());
+        o.setModifyDate(new Date());
+        int i=this.baseCompanyDao.insert(o);
+        if(i<=0){
+            return new ResponseDTO(ResultCode.FAIL, "内部错误！");
+        }
+
+        ServeBusinessIntegral integral =new ServeBusinessIntegral();
+        integral.setId(GUIDUtil.getGUID());
+        integral.setCompanyId(companyId);
+        integral.setCompanyName(s.getCompanyName());
+        integral.setGetIntegral(500);
+        integral.setSurplusIntegral(500);
+        integral.setRegister("1");
+        integral.setCreateDate(new Date());
+        integral.setStatus("1");
+        integral.setCreateUserName(userProp.getName());
+        integral.setCreateUserId(userProp.getUserId());
+        integral.setModifyDate(new Date());
+        int j=serveBusinessIntegralDao.insert(integral);
+        if(j<=0){
+            return new ResponseDTO(ResultCode.FAIL, "内部错误！");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
 
 
 }

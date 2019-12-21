@@ -135,7 +135,7 @@
     <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BaseCompany" resultType="int">
             select count(1)
         from base_company
-        where id = #{id,jdbcType=VARCHAR}
+        where companyName = #{companyName,jdbcType=VARCHAR}
   </select>
     <delete id="deleteByIds">
         delete from base_company

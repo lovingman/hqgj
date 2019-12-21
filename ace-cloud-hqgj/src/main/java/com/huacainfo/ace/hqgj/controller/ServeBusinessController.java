@@ -185,7 +185,7 @@ public class ServeBusinessController extends BaseController {
     @ApiOperation(value = "/updateBasicStatus", notes = "修改状态")
     @PostMapping(value = "/updateBasicStatus", produces = "application/json;charset=UTF-8")
     public ResponseDTO updateBasicStatus(String id, String status,String type){
-        return serveBusinessService.updateBasicStatus(id,status,type);
+        return serveBusinessService.updateBasicStatus(id,status,type,this.getCurUserProp());
     }
 
 
