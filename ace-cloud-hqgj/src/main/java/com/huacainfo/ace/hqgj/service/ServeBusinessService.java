@@ -108,7 +108,7 @@ public interface ServeBusinessService {
      * @param status
      * @return
      */
-    ResponseDTO updateBasicStatus(String id,String status,String type);
+    ResponseDTO updateBasicStatus(String id,String status,String type,UserProp userProp);
 
     /**
      * 查询是否都完成审核

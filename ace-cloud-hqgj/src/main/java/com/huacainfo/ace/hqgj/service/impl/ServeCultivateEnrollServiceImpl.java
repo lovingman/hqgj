@@ -84,11 +84,6 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if (CommonUtils.isBlank(serveCultivateId)) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID（关联serve_cultivate表id）不能为空！");
         }
-
-        int temp = this.serveCultivateEnrollDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "培训提升-报名管理名称重复！");
-        }
         o.setIsSign("n");
         o.setCreateDate(new Date());
         o.setStatus("0");

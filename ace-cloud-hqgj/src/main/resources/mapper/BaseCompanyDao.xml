@@ -75,8 +75,7 @@
         <where>
             1 = 1
             <if test="condition.companyName != null and condition.companyName != ''">
-                and (t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
-                or t.creditCode like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%'))
+                and t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.creditCode != null and condition.creditCode != ''">
                 and t.creditCode = #{condition.creditCode,jdbcType=VARCHAR}
@@ -136,7 +135,7 @@
     <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BaseCompany" resultType="int">
             select count(1)
         from base_company
-        where id = #{id,jdbcType=VARCHAR}
+        where companyName = #{companyName,jdbcType=VARCHAR}
   </select>
     <delete id="deleteByIds">
         delete from base_company
