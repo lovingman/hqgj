@@ -302,11 +302,12 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
      * @return
      */
     @Override
-    public ResponseDTO selectByIdDetails(String id) {
+    public ResponseDTO selectByIdDetails(String id,String userId) {
+
         if(CommonUtils.isBlank(id)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
-        ServeCultivateDetail detail=serveCultivateDao.selectByIdDetails(id);
+        ServeCultivateDetail detail=serveCultivateDao.selectByIdDetails(id,userId);
         if(detail==null){
             return new ResponseDTO(ResultCode.FAIL, "数据错误");
         }

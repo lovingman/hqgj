@@ -9,7 +9,10 @@ import java.util.List;
 
 
 public class ServeCultivateDetail extends ServeCultivate {
-    private String surplusQuota;
+    //剩余名额
+    private Integer surplusQuota;
+    //当前用户 是否报名
+    private Integer isEnroll;
     private BaseOrganization baseOrganization;
     private List<BasicAnnex> basicAnnexList;
     private List<ServeCultivateEnroll> cultivateEnrollList;
@@ -39,11 +42,19 @@ public class ServeCultivateDetail extends ServeCultivate {
         this.cultivateEnrollList = cultivateEnrollList;
     }
 
-    public String getSurplusQuota() {
+    public Integer getSurplusQuota() {
         return surplusQuota;
     }
 
-    public void setSurplusQuota(String surplusQuota) {
+    public void setSurplusQuota(Integer surplusQuota) {
         this.surplusQuota = surplusQuota;
+    }
+
+    public Integer getIsEnroll() {
+        return isEnroll;
+    }
+
+    public void setIsEnroll(Integer isEnroll) {
+        this.isEnroll = isEnroll;
     }
 }

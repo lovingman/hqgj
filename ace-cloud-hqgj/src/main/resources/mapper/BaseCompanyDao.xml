@@ -75,8 +75,7 @@
         <where>
             1 = 1
             <if test="condition.companyName != null and condition.companyName != ''">
-                and (t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
-                or t.creditCode like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%'))
+                and t.companyName like concat('%',#{condition.companyName,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.creditCode != null and condition.creditCode != ''">
                 and t.creditCode = #{condition.creditCode,jdbcType=VARCHAR}
