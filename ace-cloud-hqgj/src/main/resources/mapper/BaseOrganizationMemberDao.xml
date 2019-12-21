@@ -169,4 +169,15 @@
             #{ids}
         </foreach>
     </delete>
+
+    <select id="existMember" parameterType="java.lang.String" resultType="java.lang.String">
+        select id from base_organization_member
+        where orgId = #{orgId,jdbcType=VARCHAR} and idCard = #{idCard,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateUserId" parameterType="java.lang.String" >
+      update base_organization_member
+      set userId = #{userId,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>
