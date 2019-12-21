@@ -101,6 +101,8 @@ public class LawServeServiceImpl implements LawServeService {
                 a.setRelationId(cultivateId);
                 a.setFileURL(a.getFileURL());
                 a.setType("2");
+                a.setStatus("1");
+                a.setCreateDate(new Date());
                 a.setRemark("法律服务附件");
                 basicAnnexDao.insert(a);
             }
