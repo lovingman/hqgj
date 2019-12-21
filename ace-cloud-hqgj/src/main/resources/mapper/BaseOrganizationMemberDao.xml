@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao">
-  <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="orgId" jdbcType="VARCHAR" property="orgId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="idCard" jdbcType="VARCHAR" property="idCard" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="jobs" jdbcType="VARCHAR" property="jobs" />
-    <result column="speciality" jdbcType="VARCHAR" property="speciality" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto" />
-    <result column="wechatPhoto" jdbcType="VARCHAR" property="wechatPhoto" />
-    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
-    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
-    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
-    <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
-    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, orgId, name, idCard, mobile, jobs, speciality, content, imagePhoto, wechatPhoto,
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="orgId" jdbcType="VARCHAR" property="orgId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="jobs" jdbcType="VARCHAR" property="jobs"/>
+        <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
+        <result column="wechatPhoto" jdbcType="VARCHAR" property="wechatPhoto"/>
+        <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, orgId, userId, name, idCard, mobile, jobs, speciality, content, imagePhoto, wechatPhoto,
     createUserId, createUserName, createDate, modifyUserId, modifyUserName, modifyDate,
     status
   </sql>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from base_organization_member
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
-    insert into base_organization_member (id, orgId, name,
+    <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+    insert into base_organization_member (id, orgId, userId, name,
       idCard, mobile, jobs,
       speciality, content, imagePhoto,
       wechatPhoto, createUserId, createUserName,
       createDate, modifyUserId, modifyUserName,
       modifyDate, status)
-    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{jobs,jdbcType=VARCHAR},
       #{speciality,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{imagePhoto,jdbcType=VARCHAR},
       #{wechatPhoto,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR},
       #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR},
       #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember">
     update base_organization_member
     set orgId = #{orgId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       idCard = #{idCard,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
@@ -63,77 +65,80 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo">
+    <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo">
 
-  </resultMap>
-  <sql id="Vo_Column_List">
-    t.id, t.orgId, t.name, t.idCard, t.mobile, t.jobs, t.speciality, t.content, t.imagePhoto, t.wechatPhoto, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    </resultMap>
+    <sql id="Vo_Column_List">
+    t.id, t.orgId, t.userId, t.name, t.idCard, t.mobile, t.jobs, t.speciality, t.content, t.imagePhoto, t.wechatPhoto, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
-  <sql id="From_Statement">
+    <sql id="From_Statement">
     FROM base_organization_member t
   </sql>
-  <sql id="Where_Condition">
-    <where>
-      1 = 1
-      <if test="condition.orgId != null and condition.orgId != ''">
-         and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.name != null and condition.name != ''">
-         and(t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
-         or t.mobile like concat('%',#{condition.name,jdbcType=VARCHAR},'%') )
-      </if>
-      <if test="condition.idCard != null and condition.idCard != ''">
-         and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.mobile != null and condition.mobile != ''">
-         and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.jobs != null and condition.jobs != ''">
-         and t.jobs = #{condition.jobs,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.speciality != null and condition.speciality != ''">
-         and t.speciality = #{condition.speciality,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.content != null and condition.content != ''">
-         and t.content = #{condition.content,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.imagePhoto != null and condition.imagePhoto != ''">
-         and t.imagePhoto = #{condition.imagePhoto,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.wechatPhoto != null and condition.wechatPhoto != ''">
-         and t.wechatPhoto = #{condition.wechatPhoto,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserId != null and condition.createUserId != ''">
-         and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createUserName != null and condition.createUserName != ''">
-         and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
-         and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
-         and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
-      </if>
-      <if test="condition.modifyDate != null and condition.modifyDate != ''">
-         and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="condition.status != null and condition.status != ''">
-         and t.status = #{condition.status,jdbcType=VARCHAR}
-      </if>
-    </where>
-  </sql>
-  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
-      select
+    <sql id="Where_Condition">
+        <where>
+            1 = 1
+            <if test="condition.orgId != null and condition.orgId != ''">
+                and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.name != null and condition.name != ''">
+                and(t.name like concat('%',#{condition.name,jdbcType=VARCHAR},'%')
+                or t.mobile like concat('%',#{condition.name,jdbcType=VARCHAR},'%') )
+            </if>
+            <if test="condition.idCard != null and condition.idCard != ''">
+                and t.idCard = #{condition.idCard,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.userId != null and condition.userId != ''">
+                and t.userId = #{condition.userId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.mobile != null and condition.mobile != ''">
+                and t.mobile = #{condition.mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.jobs != null and condition.jobs != ''">
+                and t.jobs = #{condition.jobs,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.speciality != null and condition.speciality != ''">
+                and t.speciality = #{condition.speciality,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.content != null and condition.content != ''">
+                and t.content = #{condition.content,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.imagePhoto != null and condition.imagePhoto != ''">
+                and t.imagePhoto = #{condition.imagePhoto,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.wechatPhoto != null and condition.wechatPhoto != ''">
+                and t.wechatPhoto = #{condition.wechatPhoto,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createUserName != null and condition.createUserName != ''">
+                and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.createDate != null and condition.createDate != ''">
+                and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
+                and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
+                and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
+            </if>
+            <if test="condition.modifyDate != null and condition.modifyDate != ''">
+                and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.status != null and condition.status != ''">
+                and t.status = #{condition.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
         <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         where t.id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
-            select
+    </select>
+    <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
         <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
@@ -145,23 +150,23 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-      limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
-  </select>
-  <select id="findCount" resultType="int">
-    SELECT COUNT(*)
-<include refid="From_Statement"/>
-<include refid="Where_Condition"/>
-  </select>
-  <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember" resultType="int">
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+    </select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+    </select>
+    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganizationMember" resultType="int">
             select count(1)
         from base_organization_member
         where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByIds">
-     delete from base_organization_member
- where id in
- <foreach collection="array" item="ids" open="(" separator="," close=")">
-    #{ids}
- </foreach>
-  </delete>
+    <delete id="deleteByIds">
+        delete from base_organization_member
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
 </mapper>

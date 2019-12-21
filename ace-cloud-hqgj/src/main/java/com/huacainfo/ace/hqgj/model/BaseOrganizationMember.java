@@ -26,6 +26,12 @@ public class BaseOrganizationMember extends BaseModel {
     private String orgId;
 
     /**
+     * 字段名：base_organization_member.userId
+     * 注释：用户ID
+     */
+    private String  userId;
+
+    /**
      * 字段名：base_organization_member.name
      * 注释：姓名
      */
@@ -250,5 +256,13 @@ public class BaseOrganizationMember extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
