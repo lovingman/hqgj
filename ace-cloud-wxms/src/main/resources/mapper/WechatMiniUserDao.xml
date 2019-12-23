@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.wxms.dao.WechatMiniUserDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.wxms.model.WechatMiniUser">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="unionId" jdbcType="VARCHAR" property="unionId"/>
+        <result column="openId" jdbcType="VARCHAR" property="openId"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="avatarUrl" jdbcType="VARCHAR" property="avatarUrl"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="appId" jdbcType="VARCHAR" property="appId"/>
+        <result column="sysId" jdbcType="VARCHAR" property="sysId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, unionId, openId, nickName, avatarUrl, gender, city, province, country, appId, 
+    sysId, status, remark, createTime, updateTime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_mini_user
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wechat_mini_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.wxms.model.WechatMiniUser">
+    insert into wechat_mini_user (id, unionId, openId, 
+      nickName, avatarUrl, gender, 
+      city, province, country, 
+      appId, sysId, status, 
+      remark, createTime, updateTime
+      )
+    values (#{id,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.wxms.model.WechatMiniUser">
+    update wechat_mini_user
+    set unionId = #{unionId,jdbcType=VARCHAR},
+      openId = #{openId,jdbcType=VARCHAR},
+      nickName = #{nickName,jdbcType=VARCHAR},
+      avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      appId = #{appId,jdbcType=VARCHAR},
+      sysId = #{sysId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+    <select id="isExist" parameterType="com.huacainfo.ace.wxms.model.WechatMiniUser" resultType="int">
+            select count(1)
+        from wechat_mini_user
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="findByUnionId" resultType="com.huacainfo.ace.wxms.model.WechatMiniUser">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_mini_user
+        where unionId = #{unionId,jdbcType=VARCHAR}
+        order by createTime desc
+        limit 1
+    </select>
+    <delete id="deleteByIds">
+        delete from wechat_mini_user
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
