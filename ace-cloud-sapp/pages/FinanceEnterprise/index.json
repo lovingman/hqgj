@@ -1,4 +1,5 @@
 {
+    "navigationBarTitleText": "财税服务包详情",
     "usingComponents": {
         "van-image": "/@vant/weapp/image/index",
         "van-button": "/@vant/weapp/button/index",

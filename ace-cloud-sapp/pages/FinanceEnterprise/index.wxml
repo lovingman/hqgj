@@ -1,107 +1,94 @@
 <view class="index">
-    <view class="header">
-        <van-image fit="cover" width="100%" height="400rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        <van-sticky offset-top="{{60}}">
-            <view class="float">
-                <view class="img">
-                    <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                </view>
-                <view class="text">
-                    <view class="title van-ellipsis">
-                        常德市正信会计服务公司
-                    </view>
-                    <view class="subTitle van-ellipsis">
-                        <van-icon name="location" />专业代理记账高效办理平台
-                    </view>
-                    <view class="bottom">
-                        <text class="sign">已认证</text>
-                    </view>
-                </view>
-            </view>
-        </van-sticky>
-    </view>
-    <view class="mod first">
-        <view class="title">
-            机构简介
+  <view class="header">
+    <van-image fit="cover" width="100%" height="400rpx" src="{{detailsForm.fmUrl}}" />
+    <van-sticky offset-top="{{60}}">
+      <view class="float">
+        <view class="img">
+          <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
         </view>
         <view class="text">
-            正信会计是常德市首家专业从事财税服务行业的大型综合财税服务机构。创立于2004年，目前拥有常德市正信会计服务有限公司、常德正信税务师事务所有限公司两家实体机构，业务涵盖工商注册、代理记账、财务咨询、会计实操等专业财税服务内容，拥有多名资深财税专家和高级技术人才，正信会计始终坚持以“成就员工、造福客户”为宗旨，为把正信打造成优秀的现代服务企业而努力奋斗。
+          <view class="title van-ellipsis">
+            {{detailsForm.baseOrganization.orgName}}
+          </view>
+          <view class="subTitle van-ellipsis">
+            <van-icon name="location" /> {{detailsForm.baseOrganization.orgAddress}}
+          </view>
+          <view class="bottom">
+            <text class="sign">已认证</text>
+          </view>
         </view>
+      </view>
+    </van-sticky>
+  </view>
+  <view class="mod first">
+    <view class="title">
+      机构简介
     </view>
-    <view class="mod">
-        <view class="title">
-            服务介绍
-        </view>
-        <view class="text">
-            办理步骤及所需时间 1.签订代理记账合同，确定服务及费用 2.取得、登记、审核票据 3.账务处理，审核账务，出具报表 4.税务审核 5.税务申报 6.打印、保管完税凭证 办理所需材料 1.公司营业执照 2.法人身份证明 3.现金单据（差旅费、业务招待费、员工工资表、办公费、房租费、通讯费、运输费等） 4.银行单据（提现、转账、贷记凭证、电汇、进账单、借款单、银行对账单等） 5.发票（1日---31日开具的所有发票记账联） 6.公司员工的名字、性别、月工资额、身份证号码、代扣社保费、代缴个税，邮政编码
-            交付材料 1.财务报表 2.完税凭证 交付时长 一个月
-        </view>
+    <view class="text">
+      {{detailsForm.baseOrganization.content}}
     </view>
-    <view class="mod last">
-        <view class="title">
-            费用说明
-        </view>
-        <view class="text">
-            通过此平台注册企业成功后，平台发放500积分，积分用于抵扣该项服务的费用，实际产生的费用由常德市武陵区工信局为你提供资金补贴。 下单前，请先咨询服务机构，具体以沟通事项为准。
-        </view>
+  </view>
+  <view class="mod">
+    <view class="title">
+      服务介绍
     </view>
-    <view class="footer">
-        <view class="phone">
-            <view>
-                <van-icon name="phone" />
-            </view>
-            <view>
-                免费咨询
-            </view>
-        </view>
-        <view class="btn">
-            <van-button round type="info" size="large">立即下单</van-button>
-        </view>
+    <view class="text">
+      {{detailsForm.content}}
     </view>
-    <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
-        <view class="goods">
-            <view class="img">
-                <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            </view>
-            <view class="text">
-                <view class="title van-ellipsis">
-                    常德市正信会计服务公司
-                </view>
-                <view class="price">
-                    ￥2000~10000
-                </view>
-            </view>
+  </view>
+  <view class="mod last">
+    <view class="title">
+      费用说明
+    </view>
+    <view class="text">
+      通过此平台注册企业成功后，平台发放500积分，积分用于抵扣该项服务的费用，实际产生的费用由常德市武陵区工信局为你提供资金补贴。 下单前，请先咨询服务机构，具体以沟通事项为准。
+    </view>
+  </view>
+  <view class="footer">
+    <view class="phone">
+      <view>
+        <van-icon name="phone" />
+      </view>
+      <view>
+        免费咨询
+      </view>
+    </view>
+    <view class="btn">
+      <van-button round type="info" size="large">立即下单</van-button>
+    </view>
+  </view>
+  <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
+    <view class="goods">
+      <view class="img">
+        <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
+      </view>
+      <view class="text">
+        <view class="title van-ellipsis">
+          {{detailsForm.baseOrganization.orgName}}
         </view>
-        <view class="option">
-            <view class="title">
-                服务项目
-            </view>
-            <van-radio-group value="{{ radio }}" bind:change="onChange">
-                <van-radio class="{{radio=='1'?'chcked':''}}" use-icon-slot value="{{ radio }}" name="1">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="2">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="3">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="4">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="5">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="6">
-                    自定义图标
-                </van-radio>
-                <van-radio use-icon-slot value="{{ radio }}" name="7">
-                    自定义图标
-                </van-radio>
-            </van-radio-group>
+        <view class="price">
+          ￥<text wx:if="{{isTrue}}">{{detailsForm.minPrice}}~{{detailsForm.maxPrice}}</text>
+            <text wx:if="{{isFalse}}">{{priceForm.price}}</text>
         </view>
-        <view class="btn">
-                <van-button round type="info" size="large">确定</van-button>
+      </view>
+    </view>
+    <view class="option">
+      <view class="title">
+        服务项目
+      </view>
+      <view class="service-box">
+        <view class='service-list {{showId == item.id ? "active" : ""}}' bindtap="activeClick" wx:for="{{financeItemArr}}" wx:for-item="{{item}}" wx:key="{{index}}" wx:for-item="item" data-id="{{item.id}}" data-index="{{index}}">
+          <text>{{item.itemName}}</text>
         </view>
-    </van-popup>
+      </view>
+      <!-- <van-radio-group value="{{ radio }}">
+        <van-radio class="{{radio=='1'?'chcked':''}}" use-icon-slot value="{{ radio }}" name="1" wx:for="{{financeItemArr}}" wx:for-item="{{item}}">
+          {{item.itemName}}
+        </van-radio>
+      </van-radio-group> -->
+    </view>
+    <view class="btn">
+      <van-button round type="info" size="large">确定</van-button>
+    </view>
+  </van-popup>
 </view>

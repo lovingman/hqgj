@@ -1,26 +1,45 @@
 <!--pages/FinanceTax/index.wxml-->
 <view class="index">
-    <van-tabs line-width="30" color="#ffffff" sticky animated swipeable active="{{ active }}">
-        <van-tab title-style="color:#ffffff" title="代理记账">
-            <view class="wrap">
-                <view class="img">
-                    <van-image width="100%" height="100%" lazy-load fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                </view>
-                <view class="text">
-                    <view class="title van-ellipsis">
-                        常德市正信会计服务公司
-                    </view>
-                    <view class="subTitle van-ellipsis">
-                        专业代理记账高效办理平台
-                    </view>
-                    <view class="bottom">
-                        <view class="sign"><icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-                        <text class="fine">免费咨询</text>
-                    </view>
-                </view>
-            </view>
-        </van-tab>
-        <van-tab title-style="color:#ffffff" title="财税管家">
-        </van-tab>
-    </van-tabs>
+  <van-tabs line-width="30" color="#ffffff" sticky animated swipeable active="{{ active }}" bind:click="tabClick">
+    <van-tab title-style="color:#ffffff" title="代理记账">
+      <view class="wrap" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
+        <view class="img">
+          <van-image width="100%" height="100%" lazy-load fit="cover" src="{{item.fmUrl}}" />
+        </view>
+        <view class="text">
+          <view class="title van-ellipsis">
+            {{item.baseOrganization.orgName}}
+          </view>
+          <view class="subTitle van-ellipsis">
+            {{item.baseOrganization.content}}
+          </view>
+          <view class="bottom">
+            <view class="sign">
+              <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+            <text class="fine">免费咨询</text>
+          </view>
+        </view>
+      </view>
+    </van-tab>
+    <van-tab title-style="color:#ffffff" title="财税管家">
+      <view class="wrap" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
+        <view class="img">
+          <van-image width="100%" height="100%" lazy-load fit="cover" src="{{item.fmUrl}}" />
+        </view>
+        <view class="text">
+          <view class="title van-ellipsis">
+            {{item.baseOrganization.orgName}}
+          </view>
+          <view class="subTitle van-ellipsis">
+            {{item.baseOrganization.content}}
+          </view>
+          <view class="bottom">
+            <view class="sign">
+              <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+            <text class="fine">免费咨询</text>
+          </view>
+        </view>
+      </view>
+    </van-tab>
+  </van-tabs>
 </view>

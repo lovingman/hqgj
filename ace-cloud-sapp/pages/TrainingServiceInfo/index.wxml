@@ -1,131 +1,96 @@
 <view class="index">
-    <van-image width="750rpx" fit="cover" height="400rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-    <view class="subject">
-        <view class="title van-multi-ellipsis--l2">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德 </view>
-        <view class="adress">
-            <van-icon name="location" />常德市武陵区互联网产业园</view>
+  <van-image width="750rpx" fit="cover" height="400rpx" src="{{basicForm.fmUrl}}" />
+  <view class="subject">
+    <view class="title van-multi-ellipsis--l2">{{basicForm.title}} </view>
+    <view class="adress">
+      <van-icon name="location" />{{basicForm.detailedAddress}}</view>
+  </view>
+  <view class="organization">
+    <view class="image">
+      <van-image width="100%" fit="cover" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
     </view>
-    <view class="organization">
-        <view class="image">
-            <van-image width="100%" fit="cover" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        </view>
-        <view class="text">
-            <view class="title van-multi-ellipsis--l2">常德市武陵区培训机构常德市武陵区培训机构常德市武陵区培训机构常德市武陵区培训机构</view>
-            <view class="tip">
-                <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-        </view>
+    <view class="text">
+      <view class="title van-multi-ellipsis--l2">{{basicForm.baseOrganization.orgName}}</view>
+      <view class="tip">
+        <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+    </view>
+    <van-icon name="arrow" />
+  </view>
+  <view class="entry">
+    <view class="title">
+      报名企业
+    </view>
+    <view class="list">
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <view class="right-icon">
+        <van-icon name="weapp-nav" />
         <van-icon name="arrow" />
+      </view>
     </view>
-    <view class="entry">
+  </view>
+
+  <van-tabs line-width="24" line-height="4" color="#2E88F2" swipeable sticky animated bind:click="tabClick">
+    <van-tab title="培训介绍">
+      <view class="content">
         <view class="title">
-            报名企业
+          <icon class="iconfont icon-jieshao"></icon>基本介绍
         </view>
-        <view class="list">
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <view class="right-icon">
-                <van-icon name="weapp-nav" />
-                <van-icon name="arrow" />
-            </view>
+        <!-- <view class="subtitle">
+          学习对象
+        </view> -->
+        <view class="text">{{basicForm.content}} </view>
+        <view class="title">
+          <icon class="iconfont icon-jieshao"></icon>课件下载
+          <text class="remark">报名后现场签到，才能下载资料</text>
         </view>
-    </view>
-
-    <van-tabs line-width="24" line-height="4" color="#2E88F2" swipeable sticky animated>
-        <van-tab title="培训介绍">
-            <view class="content">
-                <view class="title">
-                    <icon class="iconfont icon-jieshao"></icon>基本介绍
-                </view>
-                <view class="subtitle">
-                    学习对象
-                </view>
-                <view class="text">
-                    希望通过思维训练，养成有效发现问题、分析问题的能力，快速抓住问题的本质的企业管理人员(企业高层、部门经理、人力资源总监、经理、业务部门主管、企业内部顾问等); 　　希望通过思维训练，能够制作出周密的商业计划并清晰呈现，有效屏蔽各类风险的企业专业人员(企划部、市场部、销售部、法规部、战略部等人员); 　　希望通过思维训练，提高思维深度和洞察力，能够有条不紊地处理各种复杂问题，在激烈竞争中先人一步(职业经理人、创业者、高级专员等)。
-                </view>
-                <view class="subtitle">
-                    课程目标
-                </view>
-                <view class="text">
-                    在沟通表达中观点更明确，结构更严密，表达更清晰。 　　掌握结构化思维的正确理念、方法和工具，提升工作的质量。 　　培养严谨的思维习惯，在企业内部建立彼此交流时共有的思维和语言平台。 　　借助结构化思维的方法和工具，有效地分析、处理和解决各种工作和管理问题，提高团队的工作决策水平，高效工作并创造价值。
-                </view>
-                <view class="title">
-                    <icon class="iconfont icon-jieshao"></icon>课件下载
-                    <text class="remark">报名后现场签到，才能下载资料</text>
-                </view>
-                <view class="files">
-                    <view class="file">
-                        <view class="name">
-                            企业管理在实际中的应用.pptx
-                        </view>
-                        <view class="downBtn">
-                            下载
-                        </view>
-                    </view>
-                    <view class="file">
-                        <view class="name">
-                            企业管理在实际中的应用.pptx
-                        </view>
-                        <view class="downBtn">
-                            下载
-                        </view>
-                    </view>
-                    <view class="file">
-                        <view class="name">
-                            企业管理在实际中的应用.pptx
-                        </view>
-                        <view class="downBtn">
-                            下载
-                        </view>
-                    </view>
-                </view>
+        <view class="files">
+          <view class="file">
+            <view class="name">
+              企业管理在实际中的应用.pptx
             </view>
-        </van-tab>
-        <van-tab title="日程安排">
-            <view class="calendar">
-                <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德课程一 </view>
-                <view class="other">
-                    <van-icon name="clock-o" />10.19 14:00-16:00
-                    <van-icon class="icon1" name="location" />A02栋4楼201
-                    <text class="tip">查看</text>
-                </view>
+            <view class="downBtn">
+              下载
             </view>
-
-            <view class="calendar">
-                <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德课程一 </view>
-                <view class="other">
-                    <van-icon name="clock-o" />10.19 14:00-16:00
-                    <van-icon class="icon1" name="location" />A02栋4楼201
-                    <text class="tip">查看</text>
-                </view>
+          </view>
+          <view class="file">
+            <view class="name">
+              企业管理在实际中的应用.pptx
             </view>
-
-            <view class="calendar">
-                <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德课程一 </view>
-                <view class="other">
-                    <van-icon name="clock-o" />10.19 14:00-16:00
-                    <van-icon class="icon1" name="location" />A02栋4楼201
-                    <text class="tip">查看</text>
-                </view>
+            <view class="downBtn">
+              下载
             </view>
-
-            <view class="calendar">
-                <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》常德课程一 </view>
-                <view class="other">
-                    <van-icon name="clock-o" />10.19 14:00-16:00
-                    <van-icon class="icon1" name="location" />A02栋4楼201
-                    <text class="tip">查看</text>
-                </view>
+          </view>
+          <view class="file">
+            <view class="name">
+              企业管理在实际中的应用.pptx
             </view>
-        </van-tab>
-    </van-tabs>
-    <view class="btn">
-        <van-button round type="info" size="large">立即报名
-            <text class="remark">仅剩5个名额</text> </van-button>
-    </view>
+            <view class="downBtn">
+              下载
+            </view>
+          </view>
+        </view>
+      </view>
+    </van-tab>
+    <van-tab title="日程安排">
+      <view class="calendar" wx:for="{{scheduleList}}" wx:key="{{index}}" wx:for-item="item" bindtap="scheduleClcik" data-index='{{index}}'>
+        <view class="title">{{item.title}} </view>
+        <view class="other">
+          <van-icon name="clock-o" />{{item.startDate}}
+          <van-icon class="icon1" name="location" />{{item.detailedAddress}}
+          <text class="tip">查看</text>
+        </view>
+      </view>
+    </van-tab>
+  </van-tabs>
+  <view class="btn">
+    <van-button round type="info" size="large">立即报名
+      <text class="remark">仅剩{{basicForm.surplusQuota}}个名额</text> </van-button>
+  </view>
 </view>

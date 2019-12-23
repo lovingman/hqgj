@@ -1,4 +1,5 @@
 {
+    "navigationBarTitleText": "日程安排详情",
     "usingComponents": {
         "van-icon": "/@vant/weapp/icon/index",
         "van-image": "/@vant/weapp/image/index"
