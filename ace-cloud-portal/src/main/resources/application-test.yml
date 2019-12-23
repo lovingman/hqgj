@@ -12,7 +12,7 @@ spring:
     auto: true
   redis:
     cluster:
-      nodes: 10.0.0.12:7000,10.0.0.12:7001,10.0.0.12:7002
+      nodes: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
     timeout: 60000
     pool:
       max-active: 300
@@ -23,9 +23,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      url: jdbc:mysql://10.0.0.12:3306/portal_zcpa?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://127.0.0.1:3306/portal_hqgj?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
       username: root
-      password: huacai$2019
+      password: huacai#2019
       initial-size: 2
       max-active: 100
       min-idle: 2
@@ -60,10 +60,10 @@ fdfs:
   thumbImage:
     width: 400
     height: 400
-  trackerList: 10.0.0.12:22122
+  trackerList: 47.110.224.35:22122
   pool:
     jmx-enabled: false
-  web-server-url: http://10.0.0.12:8888/
+  web-server-url: http://47.110.224.35:80/
 
 #用于配置是否启用swagger
 swagger:
