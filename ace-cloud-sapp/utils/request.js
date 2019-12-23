@@ -56,6 +56,6 @@ function post(url, data) {
 }
 
 module.exports = {
-    post: post,
-    getJOSN: getJOSN
+    post,
+    getJSON
 }
