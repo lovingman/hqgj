@@ -1,0 +1,56 @@
+spring:
+  aop:
+    auto: true
+  redis:
+    cluster:
+      nodes: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
+    timeout: 60000
+    pool:
+      max-active: 300
+      max-wait: -1
+      max-idle: 100
+      min-idle: 20
+  #    password: 1qaz@WSX
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      url: jdbc:mysql://192.168.2.253:3306/ace_hqgj_wxms?failOverReadOnly=false&autoReconnect=true&roundRobinLoadBalance=true&useOldAliasMetadataBehavior=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      initial-size: 2
+      max-active: 100
+      min-idle: 2
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+mybatis:
+  mapper-locations: classpath:mapper/**.xml
+# 打印sql
+logging:
+  level:
+    com.huacainfo.ace: debug
+#用于配置是否启用swagger
+swagger:
+  scan: "com.huacainfo.ace.wxms.controller"
+  enable: true
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mySecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+filter:
+  ignoreuris: /swagger,/webjars,/v2,/www,/feign
+wechat:
+  jsapi-redirectUri: http://show.huacainfo.com/wxms/www/jsapi/parseCode
+

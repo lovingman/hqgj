@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.wxms.dao.MapWechatSysDao">
+    <resultMap id="BaseResultMap" type="com.huacainfo.ace.wxms.model.MapWechatSys">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="appType" jdbcType="VARCHAR" property="appType"/>
+        <result column="unionId" jdbcType="VARCHAR" property="unionId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="appId" jdbcType="VARCHAR" property="appId"/>
+        <result column="sysId" jdbcType="VARCHAR" property="sysId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, appType, unionId, userId, status, remark, createDate, appId, sysId
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from map_wechat_sys
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from map_wechat_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huacainfo.ace.wxms.model.MapWechatSys">
+    insert into map_wechat_sys (id, appType, unionId, 
+      userId, status, remark, 
+      createDate, appId, sysId
+      )
+    values (#{id,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.wxms.model.MapWechatSys">
+    update map_wechat_sys
+    set appType = #{appType,jdbcType=VARCHAR},
+      unionId = #{unionId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      appId = #{appId,jdbcType=VARCHAR},
+      sysId = #{sysId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="isExist" parameterType="com.huacainfo.ace.wxms.model.MapWechatSys" resultType="int">
+            select count(1)
+        from map_wechat_sys
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByIds">
+        delete from map_wechat_sys
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findByUnionId" resultType="java.util.Map">
+        select
+
+            t.userId,
+            u.account,
+            u.mobile,
+            u.`name` AS userName,
+            d.department_name as corpName,
+            d.department_id as corpId
+
+        from map_wechat_sys t
+        left join portal.users u on t.userId = u.user_id
+        left join portal.department d on u.department_id = d.department_id
+        where t.unionId =  #{unionId}
+        order by t.createDate desc
+        limit 1
+    </select>
+</mapper>
