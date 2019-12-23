@@ -16,7 +16,7 @@
             <el-form-item label="类型：" prop="type">
               <el-select
                 v-model="serviceForm.type"
-                clearable
+                disabled="disabled"
                 @change="changeType"
                 placeholder="请选择"
               >
@@ -87,7 +87,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <photo ref="imgUpload"></photo>
+            <photo ref="imgUpload" :getData="getData" :submitType="submitType"></photo>
           </el-row>
           <el-row>
             <el-form-item label="服务介绍：" prop="content">
@@ -168,14 +168,14 @@
 </template>
 
 <script>
-import { create } from "@/api/hqgj/handheld";
+import { getById, update, itemPage } from "@/api/hqgj/handheld";
 import { getDict, getUser, lecturerMechanism, lecturerPage } from "@/api/sys";
 import photo from "../../publicTemplate/photo";
 export default {
   components: {
     photo
   },
-  name: "add",
+  name: "edit",
   data() {
     return {
       financeShow: false, //代理财政是否显示
@@ -183,7 +183,9 @@ export default {
       expertShow: false, //专家问诊是否显示
       tieShow: false, //提示是否显示
       tisShow: false, //计帐是否显示提示
-      orgDisabled: true, //是否禁止服务机构选择
+      getData: {}, //编辑数据
+      orgDisabled: true, //禁止选择服务机构
+      submitType: "edit", //类型
       //服务包类型
       typeArr: [],
       //机构类型
@@ -284,6 +286,7 @@ export default {
   },
   created() {
     this.dictQuery();
+    this.load();
     this.loadUser();
   },
   methods: {
@@ -291,14 +294,13 @@ export default {
     loadUser() {
       getUser().then(res => {
         this.userType = res.data.userType; //1律师服务 2会计师服务 3培训机构 4工信局
-        this.dataRows = res.data;
         if (this.userType == 4) {
           //如果是工信局请求服务机构数据, 2是会计师服务type值
           let obj = 2;
           this.orgDisabled = false;
+          this.corpArr = [];
           lecturerMechanism(obj).then(res => {
             if (res.status == 1) {
-              this.disabled = false;
               this.orgRows = res.rows;
               for (let i = 0; i < this.orgRows.length; i++) {
                 var obj = {};
@@ -310,24 +312,37 @@ export default {
           });
         } else {
           this.orgDisabled = true;
-          this.serviceForm.orgId = this.dataRows.corpId;
+        }
+      });
+    },
+    //获取编辑传递过来id获取内容
+    load() {
+      this.id = this.$route.query.id;
+      //请求数据接口
+      getById(this.id).then(res => {
+        if (res.status == 1) {
+          this.serviceForm = res.data; //赋值数据
+          this.getData = res.data; //传递给子组件的数据
+          this.changeType(res.data.type);
+          //机构数组
           var arrs = {};
-          arrs.id = this.dataRows.corpId;
-          arrs.name = this.dataRows.corpName;
+          arrs.id = res.data.orgId;
+          arrs.name = res.data.orgName;
           this.corpArr.push(arrs);
-          lecturerPage(this.dataRows.corpId).then(res => {
+          lecturerPage(res.data.orgId).then(res => {
             if (res.status == 1) {
-              console.log(res);
-              this.contactPersonArr = [];
-              this.serviceForm.contactId = "";
-              let personnelRows = res.rows;
-              for (let i = 0; i < personnelRows.length; i++) {
-                let obj = {};
-                obj.id = personnelRows[i].id;
-                obj.name = personnelRows[i].name;
-                this.contactPersonArr.push(obj);
+              for (let i = 0; i < res.rows.length; i++) {
+                let arrs = {};
+                arrs.id = res.rows[i].id;
+                arrs.name = res.rows[i].name;
+                this.contactPersonArr.push(arrs);
               }
             }
+          });
+        } else {
+          this.$message({
+            message: res.message,
+            type: "warning"
           });
         }
       });
@@ -352,9 +367,6 @@ export default {
     changeType(value) {
       this.type = value;
       this.financeShow = true;
-      if (this.userType == 4) {
-        this.serviceForm.orgId = "";
-      }
       if (value == 1) {
         this.tisShow = true;
       } else {
@@ -376,7 +388,6 @@ export default {
     //服务机构选择
     changeService(value) {
       if (value) {
-        let orgId = value;
         let obj = {};
         obj = this.corpArr.find(item => {
           //这里的userList就是上面遍历的数据源
@@ -387,10 +398,10 @@ export default {
         if (this.userType == 4) {
           //如果是工信局用户先选择机构再调取人员信息
           //选择服务机构调取服务机构下面的人员信息
-          lecturerPage(orgId).then(res => {
+          lecturerPage(value).then(res => {
             if (res.status == 1) {
-              this.contactPersonArr = [];
-              this.serviceForm.contactId = "";
+              this.contactPersonArr = []; //选择机构的时候先清空专家人员信息，调取数据重新渲染该机构下的人员
+              this.serviceForm.contactId = ""; //清空专家选择的人员信息
               let personnelRows = res.rows;
               for (let i = 0; i < personnelRows.length; i++) {
                 let obj = {};
@@ -403,7 +414,6 @@ export default {
         }
       }
     },
-
     //封面照片
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -428,7 +438,8 @@ export default {
       //验证其他信息
       this.$refs[formName].validate(valid => {
         if (valid) {
-          create({
+          update({
+            id: this.id, //主键ID
             type: this.type, // 类型 1代理记账 2财税管理 3专家问诊
             orgName: this.serviceForm.orgName, //服务机构名称
             orgId: this.serviceForm.orgId, //服务机构ID

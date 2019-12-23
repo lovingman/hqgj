@@ -5,36 +5,47 @@
         <el-col class="selectSearch" :span="12">
           <el-col :span="12">
             <el-date-picker
-              v-model="query.times"
-              type="datetimerange"
+              v-model="timeArr"
+              type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
             ></el-date-picker>
           </el-col>
           <el-col :span="11" :offset="1">
-            <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
-              <el-button slot="append">搜索</el-button>
+            <el-input
+              placeholder="请输入内容"
+              v-model="query.evaluateContent"
+              clearable
+              class="input-with-select"
+            >
+              <el-button slot="append" @click="search">搜索</el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
-    <el-table-column class="table-box">
+    <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="name" sortable label="姓名"></el-table-column>
-        <el-table-column prop="content" sortable label="评价内容"></el-table-column>
-        <el-table-column prop="evaValue" sortable label="服务评分">
+        <el-table-column prop="orgPersonName" sortable label="姓名"></el-table-column>
+        <el-table-column prop="evaluateContent" sortable label="评价内容"></el-table-column>
+        <el-table-column prop="evaluateGrade" sortable label="服务评分" width="200">
           <template slot-scope="scope">
-            <el-rate v-model="scope.row.evaValue" :allow-half="true" disabled text-color="#ff9900"></el-rate>
+            <el-rate
+              v-model="scope.row.evaluateGrade"
+              :allow-half="true"
+              disabled
+              text-color="#ff9900"
+            ></el-rate>
           </template>
         </el-table-column>
-        <el-table-column prop="mechanism" sortable label="服务机构"></el-table-column>
-        <el-table-column prop="times" sortable label="评价时间"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="createDate" sortable label="评价时间"></el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
-          <template>
-            <el-button type="text">删除</el-button>
+          <template slot-scope="scope">
+            <el-button type="text" @click="deleteId(scope.row)">删除</el-button>
             <el-button type="text">详情</el-button>
           </template>
         </el-table-column>
@@ -48,11 +59,12 @@
         background
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
-    </el-table-column>
+    </div>
   </div>
 </template>
 
 <script>
+import { evaluatePage, evaluateDelete } from "@/api/hqgj/handheld";
 export default {
   name: "evaluate",
   data() {
@@ -60,9 +72,9 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
+      timeArr: [], //时间数组
       query: {
-        name: "", //搜索
-        times: "" //时间
+        evaluateContent: "" //搜索
       },
       stautsArr: [
         {
@@ -87,43 +99,72 @@ export default {
         }
       ], //状态容器
       //订单数据
-      tableData: [
-        {
-          name: "12312312312",
-          content: "为企业节省各类成本，提高效率，非常推荐",
-          evaValue: 4,
-          mechanism: "常德市正信会计",
-          times: "2019-11-21 09:31:08"
-        },
-        {
-          name: "12312312312",
-          content: "为企业节省各类成本，提高效率，非常推荐",
-          evaValue: 4,
-          mechanism: "常德市正信会计",
-          times: "2019-11-21 09:31:08"
-        },
-        {
-          name: "12312312312",
-          content: "为企业节省各类成本，提高效率，非常推荐",
-          evaValue: 4,
-          mechanism: "常德市正信会计",
-          times: "2019-11-21 09:31:08"
-        },
-        {
-          name: "12312312312",
-          content: "为企业节省各类成本，提高效率，非常推荐",
-          evaValue: 4,
-          mechanism: "常德市正信会计",
-          times: "2019-11-21 09:31:08"
-        }
-      ]
+      tableData: []
     };
   },
+  created() {
+    this.getList();
+  },
   methods: {
+    //请求page
+    getList() {
+      this.query = Object.assign(this.query, {
+        pageNum: this.tablePage,
+        pageSize: this.tableSize,
+        totalRecord: this.total
+      });
+      if (this.timeArr) {
+        this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
+        this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
+      } else {
+        this.query.startTime = "";
+        this.query.endTime = "";
+      }
+      evaluatePage(this.query).then(res => {
+        if (res.status == 1) {
+          this.tableData = res.rows;
+          this.total = res.total;
+        }
+      });
+    },
+    //删除
+    deleteId(row) {
+      let ids = row.id;
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          evaluateDelete(ids).then(res => {
+            if (res.status == 1) {
+              this.currentPage = 1;
+              this.$message.success("删除成功");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    search() {
+      this.tablePage = 1;
+      this.getList();
+    },
     //选择tableSize事件
-    handleTableSize() {},
+    handleTableSize(size) {
+      this.tableSize = size;
+      this.getList();
+    },
     //选择tablePage事件
-    handleTableCurrent() {}
+    handleTableCurrent(current) {
+      this.tablePage = current;
+      this.getList();
+    }
   }
 };
 </script>

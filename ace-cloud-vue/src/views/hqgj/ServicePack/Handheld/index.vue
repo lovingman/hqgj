@@ -7,33 +7,33 @@
         </el-col>
         <el-col class="selectSearch" :span="14">
           <el-col :span="5">
-            <el-select v-model="query.mechanism" placeholder="请选择服务机构">
+            <el-select v-model="query.orgId" clearable placeholder="请选择服务机构">
               <el-option
                 v-for="item in mechanismArr"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-col>
           <el-col :span="5" :offset="1">
-            <el-select v-model="query.stauts" placeholder="请选择状态">
+            <el-select v-model="query.status" clearable placeholder="请选择状态">
               <el-option
                 v-for="item in stautsArr"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-col>
           <el-col :span="12" :offset="1">
             <el-input
               placeholder="请输入服务机构名称"
-              v-model="query.name"
+              v-model="query.orgName"
               clearable
               class="input-with-select"
             >
-              <el-button slot="append">搜索</el-button>
+              <el-button slot="append" @click="search">搜索</el-button>
             </el-input>
           </el-col>
         </el-col>
@@ -42,18 +42,33 @@
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="type" sortable label="类型"></el-table-column>
-        <el-table-column prop="service" sortable label="服务机构"></el-table-column>
-        <el-table-column prop="phone" sortable label="联系方式"></el-table-column>
-        <el-table-column prop="creatTime" sortable label="创建时间"></el-table-column>
-        <el-table-column prop="state" sortable label="状态"></el-table-column>
+        <el-table-column prop="type" sortable label="类型">
+          <template slot-scope="scope">
+            <div type="text" v-if="scope.row.type=='1'">代理记账</div>
+            <div type="text" v-if="scope.row.type=='2'">财税管理</div>
+            <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="contactPersonTel" sortable label="联系方式"></el-table-column>
+        <el-table-column prop="createDate" sortable label="创建时间"></el-table-column>
+        <el-table-column prop="status" sortable label="状态">
+          <template slot-scope="scope">
+            <div type="text" class="brown" v-if="scope.row.status=='0'">待审核</div>
+            <div type="text" class="blue" v-if="scope.row.status=='1'">审核通过</div>
+            <div type="text" class="red" v-if="scope.row.status=='2'">未通过</div>
+            <div type="text" class="green" v-if="scope.row.status=='3'">已上线</div>
+            <div type="text" class="gray" v-if="scope.row.status=='4'">已下线</div>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
-          <template>
-            <el-button type="text">审核</el-button>
-            <el-button type="text">上线</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">详情</el-button>
+          <template slot-scope="scope">
+            <el-button type="text" v-if="scope.row.status =='0'" @click="examine(scope.row)">审核</el-button>
+            <el-button type="text" v-if="scope.row.status =='1'" @click="online(scope.row)">上线</el-button>
+            <el-button type="text" v-if="scope.row.status =='3'" @click="offline(scope.row)">下线</el-button>
+            <el-button type="text" v-if="scope.row.status !='4'" @click="edit(scope.row)">编辑</el-button>
+            <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
+            <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -67,10 +82,33 @@
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
     </div>
+    <!-- 审核弹出框 -->
+    <el-dialog title="审核" class="examine" :visible.sync="examineVisible">
+      <el-form ref="form" :model="updateState" label-width="100%">
+        <p style="line-height:30px; text-align: center; font-size: 20px;padding-bottom:20px;">服务是否通过</p>
+        <div style="text-align: center">
+          <el-radio-group v-model="updateState.status" style="text-align: center">
+            <el-radio :label="1">通过</el-radio>
+            <el-radio :label="2">不通过</el-radio>
+          </el-radio-group>
+        </div>
+      </el-form>
+      <span class="dialog-footer">
+        <el-button @click="examineVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveExamine">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- end -->
   </div>
 </template>
 
 <script>
+import {
+  page,
+  orgChange,
+  updateStatus,
+  deleteByIds
+} from "@/api/hqgj/handheld";
 export default {
   name: "index",
   data() {
@@ -78,97 +116,195 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
+      examineVisible: false, //审核弹出框是否显示
       query: {
-        name: "", //搜索
-        mechanism: "", //服务机构
+        orgName: "", //搜索
+        orgId: "", //服务机构
         status: "" //状态
       },
       //机构容器
-      mechanismArr: [
-        {
-          value: "选项1",
-          label: "全部"
-        },
-        {
-          value: "选项2",
-          label: "代理计账"
-        },
-        {
-          value: "选项3",
-          label: "财税管家"
-        },
-        {
-          value: "选项4",
-          label: "专家问诊"
-        }
-      ],
+      mechanismArr: [],
+      //审核容器
+      updateState: {
+        status: 1
+      },
       //状态容器
       stautsArr: [
         {
-          value: "选项1",
-          label: "全部"
+          id: " ",
+          name: "全部"
         },
         {
-          value: "选项2",
-          label: "待审核"
+          id: "0",
+          name: "待审核"
         },
         {
-          value: "选项3",
-          label: "审核通过"
+          id: "1",
+          name: "审核通过"
         },
         {
-          value: "选项4",
-          label: "未通过"
+          id: "2",
+          name: "未通过"
         },
         {
-          value: "选项5",
-          label: "已上线"
+          id: "3",
+          name: "已上线"
         },
         {
-          value: "选项6",
-          label: "已下线"
+          id: "4",
+          name: "已下线"
         }
       ],
-      tableData: [
-        {
-          phone: "158715222",
-          type: "代理计财",
-          service: "常德武陵区会计事务所",
-          creatTime: "2019-05-01",
-          state: "已上线"
-        },
-        {
-          phone: "158715222",
-          type: "代理计财",
-          service: "常德武陵区会计事务所",
-          creatTime: "2019-05-01",
-          state: "已上线"
-        },
-        {
-          phone: "158715222",
-          type: "代理计财",
-          service: "常德武陵区会计事务所",
-          creatTime: "2019-05-01",
-          state: "已上线"
-        },
-        {
-          phone: "158715222",
-          type: "代理计财",
-          service: "常德武陵区会计事务所",
-          creatTime: "2019-05-01",
-          state: "已上线"
-        }
-      ]
+      tableData: []
     };
   },
+  created() {
+    this.getList();
+    this.getOrgArr();
+  },
   methods: {
+    //请求page
+    getList() {
+      this.query = Object.assign(this.query, {
+        pageNum: this.tablePage,
+        pageSize: this.tableSize,
+        totalRecord: this.total
+      });
+      page(this.query).then(res => {
+        if (res.status == 1) {
+          this.tableData = res.rows;
+          this.total = res.total;
+        }
+      });
+    },
+
     //选择tableSize事件
-    handleTableSize() {},
+    handleTableSize(size) {
+      this.tableSize = size;
+      this.getList();
+    },
     //选择tablePage事件
-    handleTableCurrent() {},
+    handleTableCurrent(current) {
+      this.tablePage = current;
+      this.getList();
+    },
     //创建
     create() {
       this.$router.push({ path: "/hqgj/ServicePack/Handheld/add" });
+    },
+    //删除
+    deleteById(row) {
+      this.ids = row.id;
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteByIds(this.ids).then(res => {
+            if (res.status == 1) {
+              this.currentPage = 1;
+              this.$message.success("删除成功");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    //选择服务机构请求数据
+    getOrgArr() {
+      orgChange().then(res => {
+        if (res.status == 1) {
+          this.orgRows = res.rows;
+          for (let i = 0; i < this.orgRows.length; i++) {
+            //循环获取到的服务机构名称和ID，添加到服务机构下拉框容器中
+            var obj = {};
+            obj.name = this.orgRows[i].orgName;
+            obj.id = this.orgRows[i].id;
+            this.mechanismArr.push(obj);
+          }
+        }
+      });
+    },
+    //搜索请求
+    search() {
+      this.tablePage = 1;
+      this.getList();
+    },
+    // 编辑跳转传递ID
+    edit(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Handheld/edit",
+        query: { id: data.id }
+      });
+    },
+    //下线操作
+    offline(row) {
+      this.offlineId = row.id;
+      let statusType = 4; //传递4代表下线状态
+      this.$confirm("确定是否要上线该服务?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          updateStatus(this.offlineId, statusType).then(res => {
+            if (res.status == 1) {
+              this.$message.success("成功下架改商品");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作"
+          });
+        });
+    },
+    //审核弹窗
+    examine(row) {
+      this.examineId = row.id;
+      this.examineVisible = true;
+    },
+    //确定审核
+    saveExamine() {
+      updateStatus(this.examineId, this.updateState.status).then(res => {
+        if (res.status == 1) {
+          this.$message.success("审核成功");
+          this.examineVisible = false;
+          this.getList();
+        }
+      });
+    },
+    //上线操作
+    online(row) {
+      this.onlineId = row.id;
+      let statusType = 3; //传递3代表已上线状态
+      this.$confirm("确定是否要上线该服务?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          updateStatus(this.onlineId, statusType).then(res => {
+            if (res.status == 1) {
+              this.$message.success("上线成功");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作"
+          });
+        });
     }
   }
 };
@@ -201,6 +337,29 @@ export default {
     /deep/ .el-table th:last-child {
       text-align: right;
       padding-right: 10px;
+    }
+    .brown {
+      color: #cc6600;
+    }
+    .green {
+      color: #00a854;
+    }
+    .blue {
+      color: #1890ff;
+    }
+    .red {
+      color: #ff5a5a;
+    }
+    .gray {
+      color: #5a5a5a;
+    }
+  }
+  .examine {
+    .dialog-footer {
+      justify-content: center;
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
     }
   }
 }

@@ -14,6 +14,26 @@
           >
             <el-row>
               <el-col :span="12">
+                <el-form-item label="机构：" prop="orgId">
+                  <el-select
+                    v-model="basicForm.orgId"
+                    clearable
+                    :disabled="disabled"
+                    @change="changeOrg"
+                    placeholder="请选择机构"
+                  >
+                    <el-option
+                      v-for="item in corpArr"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
                 <el-form-item label="标题：" prop="title">
                   <el-input
                     maxlength="50"
@@ -113,12 +133,23 @@
                 <el-col :span="12">
                   <el-form-item
                     :label="'讲师：'"
-                    :prop="'scheduleModels.'+index+'.lecturerName'"
+                    :prop="'scheduleModels.'+index+'.lecturerId'"
                     :key="scheduleModel.key"
+                    :rules="scheduleRules.lecturerId"
                   >
-                    <el-button class="get-address">
-                      <i class="el-icon-plus"></i>选择讲师
-                    </el-button>
+                    <el-select
+                      v-model="scheduleModel.lecturerId"
+                      @change="changeLecturer($event,index)"
+                      clearable
+                      placeholder="请选择讲师"
+                    >
+                      <el-option
+                        v-for="item in lecturerArr"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -219,6 +250,7 @@
 
 <script>
 import { update, getById } from "@/api/hqgj/training";
+import { getUser, lecturerMechanism, lecturerPage } from "@/api/sys";
 import EditorBar from "../../publicTemplate/wangEnduit";
 import photo from "../../publicTemplate/photo";
 export default {
@@ -231,8 +263,11 @@ export default {
       isShow: true, //是否显示
       getData: {}, //编辑数据
       submitType: "edit", //类型
+      disabled: true, //机构是否禁止选择
       //基本信息
       basicForm: {
+        corpName: "", //机构名称
+        orgId: "", //机构ID
         title: "", //标题
         cultivatePersonNumber: "", //人数
         address: "", //地点
@@ -240,6 +275,8 @@ export default {
         timeArr: [] //基本时间数组
       },
       isClear: false,
+      lecturerArr: [], //讲师数组
+      corpArr: [], //机构数组
       //基本信息验证
       basicRules: {
         title: [
@@ -247,6 +284,13 @@ export default {
             required: true,
             message: "请输入标题,字数在50字以内",
             trigger: "blur"
+          }
+        ],
+        orgId: [
+          {
+            required: true,
+            message: "请选择服务机构",
+            trigger: "change"
           }
         ],
         timeArr: [
@@ -276,7 +320,8 @@ export default {
       scheduleForm: {
         title: "", //名称
         detailedAddress: "", //地点
-        lecturerName: "", //讲师
+        lecturerId: "", //讲师Id
+        lecturerName: "", //讲师Name
         timeArr: [], //时间
         content: "", //简介
         courseware: "", //课件
@@ -289,6 +334,13 @@ export default {
             required: true,
             message: "请输入培训名称,字数在50字以内",
             trigger: "blur"
+          }
+        ],
+        lecturerId: [
+          {
+            required: true,
+            message: "请选择讲师",
+            trigger: "change"
           }
         ],
         timeArr: [
@@ -310,6 +362,7 @@ export default {
   },
   created() {
     this.load();
+    this.loadUser();
   },
   methods: {
     //获取数据
@@ -320,10 +373,30 @@ export default {
         if (res.status == 1) {
           this.basicForm = res.data; //基本信息
           this.getData = res.data; //传递给子组件的数据
+          //时间数组
           var obj = [];
           obj.push(res.data.startDate); //开始时间
           obj.push(res.data.endDate); //结束时间
           this.basicForm.timeArr = obj;
+          //机构数组
+          var arrs = {};
+          arrs.id = res.data.orgId;
+          arrs.name = res.data.orgName;
+          this.corpArr.push(arrs);
+          //获取机构下面的人员
+          lecturerPage(res.data.orgId).then(res => {
+            //根据corpId获取服务机构人员
+            if (res.status == 1) {
+              this.lecturerRows = res.rows;
+              for (let i = 0; i < this.lecturerRows.length; i++) {
+                //循环获取到的数据，依次拿到name 和 id，push给下拉框容器
+                var obj = {};
+                obj.name = this.lecturerRows[i].name;
+                obj.id = this.lecturerRows[i].id;
+                this.lecturerArr.push(obj);
+              }
+            }
+          });
           var scheduleModelsArr = res.data.scheduleList;
           if (scheduleModelsArr) {
             for (let i = 0; i < scheduleModelsArr.length; i++) {
@@ -344,6 +417,32 @@ export default {
         }
       });
     },
+    //获取用户信息
+    loadUser() {
+      getUser().then(res => {
+        if (res.status == 1) {
+          this.userType = res.data.userType; //1律师服务 2会计师服务 3培训机构 4工信局
+          this.corpId = res.data.corpId; //服务机构corpId
+          if (this.userType == 4) {
+            //如果是 工信局请求服务机构数据, 3是培训机构的type值
+            var obj = 3;
+            this.corpArr = [];
+            lecturerMechanism(obj).then(res => {
+              if (res.status == 1) {
+                this.disabled = false;
+                this.orgRows = res.rows;
+                for (let i = 0; i < this.orgRows.length; i++) {
+                  var obj = {};
+                  obj.id = this.orgRows[i].id;
+                  obj.name = this.orgRows[i].orgName;
+                  this.corpArr.push(obj);
+                }
+              }
+            });
+          }
+        }
+      });
+    },
     //
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -356,6 +455,43 @@ export default {
       this.dialogVisible = true;
     },
     beforeAvatarUpload() {},
+    //选择机构
+    changeOrg(value) {
+      var lecturerCorpId = value;
+      let obj = {};
+      obj = this.corpArr.find(item => {
+        //这里的userList就是上面遍历的数据源
+        return item.id === value; //筛选出匹配数据
+      });
+      this.basicForm.orgId = value;
+      this.basicForm.orgName = obj.name;
+      if (this.userType == 4) {
+        lecturerPage(lecturerCorpId).then(res => {
+          //根据corpId获取服务机构人员
+          if (res.status == 1) {
+            this.lecturerArr = []; //选择机构的时候先清空专家人员信息，调取数据重新渲染该机构下的人员
+            this.lecturerRows = res.rows;
+            for (let i = 0; i < this.lecturerRows.length; i++) {
+              //循环获取到的数据，依次拿到name 和 id，push给下拉框容器
+              var obj = {};
+              obj.name = this.lecturerRows[i].name;
+              obj.id = this.lecturerRows[i].id;
+              this.lecturerArr.push(obj);
+            }
+          }
+        });
+      }
+    },
+    //选择讲师
+    changeLecturer(value, index) {
+      let obj = {};
+      obj = this.lecturerArr.find(item => {
+        //这里的userList就是上面遍历的数据源
+        return item.id === value; //筛选出匹配数据
+      });
+      this.scheduleForm.scheduleModels[index].lecturerId = value;
+      this.scheduleForm.scheduleModels[index].lecturerName = obj.name;
+    },
     //返回
     black() {
       this.$router.push({
@@ -368,7 +504,7 @@ export default {
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
         if (valid) {
         } else {
-          return;
+          return false;
         }
       });
       this.$refs[formName].validate(valid => {
@@ -394,6 +530,7 @@ export default {
             title: this.basicForm.title, //标题
             cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
             fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
+            orgId: this.basicForm.orgId, //机构ID
             id: this.id, //基本信息表id
             startDate:
               this.basicForm.timeArr.length > 0
@@ -444,7 +581,8 @@ export default {
     addSchedule() {
       this.scheduleForm.scheduleModels.push({
         title: "", //名称
-        lecturerName: "", //讲师
+        lecturerId: "", //讲师Id
+        lecturerName: "", //讲师Name
         detailedAddress: "", //地点
         timeArr: [], //时间
         content: "", //简介
@@ -458,9 +596,6 @@ export default {
       if (index !== -1) {
         this.scheduleForm.scheduleModels.splice(index, 1);
       }
-    },
-    change(val) {
-      console.log(val);
     }
   }
 };

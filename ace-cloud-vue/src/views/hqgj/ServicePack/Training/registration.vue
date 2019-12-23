@@ -1,34 +1,44 @@
 <template>
-  <el-table-column class="main-box">
+  <div class="main-box">
     <div class="header">
       <el-row>
         <el-col class="selectSearch" :span="10">
-          <el-col :span="7" style="margin-right:20px;">
-            <el-select v-model="query.stauts" placeholder="请选择">
+          <el-col :span="7">
+            <el-select v-model="query.isSign" placeholder="请选择">
               <el-option
                 v-for="item in stautsArr"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="16">
-            <el-input placeholder="请输入名称" v-model="query.name" clearable class="input-with-select">
-              <el-button slot="append">搜索</el-button>
+          <el-col :span="16" :offset="1">
+            <el-input
+              placeholder="请输入企业名称或姓名"
+              v-model="query.companyName"
+              clearable
+              class="input-with-select"
+            >
+              <el-button slot="append" @click="search">搜索</el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
-    <el-table-column class="table-box">
+    <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="enterprise" sortable label="企业名称"></el-table-column>
-        <el-table-column prop="name" sortable label="姓名"></el-table-column>
-        <el-table-column prop="phone" sortable label="手机号码"></el-table-column>
-        <el-table-column prop="whether" sortable label="是否签到"></el-table-column>
-        <el-table-column prop="time" sortable label="报名时间"></el-table-column>
+        <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
+        <el-table-column prop="enrollName" sortable label="姓名"></el-table-column>
+        <el-table-column prop="enrollMobile" sortable label="手机号码"></el-table-column>
+        <el-table-column prop="isSign" sortable label="是否签到">
+          <template slot-scope="scope">
+            <div type="text" v-if="scope.row.isSign=='n'">否</div>
+            <div type="text" v-if="scope.row.isSign=='y'">是</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createDate" sortable label="报名时间"></el-table-column>
         <el-table-column
           label="操作"
           fixed="right"
@@ -37,9 +47,8 @@
           header-align="center"
           class="right-txt"
         >
-          <template>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">详情</el-button>
+          <template slot-scope="scope">
+            <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,11 +61,12 @@
         background
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
-    </el-table-column>
-  </el-table-column>
+    </div>
+  </div>
 </template>
 
 <script>
+import { registrationPage, registrationDeleteByIds } from "@/api/hqgj/training";
 export default {
   name: "registration",
   data() {
@@ -64,61 +74,95 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
+      //搜索
       query: {
-        name: "", //搜索
-        status: "" //状态
+        serveCultivateId: "", //id
+        companyName: "", //名称
+        isSign: "" //签到
       },
       stautsArr: [
         {
-          value: "选项1",
-          label: "全部"
+          id: " ",
+          name: "全部"
         },
         {
-          value: "选项2",
-          label: "已签到"
+          id: "y",
+          name: "已签到"
         },
         {
-          value: "选项3",
-          label: "未签到"
+          id: "n",
+          name: "未签到"
         }
       ], //状态容器
-      tableData: [
-        {
-          enterprise: "湖南华彩伟业网络科技有限公司",
-          name: "阿尔斯",
-          phone: "17688876666",
-          whether: "是",
-          time: "2019-11-21 09:31:08"
-        },
-        {
-          enterprise: "湖南华彩伟业网络科技有限公司2",
-          name: "阿尔斯",
-          phone: "17688876666",
-          whether: "是",
-          time: "2019-11-21 09:31:08"
-        },
-        {
-          enterprise: "湖南华彩伟业网络科技有限公司3",
-          name: "阿尔斯",
-          phone: "17688876666",
-          whether: "是",
-          time: "2019-11-21 09:31:08"
-        }
-      ]
+      //报名列表容器
+      tableData: []
     };
   },
+  created() {
+    this.load();
+  },
   methods: {
-    //选择tableSize事件
-    handleTableSize() {},
-    //选择tablePage事件
-    handleTableCurrent() {},
-    //创建
-    create() {
-      this.$router.push({ path: "/hqgj/ServicePack/Training/add" });
+    load() {
+      this.query.serveCultivateId = this.$route.query.id;
+      registrationPage(this.query).then(res => {
+        if (res.status == 1) {
+          this.tableData = res.rows;
+          this.total = res.total;
+        }
+      });
     },
-    //报名管理
-    registrationClick() {
-      this.$router.push({ path: "/hqgj/ServicePack/Training/registration" });
+    //page列表
+    getList() {
+      this.query = Object.assign(this.query, {
+        pageNum: this.tablePage,
+        pageSize: this.tableSize,
+        totalRecord: this.total
+      });
+      registrationPage(this.query).then(res => {
+        if (res.status == 1) {
+          this.tableData = res.rows;
+          this.total = res.total;
+        }
+      });
+    },
+    //搜搜
+    search() {
+      this.tablePage = 1;
+      this.getList();
+    },
+    //删除
+    deleteById(row) {
+      this.ids = row.id;
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          registrationDeleteByIds(this.ids).then(res => {
+            if (res.status == 1) {
+              this.currentPage = 1;
+              this.$message.success("删除成功");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    //选择tableSize事件
+    handleTableSize(size) {
+      this.tableSize = size;
+      this.getList();
+    },
+    //选择tablePage事件
+    handleTableCurrent(current) {
+      this.tablePage = current;
+      this.getList();
     }
   }
 };

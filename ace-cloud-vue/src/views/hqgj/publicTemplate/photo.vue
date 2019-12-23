@@ -200,8 +200,8 @@ export default {
           // 文件对象
           let obj = {};
           if (that.submitType == "edit") {
-            that.actionUrls = "/hqgj/actProject/updateCoverUrl";
-            obj.projectId = that.byIdData.id;
+            that.actionUrls = "/hqgj/serveCultivate/updateCoverUrl";
+            obj.id = that.getData.id;
             obj.coverUrl = newUrl;
           } else {
             that.actionUrls = "/hqgj-portal/www/uploadFileBase";

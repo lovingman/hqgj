@@ -84,21 +84,26 @@ export function getDict(ids) {
   return request({
     url: '/hqgj-portal/dict/getByCategoryIds',
     method: 'get',
-    params: {categoryIds:ids}
+    params: {
+      categoryIds: ids
+    }
   })
 }
-export function fileUpload(fileobj,url) {
+
+export function fileUpload(fileobj, url) {
   let param = new FormData()
-  param.append('file',fileobj.file)
+  param.append('file', fileobj.file)
   return request({
     method: 'post',
     url: url,
-    headers: {'Content-Type':'multipart/form-data'},
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
     data: param
   })
 }
 
-export function filedown(query,url) {
+export function filedown(query, url) {
   return request({
     url: url,
     method: 'get',
@@ -110,11 +115,13 @@ export function getPAreaCode(areaCode) {
   return request({
     url: '/hqgj-portal/system/getPAreaCode',
     method: 'get',
-    params:{areaCode:areaCode}
+    params: {
+      areaCode: areaCode
+    }
   })
 }
 
-export function fileUpImg(url,data) {
+export function fileUpImg(url, data) {
   return request({
     url: url,
     method: 'post',
@@ -128,6 +135,49 @@ export function fileUpImg(url,data) {
     }],
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+
+//获取当前登录用户信息
+export function getUser() {
+  return request({
+    url: '/hqgj/reg/selectUserInfo',
+    method: 'get',
+  })
+}
+
+//获取服务机构信息
+export function lecturerMechanism(data) {
+  return request({
+    url: '/hqgj/baseOrganization/page',
+    method: 'get',
+    params: {
+      type: data
+    }
+  })
+}
+
+//获取服务机构人员信息
+export function lecturerPage(id) {
+  return request({
+    url: '/hqgj/baseOrganizationMember/page',
+    method: 'get',
+    params: {
+      orgId: id
+    }
+  })
+}
+
+// 文件上传
+export function uploadFile(data) {
+  return request({
+    url: '/hqgj-portal/www/uploadFile',
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
     }
   })
 }

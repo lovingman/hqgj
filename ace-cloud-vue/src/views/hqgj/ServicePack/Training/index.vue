@@ -5,7 +5,7 @@
         <el-button type="primary" style="float:left;" @click="create">创建</el-button>
         <el-col class="selectSearch" :span="10">
           <el-col :span="7">
-            <el-select v-model="query.status" placeholder="请选择">
+            <el-select v-model="query.status" clearable placeholder="请选择">
               <el-option
                 v-for="item in stautsArr"
                 :key="item.id"
@@ -32,20 +32,25 @@
         <el-table-column prop="endDate" sortable label="截止时间"></el-table-column>
         <el-table-column prop="status" sortable label="状态">
           <template slot-scope="scope">
-            <div type="text" class="orange" v-if="scope.row.status=='0'">待审核</div>
+            <div type="text" class="brown" v-if="scope.row.status=='0'">待审核</div>
             <div type="text" class="green" v-if="scope.row.status=='1'">进行中</div>
             <div type="text" class="red" v-if="scope.row.status=='2'">未通过</div>
             <div type="text" class="gray" v-if="scope.row.status=='3'">已结束</div>
+            <div type="text" class="blue" v-if="scope.row.status=='4'">待发布</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="280" align="right" header-align="center">
           <template slot-scope="scope">
-            <el-button type="text">发布</el-button>
-            <el-button type="text">审核</el-button>
-            <el-button type="text" @click="registrationClick(scope)">报名管理</el-button>
-            <el-button type="text" @click="update(scope.row)">编辑</el-button>
+            <el-button type="text" @click="release(scope.row)" v-if="scope.row.status =='4'">发布</el-button>
+            <el-button type="text" @click="examine(scope.row)" v-if="scope.row.status =='0'">审核</el-button>
+            <el-button
+              type="text"
+              @click="registrationClick(scope.row)"
+              v-if="scope.row.status =='1' || scope.row.status =='3' "
+            >报名管理</el-button>
+            <el-button type="text" v-if="scope.row.status !='3'" @click="update(scope.row)">编辑</el-button>
             <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
-            <el-button type="text">详情</el-button>
+            <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,11 +64,29 @@
         layout="total,sizes,prev, pager, next ,jumper"
       ></el-pagination>
     </div>
+    <!-- 审核弹出框 -->
+    <el-dialog title="审核" class="examine" :visible.sync="examineVisible">
+      <el-form ref="form" :model="updateState" label-width="100%">
+        <p style="line-height:30px; text-align: center; font-size: 20px;padding-bottom:20px;">服务是否通过</p>
+        <div style="text-align: center">
+          <el-radio-group v-model="updateState.status" style="text-align: center">
+            <el-radio :label="4">通过</el-radio>
+            <el-radio :label="2">不通过</el-radio>
+          </el-radio-group>
+        </div>
+      </el-form>
+      <span class="dialog-footer">
+        <el-button @click="examineVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveExamine">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- end -->
+
   </div>
 </template>
 
 <script>
-import { page, deleteByIds } from "@/api/hqgj/training";
+import { page, deleteByIds, updateStatus } from "@/api/hqgj/training";
 export default {
   name: "index",
   data() {
@@ -71,9 +94,15 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
+      examineVisible: false, //是否显示审核弹框
+      //搜索
       query: {
-        title: "", //搜索
+        title: "", //输入框
         status: "" //状态
+      },
+      //审核
+      updateState: {
+        status: 4
       },
       stautsArr: [
         {
@@ -113,7 +142,6 @@ export default {
         totalRecord: this.total
       });
       page(this.query).then(res => {
-        console.log(this.query);
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;
@@ -126,16 +154,32 @@ export default {
       this.getList();
     },
     //选择tableSize事件
-    handleTableSize(size) {},
+    handleTableSize(size) {
+      this.tableSize = size;
+      this.getList();
+    },
     //选择tablePage事件
-    handleTableCurrent(current) {},
+    handleTableCurrent(current) {
+      this.tablePage = current;
+      this.getList();
+    },
     //创建
     create() {
       this.$router.push({ path: "/hqgj/ServicePack/Training/add" });
     },
     //报名管理
-    registrationClick() {
-      this.$router.push({ path: "/hqgj/ServicePack/Training/registration" });
+    registrationClick(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Training/registration",
+        query: { id: data.id }
+      });
+    },
+    //详情
+    seeClick(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Training/see",
+        query: { id: data.id }
+      });
     },
     //删除
     deleteById(row) {
@@ -167,6 +211,45 @@ export default {
         path: "/hqgj/ServicePack/Training/edit",
         query: { id: data.id }
       });
+    },
+    //审核弹窗
+    examine(row) {
+      this.examineId = row.id;
+      this.examineVisible = true;
+    },
+    //确定审核
+    saveExamine() {
+      updateStatus(this.examineId, this.updateState.status).then(res => {
+        if (res.status == 1) {
+          this.$message.success("审核成功");
+          this.examineVisible = false;
+          this.getList();
+        }
+      });
+    },
+    //确定是否发布
+    release(row) {
+      this.releaseId = row.id;
+      this.statusType = 1; //传递1代表发布成功
+      this.$confirm("确定是否要发布该服务?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          updateStatus(this.releaseId, this.statusType).then(res => {
+            if (res.status == 1) {
+              this.$message.success("发布成功");
+              this.getList();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作"
+          });
+        });
     }
   }
 };
@@ -196,6 +279,29 @@ export default {
     /deep/ .el-table th:last-child {
       text-align: right;
       padding-right: 10px;
+    }
+    .brown {
+      color: #cc6600;
+    }
+    .green {
+      color: #4da64d;
+    }
+    .blue {
+      color: #1890ff;
+    }
+    .red {
+      color: #ff5a5a;
+    }
+    .gray {
+      color: #5a5a5a;
+    }
+  }
+  .examine {
+    .dialog-footer {
+      justify-content: center;
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
     }
   }
 }

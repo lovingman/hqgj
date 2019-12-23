@@ -44,3 +44,44 @@ export function deleteByIds(ids) {
     },
   })
 }
+//审核
+export function updateStatus(id, status) {
+  return request({
+    url: '/hqgj/serveCultivate/updateStatus',
+    method: 'post',
+    params: {
+      id: id,
+      status: status
+    },
+  })
+}
+//报名管理
+export function registrationPage(query) {
+  return request({
+    url: '/hqgj/serveCultivateEnroll/page',
+    method: 'get',
+    params: query
+  })
+}
+//报名管理删除
+export function registrationDeleteByIds(ids) {
+  return request({
+    url: '/hqgj/serveCultivateEnroll/page',
+    method: 'post',
+    params: {
+      ids: ids
+    },
+  })
+}
+
+//获取服务机构人员信息
+export function lecturerPage(id) {
+  return request({
+    url: '/hqgj/baseOrganizationMember/page',
+    method: 'get',
+    params: {
+      orgId: id
+    }
+  })
+}
+
