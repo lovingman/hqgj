@@ -10,9 +10,12 @@ import java.util.List;
 
 public class ServeFinanceVo extends ServeFinance {
     private static final long serialVersionUID = 1L;
+    //剩余名额
     private String surplusQuota;
     private BaseOrganization baseOrganization;
     private BaseOrganizationMember baseOrganizationMember;
+    //剩余积分
+    private Integer integral;
     //最大
     private String maxPrice;
     //最小
@@ -69,5 +72,13 @@ public class ServeFinanceVo extends ServeFinance {
     @Override
     public void setFinanceItemList(List<ServeFinanceItem> financeItemList) {
         this.financeItemList = financeItemList;
+    }
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
     }
 }

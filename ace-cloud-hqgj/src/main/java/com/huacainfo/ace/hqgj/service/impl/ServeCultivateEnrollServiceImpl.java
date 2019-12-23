@@ -179,5 +179,21 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
+    /**
+     * 批量修改状态
+     * @param status
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO updateStatus(String status, String[] ids) throws Exception {
+        if(CommonUtils.isBlank(status) || CommonUtils.isBlank(ids)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        this.serveCultivateEnrollDao.updateStatus(status,ids);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
 
 }

@@ -36,12 +36,12 @@ public class PersonalCenterController  extends BaseController {
      * 绑定企业或者服务机构
      * type 1 企业，2 机构
      */
-    @ApiOperation(value = "/scheduleGetById", notes = "根据主键获取 培训提升日程表")
+    @ApiOperation(value = "/bingUser", notes = "绑定企业或者服务机构")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
     })
-    @GetMapping(value = "/scheduleGetById", produces = "application/json;charset=UTF-8")
-    public ResponseDTO bingUser(String id,String userId,String type) throws Exception {
+    @GetMapping(value = "/bingUser", produces = "application/json;charset=UTF-8")
+    public ResponseDTO bingUser(String id,String type) throws Exception {
         if(CommonUtils.isBlank(id) || CommonUtils.isBlank(type)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }

@@ -150,4 +150,14 @@
             #{id}
         </foreach>
     </delete>
+
+
+    <update id="updateStatus" parameterType="java.lang.String">
+        update  serve_cultivate_enroll
+        set status=#{status,jdbcType=VARCHAR}
+        where id in
+        <foreach collection="ids" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
 </mapper>

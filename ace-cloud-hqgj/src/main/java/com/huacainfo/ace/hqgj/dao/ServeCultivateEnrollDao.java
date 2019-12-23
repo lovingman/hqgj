@@ -27,4 +27,6 @@ public interface ServeCultivateEnrollDao {
     int isExist(ServeCultivateEnroll o);
 
     int deleteByIds(String[] ids);
+
+    int updateStatus(@Param("status") String status,@Param("ids") String[] ids);
 }

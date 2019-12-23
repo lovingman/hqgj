@@ -64,7 +64,7 @@ public interface ServeFinanceService {
      * @author: 何双
      * @version: 2019-12-10
      */
-    ResponseDTO<ServeFinanceVo> getById(String id) throws Exception;
+    ResponseDTO<ServeFinanceVo> getById(String id,String userId) throws Exception;
 
     /**
      * @throws

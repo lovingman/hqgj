@@ -90,4 +90,13 @@ public interface ServeCultivateEnrollService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+    /**
+     * 批量修改状态
+     * @param status
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO updateStatus(String status,String[] ids)throws Exception;
+
 }
