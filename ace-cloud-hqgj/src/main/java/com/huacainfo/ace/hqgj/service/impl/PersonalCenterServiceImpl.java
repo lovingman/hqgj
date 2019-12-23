@@ -45,6 +45,10 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
         if(type.equals("1")){
             BaseCompanyMember o=new BaseCompanyMember();
                 o.setId(userProp.getUserId());
+             int temp = this.baseCompanyMemberDao.isExist(o);
+             if (temp > 0) {
+                return new ResponseDTO(ResultCode.FAIL, "已经存在！");
+             }
                 o.setCompanyId(id);
                 o.setName(userProp.getName());
                 o.setIdCard(user.getIdCard());

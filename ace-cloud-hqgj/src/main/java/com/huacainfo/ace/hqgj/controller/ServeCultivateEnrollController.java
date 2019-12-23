@@ -161,4 +161,23 @@ public class ServeCultivateEnrollController extends BaseController {
         return this.serveCultivateEnrollService.deleteByIds(ids.split(","));
     }
 
+
+    /**
+     * 批量修改状态（签到，待签订的）
+     * @param status
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/updateStatus", notes = "更新培训提升-报名管理")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "jsons", value = "ServeCultivateEnroll的json化对象", required = true, dataType = "String",
+                    paramType = "form"),
+    })
+    @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateStatus(String status,String ids) throws Exception {
+        return this.serveCultivateEnrollService.updateStatus(status, ids.split(","));
+    }
+
+
 }

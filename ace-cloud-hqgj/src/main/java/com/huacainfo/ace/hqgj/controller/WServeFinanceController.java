@@ -8,6 +8,7 @@ import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.common.vo.PageParam;
+import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.web.controller.BaseController;
 import com.huacainfo.ace.hqgj.model.ServeFinance;
 import com.huacainfo.ace.hqgj.service.ServeFinanceService;
@@ -121,8 +122,9 @@ public class WServeFinanceController extends BaseController {
             @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
     })
     @GetMapping(value = "/getById", produces = "application/json;charset=UTF-8")
-    public ResponseDTO<ServeFinanceVo> getById(String id) throws Exception {
-        return this.serveFinanceService.getById(id);
+    public ResponseDTO<ServeFinanceVo> getById(String id,String userId) throws Exception {
+        UserProp user = this.getCurUserProp();
+        return this.serveFinanceService.getById(id,user==null?userId:user.getUserId());
     }
 
 

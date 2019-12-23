@@ -171,9 +171,9 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
      */
     @Override
     @Transactional
-    public ResponseDTO<ServeFinanceVo> getById(String id) throws Exception {
+    public ResponseDTO<ServeFinanceVo> getById(String id,String userId) throws Exception {
         ResponseDTO<ServeFinanceVo> rst = new ResponseDTO<>();
-        rst.setData(this.serveFinanceDao.selectVoByPrimaryKey(id));
+        rst.setData(this.serveFinanceDao.selectVoByPrimaryKey(id,userId));
         return rst;
     }
 

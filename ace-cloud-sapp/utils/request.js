@@ -26,7 +26,7 @@ Promise.prototype.finally = function (callback) {
  * url
  * data 以对象的格式传入
  */
-function getJOSN(url, data) {
+function getJSON(url, data) {
     var getRequest = wxPromisify(wx.request)
     return getRequest({
         url: url,
@@ -56,6 +56,6 @@ function post(url, data) {
 }
 
 module.exports = {
-    post: post,
-    getJOSN: getJOSN
+    post,
+    getJSON
 }

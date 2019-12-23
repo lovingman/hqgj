@@ -143,7 +143,7 @@ public class WServeCultivateController extends BaseController {
     @GetMapping(value = "/selectByIdDetails", produces = "application/json;charset=UTF-8")
     public ResponseDTO selectByIdDetails(String id,String userId) {
         UserProp user = this.getCurUserProp();
-        return serveCultivateService.selectByIdDetails(id,user==null?userId:null);
+        return serveCultivateService.selectByIdDetails(id,user==null?userId:user.getUserId());
     }
 
 

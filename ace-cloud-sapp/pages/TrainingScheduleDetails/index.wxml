@@ -1,83 +1,58 @@
 <view>
-    <view class="modal">
-        <view class="content">
-            <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》</view>
-            <view class="footer">
-                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-            <view class="footer">
-                <van-icon name="location" />
-                <text>常德市武陵区互联网产业园</text>
-            </view>
-        </view>
+  <view class="modal">
+    <view class="content">
+      <view class="title">{{basicForm.title}}</view>
+      <view class="footer">
+        <van-icon name="clock-o" />{{basicForm.startDate}}
+        <text>至</text>{{basicForm.endDate}}</view>
+      <view class="footer">
+        <van-icon name="location" />
+        <text>{{basicForm.detailedAddress}}</text>
+      </view>
     </view>
-    <view class="mod">
-        <view class="title">
-            <icon class="iconfont icon-jieshao"></icon> 简介
-        </view>
-        <view class="text">
-            10多年高新技术企业产品管理、研发管理和项目管理经验，先后担任过产品创新战略经理、产品经理、产品总监、技术管理总监、项目管理部总经理、常务副总裁等职位，在长期的管理实践中积累了丰富的产品与研发创新思想与理念。 　曾先后担任GE集团产品创新战略经理、02-04年创办江西互联科技有限公司任总经理、知名物联网(医疗、交通、税务、纺织智能信息化)企业(上市)产品经理、产品总监。某大型软件及系统集成设备企业技术管理总监、IPMT秘书、IPD咨询项目经理、研发任职资格小组组长、项目管理部总经理。中美合资知名智能识别系统设备企业常务副总裁。
-        </view>
+  </view>
+  <view class="mod">
+    <view class="title">
+      <icon class="iconfont icon-jieshao"></icon> 简介
     </view>
-    <view class="mod">
-        <view class="title">
-            <icon class="iconfont icon-yonghuguanli"></icon> 讲师介绍
-        </view>
+    <view class="text">
+      {{basicForm.content}}
     </view>
-    <view class="org">
-        <view class="img">
-            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        </view>
-        <view class="info">
-            <view class="info1">
-                <view class="name">王麒霖</view>
-                <view class="sign" ><icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-            </view>
-            <view class="info2 van-ellipsis">
-                常德市武陵区会计事务所·投资顾问
-            </view>
-        </view>
+  </view>
+  <view class="mod">
+    <view class="title">
+      <icon class="iconfont icon-yonghuguanli"></icon> 讲师介绍
     </view>
-    <view class="mod">
-        <view class="title">
-            擅长领域
-        </view>
-        <view class="goodList">
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-            <view class="item">
-                四个字字
-            </view>
-        </view>
-        <view class="title">
-            个人简介
-        </view>
-        <view class="text">
-            10多年高新技术企业产品管理、研发管理和项目管理经验，先后担任过产品创新战略经理、产品经理、产品总监、技术管理总监、项目管理部总经理、常务副总裁等职位，在长期的管理实践中积累了丰富的产品与研发创新思想与理念。 　曾先后担任GE集团产品创新战略经理、02-04年创办江西互联科技有限公司任总经理、知名物联网(医疗、交通、税务、纺织智能信息化)企业(上市)产品经理、产品总监。某大型软件及系统集成设备企业技术管理总监、IPMT秘书、IPD咨询项目经理、研发任职资格小组组长、项目管理部总经理。中美合资知名智能识别系统设备企业常务副总裁。
-        </view>
+  </view>
+  <view class="org">
+    <view class="img">
+      <van-image width="100%" height="100%" fit="cover" src="{{basicForm.baseOrganizationMember.imagePhoto}}" />
     </view>
+    <view class="info">
+      <view class="info1">
+        <view class="name">{{basicForm.baseOrganizationMember.name}}</view>
+        <view class="sign">
+          <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+      </view>
+      <view class="info2 van-ellipsis">
+        培训讲师
+      </view>
+    </view>
+  </view>
+  <view class="mod">
+    <view class="title">
+      擅长领域
+    </view>
+    <view class="goodList">
+      <view class="item" wx:for="{{specialityList}}" wx:key="{{index}}" wx:for-item="item" data-index='{{index}}'>
+        {{item ? item:'无'}}
+      </view>
+    </view>
+    <view class="title">
+      个人简介
+    </view>
+    <view class="text">
+      {{basicForm.baseOrganizationMember.content}}
+    </view>
+  </view>
 </view>

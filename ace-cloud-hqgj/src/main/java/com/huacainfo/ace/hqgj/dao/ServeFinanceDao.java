@@ -14,7 +14,7 @@ public interface ServeFinanceDao {
 
     int updateByPrimaryKey(ServeFinance o);
 
-    ServeFinanceVo selectVoByPrimaryKey(String id);
+    ServeFinanceVo selectVoByPrimaryKey(String id,String userId);
 
     List<ServeFinanceVo> findList(@Param("condition") ServeFinanceQVo condition,
         @Param("start") int start,
