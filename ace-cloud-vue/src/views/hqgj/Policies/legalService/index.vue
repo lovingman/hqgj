@@ -17,7 +17,7 @@
                 <el-table-column label="上传时间" prop="createDate" sortable></el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="240">
                     <template slot-scope="scope">
-                        <el-button type="text">下载</el-button>
+                        <el-button @click="download(scope.$index,scope.row)" type="text">下载</el-button>
                         <el-button @click="edit(scope.$index,scope.row)" type="text">编辑</el-button>
                         <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
                         <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
@@ -39,7 +39,7 @@
 
 <script>
     import {getServe, deleteServeById} from "@/api/hqgj/Policies";
-
+    import {getAnnex} from "@/api/hqgj/BWSService";
     export default {
         name: "index",
         data() {
@@ -49,6 +49,9 @@
                 total: 0,
                 query: {
                     title: "" //搜索
+                },
+                query2: {
+                    relationId: "" //搜索
                 },
                 tableData: [
                     {
@@ -98,6 +101,46 @@
                     this.total = response.total;
                     this.tableData = response.rows
                 })
+            },
+            //删除
+            handleDele(index, data) {
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deleteServeById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+                        this.$message.error('error')
+                    });
+            },
+            //下载
+            download(index,data){
+                this.$confirm("此操作将下载所有附件, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.query2.relationId = data.id;
+                        getAnnex(this.query2).then(response => {
+                            for(var i=0;i<response.data.length;i++){
+                                // let link = document.createElement('a')
+                                // link.href = response.data[i].fileURL;
+                                // link.download = data.fileName + '.png'
+                                // link.click()
+                            }
+                        });
+                    })
+                    .catch(() => {
+                        this.$message.error('error')
+                    });
             },
             //选择tableSize事件
             handleTableSize() {

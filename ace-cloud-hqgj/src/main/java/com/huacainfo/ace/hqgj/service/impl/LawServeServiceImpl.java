@@ -180,6 +180,7 @@ public class LawServeServiceImpl implements LawServeService {
     @Log(operationObj = "法律服务", operationType = "删除", detail = "删除法律服务")
     public ResponseDTO deleteById(String id) throws Exception {
         this.lawServeDao.deleteByPrimaryKey(id);
+        basicAnnexDao.deleteByRelationIds(id.split(","));
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
