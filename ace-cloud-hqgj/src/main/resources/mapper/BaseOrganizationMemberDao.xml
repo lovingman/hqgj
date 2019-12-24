@@ -180,4 +180,6 @@
       set userId = #{userId,jdbcType=VARCHAR}
       where id = #{id,jdbcType=VARCHAR}
     </update>
+
+
 </mapper>

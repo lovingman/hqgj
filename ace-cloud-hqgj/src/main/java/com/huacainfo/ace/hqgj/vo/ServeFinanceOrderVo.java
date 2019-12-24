@@ -15,6 +15,11 @@ public class ServeFinanceOrderVo extends ServeFinanceOrder {
     private String mName;
     //专家照片
     private String imagePhoto;
+
+    //预约人姓名
+    private String userName;
+    //预约人电话
+    private String userMobile;
     @Override
     public String getFmUrl() {
         return fmUrl;
@@ -55,5 +60,21 @@ public class ServeFinanceOrderVo extends ServeFinanceOrder {
 
     public void setImagePhoto(String imagePhoto) {
         this.imagePhoto = imagePhoto;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
     }
 }

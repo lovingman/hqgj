@@ -8,42 +8,26 @@ import java.util.Date;
 
 public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
     private static final long serialVersionUID = 1L;
-    private String title;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date startDate;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date endDate;
-    private String fmUrl;
+    private String name;
 
-    public String getTitle() {
-        return title;
+    private String companyName;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    @Override
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getFmUrl() {
-        return fmUrl;
-    }
-
-    public void setFmUrl(String fmUrl) {
-        this.fmUrl = fmUrl;
+    @Override
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

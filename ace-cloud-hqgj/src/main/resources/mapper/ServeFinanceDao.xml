@@ -90,6 +90,8 @@
             <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
             <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
             <result column="mContent" jdbcType="VARCHAR" property="content"/>
+            <result column="mjobs" jdbcType="VARCHAR" property="jobs"/>
+            <result column="mmobile" jdbcType="VARCHAR" property="mobile"/>
         </association>
         <collection property="financeItemList"  column="id" ofType="com.huacainfo.ace.hqgj.model.ServeFinanceItem">
             <result column="itId" jdbcType="VARCHAR" property="id"/>
@@ -131,8 +133,8 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
-        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode,o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,m.jobs mjobs,m.mobile mmobile,
         (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
         (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
         (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
@@ -161,7 +163,7 @@
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
         <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
-        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,
+        m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,m.jobs mjobs,m.mobile mmobile,
         (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
         case p.type
         when '4' then   '常德市'
