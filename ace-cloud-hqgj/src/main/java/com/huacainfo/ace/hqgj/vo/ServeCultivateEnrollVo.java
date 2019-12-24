@@ -23,6 +23,8 @@ public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
     private Date endDate;
     //培训封面
     private String fmUrl;
+    //手机号
+    private String mobile;
 
     public String getName() {
         return name;
@@ -72,5 +74,13 @@ public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
 
     public void setFmUrl(String fmUrl) {
         this.fmUrl = fmUrl;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

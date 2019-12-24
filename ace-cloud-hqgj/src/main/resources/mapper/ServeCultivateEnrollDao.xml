@@ -70,6 +70,7 @@
         <result column="endDate" jdbcType="TIMESTAMP" property="endDate"/>
         <result column="fmUrl" jdbcType="VARCHAR" property="fmUrl"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.serveCultivateId, t.companyId,  t.enrollUserId, t.enrollName, t.enrollMobile, t.sex, t.isSign, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -120,7 +121,7 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,c.title,c.startDate,c.endDate,c.fmUrl,bm.name,bc.companyName companyName
+        <include refid="Vo_Column_List"/>,c.title,c.startDate,c.endDate,c.fmUrl,bm.name,bm.mobile,bc.companyName companyName
         <include refid="From_Statement"/>
         left  join serve_cultivate c on c.id=t.serveCultivateId
         left join base_company_member bm on bm.id=t.enrollUserId

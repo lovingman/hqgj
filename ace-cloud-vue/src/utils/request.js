@@ -6,11 +6,12 @@ import { getToken } from '@/utils/auth'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  //  baseURL: "http://39.97.185.200:9011", // url = base url + request url
-  //  baseURL: "http://10.0.0.12:9011", // url = base url + request url
-  //  baseURL: "http://192.168.2.105", // url = base url + request url
+   // baseURL: "http://39.97.185.200:9011", // url = base url + request url
+   // baseURL: "http://10.0.0.12:9011", // url = base url + request url
+   // baseURL: "http://192.168.2.114", // url = base url + request url
   // baseURL: "http://111.8.133.83:9011", // url = base url + request url
   // baseURL: "http://zx.huacainfo.com/", // url = base url + request url
+  // baseURL: "http://test.huacainfo.com/webapp/#", // url = base url + request url
   // baseURL: "http://zhtz.cdtyzx.gov.cn/", // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000 // request timeout

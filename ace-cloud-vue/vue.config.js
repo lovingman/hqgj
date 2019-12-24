@@ -10,6 +10,7 @@ module.exports = {
 如我本地的应用的路径是“D:\WORK\study\vue\vue_cli3_test\demo1”，则在这个应用中，根路径就是“D:\WORK\study\vue\vue_cli3_test\demo1”
   */
   // publicPath: '/webapp/server',
+  // publicPath: '/webapp',
   publicPath: '/www',
 
   //3.当运行vue-cli-service build时生成的生产环境构建环境的目录。用法和webpack的output.path一样，不要修改output.path
