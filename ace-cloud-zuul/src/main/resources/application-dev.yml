@@ -59,7 +59,7 @@ jwt:
   expiration: 604800 #JWT的超期限时间(60*60*24)
   tokenHead: Bearer  #JWT负载中拿到开头
 filter:
-  ignoreuris: /login,/security/login,/feign,/hqgj-portal/security/login,/zcpa/www,/hqgj-portal/www,/webapp/,/hqgj/www
+  ignoreuris: /login,/security/login,/feign,/hqgj-portal/security/login,/zcpa/www,/hqgj-portal/www,/webapp/,/hqgj/www,/wxms/www
 #
 cloudplatform-service-local:
   #设置ribbon的请求超时时间，大文件上传必须调高此时间
