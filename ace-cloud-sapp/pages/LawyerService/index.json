@@ -1,8 +1,9 @@
 {
-    "usingComponents": {
-        "van-tab": "/@vant/weapp/tab/index",
-        "van-tabs": "/@vant/weapp/tabs/index",
-        "van-image": "/@vant/weapp/image/index",
-        "van-search": "/@vant/weapp/search/index"
-    }
+  "navigationBarTitleText": "法律服务",
+  "usingComponents": {
+    "van-tab": "/@vant/weapp/tab/index",
+    "van-tabs": "/@vant/weapp/tabs/index",
+    "van-image": "/@vant/weapp/image/index",
+    "van-search": "/@vant/weapp/search/index"
+  }
 }

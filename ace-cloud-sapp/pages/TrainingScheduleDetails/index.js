@@ -1,14 +1,14 @@
 // pages/TrainingScheduleDetails/index.js
 var cfg = require("../../utils/config.js");
-var app = getApp(); // 取得全局App
+var request = require("../../utils/request.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    basicForm: {},//数据容器
-    specialityList: [],//领域数组
+    basicForm: {}, //数据容器
+    specialityList: [], //领域数组
   },
 
   /**
@@ -20,15 +20,13 @@ Page({
     this.setData({
       id: options.id
     })
-    var ids = this.data.id;
-    app.request(cfg.scheduleGetByIdUrl, {
-      id: ids
-    }, function (res) {
-      console.log(res);
-      if (res.status == 1) {
+    request.getJSON(cfg.scheduleGetByIdUrl, {
+      id: that.data.id
+    }).then(res => {
+      if (res.data.status == 1) {
         that.setData({
-          basicForm: res.data,
-          specialityList: res.data.baseOrganizationMember.speciality.split(',')
+          basicForm: res.data.data,
+          specialityList: res.data.data.baseOrganizationMember.speciality.split(',')
         })
       }
     })

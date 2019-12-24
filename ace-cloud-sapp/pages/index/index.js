@@ -13,12 +13,12 @@ Page({
       {
         text: '财税服务包',
         imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-        path: '/'
+        path: '../FinanceTax/index'
       },
       {
         text: '财税专家问诊',
         imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-        path: '../FinanceTax/index'
+        path: '../ExpertConsultation/index'
       },
       {
         text: '培训提升服务',
@@ -28,12 +28,12 @@ Page({
       {
         text: '法律服务',
         imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-        path: '/'
+        path: '../LawyerService/index'
       },
       {
         text: '政策服务',
         imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-        path: '/'
+        path: '../PolicyService/index'
       }
     ]
   },

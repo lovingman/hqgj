@@ -1,6 +1,6 @@
 // pages/FinanceTax/index.js
 var cfg = require("../../utils/config.js");
-var app = getApp(); // 取得全局App
+var request = require("../../utils/request.js");
 Page({
 
   /**
@@ -26,14 +26,13 @@ Page({
         type: 2
       })
     }
-    console.log(that.data.type)
-    app.request(cfg.financePageUrL, {
+    request.getJSON(cfg.financePageUrL, {
       type: that.data.type
-    }, function (res) {
-      if (res.status == 1) {
+    }).then(res => {
+      if (res.data.status == 1) {
         console.log(res);
         that.setData({
-          listArr: res.rows
+          listArr: res.data.rows
         })
       }
     })
