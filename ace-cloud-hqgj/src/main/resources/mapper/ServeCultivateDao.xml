@@ -143,8 +143,12 @@
             <if test="condition.content != null and condition.content != ''">
                 and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
-            <if test="condition.status != null and condition.status != ''">
-                and t.status = #{condition.status,jdbcType=VARCHAR}
+            <if test="condition.statuss != null and condition.statuss != ''">
+                and t.status in
+                <foreach collection="condition.statuss" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+
             </if>
         </where>
     </sql>
