@@ -66,9 +66,13 @@
         <view class="title van-ellipsis">
           {{detailsForm.baseOrganization.orgName}}
         </view>
-        <view class="price">
-          ￥<text wx:if="{{isTrue}}">{{detailsForm.minPrice}}~{{detailsForm.maxPrice}}</text>
-            <text wx:if="{{isFalse}}">{{priceForm.price}}</text>
+        <view class="price" wx:if="{{isTrue}}">
+          ￥
+          <text>{{detailsForm.minPrice}}~{{detailsForm.maxPrice}}</text>
+        </view>
+        <view class="price" wx:if="{{isPrice}}">
+          ￥
+          <text>{{priceModel.price}}</text>
         </view>
       </view>
     </view>

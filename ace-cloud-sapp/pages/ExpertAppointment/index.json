@@ -1,7 +1,8 @@
 {
-    "usingComponents": {
-        "van-image": "/@vant/weapp/image/index",
-        "van-button": "/@vant/weapp/button/index",
-        "van-icon": "/@vant/weapp/icon/index"
-    }
+  "navigationBarTitleText": "财税专家问诊详情",
+  "usingComponents": {
+    "van-image": "/@vant/weapp/image/index",
+    "van-button": "/@vant/weapp/button/index",
+    "van-icon": "/@vant/weapp/icon/index"
+  }
 }

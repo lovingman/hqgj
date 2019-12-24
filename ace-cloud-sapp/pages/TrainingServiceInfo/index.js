@@ -1,6 +1,6 @@
 // pages/TrainingServiceInfo/index.js
 var cfg = require("../../utils/config.js");
-var app = getApp(); // 取得全局App
+var request = require("../../utils/request.js");
 Page({
 
   /**
@@ -8,23 +8,22 @@ Page({
    */
   data: {
     basicForm: {}, //基本信息数据
-    scheduleList: [],//日程列表
+    scheduleList: [], //日程列表
   },
   //tab切换日常调取日程接口
   tabClick: function (event) {
     var that = this;
     var index = parseInt(event.detail.index); //获取当前点击的tabs的索引值
     if (index == 1) { //0是培训介绍， 1是日程安排
-      app.request(cfg.schedulePageUrl, {
-        serveCultivateId: this.data.id
-      }, function (res) {
-        console.log(res);
-        if (res.status == 1) {
-          that.setData({
-            scheduleList: res.rows
-          })
-        }
-      })
+      request.getJSON(cfg.schedulePageUrl, { serveCultivateId: that.data.id }).
+        then(res => {
+          console.log(res);
+          if (res.data.status == 1) {
+            that.setData({
+              scheduleList: res.data.rows
+            })
+          }
+        })
     }
   },
   //点击日程去详情
@@ -39,19 +38,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
     var that = this;
-    this.setData({
+    that.setData({
       id: options.id
     })
-    var ids = this.data.id;
-    app.request(cfg.selectByIdDetailsUrl, {
-      id: ids
-    }, function (res) {
+    request.getJSON(cfg.selectByIdDetailsUrl, { id: that.data.id }).then(res => {
       console.log(res);
-      if (res.status == 1) {
+      if (res.data.status == 1) {
         that.setData({
-          basicForm: res.data
+          basicForm: res.data.data
         })
       }
     })

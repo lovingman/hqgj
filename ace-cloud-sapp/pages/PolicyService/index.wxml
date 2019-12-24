@@ -1,57 +1,20 @@
 <view>
-    <view class="search">
-        <view class="title">为企业提供有价值的政策信息</view>
-        <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索政策" bind:change="onChange" bind:search="onSearch">
-        </van-search>
+  <view class="search">
+    <view class="title">为企业提供有价值的政策信息</view>
+    <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索政策" bind:change="onChange" bind:search="onSearch">
+    </van-search>
+  </view>
+  <view class="files">
+    <view class="title">
+      全部模板（{{listNumll}}）
     </view>
-    <view class="files">
-        <view class="title">
-            全部模板（206）
-        </view>
-        <view class="file">
-            <view class="name">
-                最新租赁经营合同书范文
-            </view>
-            <view class="other">
-                <view>2019-10-10 </view>
-            </view>
-        </view>
-
-
-        <view class="file">
-            <view class="name">
-                最新租赁经营合同书范文
-            </view>
-            <view class="other">
-                <view>2019-10-10 </view>
-            </view>
-        </view>
-
-        <view class="file">
-            <view class="name">
-                最新租赁经营合同书范文
-            </view>
-            <view class="other">
-                <view>2019-10-10 </view>
-            </view>
-        </view>
-
-        <view class="file">
-            <view class="name">
-                最新租赁经营合同书范文
-            </view>
-            <view class="other">
-                <view>2019-10-10 </view>
-            </view>
-        </view>
-
-        <view class="file">
-            <view class="name">
-                最新租赁经营合同书范文
-            </view>
-            <view class="other">
-                <view>2019-10-10 </view>
-            </view>
-        </view>
+    <view class="file" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
+      <view class="name">
+        {{item.title}}
+      </view>
+      <view class="other">
+        <view>{{item.createDate}} </view>
+      </view>
     </view>
+  </view>
 </view>
