@@ -247,9 +247,22 @@
         <el-dialog
                 :visible.sync="addressVisible"
                 title="提示"
-                width="30%">
-
-                  <span class="dialog-footer" slot="footer">
+                width="60%">
+            <div>
+                <div>
+                    <input id="keyword" type="textbox" value="酒店">
+                    <el-button @click="searchKeyword" type="text" value="search">搜索</el-button>
+                </div>
+                <!--<a-input-search-->
+                <!--@search="onSearch"-->
+                <!--enterButton="Search"-->
+                <!--placeholder="请输入搜索的地址"-->
+                <!--style="width: 300px;margin-left: 20px;"-->
+                <!--/>-->
+                <div id="container">
+                </div>
+            </div>
+            <span class="dialog-footer" slot="footer">
     <el-button @click="addressVisible = false">取 消</el-button>
     <el-button @click="addressVisible = false" type="primary">确 定</el-button>
                 </span>
@@ -257,12 +270,12 @@
     </div>
 
 </template>
-
-<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77">
+<script>
     import {create} from "@/api/hqgj/training";
-    import {getUser, lecturerMechanism, lecturerPage,fileUpload} from "@/api/sys";
+    import {getUser, lecturerMechanism, lecturerPage, fileUpload} from "@/api/sys";
     import EditorBar from "../../publicTemplate/wangEnduit";
     import photo from "../../publicTemplate/photo";
+
     export default {
         components: {EditorBar, photo},
         name: "add",
@@ -274,7 +287,7 @@
                 isShow: true, //是否显示
                 disabled: true, //机构是否禁止选择
                 //附件列表
-                fileList:[],
+                fileList: [],
                 //基本信息
                 basicForm: {
                     orgName: "", //机构
@@ -341,7 +354,7 @@
                     scheduleModels: [] //日程数组
                 },
                 //上传的附件列表
-                basicAnnexesArr:[],
+                basicAnnexesArr: [],
                 //日程管理验证
                 scheduleRules: {
                     title: [
@@ -383,10 +396,92 @@
             };
         },
         created() {
+            // this.initMapScript();
             this.loadUser();
+
         },
         methods: {
+            initMapScript() {
+                var script = document.createElement("script");
+                script.charset = "utf-8"
+                script.type = "text/javascript";
+                script.src = "https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77";
+                document.head.appendChild(script);
+            },
+            intMap() {
+                var map = new qq.maps.Map(document.getElementById("container"),{
+                    center: new qq.maps.LatLng(39.916527,116.397128),
+                    zoom: 13
+                });
+                this.marker="";
+                //添加监听事件   获取鼠标单击事件
+                qq.maps.event.addListener(map, 'click', function(event) {
+                    this.marker=new qq.maps.Marker({
+                        position:event.latLng,
+                        map:map
+                    });
+                    qq.maps.event.addListener(map, 'click', function(event) {
+                        this.marker.setMap(null);
+                    });
 
+                });
+
+                var latlngBounds = new qq.maps.LatLngBounds();
+                //设置Poi检索服务，用于本地检索、周边检索
+                searchService = new qq.maps.SearchService({
+                    //设置搜索范围为北京
+                    location: "北京",
+                    //设置搜索页码为1
+                    pageIndex: 1,
+                    //设置每页的结果数为5
+                    pageCapacity: 5,
+                    //设置展现查询结构到infoDIV上
+                    panel: document.getElementById('infoDiv'),
+                    //设置动扩大检索区域。默认值true，会自动检索指定城市以外区域。
+                    autoExtend: true,
+                    //检索成功的回调函数
+                    complete: function (results) {
+                        //设置回调函数参数
+                        var pois = results.detail.pois;
+                        for (var i = 0, l = pois.length; i < l; i++) {
+                            var poi = pois[i];
+                            //扩展边界范围，用来包含搜索到的Poi点
+                            latlngBounds.extend(poi.latLng);
+                            this.marker = new qq.maps.Marker({
+                                map: map,
+                                position: poi.latLng
+                            });
+
+                            this.marker.setTitle(i + 1);
+
+                            markers.push(marker);
+
+                        }
+                        //调整地图视野
+                        map.fitBounds(latlngBounds);
+                    },
+                    //若服务请求失败，则运行以下函数
+                    error: function () {
+                        alert("出错了。");
+                    }
+                });
+            },
+            //清除地图上的marker
+            clearOverlays(overlays) {
+                var overlay;
+                while (overlay = overlays.pop()) {
+                    overlay.setMap(null);
+                }
+            },
+            //设置搜索的范围和关键字等属性
+            searchKeyword() {
+                var keyword = document.getElementById("keyword").value;
+                this.clearOverlays(markers);
+                //根据输入的城市设置搜索范围
+                // searchService.setLocation("北京");
+                //根据输入的关键字在搜索范围内检索
+                searchService.search(keyword);
+            },
             //获取用户信息
             loadUser() {
                 getUser().then(res => {
@@ -472,6 +567,11 @@
             //获取地理位置
             getAddress() {
                 this.addressVisible = true;
+                clearTimeout(this.timer);  //清除延迟执行
+
+                this.timer = setTimeout(() => {   //设置延迟执行
+                    this.intMap();
+                }, 500);
             },
 
             //返回
@@ -611,7 +711,7 @@
                         fileURL: fileList[i].url
                     })
                 }
-                this.scheduleForm.scheduleModels.basicAnnexes=this.basicAnnexesArr;
+                this.scheduleForm.scheduleModels.basicAnnexes = this.basicAnnexesArr;
                 this.fileList = fileList;
             },
             //文件上传成功
@@ -622,7 +722,7 @@
                         fileURL: fileList[i].url
                     })
                 }
-                this.scheduleForm.scheduleModels.basicAnnexes=this.basicAnnexesArr;
+                this.scheduleForm.scheduleModels.basicAnnexes = this.basicAnnexesArr;
                 this.fileList = fileList;
             },
             //文件上传失败
@@ -652,6 +752,11 @@
 </script>
 
 <style lang="less" scoped>
+    #container {
+        min-width: 600px;
+        min-height: 767px;
+    }
+
     .main-box {
         background-color: #fff;
 
