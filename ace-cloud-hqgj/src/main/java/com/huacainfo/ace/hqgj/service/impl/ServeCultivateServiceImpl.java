@@ -68,6 +68,9 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
     public PageDTO
             <ServeCultivateVo> page(ServeCultivateQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeCultivateVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getStatus())){
+            condition.setStatuss(condition.getStatus().split(","));
+        }
         List<ServeCultivateVo> list = this.serveCultivateDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
