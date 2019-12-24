@@ -16,7 +16,7 @@ public class MyUnitTest {
     @Test
     public void test() {
         try {
-            MapperXmlAdapter.generate("generatorConfig.xml", "base_company");
+            MapperXmlAdapter.generate("generatorConfig.xml", "serve_business_append");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
