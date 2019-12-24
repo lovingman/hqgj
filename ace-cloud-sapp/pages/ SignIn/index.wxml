@@ -5,13 +5,13 @@
     </view>
     <view class="content">
         <view class="input van-hairline--bottom">
-            <van-field value="{{ value }}" clearable placeholder="手机号码" border="{{ false }}" bind:change="onChange" />
+            <van-field value="{{ username }}" error="{{usernameState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="手机号码" border="{{ false }}" data-field="username" data-validate="mobilePhone" bind:change="onChange"/>
         </view>
         <view class="input van-hairline--bottom">
-            <van-field value="{{ value }}" clearable type="password" placeholder="输入6位密码" border="{{ false }}" bind:change="onChange" />
+            <van-field value="{{ password }}"  clearable type="password" placeholder="输入6位密码" data-field="password" border="{{ false }}" bind:change="onChange" />
         </view>
         <view class="btn">
-            <van-button round type="info" size="large">登录</van-button>
+            <van-button bindtap="submitForm" round type="info" size="large">登录</van-button>
         </view>
         <view class="other">
             <button>注册</button>
@@ -20,6 +20,8 @@
     </view>
 
     <view class="wechat">
-        <icon class="van-icon" class="iconfont icon-weixin"  ></icon>
+        <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> <icon class="van-icon" class="iconfont icon-weixin"  ></icon>
+        </button>
     </view>
+    <van-toast id="van-toast" />    
 </view>

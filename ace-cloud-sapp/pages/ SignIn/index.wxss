@@ -52,14 +52,18 @@ button::after {
 }
 
 .wechat {
+    transform: translate(-50%, 0);
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+}
+
+.wechat button {
     width: 80rpx;
     height: 80rpx;
     border: 4rpx solid #58c45e;
     border-radius: 50%;
-    position: fixed;
-    bottom: 10%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;

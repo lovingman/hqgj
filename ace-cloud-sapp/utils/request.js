@@ -2,7 +2,6 @@ function wxPromisify(fn) {
     return function (obj = {}) {
         return new Promise((resolve, reject) => {
             obj.success = function (res) {
-                //成功
                 resolve(res)
             }
             obj.fail = function (res) {
@@ -33,8 +32,8 @@ function getJSON(url, data) {
         method: 'GET',
         data: data,
         header: {
-            'Content-Type': 'application/json'
-        }
+            'Authorization': wx.getStorageSync('Authorization'),
+        },
     })
 }
 
@@ -49,8 +48,10 @@ function post(url, data) {
         url: url,
         method: 'POST',
         data: data,
+        dataType: "json",
         header: {
-            "content-type": "application/json"
+            "content-type": "application/x-www-form-urlencoded",
+            'Authorization': wx.getStorageSync('Authorization'),
         },
     })
 }

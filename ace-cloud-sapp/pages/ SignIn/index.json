@@ -1,8 +1,13 @@
 {
+    "enablePullDownRefresh": true,
+    "navigationBarBackgroundColor": "#2E88F2",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "登录",
     "usingComponents": {
         "van-image": "/@vant/weapp/image/index",
         "van-field": "/@vant/weapp/field/index",
         "van-button": "/@vant/weapp/button/index",
-        "van-icon": "/@vant/weapp/icon/index"
+        "van-icon": "/@vant/weapp/icon/index",
+        "van-toast": "/@vant/weapp/toast/index"
     }
 }
