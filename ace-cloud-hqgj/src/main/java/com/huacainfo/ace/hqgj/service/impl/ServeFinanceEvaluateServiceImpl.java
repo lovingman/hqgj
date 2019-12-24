@@ -92,21 +92,9 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         if (CommonUtils.isBlank(o.getType())) {
             return new ResponseDTO(ResultCode.FAIL, "类型不能为空！");
         }
-       String orderNo="";
-        switch (o.getType()){
-            case "1":
-                orderNo ="JZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-                break;
-            case "2":
-                orderNo = "CS"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-                break;
-            case "3":
-                orderNo = "WZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-                break;
-            default:
-                orderNo=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        if (CommonUtils.isBlank(o.getOrderNo())) {
+            return new ResponseDTO(ResultCode.FAIL, "订单号不能为空！");
         }
-
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }

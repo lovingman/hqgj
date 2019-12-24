@@ -26,13 +26,14 @@
         <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="itemId" jdbcType="VARCHAR" property="itemId"/>
+        <result column="contactId" jdbcType="VARCHAR" property="contactId"/>
 
     </resultMap>
     <sql id="Base_Column_List">
     id, orderNo, financeId, type, orgId, orgName, orgPersonName, orgPersonTel, companyId, 
     companyName, companyPersonName, companyPersonTel, address, quota, fmUrl, content, 
     createUserId, createUserName, createDate, modifyUserId, modifyUserName, modifyDate, 
-    status,itemId
+    status,itemId,contactId
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -52,7 +53,7 @@
       address, quota, fmUrl, 
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
-      modifyDate, status,itemId)
+      modifyDate, status,itemId,contactId)
     values (#{id,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{financeId,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
       #{orgPersonName,jdbcType=VARCHAR}, #{orgPersonTel,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
@@ -60,7 +61,7 @@
       #{address,jdbcType=VARCHAR}, #{quota,jdbcType=INTEGER}, #{fmUrl,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},#{itemId,jdbcType=VARCHAR})
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},#{itemId,jdbcType=VARCHAR},#{contactId,jdbcType=VARCHAR})
   </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeFinanceOrder">
@@ -84,7 +85,8 @@
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=VARCHAR},
-      itemId=#{itemId,jdbcType=VARCHAR}
+      itemId=#{itemId,jdbcType=VARCHAR},
+      contactId=#{contactId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeFinanceOrderVo">
@@ -100,7 +102,7 @@
     <sql id="Vo_Column_List">
     t.id, t.orderNo, t.financeId, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId,  t.companyPersonName,
      t.companyPersonTel, t.address, t.quota, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName,
-      t.modifyDate, t.status,t.itemId
+      t.modifyDate, t.status,t.itemId,t.contactId
   </sql>
     <sql id="From_Statement">
     FROM serve_finance_order t
@@ -149,9 +151,9 @@
         <include refid="From_Statement"/>
         left join  base_organization o on o.id=t.orgId
         left join  base_company co on  co.id=t.companyId
-        left join  serve_finance_item f on f.id=itemId
+        left join  serve_finance_item f on f.id=t.itemId
         left join  base_organization_member m on m.id=t.contactId
-        left join  portal_hqgj.users u on u.id=t.createUserId
+        left join  portal_hqgj.users u on u.user_id=t.createUserId
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>

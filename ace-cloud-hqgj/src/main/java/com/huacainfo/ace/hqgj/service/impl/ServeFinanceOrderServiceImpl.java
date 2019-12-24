@@ -89,12 +89,28 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
     @Log(operationObj = "财税服务订单表", operationType = "创建", detail = "创建财税服务订单表")
     public ResponseDTO create(ServeFinanceOrder o, UserProp userProp) throws Exception {
         o.setId(GUIDUtil.getGUID());
-        if (CommonUtils.isBlank(o.getOrderNo())) {
-            return new ResponseDTO(ResultCode.FAIL, "订单号不能为空！");
-        }
         if (CommonUtils.isBlank(o.getType())) {
-            return new ResponseDTO(ResultCode.FAIL, "类型（1-代理记账 2-财税管理 3-专家问诊）不能为空！");
+            return new ResponseDTO(ResultCode.FAIL, "类型不能为空！");
         }
+        if (CommonUtils.isBlank(o.getFinanceId())) {
+            return new ResponseDTO(ResultCode.FAIL, "财税服务表ID不能为空！");
+        }
+        String orderNo="";
+        switch (o.getType()){
+            case "1":
+                orderNo ="JZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            case "2":
+                orderNo = "CS"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            case "3":
+                orderNo = "WZ"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                break;
+            default:
+                orderNo=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        }
+        o.setOrderNo(orderNo);
+
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }

@@ -148,15 +148,15 @@
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
         left join base_organization_member m on m.id=t.contactId
-        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join  portal_hqgj.province p on p.code=o.areaCode
         left join  serve_finance_item it on it.financeId=t.id
         left join (	select
         name as pName, p.`code` as pCode, parent_code as ppCode
-        from portal_zcpa.province p
+        from portal_hqgj.province p
         )pp on pp.pCode = p.parent_code
         left join  (select
         name as ppNames, p.`code` as pppcode
-        from portal_zcpa.province p
+        from portal_hqgj.province p
         )ppp on ppp.pppcode = pp.ppCode
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
@@ -174,14 +174,14 @@
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
         left join base_organization_member m on m.id=t.contactId
-        left join  portal_zcpa.province p on p.code=o.areaCode
+        left join  portal_hqgj.province p on p.code=o.areaCode
         left join (	select
         name as pName, p.`code` as pCode, parent_code as ppCode
-        from portal_zcpa.province p
+        from portal_hqgj.province p
         )pp on pp.pCode = p.parent_code
         left join  (select
         name as ppNames, p.`code` as pppcode
-        from portal_zcpa.province p
+        from portal_hqgj.province p
         )ppp on ppp.pppcode = pp.ppCode
         <include refid="Where_Condition"/>
         <choose>

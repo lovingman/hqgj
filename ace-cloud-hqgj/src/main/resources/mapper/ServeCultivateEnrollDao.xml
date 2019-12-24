@@ -65,6 +65,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateEnrollVo">
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="startDate" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="endDate" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="fmUrl" jdbcType="VARCHAR" property="fmUrl"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
     </resultMap>
     <sql id="Vo_Column_List">
@@ -116,8 +120,9 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,bm.name,bc.companyName companyName
+        <include refid="Vo_Column_List"/>,c.title,c.startDate,c.endDate,c.fmUrl,bm.name,bc.companyName companyName
         <include refid="From_Statement"/>
+        left  join serve_cultivate c on c.id=t.serveCultivateId
         left join base_company_member bm on bm.id=t.enrollUserId
         left join base_company bc on bc.id=bm.companyId
         <include refid="Where_Condition"/>

@@ -154,6 +154,8 @@ public class ServeFinanceOrder extends BaseModel {
 
     private String itemId;
 
+    private String contactId;
+
     public String getId() {
         return id;
     }
@@ -344,5 +346,13 @@ public class ServeFinanceOrder extends BaseModel {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 }
