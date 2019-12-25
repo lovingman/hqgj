@@ -19,7 +19,7 @@
                 </van-cell-group>
             </view>
             <view class="button_1">
-                <van-button round type="info" size="large">下一步</van-button>
+                <van-button round type="info" size="large" bindtap="nextClick">下一步</van-button>
             </view>
         </van-tab>
         <van-tab title="法人、监事">

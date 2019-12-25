@@ -27,7 +27,8 @@ Page({
       })
     }
     request.getJSON(cfg.financePageUrL, {
-      type: that.data.type
+      type: that.data.type,
+      status: 3, //状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
     }).then(res => {
       if (res.data.status == 1) {
         console.log(res);
