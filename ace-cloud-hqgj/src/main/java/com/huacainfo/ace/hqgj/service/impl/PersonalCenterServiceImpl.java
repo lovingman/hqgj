@@ -8,9 +8,12 @@ import com.huacainfo.ace.common.tools.CommonUtils;
 
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.dao.BaseCompanyMemberDao;
+import com.huacainfo.ace.hqgj.dao.BaseOrganizationDao;
 import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
 import com.huacainfo.ace.hqgj.dao.RegisterDao;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
+import com.huacainfo.ace.hqgj.model.BaseOrganization;
+import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +23,9 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 /**
- * 个人中心
+ * @author: 何双
+ * @version: 2019-12-020
+ * @Description: TODO(个人中心相关接口)
  */
 @Service
 public class PersonalCenterServiceImpl implements PersonalCenterService {
@@ -31,10 +36,11 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     private RegisterDao registerDao;
     @Resource
     private BaseOrganizationMemberDao organizationMemberDao;
-
+    @Resource
+    private BaseOrganizationDao baseOrganizationDao;
     /**
      * 用户绑定企业或者机构
-     * @param id
+     * @param id 企业id或机构id
      * @param   userProp
      * @param type  1,企业 2 机构
      * @return
@@ -42,6 +48,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     @Override
     public ResponseDTO bindUser(String id, String type, UserProp userProp) {
        Users user= registerDao.selectUserInfo(userProp.getUserId());
+         //企业
         if(type.equals("1")){
             BaseCompanyMember o=new BaseCompanyMember();
                 o.setId(userProp.getUserId());
@@ -62,7 +69,9 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
             if(i<=0){
                 return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
             }
+            registerDao.updateUserType("5",userProp.getUserId());
         }else{
+            //机构
               String memberId=organizationMemberDao.existMember(id,user.getIdCard());
               if(CommonUtils.isBlank(memberId)){
                   return new ResponseDTO(ResultCode.FAIL, "绑定失败，请联系管理员先添加至该机构！");
@@ -71,7 +80,33 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                  if(i<=0){
                      return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
                  }
+              BaseOrganization org =baseOrganizationDao.selectVoByPrimaryKey(id);
+                 if(org!=null){
+                     registerDao.updateUserType(org.getType(),userProp.getUserId());
+                 }
       }
         return new ResponseDTO(ResultCode.SUCCESS, "绑定成功！");
     }
+
+
+    /**
+     * 个人中心
+     * @param userProp
+     * @return
+     */
+    @Override
+    public ResponseDTO homePage(UserProp userProp) {
+        Users user= registerDao.selectUserInfo(userProp.getUserId());
+        ResponseDTO dto=new ResponseDTO();
+          if(user.getUserType().equals("5")){
+              BaseCompanyMember m= baseCompanyMemberDao.selectVoByPrimaryKey(userProp.getUserId());
+              dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
+          } else if(user.getUserType().equals("1")||user.getUserType().equals("2")||user.getUserType().equals("3")){
+            BaseOrganizationMember m= organizationMemberDao.selectByUserId(userProp.getUserId());
+               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
+          }
+        return dto;
+    }
+
+
 }

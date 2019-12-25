@@ -57,7 +57,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseCompanyMemberVo">
-
+         <result column="surplusIntegral" jdbcType="VARCHAR" property="surplusIntegral"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.companyId, t.name, t.idCard, t.mobile, t.jobs, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -91,8 +91,9 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,IFNULL(b.surplusIntegral,0)as surplusIntegral
         <include refid="From_Statement"/>
+        left join serve_business_integral b on b.companyId=t.companyId
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
@@ -127,4 +128,5 @@
             #{ids}
         </foreach>
     </delete>
+
 </mapper>

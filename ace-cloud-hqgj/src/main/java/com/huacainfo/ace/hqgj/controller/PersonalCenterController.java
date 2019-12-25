@@ -51,4 +51,20 @@ public class PersonalCenterController  extends BaseController {
         }
         return this.personalCenterService.bindUser(id,type,user);
     }
+
+    /**
+     * 个人中心--
+     */
+    @ApiOperation(value = "/homePage", notes = "个人中心")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @GetMapping(value = "/homePage", produces = "application/json;charset=UTF-8")
+    public ResponseDTO homePage() throws Exception {
+        UserProp user = this.getCurUserProp();
+        if(user==null){
+            return new ResponseDTO(ResultCode.FAIL, "请先登录！");
+        }
+        return this.personalCenterService.homePage(user);
+    }
 }

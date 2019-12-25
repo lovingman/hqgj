@@ -43,4 +43,6 @@ public interface RegisterDao {
     int updateUsers(Users o);
 
     Users selectUserInfo(String userId);
+
+    int updateUserType(@Param("userType") String userType,@Param("userId") String userId);
 }
