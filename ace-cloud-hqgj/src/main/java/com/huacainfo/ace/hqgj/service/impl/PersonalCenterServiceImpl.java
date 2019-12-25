@@ -104,6 +104,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
           } else if(user.getUserType().equals("1")||user.getUserType().equals("2")||user.getUserType().equals("3")){
             BaseOrganizationMember m= organizationMemberDao.selectByUserId(userProp.getUserId());
                dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
+          }else{
+              dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",userProp);
           }
         return dto;
     }
