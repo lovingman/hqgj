@@ -1,4 +1,4 @@
-var server = "http://127.0.0.1";
+var server = "http://192.168.2.114";
 var config = {
     login: `${server}/hqgj-portal/security/login`,
   trainPageUrl: `${server}/hqgj/www/serveCultivate/page`,  //培训列表page请求
