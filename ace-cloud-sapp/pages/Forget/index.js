@@ -12,14 +12,14 @@ Page({
         captchaTxt:'发送验证码',
         disabled:false,
         countdown:60,
-        account: '',
-        accountState: false,
-        accountVali: 'mobilePhone',
-        password: '',
+        mobile: '',
+        mobileState: false,
+        mobileVali: 'mobilePhone',
+        newPassword: '',
         captcha:'',
         captchaVali: 'len4Num',
-        passwordState: false,
-        passwordVali: 'thanlen6Str',
+        newPasswordState: false,
+        newPasswordVali: 'thanlen6Str',
     },
 
     /**
@@ -30,15 +30,19 @@ Page({
     },
     getcode(){
         let that = this;
-        if (that.validateHandler('account')){
-            request.post(config.getCaptcha, { mobile:that.data.account}).then(rst => {
-                that.settime();
+        that.settime();
+        if (that.validateHandler('mobile')){
+            request.post(config.captchaForgetPwd, { mobile:that.data.mobile}).then(rst => {
+                let r=rst.data;
+                if(r.status==1){
+                    Toast.success("发送成功");
+                }
+                else{
+                    Toast.fail(r.message);
+                }
             });
         }else{
-            wx.showToast({
-                title: '手机号码错误',
-                icon:'warn'
-            })
+            Toast.fail(手机号码错误);
             return;
         }
     },
@@ -87,7 +91,7 @@ Page({
     },
     next(){
         let that=this;
-        if (!that.validateHandler('account')){
+        if (!that.validateHandler('mobile')){
             Toast.fail('手机号码错误');
             return;
         }
@@ -95,28 +99,30 @@ Page({
             Toast.fail('验证码不对');
             return;
         }
-        if (!that.validateHandler('password')) {
+        if (!that.validateHandler('newPassword')) {
             Toast.fail('密码位数不对');
             return;
         }
         wx.navigateTo({
-          url: "../RegisterVerifies/index?account=" + that.data.account + "&captcha=" + that.data.captcha + "&password=" + that.data.password
+          url: "../RegisterVerifies/index"
         })
-        // request.post(config.register,data).then(
-        //     res=>{
-        //         let r=res.data;
-        //         if(res.status==1){
-        //             Toast.success({
-        //                 message:'注册成功',
-        //                 onClose:()=>{
-                            
-        //                 }
-        //             });
-        //         }else{
-        //             Toast.fail(r.message);
-        //         }
-        //     }
-        // )
+        request.post(config.resetPassword,data).then(
+            res=>{
+                let r=res.data;
+                if(res.status==1){
+                    Toast.success({
+                        message:'修改成功',
+                        onClose:()=>{
+                            wx.navigateTo({
+                                url: "../SignIn/index"
+                            })
+                        }
+                    });
+                }else{
+                    Toast.fail(r.message);
+                }
+            }
+        )
     },
     onChange(e) {
         let that = this;

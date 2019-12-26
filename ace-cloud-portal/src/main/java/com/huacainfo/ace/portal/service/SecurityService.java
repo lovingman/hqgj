@@ -13,6 +13,8 @@ public interface SecurityService {
     Users selectUsersByAccount(String account);
     Users selectUsersByAccount1(String account);
     Users selectUsersByAccount2(String account);
+    Users selectUsersByOpenId(String account);
+    String selectUsersByWx(String account);
 
 
     List<Map<String, String>> selectRoleListByUserId(String userId);

@@ -58,6 +58,7 @@
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseCompanyMemberVo">
          <result column="surplusIntegral" jdbcType="VARCHAR" property="surplusIntegral"/>
+         <result column="companyName" jdbcType="VARCHAR" property="companyName"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.companyId, t.name, t.idCard, t.mobile, t.jobs, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -91,8 +92,10 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>, (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) AS surplusIntegral
+        <include refid="Vo_Column_List"/>, (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) AS surplusIntegral,
+        c.companyName
         <include refid="From_Statement"/>
+        left join base_company c on  c.id=t.companyId
         where t.id = #{id,jdbcType=VARCHAR}
 
     </select>

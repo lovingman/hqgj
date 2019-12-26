@@ -2,10 +2,12 @@ function wxPromisify(fn) {
     return function (obj = {}) {
         return new Promise((resolve, reject) => {
             obj.success = function (res) {
+                console.log(1)
                 resolve(res)
             }
             obj.fail = function (res) {
                 //失败
+                console.log(2)
                 reject(res)
             }
             fn(obj)
@@ -55,8 +57,21 @@ function post(url, data) {
         },
     })
 }
-
+function posts(url, data) {
+  var postRequest = wxPromisify(wx.request)
+  return postRequest({
+    url: url,
+    method: 'POST',
+    data: data,
+    dataType: "json",
+    header: {
+      "Content-Type": "application/json",
+      'Authorization': wx.getStorageSync('Authorization'),
+    },
+  })
+}
 module.exports = {
     post,
+    posts,
     getJSON
 }

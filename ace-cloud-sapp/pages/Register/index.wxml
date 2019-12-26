@@ -5,18 +5,21 @@
     </view>
     <view class="content">
         <view class="input van-hairline--bottom">
-            <van-field value="{{ value }}" clearable placeholder="手机号码" border="{{ false }}" bind:change="onChange" />
+            <van-field value="{{ account }}" error="{{accountState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="手机号码" border="{{ false }}" data-field="account" bind:change="onChange"/>
         </view>
         <view class="input van-hairline--bottom">
-            <van-field value="{{ value }}" clearable placeholder="输入6位密码" border="{{ false }}" bind:change="onChange">
-                <van-button use-button-slot slot="button" size="small" type="info">发送验证码</van-button>
+            <van-field value="{{ captcha }}" data-field="captcha" clearable placeholder="输入验证码" border="{{ false }}" bind:change="onChange">
+                <van-button bindtap="getcode" disabled="{{disabled}}"  use-button-slot slot="button" size="small" type="info">{{captchaTxt}}</van-button>
             </van-field>
         </view>
         <view class="input van-hairline--bottom">
-            <van-field value="{{ value }}" clearable type="password" placeholder="输入6位密码" border="{{ false }}" bind:change="onChange" />
+            <!-- <van-field value="{{ value }}" clearable  placeholder="输入6位以上密码" border="{{ false }}" bind:change="onChange" /> -->
+
+            <van-field value="{{ password }}" type="password" error="{{passwordState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="输入6位以上密码" border="{{ false }}" data-field="password" bind:change="onChange"/>
         </view>
         <view class="btn">
-            <van-button round type="info" size="large">下一步</van-button>
+            <van-button bindtap="next" round type="info" size="large">下一步</van-button>
         </view>
     </view>
+    <van-toast id="van-toast" />
 </view>

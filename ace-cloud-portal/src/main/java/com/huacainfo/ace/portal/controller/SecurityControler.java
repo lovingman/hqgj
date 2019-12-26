@@ -36,9 +36,20 @@ public class SecurityControler {
     Users selectUsersByAccount1(@RequestParam String account) {
         return securityService.selectUsersByAccount1(account);
     }
+
     @GetMapping(value = "/selectUsersByAccount2", produces = "application/json;charset=UTF-8")
     Users selectUsersByAccount2(@RequestParam String account) {
         return securityService.selectUsersByAccount2(account);
+    }
+
+    @GetMapping(value = "/selectUsersByOpenId", produces = "application/json;charset=UTF-8")
+    Users selectUsersByOpenId(@RequestParam String account) {
+        return securityService.selectUsersByOpenId(account);
+    }
+
+    @GetMapping(value = "/selectUsersByWx", produces = "application/json;charset=UTF-8")
+    String selectUsersByWx(@RequestParam String account) {
+        return securityService.selectUsersByWx(account);
     }
 
     @GetMapping(value = "/selectRoleListByUserId", produces = "application/json;charset=UTF-8")
