@@ -107,6 +107,8 @@ public class WRegisterController extends BizController {
         String tel = mobile + "," + mobile + ";";
         // 保存进session
         setSession("j_captcha_cmcc_" + mobile, randCode);
+
+        logger.info("session1================"+getRequest().getSession().getId());
         //session获取测试
         logger.debug(mobile + "=>j_captcha_cmcc:{}", getSession("j_captcha_cmcc_" + mobile));
 
@@ -123,8 +125,9 @@ public class WRegisterController extends BizController {
     @ApiOperation(value = "/register", notes = "注册接口")
     @PostMapping(value = "/register", produces = "application/json;charset=UTF-8")
     public ResponseDTO register(UsersVo data) throws Exception {
-         String mobile=data.getMobile()==null?data.getAccount():data.getMobile();
+        String mobile=data.getMobile()==null?data.getAccount():data.getMobile();
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
+        logger.info("session2================"+getRequest().getSession().getId());
         String userCode = data.getCaptcha();
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
             return new ResponseDTO(ResultCode.FAIL, "验证码验证失败！");
