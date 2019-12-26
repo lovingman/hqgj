@@ -1,238 +1,238 @@
 <!--pages/EnterpriseReg/index.wxml-->
 <view class="index">
+  <view class="title">
+    大众创新 万众创业
+  </view>
+  <view class="subTitle">
+    “创业服务一条龙” 免费注册企业
+  </view>
+  <view class="wrap">
     <view class="title">
-        大众创新 万众创业
+      什么是“创业服务一条龙”
     </view>
     <view class="subTitle">
-        “创业服务一条龙” 免费注册企业
+      由常德市武陵区工信局主办的武陵区中小企业公共服务平台开展“创业服务一条龙”活动，为符合条件的申请人提供三大免费服务。
     </view>
-    <view class="wrap">
-        <view class="title">
-            什么是“创业服务一条龙”
+    <view class="text">
+      <view>
+        <view class="li">
+          工商注册免费代办服务（含公章一套）
+          <view class="tip van-hairline--surround">
+            <van-icon class="icon-success" name="success" />
+          </view>
         </view>
-        <view class="subTitle">
-            由常德市武陵区工信局主办的武陵区中小企业公共服务平台开展“创业服务一条龙”活动，为符合条件的申请人提供三大免费服务。
+        <view class="li">
+          银行基本户免费代办服务
+          <view class="tip van-hairline--surround">
+            <van-icon class="icon-success" name="success" />
+          </view>
         </view>
-        <view class="text">
-            <view>
-                <view class="li">
-                    工商注册免费代办服务（含公章一套）
-                    <view class="tip van-hairline--surround">
-                        <van-icon class="icon-success" name="success" />
-                    </view>
-                </view>
-                <view class="li">
-                    银行基本户免费代办服务
-                    <view class="tip van-hairline--surround">
-                        <van-icon class="icon-success" name="success" />
-                    </view>
-                </view>
-                <view class="li">
-                    银行开户费、小额账户管理费免费服务
-                    <view class="tip van-hairline--surround">
-                        <van-icon class="icon-success" name="success" />
-                    </view>
-                </view>
-            </view>
+        <view class="li">
+          银行开户费、小额账户管理费免费服务
+          <view class="tip van-hairline--surround">
+            <van-icon class="icon-success" name="success" />
+          </view>
         </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="wrap">
+    <view class="title">
+      您需要准备的材料
+    </view>
+    <view class="text">
+      <view>
+        <view class="li">
+          公司名称（准备2-3个备用名）
+          <view class="tip ">
+            1、
+          </view>
+        </view>
+        <view class="li">
+          注册资金及经营范围
+          <view class="tip ">
+            2、
+          </view>
+        </view>
+        <view class="li">
+          股东出资比例及身份证复印件
+          <view class="tip ">
+            3、
+          </view>
+        </view>
+        <view class="li">
+          法人、监事身份证复印件
+          <view class="tip ">
+            4、
+          </view>
+        </view>
+        <view class="li">
+          财务身份证复印件
+          <view class="tip ">
+            5、
+          </view>
+        </view>
+        <view class="li">
+          房屋证明
+          <view class="tip ">
+            6、
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="wrap">
+    <view class="title">
+      经办流程
     </view>
 
-    <view class="wrap">
-        <view class="title">
-            您需要准备的材料
+    <view class="text">
+      <view>
+        <view class="li van-hairline--left">
+          资料审核无误后，开始办理。
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
         </view>
-        <view class="text">
-            <view>
-                <view class="li">
-                    公司名称（准备2-3个备用名）
-                    <view class="tip ">
-                        1、
-                    </view>
-                </view>
-                <view class="li">
-                    注册资金及经营范围
-                    <view class="tip ">
-                        2、
-                    </view>
-                </view>
-                <view class="li">
-                    股东出资比例及身份证复印件
-                    <view class="tip ">
-                        3、
-                    </view>
-                </view>
-                <view class="li">
-                    法人、监事身份证复印件
-                    <view class="tip ">
-                        4、
-                    </view>
-                </view>
-                <view class="li">
-                    财务身份证复印件
-                    <view class="tip ">
-                        5、
-                    </view>
-                </view>
-                <view class="li">
-                    房屋证明
-                    <view class="tip ">
-                        6、
-                    </view>
-                </view>
-            </view>
+        <view class="li van-hairline--left">
+          人工到工商局窗口审核名称。
+          <view class="subText">确定名称100%可用</view>
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
         </view>
-    </view>
-    <view class="wrap">
-        <view class="title">
-            经办流程
+        <view class="li van-hairline--left">
+          收集所有新办企业需要提供的资料。
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
+        </view>
+        <view class="li van-hairline--left">
+          资料达到工商局标准后上传工商“全程电子化业务系统”
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
+        </view>
+        <view class="li van-hairline--left">
+          联系所有股东下载“湖南企业登记APP”签字
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
+        </view>
+        <view class="li van-hairline--left">
+          签字完后后，资料提交到工商局内部系统
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
         </view>
 
-        <view class="text">
-            <view>
-                <view class="li van-hairline--left">
-                    资料审核无误后，开始办理。
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li van-hairline--left">
-                    人工到工商局窗口审核名称。
-                    <view class="subText">确定名称100%可用</view>
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li van-hairline--left">
-                    收集所有新办企业需要提供的资料。
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li van-hairline--left">
-                    资料达到工商局标准后上传工商“全程电子化业务系统”
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li van-hairline--left">
-                    联系所有股东下载“湖南企业登记APP”签字
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li van-hairline--left">
-                    签字完后后，资料提交到工商局内部系统
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
+        <view class="li van-hairline--left">
+          工商审核通过后，3个工作日下发执照
+          <view class="subText">若资料有问题，工商局退回资料，重新修改，重新3-5步，直到审核通过</view>
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
+        </view>
+        <view class="li defult">
+          企业注册成功
+          <view class="tip ">
+            <van-icon class="icon-checked" name="checked" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="wrap">
+    <view class="title">
+      审核条件
+    </view>
+    <view class="text">
+      <view>
+        <view class="li">
+          新注册企业，工商注册地、税务登记地在武陵区，具有独立法人资格；
+          <view class="tip ">
+            1、
+          </view>
+        </view>
+        <view class="li">
+          符合国家有关中小微企业认定标准,注册资本不超过1000万元；
+          <view class="tip ">
+            2、
+          </view>
+        </view>
+        <view class="li">
+          符合国家产业发展政策和武陵区发展总体规划；
+          <view class="tip ">
+            3、
+          </view>
+        </view>
+        <view class="li">
+          企业同步在武陵区中小企业公共服务平台网站注册、纳入武陵区中小企业基础数据库管理；
+          <view class="tip ">
+            4、
+          </view>
+        </view>
+        <view class="li">
+          企业负责人无偷税漏税、假冒伪劣、诈骗传销、重大责任事故等企业经营管理不良记录
+          <view class="tip ">
+            5、
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="remark">
+      以上条件都满足后，审核才能通过
+    </view>
+  </view>
+  <view class="wrap">
+    <view class="title">
+      您将获得
+    </view>
+    <view class="text">
+      <view>
+        <view class="li">
+          营业执照
+          <view class="tip ">
+            1、
+          </view>
+        </view>
+        <view class="li">
+          企业统一社会信用代码证明
+          <view class="tip ">
+            2、
+          </view>
+        </view>
+        <view class="li">
+          公司印章
+          <view class="tip ">
+            3、
+          </view>
+        </view>
+        <view class="li">
+          公司章程
+          <view class="tip ">
+            4、
+          </view>
+        </view>
+        <view class="li">
+          500积分，可用于抵扣该平台的代理记账服务 费用
+          <view class="tip ">
+            5、
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 
-                <view class="li van-hairline--left">
-                    工商审核通过后，3个工作日下发执照
-                    <view class="subText">若资料有问题，工商局退回资料，重新修改，重新3-5步，直到审核通过</view>
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-                <view class="li defult">
-                    企业注册成功
-                    <view class="tip ">
-                        <van-icon class="icon-checked" name="checked" />
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view>
-    <view class="wrap">
-        <view class="title">
-            审核条件
-        </view>
-        <view class="text">
-            <view>
-                <view class="li">
-                    新注册企业，工商注册地、税务登记地在武陵区，具有独立法人资格；
-                    <view class="tip ">
-                        1、
-                    </view>
-                </view>
-                <view class="li">
-                    符合国家有关中小微企业认定标准,注册资本不超过1000万元；
-                    <view class="tip ">
-                        2、
-                    </view>
-                </view>
-                <view class="li">
-                    符合国家产业发展政策和武陵区发展总体规划；
-                    <view class="tip ">
-                        3、
-                    </view>
-                </view>
-                <view class="li">
-                    企业同步在武陵区中小企业公共服务平台网站注册、纳入武陵区中小企业基础数据库管理；
-                    <view class="tip ">
-                        4、
-                    </view>
-                </view>
-                <view class="li">
-                    企业负责人无偷税漏税、假冒伪劣、诈骗传销、重大责任事故等企业经营管理不良记录
-                    <view class="tip ">
-                        5、
-                    </view>
-                </view>
-            </view>
-        </view>
-        <view class="remark">
-            以上条件都满足后，审核才能通过
-        </view>
-    </view>
-    <view class="wrap">
-        <view class="title">
-            您将获得
-        </view>
-        <view class="text">
-            <view>
-                <view class="li">
-                    营业执照
-                    <view class="tip ">
-                        1、
-                    </view>
-                </view>
-                <view class="li">
-                    企业统一社会信用代码证明
-                    <view class="tip ">
-                        2、
-                    </view>
-                </view>
-                <view class="li">
-                    公司印章
-                    <view class="tip ">
-                        3、
-                    </view>
-                </view>
-                <view class="li">
-                    公司章程
-                    <view class="tip ">
-                        4、
-                    </view>
-                </view>
-                <view class="li">
-                    500积分，可用于抵扣该平台的代理记账服务 费用
-                    <view class="tip ">
-                        5、
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view>
+  <view class="prompt">
+    官方平台
+  </view>
 
-    <view class="prompt">
-        官方平台
-    </view>
-
-    <view class="prompt">
-        以上服务由“常德市武陵区工信局”为您全程办理
-    </view>
-    <view class="button">
-        <van-button round  type="default" size="large">申请办理</van-button>
-    </view>
+  <view class="prompt">
+    以上服务由“常德市武陵区工信局”为您全程办理
+  </view>
+  <view class="button">
+    <van-button round type="default" size="large" bindtap="jumpClick">申请办理</van-button>
+  </view>
 </view>

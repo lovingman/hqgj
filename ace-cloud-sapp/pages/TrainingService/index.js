@@ -41,7 +41,9 @@ Page({
   //请求page数据渲染列表
   getList: function() {
     var that = this;
-    request.getJSON(cfg.trainPageUrl).then(res => {
+    request.getJSON(cfg.trainPageUrl, {
+      status: "1,3"
+    }).then(res => {
       if (res.data.status == 1) {
         console.log(res);
         that.setData({

@@ -28,7 +28,7 @@
             <van-button round plain hairline type="default">不同意</van-button>
         </view>
         <view class="agree">
-            <van-button round type="info">同意</van-button>
+            <van-button round type="info" bindtap="agreeClick">同意</van-button>
         </view>
     </view>
 </view>

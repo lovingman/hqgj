@@ -243,6 +243,13 @@ export default {
         query: { id: data.id }
       });
     },
+    //详情跳转
+    seeClick(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Handheld/see",
+        query: { id: data.id }
+      });
+    },
     //下线操作
     offline(row) {
       this.offlineId = row.id;

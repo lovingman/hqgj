@@ -66,7 +66,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo">
-
+        <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orgId, t.userId, t.name, t.idCard, t.mobile, t.jobs, t.speciality, t.content, t.imagePhoto, t.wechatPhoto, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -181,5 +181,11 @@
       where id = #{id,jdbcType=VARCHAR}
     </update>
 
-
+    <select id="selectByUserId" parameterType="java.lang.String" resultMap="VoResultMap">
+        select
+        <include refid="Vo_Column_List"/>,o.orgName
+        from base_organization_member t
+        left join base_organization o on o.id=t.orgId
+        where  userId = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>

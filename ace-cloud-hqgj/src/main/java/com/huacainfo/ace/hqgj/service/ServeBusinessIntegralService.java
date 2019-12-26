@@ -4,6 +4,7 @@ import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.model.ServeBusinessIntegral;
+import com.huacainfo.ace.hqgj.vo.IntegralDetailedVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessIntegralVo;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessIntegralQVo;
 
@@ -90,5 +91,14 @@ public interface ServeBusinessIntegralService {
      * @version: 2019-12-09
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
+
+
+    /**
+     * 查看积分明细
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO<IntegralDetailedVo> IntegralDetailed(String userId)throws Exception;
 
 }

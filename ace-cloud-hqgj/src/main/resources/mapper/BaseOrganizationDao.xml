@@ -118,7 +118,7 @@
                 and t.modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
             </if>
             <if test="condition.status != null and condition.status != ''">
-                and t.status = #{status,jdbcType=VARCHAR}
+                and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
