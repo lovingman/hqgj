@@ -5,13 +5,14 @@
   </view>
   <view class="content">
     <view class="input van-hairline--bottom">
-      <van-field value="{{ value }}" clearable placeholder="真实姓名" border="{{ false }}" bind:change="onChange" />
+    <van-field value="{{ name }}" error="{{nameState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="真实姓名" border="{{ false }}" data-field="name" bind:change="onChange"/>
+      <!-- <van-field value="{{ value }}" clearable placeholder="" border="{{ false }}" bind:change="onChange" /> -->
     </view>
     <view class="input van-hairline--bottom">
-      <van-field value="{{ value }}" clearable placeholder="身份证号码" border="{{ false }}" bind:change="onChange" />
+          <van-field value="{{ idCard }}" error="{{idCardState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="身份证号码" border="{{ false }}" data-field="idCard" bind:change="onChange"/>
     </view>
     <view class="btn">
-      <van-button round type="info" size="large">确定</van-button>
+      <van-button round bindtap="submit" type="info" size="large">确定</van-button>
     </view>
   </view>
   <van-toast id="van-toast" />

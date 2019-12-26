@@ -16,7 +16,7 @@
         "pages/TrainingInstitutions/index",
         "pages/TrainingEnrollmentManagement/index",
         "pages/ServiceAccounting/index",
-        "pages/ SignIn/index",
+        "pages/SignIn/index",
         "pages/RegisterVerifies/index",
         "pages/Register/index",
         "pages/PersonalCenter/index",
@@ -25,6 +25,7 @@
         "pages/TrainingServiceInfo/index",
         "pages/TrainingScheduleDetails/index",
         "pages/LawyerService/index",
+        "pages/Forget/index",
         "pages/LawFirm/index",
         "pages/PolicyService/index",
         "pages/PolicyServiceDetail/index"

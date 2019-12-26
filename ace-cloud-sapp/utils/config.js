@@ -5,6 +5,8 @@ var config = {
     authority: `${server}/wxms/www/mini/authority`,//微信授权
     getCaptcha: `${server}/hqgj/www/reg/captcha`,//验证码
     register: `${server}/hqgj/www/reg/register`,//注册
+    captchaForgetPwd: `${server}/hqgj/www/reg/captchaForgetPwd`,//   验证码获取接口
+    resetPassword: `${server}/hqgj/www/reg/resetPassword`,//重置密码
     trainPageUrl: `${server}/hqgj/www/serveCultivate/page`, //培训列表page请求
     selectByIdDetailsUrl: `${server}/hqgj/www/serveCultivate/selectByIdDetails`, //培训列表详情请求
     schedulePageUrl: `${server}/hqgj/www/serveCultivate/schedulePage`, //日程请求列表

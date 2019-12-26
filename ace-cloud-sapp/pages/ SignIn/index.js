@@ -42,10 +42,10 @@ Page({
     },
     submitForm() {
         let that = this;
-        if (!that.validateHandler('username')) {
-            Toast.fail('手机号码错误',);
-            return false;
-        }
+        // if (!that.validateHandler('username')) {
+        //     Toast.fail('手机号码错误',);
+        //     return false;
+        // }
         this.loginHandler(that.data);
        
     },
