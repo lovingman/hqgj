@@ -6,6 +6,7 @@ import com.huacainfo.ace.common.security.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,21 @@ public class FeignSecurityFallBack implements FeignSecurityService {
         logger.error("FeignSecurityFallBack {} ", account);
         return null;
     }
+
     public Users selectUsersByAccount2(String account) {
         logger.error("FeignSecurityFallBack {} ", account);
         return null;
     }
 
+    public Users selectUsersByOpenId(String account) {
+        logger.error("FeignSecurityFallBack {} ", account);
+        return null;
+    }
+
+    public String selectUsersByWx(String account) {
+        logger.error("FeignSecurityFallBack {} ", account);
+        return null;
+    }
 
     public List<Map<String, String>> selectRoleListByUserId(String userId) {
 

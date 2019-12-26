@@ -17,6 +17,7 @@
         "pages/TrainingEnrollmentManagement/index",
         "pages/ServiceAccounting/index",
         "pages/ SignIn/index",
+        "pages/RegisterVerifies/index",
         "pages/Register/index",
         "pages/PersonalCenter/index",
         "pages/RecordTrain/index",
@@ -34,5 +35,8 @@
         "navigationBarTitleText": "WeChat",
         "navigationBarTextStyle": "black"
     },
-    "sitemapLocation": "sitemap.json"
+    "sitemapLocation": "sitemap.json",
+    "usingComponents": {
+        "van-toast": "/@vant/weapp/toast/index"
+    }
 }

@@ -29,7 +29,12 @@ Page({
     },
     getUserInfo: function(e) {
         let that = this;
-        Auth.checkAgreeGetUser(e, app, that, '0');
+        let data=Auth.wxUserInfo(e).then(res=>{
+            this.loginHandler({
+                username: 'WX-LOGIN|'+res.unionId,
+                password:'123weiuryweiryiwqe!@#'
+            });
+        }) 
     },
     onChange(e) {
         let that = this;
@@ -37,14 +42,18 @@ Page({
     },
     submitForm() {
         let that = this;
-        // if (!that.validateHandler('username')) {
-        //     Toast.fail('手机号码错误',);
-        //     return false;
-        // }
-        request.post(config.login, that.data).then(rst => {
+        if (!that.validateHandler('username')) {
+            Toast.fail('手机号码错误',);
+            return false;
+        }
+        this.loginHandler(that.data);
+       
+    },
+    loginHandler(data){
+        request.post(config.login, data).then(rst => {
             console.log(rst);
-            let res=rst.data;
-            if (res.status==1){
+            let res = rst.data;
+            if (res.status == 1) {
                 const tokenStr = res.data.tokenHead + res.data.token;
                 wx.setStorage({
                     key: "Authorization",
@@ -118,7 +127,6 @@ Page({
     onReachBottom: function() {
 
     },
-
     /**
      * 用户点击右上角分享
      */
