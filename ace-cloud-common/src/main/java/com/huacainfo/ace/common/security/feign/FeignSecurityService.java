@@ -21,6 +21,13 @@ public interface FeignSecurityService {
     @RequestMapping(value = "/feign/selectUsersByAccount2", produces = "application/json;charset=UTF-8")
     Users selectUsersByAccount2(@RequestParam String account);
 
+    @RequestMapping(value = "/feign/selectUsersByOpenId", produces = "application/json;charset=UTF-8")
+    Users selectUsersByOpenId(@RequestParam String account);
+
+
+    @RequestMapping(value = "/feign/selectUsersByWx", produces = "application/json;charset=UTF-8")
+    String selectUsersByWx(@RequestParam String account);
+
     @RequestMapping(value = "/feign/selectRoleListByUserId", produces = "application/json;charset=UTF-8")
     List<Map<String, String>> selectRoleListByUserId(@RequestParam String userId);
 

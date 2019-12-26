@@ -1,4 +1,5 @@
 var request = require('request.js')
+var config = require('config.js')
 // var Api = require('api.js');
 
 const Auth = {}
@@ -70,7 +71,6 @@ Auth.checkAgreeGetUser = function(e, app, appPage, authFlag) {
                 appPage.setData({
                     userLevel: res.userLevel
                 });
-
             } else {
                 var userInfo = {
                     avatarUrl: "../../images/gravatar.png",
@@ -98,13 +98,15 @@ Auth.checkAgreeGetUser = function(e, app, appPage, authFlag) {
     }
 }
 
+Auth.wxLogin=function(){
+    return new Promise(function (resolve, reject) {})
+}
+
 // 同意获取用户信息
 Auth.agreeGetUser = function(e, wxLoginInfo, authFlag) {
-    console.log(e);
     return new Promise(function(resolve, reject) {
         let args = {};
         let data = {};
-
         if (authFlag == '0' && e.detail.errMsg == 'getUserInfo:fail auth deny') {
             args.errcode = e.detail.errMsg;
             args.userInfo = {
@@ -129,31 +131,18 @@ Auth.agreeGetUser = function(e, wxLoginInfo, authFlag) {
                 signature: userInfoDetail.signature,
                 rawData: userInfoDetail.rawData,
                 jscode: wxLoginInfo.js_code,
-                sysId:'hqgj'
+                sysId: 'hqgj'
             }
 
             let userInfo = userInfoDetail.userInfo;
             userInfo.isLogin = true;
             data.userInfo = userInfo;
-            var url = 'http://192.168.2.124/wxms/www/mini/authority';
-            // var postOpenidRequest = request.post(url, args);
+            var url = 'http://192.168.2.124/wxms/www/mini/';
             //获取openid
-            postOpenidRequest.then(response => {
-                if (response.data.status == '200') {
-                    //console.log(response.data.openid)
-                    console.log("授权登录获取成功");
-                    data.openid = response.data.openid;
-                    var userLevel = {};
-                    if (response.data.userLevel) {
-                        userLevel = response.data.userLevel;
-                    } else {
-                        userLevel.level = "0";
-                        userLevel.levelName = "订阅者";
-                    }
-                    data.userLevel = userLevel;
-                    data.errcode = "";
-                    resolve(data);
-
+            request.post(url, args).then(response => {
+                let res = response.data;
+                if (res.status == '1') {
+                    resolve(res.data);
                 } else {
                     console.log(response);
                     reject(response);
@@ -192,23 +181,53 @@ Auth.setUserInfoData = function(appPage) {
     }
 
 }
-// 微信登录
-Auth.wxLogin = function() {
+
+
+Auth.wxUserInfo = function(e) {
     return new Promise(function(resolve, reject) {
-        wx.login({
-            success: function(res) {
-                console.log(res);
-                let args = {};
-                args.js_code = res.code;
-                resolve(args);
-            },
-            fail: function(err) {
-                console.log(err);
-                reject(err);
-            }
-        });
+        var userInfo = e.detail.userInfo;
+        // 判断用户是否授权
+        if (userInfo != null && userInfo != undefined) { //授权
+            wx.login({
+                success: function(res) {
+                    console.log(res);
+                    // return;
+                    let args = {
+                        iv: e.detail.iv,
+                        encryptedData: e.detail.encryptedData,
+                        signature: e.detail.signature,
+                        rawData: e.detail.rawData,
+                        jscode: res.code,
+                        sysId: 'hqgj'
+                    };
+                    request.post(config.authority, args).then(response => {
+                        let res = response.data;
+                        if (res.status == '1') {
+                            resolve( res.data);
+                        }
+                    }).catch(function(error) {
+                        console.log('error: ' + error);
+                        reject(error);
+                    })
+                },
+                fail: function(err) {
+                    console.log(err);
+                    reject(err);
+                }
+            });
+        } else { //不授权
+            console.log(333, '执行到这里，说明拒绝了授权')
+            wx.showToast({
+                title: "为了您更好的体验,请先同意授权",
+                icon: 'none',
+                duration: 2000
+            });
+        }
     })
 }
+
+
+
 
 Auth.logout = function(appPage) {
     appPage.setData({

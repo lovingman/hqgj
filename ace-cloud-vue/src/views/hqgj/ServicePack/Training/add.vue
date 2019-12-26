@@ -69,7 +69,8 @@
                             <el-col :span="12">
                                 <el-form-item label="地点：" prop="address">
                                     <el-button @click="getAddress" class="get-address">
-                                        <i class="el-icon-plus"></i>获取地点
+                                        <span v-if="basicForm.address!=''">{{basicForm.address}}</span>
+                                        <i class="el-icon-plus" v-if="basicForm.address==''"></i><span v-if="basicForm.address==''">获取地点</span>
                                     </el-button>
                                 </el-form-item>
                             </el-col>
@@ -206,20 +207,21 @@
                             </el-row>
                             <el-row>
                                 <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
-                                    <el-upload
-                                            :before-upload="beforeAvatarUpload"
-                                            :file-list="fileList"
-                                            :http-request="uploadServer"
-                                            :on-error="uploadError"
-                                            :on-success="uploadSuccess"
-                                            action="none"
-                                            class="upload-demo"
-                                            multiple
-                                    >
-                                        <el-button size="small" type="primary">上传课件</el-button>
-                                        <div class="el-upload__tip" slot="tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M
-                                        </div>
-                                    </el-upload>
+                                    <div @click="getImageTypeIndex(index)">
+                                        <el-upload
+                                                :before-upload="beforeAvatarUpload"
+                                                :file-list="fileList"
+                                                :http-request="uploadServer"
+                                                :on-error="uploadError"
+                                                :on-success="uploadSuccess"
+                                                action="none"
+                                                class="upload-demo"
+                                                multipl>
+                                            <el-button size="small" type="primary">上传课件</el-button>
+                                            <div class="el-upload__tip" slot="tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M
+                                            </div>
+                                        </el-upload>
+                                    </div>
                                 </el-form-item>
                             </el-row>
                         </div>
@@ -278,9 +280,12 @@
         name: "add",
         data() {
             return {
-                address: '',
+                uploadfileindex:"",//上传标识
+                address: '',//详细地址
+                latitude:[],//经纬度
                 markers: [],
                 searchService: [],
+                geocoder: [],
                 addressVisible: false,
                 tabsName: "first", //选项卡展示第几个
                 noClickTabs: true, //是否可以点击选项卡
@@ -405,6 +410,28 @@
                     center: new qq.maps.LatLng(29.055100, 111.683130),
                     zoom: 13
                 });
+                var info = new qq.maps.InfoWindow({map: map});
+                that.geocoder = new qq.maps.Geocoder({
+                    complete: function (result) {
+                        map.setCenter(result.detail.location);
+                        var marker = new qq.maps.Marker({
+                            map: map,
+                            position: result.detail.location
+                        });
+                        qq.maps.event.addListener(map, 'click', function (event) {
+                            info.close();
+                            marker.setMap(null);
+                        });
+                        //添加监听事件 当标记被点击了  设置图层
+                        qq.maps.event.addListener(marker, 'click', function () {
+                            info.open();
+                            info.setContent('<div style="width:280px;height:100px;">' +
+                                result.detail.address + '</div>');
+                            info.setPosition(result.detail.location);
+                        });
+                        that.address = result.detail.address;
+                    }
+                });
                 //添加监听事件   获取鼠标单击事件
                 qq.maps.event.addListener(map, 'click', function (event) {
                     var marker = new qq.maps.Marker({
@@ -412,6 +439,7 @@
                         map: map
                     });
                     qq.maps.event.addListener(map, 'click', function (event) {
+                        info.close();
                         marker.setMap(null);
                     });
                     if (that.markers) {
@@ -419,8 +447,11 @@
                             that.markers[e].setMap(null);
                         }
                     }
+                    var info = new qq.maps.InfoWindow({map: map});
+                    //调用获取位置方法
+                    that.geocoder.getAddress(marker.position);
                     //打印地图信息
-                    console.log(marker.position);
+                    console.log(marker);
                 });
                 var latlngBounds = new qq.maps.LatLngBounds();
                 //设置Poi检索服务，用于本地检索、周边检索
@@ -478,8 +509,10 @@
                 this.searchService.search(keyword);
             },
             //确认传递地址信息
-            enterAddress(){
-
+            enterAddress() {
+                console.log(this.address)
+                this.basicForm.address = this.address;
+                this.addressVisible = false;
             },
             //获取用户信息
             loadUser() {
@@ -684,6 +717,10 @@
                     this.scheduleForm.scheduleModels.splice(index, 1);
                 }
             },
+            //获取上传组件的标识
+            getImageTypeIndex:function (index) {
+                this.uploadfileindex = index  //先在data里定义下，此处省略定义
+            },
             //上传文件
             FileUpload(obj) {
                 console.log(obj);
@@ -734,8 +771,12 @@
                         fileURL: fileList[i].url
                     });
                 }
-                this.scheduleForm.scheduleModels.basicAnnexes = this.basicAnnexesArr;
+                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                }
+                console.log(this.uploadfileindex);
                 this.fileList = fileList;
+                console.log(this.fileList);
             },
             //文件上传失败
             uploadError(response, file, fileList) {
@@ -846,10 +887,10 @@
             }
         }
 
-        .noClick /deep/ .el-tabs__item {
-            pointer-events: none;
-            cursor: default;
-        }
+        /*.noClick /deep/ .el-tabs__item {*/
+            /*pointer-events: none;*/
+            /*cursor: default;*/
+        /*}*/
 
         .formBox {
             padding-right: 50px;

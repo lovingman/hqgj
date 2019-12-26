@@ -26,23 +26,37 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public Users selectUsersByAccount(String account) {
-        Users users=securityDao.selectUsersByAccount(account);
-        logger.debug("{}",users);
+        Users users = securityDao.selectUsersByAccount(account);
+        logger.debug("{}", users);
         return users;
     }
 
     @Override
     public Users selectUsersByAccount1(String account) {
-        Users users=securityDao.selectUsersByAccount1(account);
-        logger.debug("{}",users);
+        Users users = securityDao.selectUsersByAccount1(account);
+        logger.debug("{}", users);
+        return users;
+    }
+
+    @Override
+    public Users selectUsersByOpenId(String account) {
+        Users users = securityDao.selectUsersByOpenId(account);
+        logger.debug("{}", users);
         return users;
     }
 
     @Override
     public Users selectUsersByAccount2(String account) {
-        Users users=securityDao.selectUsersByAccount2(account);
-        logger.debug("{}",users);
+        Users users = securityDao.selectUsersByAccount2(account);
+        logger.debug("{}", users);
         return users;
+    }
+
+    @Override
+    public String selectUsersByWx(String account) {
+        String username = securityDao.selectUsersByWx(account);
+        logger.debug("{}", username);
+        return username;
     }
 
     @Override

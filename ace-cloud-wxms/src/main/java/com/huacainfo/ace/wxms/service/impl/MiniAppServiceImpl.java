@@ -1,5 +1,6 @@
 package com.huacainfo.ace.wxms.service.impl;
 
+import com.huacainfo.ace.common.constant.CommonKeys;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.tools.DateUtil;
@@ -18,6 +19,7 @@ import com.huacainfo.ace.wxms.wechat.constant.WxApiRtnCode;
 import com.huacainfo.ace.wxms.wechat.entity.pojo.MiniAppAuthData;
 import com.huacainfo.ace.wxms.wechat.entity.pojo.MiniUserInfo;
 import com.huacainfo.ace.wxms.wechat.entity.pojo.resp.Code2SessionResp;
+import com.huacainfo.ace.wxms.wechat.util.HttpKit;
 import com.huacainfo.ace.wxms.wechat.util.Sha1Util;
 import org.springframework.stereotype.Service;
 
@@ -82,14 +84,12 @@ public class MiniAppServiceImpl extends RedisTemplate implements MiniAppService 
         }
         //4. 用户信息存库
         saveOrUpdateUserInfo(sysId, config.getAppId(), userInfo);
-
         //5. 根据unionId 绑定关系,获取 系统账户信息;注意根据自己业务需求适当调整sql查询语句
         //此处操作,由自己独立写逻辑完成, 建议把特权accout组装放到后端服务器完成, 以免被抓包破解
   //      Map<String, Object> userProp = wechatSysDao.findByUnionId(userInfo.getUnionId());
   //     特殊加权处理
   //      String account = CommonKeys.UN_VERIFICATION_TAG + "|" + "username";
   //      userInfo.setSysAccount(account);
-
         return new ResponseDTO<>(ResultCode.SUCCESS, "SUCCESS", userInfo);
     }
 
