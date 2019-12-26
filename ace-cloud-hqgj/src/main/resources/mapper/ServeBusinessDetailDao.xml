@@ -194,10 +194,11 @@
 			b.id = #{id,jdbcType=VARCHAR}
 		AND d.type = dtype
 	) AS annexNum
-FROM
+    FROM
 	`basic_annex` ba
-LEFT JOIN serve_business_detail d ON ba.relationId = d.id
-WHERE
-	ba.type = '3'
+    LEFT JOIN serve_business_detail d ON ba.relationId = d.id
+    LEFT JOIN serve_business b ON b.id = d.businessId
+    WHERE
+	ba.type = '3' and b.id = #{id,jdbcType=VARCHAR}
     </select>
 </mapper>

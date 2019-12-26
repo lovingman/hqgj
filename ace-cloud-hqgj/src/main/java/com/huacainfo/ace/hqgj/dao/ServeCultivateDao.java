@@ -35,5 +35,7 @@ public interface ServeCultivateDao {
 
     int addEnrollNum(@Param("id") String id);
 
+    int cancalEnrollNum(@Param("id") String id);
+
     ServeCultivateDetail selectByIdDetails(@Param("id") String id,@Param("userId")String userId);
 }

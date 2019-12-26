@@ -217,6 +217,11 @@
 		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber+1 where  id = #{id,jdbcType=VARCHAR}
   </update>
 
+    <update id="cancalEnrollNum" parameterType="java.lang.String">
+		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber-1 where  id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
     <resultMap extends="BaseResultMap" id="DetailsResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateDetail">
         <result column="surplusQuota" jdbcType="INTEGER" property="surplusQuota"/>
         <result column="isEnroll" jdbcType="INTEGER" property="isEnroll"/>
