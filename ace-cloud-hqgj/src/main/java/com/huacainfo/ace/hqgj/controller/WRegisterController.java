@@ -129,7 +129,6 @@ public class WRegisterController extends BizController {
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
             return new ResponseDTO(ResultCode.FAIL, "验证码验证失败！");
         }
-
         try {
             return registerService.insertRegister(data);
         } catch (CustomException e) {
