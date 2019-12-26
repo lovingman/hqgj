@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface PersonalCenterService {
     ResponseDTO bindUser(String id, String type, UserProp userProp);
 
+    ResponseDTO homePage(UserProp userProp);
 }

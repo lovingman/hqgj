@@ -30,4 +30,6 @@ public interface BaseOrganizationMemberDao {
     String existMember(@Param("orgId")String orgId,@Param("idCard")String idCard);
 
     int updateUserId(@Param("userId")String userId,@Param("id")String id);
+
+    BaseOrganizationMemberVo selectByUserId(@Param("userId")String userId);
 }

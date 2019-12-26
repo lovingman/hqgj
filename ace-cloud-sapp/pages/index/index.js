@@ -8,7 +8,7 @@ Page({
       {
         text: '创业服务包',
         imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-        path: '/'
+        path: '../RegEnterprise/index'
       },
       {
         text: '财税服务包',

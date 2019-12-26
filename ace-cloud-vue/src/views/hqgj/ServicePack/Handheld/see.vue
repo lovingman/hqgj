@@ -1,0 +1,251 @@
+<template>
+  <div class="main-box">
+    <div class="content-box">
+      <div class="title">基本信息</div>
+      <el-form label-width="140px" class="formBox">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="创建人：">
+              <span>{{basicForm.createUserName}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="创建时间：">
+              <span>{{basicForm.createDate}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="类型：">
+              <span>{{basicForm.typeName}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="服务机构：">
+              <span>{{basicForm.orgName}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="expertShow">
+            <el-form-item label="专家：">
+              <span>{{basicForm.baseOrganizationMember.name}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="expertShow">
+            <el-form-item label="名额：">
+              <span>{{basicForm.quota}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="联系方式：">
+              <span>{{basicForm.contactPersonTel}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="expertShow">
+            <el-form-item label="地点：">
+              <span>{{basicForm.address}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="封面：">
+              <span class="img-border">
+                <img :src="basicForm.fmUrl" />
+              </span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item label="服务介绍：">
+            <span>{{basicForm.content}}</span>
+          </el-form-item>
+        </el-row>
+      </el-form>
+      <div class="show-box" v-if="showService">
+        <div class="title">服务项目</div>
+        <el-form label-width="120px" class="project-item">
+          <div class="project-item-box">
+            <div class="memberModel" v-for="(domain,index) in serviceList" :key="domain.key">
+              <div class="member-top">
+                <div class="ltt">服务项目{{index+1}}</div>
+              </div>
+              <el-col :span="12">
+                <el-form-item label="名称：">
+                  <span>{{domain.itemName}}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="价格：">
+                  <span>{{domain.price}}</span>
+                </el-form-item>
+              </el-col>
+            </div>
+          </div>
+        </el-form>
+      </div>
+    </div>
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div class="footer-flex">
+        <div v-if="isShow">
+          <el-button @click="black" type="primary">取消</el-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { getById } from "@/api/hqgj/handheld";
+export default {
+  name: "see",
+  data() {
+    return {
+      isShow: true, //是否显示
+      basicForm: {}, //数据容器
+      showService: false, //是否显示
+      expertShow: false, //专家类容是否显示
+      serviceList: [] //服务项目数组
+    };
+  },
+  created() {
+    this.load();
+  },
+  methods: {
+    //获取数据
+    load() {
+      this.id = this.$route.query.id;
+      //请求数据接口
+      getById(this.id).then(res => {
+        if (res.status == 1) {
+          this.basicForm = res.data; //基本信息
+          this.serviceList = res.data.financeItemList; //服务项目
+          if (this.basicForm.type == 1) {
+            this.basicForm.typeName = "代理计账";
+          }
+          if (this.basicForm.type == 2) {
+            this.basicForm.typeName = "财税管家";
+            this.showService = true;
+          } else {
+            this.showService = false;
+          }
+          if (this.basicForm.type == 3) {
+            this.basicForm.typeName = "专家问诊";
+            this.expertShow = true;
+          } else {
+            this.expertShow = false;
+          }
+        }
+      });
+    },
+
+    //返回
+    black() {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Handheld/index"
+      });
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.main-box {
+  background-color: #fff;
+  /deep/ .el-tabs__nav-scroll {
+    padding: 0 20px;
+  }
+  .content-box {
+    padding-top: 20px;
+    padding-bottom: 30px;
+    .title {
+      font-weight: bold;
+      font-size: 16px;
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  .title::after {
+    content: "";
+    float: left;
+    width: 3px;
+    height: 16px;
+    background-color: #1890ff;
+    margin-right: 8px;
+  }
+
+  .formBox {
+    padding-right: 50px;
+    width: 100%;
+
+    /deep/ .el-form-item {
+      width: 100%;
+    }
+    // /deep/ .el-form-item__content {
+    //   width: calc(~"100% - 120px");
+    // }
+  }
+  .img-border {
+    width: 395px;
+    height: 220px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #aaa;
+    float: left;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+  }
+  .project-item {
+    padding-left: 106px;
+    padding-right: 106px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    display: flex;
+    .project-item-box {
+      padding: 15px;
+      width: 100%;
+      display: block;
+    }
+  }
+  .member-top {
+    width: 100%;
+    float: left;
+    color: #000;
+    font-size: 14px;
+    margin-bottom: 10px;
+    .ltt {
+      float: left;
+    }
+    .rtt {
+      float: right;
+      color: #0971ea;
+      cursor: pointer;
+    }
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #eee;
+    height: 60px;
+    background-color: #fff;
+    .footer-flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      /deep/ .el-button--medium {
+        border-radius: 4px;
+        margin-left: 20px;
+      }
+    }
+  }
+}
+</style>

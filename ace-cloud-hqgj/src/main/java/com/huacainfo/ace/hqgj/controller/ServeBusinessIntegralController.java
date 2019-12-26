@@ -1,5 +1,8 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.constant.ResultCode;
+import com.huacainfo.ace.common.vo.UserProp;
+import com.huacainfo.ace.hqgj.vo.IntegralDetailedVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -161,4 +164,25 @@ public class ServeBusinessIntegralController extends BaseController {
         return this.serveBusinessIntegralService.deleteByIds(ids.split(","));
     }
 
+
+
+    /**
+     * 查看积分明细
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/IntegralDetailed", notes = "根据主键批量删除 积分管理")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId",  required = true, dataType = "String", paramType =
+                    "form"),
+    })
+    @GetMapping(value = "/IntegralDetailed", produces = "application/json;charset=UTF-8")
+    public ResponseDTO<IntegralDetailedVo> IntegralDetailed() throws Exception {
+        UserProp user =this.getCurUserProp();
+        if(user==null){
+            return new ResponseDTO(ResultCode.FAIL, "请先登录");
+        }
+        return this.serveBusinessIntegralService.IntegralDetailed(user.getUserId());
+    }
 }

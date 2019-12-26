@@ -55,22 +55,20 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     @Transactional
     public ResponseDTO insertRegister(Users dto) throws Exception {
-        //解析性别
-        dto.setUserId(GUIDUtil.getGUID());
+
         if (CommonUtils.isBlank(dto.getIdCard())) {
             return new ResponseDTO(ResultCode.FAIL, "身份证不能为空！");
         }
         dto.setUserId(GUIDUtil.getGUID());
-        dto.setAccount(dto.getMobile());
+        dto.setAccount(dto.getAccount());
         dto.setName(dto.getName());
         dto.setSex(getSex(dto.getIdCard()));
-        dto.setMobile(dto.getMobile());
+        dto.setMobile(dto.getAccount());
         //常量设置
         dto.setCreateTime(new Date());
         dto.setStatus(CommonConstant.User_State_VALID);
         dto.setCurSyid(CommonConstant.SYS_ID);
         dto.setCorpId(CommonConstant.CORP_ID);
-        dto.setBirthday(dto.getBirthday());
       /*  if (CommonUtils.isBlank(dto.getUnionid())) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
