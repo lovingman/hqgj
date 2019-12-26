@@ -1,6 +1,8 @@
 package com.huacainfo.ace.hqgj.dao;
 
 import java.util.List;
+
+import com.huacainfo.ace.hqgj.vo.IntegralDetailedVo;
 import org.apache.ibatis.annotations.Param;
 import com.huacainfo.ace.hqgj.model.ServeBusinessIntegral;
 import com.huacainfo.ace.hqgj.vo.ServeBusinessIntegralQVo;
@@ -26,4 +28,6 @@ public interface ServeBusinessIntegralDao {
     int isExist(ServeBusinessIntegral o);
 
     int deleteByIds(String[] ids);
+
+    List<IntegralDetailedVo> integralDetailed(@Param("userId") String userId);
 }

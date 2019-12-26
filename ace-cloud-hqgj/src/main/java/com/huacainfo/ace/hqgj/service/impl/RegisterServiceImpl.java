@@ -60,10 +60,10 @@ public class RegisterServiceImpl implements RegisterService {
             return new ResponseDTO(ResultCode.FAIL, "身份证不能为空！");
         }
         dto.setUserId(GUIDUtil.getGUID());
-        dto.setAccount(dto.getMobile());
+        dto.setAccount(dto.getAccount());
         dto.setName(dto.getName());
         dto.setSex(getSex(dto.getIdCard()));
-        dto.setMobile(dto.getMobile());
+        dto.setMobile(dto.getAccount());
         //常量设置
         dto.setCreateTime(new Date());
         dto.setStatus(CommonConstant.User_State_VALID);

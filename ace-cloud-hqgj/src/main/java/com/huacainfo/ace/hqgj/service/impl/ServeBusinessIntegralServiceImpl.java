@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.vo.IntegralDetailedVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -176,6 +177,22 @@ public class ServeBusinessIntegralServiceImpl implements ServeBusinessIntegralSe
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.serveBusinessIntegralDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+
+    /**
+     * 查看积分明细
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO<IntegralDetailedVo> IntegralDetailed(String userId) throws Exception {
+        List<IntegralDetailedVo> dto =serveBusinessIntegralDao.integralDetailed(userId);
+        if(dto==null ||dto.size()<0){
+            return new ResponseDTO(ResultCode.FAIL, "查无数据！");
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！" ,dto);
     }
 
 

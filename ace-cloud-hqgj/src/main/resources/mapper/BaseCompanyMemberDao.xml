@@ -91,10 +91,10 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,IFNULL(b.surplusIntegral,0)as surplusIntegral
+        <include refid="Vo_Column_List"/>, (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) AS surplusIntegral
         <include refid="From_Statement"/>
-        left join serve_business_integral b on b.companyId=t.companyId
         where t.id = #{id,jdbcType=VARCHAR}
+
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
