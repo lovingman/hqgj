@@ -408,7 +408,8 @@
                 type: [],
                 others: [],
                 query: {
-                    type: ""
+                    type: "",
+                    businessId:""
                 },
                 query2: {
                     type: "",
@@ -540,25 +541,27 @@
             handleClick(tab, event) {
                 if (tab.name == 4) {
                     this.query.type = "1,2";
+                    this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 5) {
                     this.query.type = "3";
+                    this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 6) {
                     this.query.type = "4";
+                    this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 7) {
                     this.query.type = "5,6,7,8";
+                    this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 8) {
                     this.query3.businessId = this.$route.query.id
                     getAppend(this.query3).then(response => {
-                        console.log(response.rows);
-
                     })
                 }
             },
