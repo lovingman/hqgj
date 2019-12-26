@@ -19,11 +19,21 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </el-col>
+                    <!--<el-col :span="4">-->
+                        <!--<el-select v-model="typeObj" clearable placeholder="来源"  @change="handleStatus">-->
+                            <!--<el-option-->
+                                    <!--:key="item.code"-->
+                                    <!--:label="item.name"-->
+                                    <!--:value="item.code"-->
+                                    <!--v-for="item in dict"-->
+                            <!--&gt;</el-option>-->
+                        <!--</el-select>-->
+                    <!--</el-col>-->
                     <el-col :span="6">
                         <el-input
                                 @change="toggleChange"
                                 class="input-with-select"
-                                placeholder="请输入企业名称或统一社会信用代码"
+                                placeholder="请输入企业名称"
                                 style="float: right"
                                 v-model="query.companyName"
                         ></el-input>
@@ -46,7 +56,9 @@
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
                 <el-table-column label="企业名称" prop="companyName" sortable='custom'>
                 </el-table-column>
-                <el-table-column label="企业法人" prop="legalPerson" width="250">
+                <!--<el-table-column label="来源" prop="companyName" sortable='custom'>-->
+                <!--</el-table-column>-->
+                <el-table-column label="法人代表" prop="legalPerson" width="250">
                 </el-table-column>
                 <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>

@@ -20,8 +20,8 @@
                 <el-form-item  prop="name">
                     <span>{{form.orgAddress}}</span>
                 </el-form-item>
-                <el-form-item label="简介:" prop="name">
-                    <span>{{form.content}}</span>
+                <el-form-item label="简介:" prop="name" style="width: 70%">
+                    <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                 </el-form-item>
                 <el-form-item label="类型:" prop="name">
                     <span v-if="form.type==1">律师事务所</span>
@@ -29,8 +29,7 @@
                     <span v-if="form.type==3">培训机构</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button @click="back" type="primary">提交</el-button>
+                    <el-button @click="back" type="primary">确定</el-button>
                 </el-form-item>
             </el-form>
         </div>
