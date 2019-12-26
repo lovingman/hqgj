@@ -8,6 +8,8 @@ import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.ServeCultivateDao;
+import com.huacainfo.ace.hqgj.model.ServeCultivate;
+import com.huacainfo.ace.hqgj.vo.ServeCultivateVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -192,6 +194,27 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
         this.serveCultivateEnrollDao.updateStatus(status,ids);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+    /**
+     * 取消报名
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO cancelEnroll(String id) throws Exception {
+        if(CommonUtils.isBlank(id)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        serveCultivateEnrollDao.updateStatus("1",id.split(","));
+        ServeCultivateEnrollVo vo =serveCultivateEnrollDao.selectVoByPrimaryKey(id);
+        if(vo==null){
+            return new ResponseDTO(ResultCode.FAIL, "内部错误！");
+        }
+       int i = serveCultivateDao.cancalEnrollNum(vo.getServeCultivateId());
+
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

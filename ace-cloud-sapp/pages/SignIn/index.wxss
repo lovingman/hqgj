@@ -35,7 +35,7 @@
     margin-top: 40rpx;
 }
 
-.content .other navigator {
+.content .other button {
     margin: 0;
     background: #fff;
     color: rgba(160, 167, 182, 1);
@@ -43,7 +43,7 @@
     font-family: PingFangSC-regular;
 }
 
-.content .other navigator:first-child {
+.content .other button:first-child {
     color: #1c2843;
 }
 
