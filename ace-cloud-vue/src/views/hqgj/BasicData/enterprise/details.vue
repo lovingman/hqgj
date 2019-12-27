@@ -9,7 +9,7 @@
                 <el-form-item label="统一社会信用代码:" prop="name">
                     <span>{{form.creditCode}}</span>
                 </el-form-item>
-                <el-form-item label="法定代表人:" prop="name">
+                <el-form-item label="法人代表:" prop="name">
                     <span>{{form.legalPerson}}</span>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="name">
@@ -23,8 +23,7 @@
                     <span>{{form.companyAddress}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button type="primary" @click="">提交</el-button>
+                    <el-button type="primary" @click="back">确认</el-button>
                 </el-form-item>
             </el-form>
         </div>

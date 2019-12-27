@@ -16,8 +16,7 @@
                     <el-input style="width: 26%" placeholder="请输入职位"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button type="primary" @click="">提交</el-button>
+                    <el-button type="primary" @click="back">确认</el-button>
                 </el-form-item>
             </el-form>
         </div>

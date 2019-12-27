@@ -21,20 +21,22 @@
                             <span>{{form.speciality}}</span>
                         </el-form-item>
                         <el-form-item label="简介:" prop="name">
-                            <span>{{form.content}}</span>
+                            <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="形象照:" prop="name">
                             <i @click="Preview(form.imagePhoto)"><img :src="form.imagePhoto" alt="" class="img"></i>
+                            <el-dialog :visible.sync="dialogVisible" append-to-body>
+                                <img :src="dialogImageUrl" alt="" width="100%">
+                            </el-dialog>
                         </el-form-item>
                         <el-form-item label="微信二维码:" prop="name">
-                            <i @click="Preview(form.wechatPhoto)"><img :src="form.imagePhoto" alt="" class="img"></i>
+                            <i @click="Preview(form.wechatPhoto)"><img :src="form.wechatPhoto" alt="" class="img"></i>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-form-item  style="bottom: 10px;margin-left: 300px">
-                    <el-button @click="back">取消</el-button>
                     <el-button type="primary" @click="back">确定</el-button>
                 </el-form-item>
             </el-form>
@@ -49,6 +51,8 @@
         name: "createPerson",
         data() {
             return {
+                dialogVisible:false,
+                dialogImageUrl:"",
                 form:{},
             };
         },
@@ -60,10 +64,14 @@
                 this.id = this.$route.query.id;
                 getByIdPerson(this.id)
                     .then(response => {
-                        // this.loading = false;
                         this.form = response.data;
                     })
 
+            },
+            // 图片预览
+            Preview(data) {
+                this.dialogImageUrl = data;
+                this.dialogVisible = true;
             },
             back(){
                 this.$router.push({ path: "/hqgj/BasicData/service/Member",query: { id: this.form.orgId } });

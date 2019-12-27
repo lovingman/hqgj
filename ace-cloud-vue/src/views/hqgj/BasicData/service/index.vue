@@ -49,7 +49,6 @@
                     :data="list"
                     @selection-change="handleSelectionChange"
                     @sort-change="handleSort"
-                    border
                     class="table"
                     max-height="475"
                     ref="multipleTable"
@@ -58,6 +57,11 @@
                 <el-table-column label="机构名称" prop="orgName" sortable='custom'>
                 </el-table-column>
                 <el-table-column label="机构类型" prop="type" width="250">
+                    <template slot-scope="scope">
+                        <div type="text" v-if="scope.row.type=='1'">律师事务所</div>
+                        <div type="text" v-if="scope.row.type=='2'">会计事务所</div>
+                        <div type="text" v-if="scope.row.type=='3'">培训机构</div>
+                    </template>
                 </el-table-column>
                 <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>
