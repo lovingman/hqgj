@@ -476,7 +476,7 @@
 
                         var str = this.type.join("、");
                         this.$message({
-                            message: str + '、未审核或未通过审核',
+                            message: str + '未审核或未通过审核',
                             type: 'warning'
                         });
                     } else {
