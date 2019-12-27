@@ -74,25 +74,25 @@
                                 <img :src="dialogImageUrl" alt="" width="100%">
                             </el-dialog>
                         </el-form-item>
-                        <el-form-item label="微信二维码:" prop="wechatPhotoarr">
-                            <el-upload
-                                    :before-upload="beforeAvatarUpload2"
-                                    :class="{hide2:hideUpload2}"
-                                    :file-list="addform.wechatPhotoarr"
-                                    :http-request="uploadServerEdit2"
-                                    :limit="limitImgCount"
-                                    :on-preview="unitPictureCardPreview2"
-                                    :on-remove="unitPictrueRemove2"
-                                    :on-success="unitPictrueUploadSuccess2"
-                                    action="fakeaction"
-                                    list-type="picture-card">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
-                            <div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>
-                            <el-dialog :visible.sync="dialogVisible2" append-to-body>
-                                <img :src="dialogImageUrl2" alt="" width="100%">
-                            </el-dialog>
-                        </el-form-item>
+                        <!--<el-form-item label="微信二维码:" prop="wechatPhotoarr">-->
+                            <!--<el-upload-->
+                                    <!--:before-upload="beforeAvatarUpload2"-->
+                                    <!--:class="{hide2:hideUpload2}"-->
+                                    <!--:file-list="addform.wechatPhotoarr"-->
+                                    <!--:http-request="uploadServerEdit2"-->
+                                    <!--:limit="limitImgCount"-->
+                                    <!--:on-preview="unitPictureCardPreview2"-->
+                                    <!--:on-remove="unitPictrueRemove2"-->
+                                    <!--:on-success="unitPictrueUploadSuccess2"-->
+                                    <!--action="fakeaction"-->
+                                    <!--list-type="picture-card">-->
+                                <!--<i class="el-icon-plus"></i>-->
+                            <!--</el-upload>-->
+                            <!--<div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>-->
+                            <!--<el-dialog :visible.sync="dialogVisible2" append-to-body>-->
+                                <!--<img :src="dialogImageUrl2" alt="" width="100%">-->
+                            <!--</el-dialog>-->
+                        <!--</el-form-item>-->
                     </el-col>
                 </el-row>
                 <el-form-item style="bottom: 10px;margin-left: 300px">
@@ -155,7 +155,7 @@
                         {required: true, message: "请上传形象照"}
                     ],
                     wechatPhotoarr: [
-                        {required: true, message: "请上传形象照"}
+                        {required: true, message: "请上传微信二维码"}
                     ],
                 },
 
@@ -362,8 +362,8 @@
             },
             // 形象照预览
             unitPictureCardPreview(file) {
-                this.unitImageUrl = file.url;
-                this.dialogUnitVisible = true;
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
             },
             //微信二维码上传
             unitPictrueUploadSuccess2(response, file, fileList) {
@@ -521,8 +521,8 @@
             },
             // 微信二维码预览
             unitPictureCardPreview2(file) {
-                this.unitImageUrl = file.url;
-                this.dialogUnitVisible = true;
+                this.dialogImageUrl2 = file.url;
+                this.dialogVisible2 = true;
             },
 
         }

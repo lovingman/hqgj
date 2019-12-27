@@ -1,5 +1,5 @@
 <view class="index">
-  <van-tabs  animated active="{{ active }}" data-active="{{active}}" bind:click="clickTab">
+  <van-tabs animated active="{{ active }}" data-active="{{active}}" bind:click="clickTab">
     <van-tab title="基本信息">
       <view>
         <van-cell-group class="style1">
@@ -10,7 +10,7 @@
           </van-field>
         </van-cell-group>
         <van-cell-group>
-          <van-cell title="企业地址" data-obj="serveBusiness" value="{{ serveBusiness.areaType }}" bind:input="bindinput" size="large" bind:click="showPickerArea" />
+          <van-cell title="企业地址" data-obj="serveBusiness" is-link value="{{ serveBusiness.areaType }}" bind:input="bindinput" size="large" bind:click="showPickerArea" />
           <!-- <van-field readonly clickable label="企业地址" :value="value" placeholder="请选择区域"  bind:click="showPickerArea" /> -->
           <van-field class="textarea" value="{{ serveBusiness.companyAddress }}" data-obj="serveBusiness" data-model="companyAddress" bind:input="bindinput" placeholder="请输入详细地址，XX路XX号(XX小区XX栋XX楼XX号）" border="{{ false }}" type="textarea" autosize />
         </van-cell-group>
@@ -55,36 +55,43 @@
           </view>
         </view>
       </view>
-      <view class="model">
-        <view class="title">
-          监事
-        </view>
-        <van-cell-group>
-          <van-field  value="{{ supervisor.name }}" data-obj="supervisor" data-model="name" bind:input="bindinput" clearable label="监事姓名" placeholder="请输入真实姓名" />
-          <van-field value="{{ supervisor.mobile }}" data-obj="supervisor" data-model="mobile" bind:input="bindinput" label="联系电话" placeholder="请输入联系电话" />
-        </van-cell-group>
-        <view class="upload">
-          <view class="text">
-            <view>身份证</view>
-            <view class="tip">拍摄要求</view>
+      <view>
+        <view class="model" wx:for="{{supervisor}}" wx:key="index" wx:for-item="item">
+          <view class="title">
+            监事
           </view>
-          <view class="imgs">
-            <view class="img">
-              <image wx:if="{{supervisor.basicAnnexes[0].fileType==1}}" src="{{supervisor.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{supervisor.basicAnnexes[1].fileType==1}}" src="{{supervisor.basicAnnexes[1].fileURL}}"></image>
-              <van-uploader class="van-uploaders" data-obj="supervisor" data-file="1" bind:after-read="afterRead">
-              </van-uploader>
-              <text>拍摄/上传正面</text>
+          <van-cell-group>
+            <van-field value="{{ item.name }}" data-index="{{index}}" data-model="name" bind:input="bindinputy" clearable label="监事姓名" placeholder="请输入真实姓名" />
+            <van-field value="{{ item.mobile }}" data-index="{{index}}" data-model="mobile" bind:input="bindinputy" label="联系电话" placeholder="请输入联系电话" />
+          </van-cell-group>
+          <view class="upload">
+            <view class="text">
+              <view>身份证</view>
+              <view class="tip">拍摄要求</view>
             </view>
-            <view class="img">
-              <image wx:if="{{supervisor.basicAnnexes[0].fileType==2}}" src="{{supervisor.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{supervisor.basicAnnexes[1].fileType==2}}" src="{{supervisor.basicAnnexes[1].fileURL}}"></image>
-              <van-uploader class="van-uploaders" data-obj="supervisor" data-file="2" bind:after-read="afterRead">
-              </van-uploader>
-              <text>拍摄/上传国徽面</text>
+            <view class="imgs">
+              <view class="img">
+                <image wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="supervisor" data-file="1" bind:after-read="afterRead">
+                </van-uploader>
+                <text>拍摄/上传正面</text>
+              </view>
+              <view class="img">
+                <image wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="supervisor" data-file="2" bind:after-read="afterRead">
+                </van-uploader>
+                <text>拍摄/上传国徽面</text>
+              </view>
             </view>
           </view>
         </view>
+      </view>
+
+
+      <view class="button_3">
+        <van-button type="info" color="#E1EEFD" size="large" bindtap="addSupervisor">+添加监事</van-button>
       </view>
       <view class="button_2">
         <view class="btn">
@@ -123,7 +130,7 @@
               <view class="img">
                 <image wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
                 <image wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
-                <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="shareholder" data-file="2"  bind:after-read="afterRead">
+                <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="shareholder" data-file="2" bind:after-read="afterRead">
                 </van-uploader>
                 <text>拍摄/上传国徽面</text>
               </view>
@@ -199,7 +206,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image  src="{{contract1.basicAnnexes[0].fileURL}}"></image>
+              <image src="{{contract1.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract1" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -216,7 +223,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image  src="{{contract2.basicAnnexes[0].fileURL}}"></image>
+              <image src="{{contract2.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract2" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -234,7 +241,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image  src="{{contract3.basicAnnexes[0].fileURL}}"></image>
+              <image src="{{contract3.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract3" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -253,10 +260,10 @@
           <view class="imgs">
             <view class="img">
               <view class="img">
-              <image  src="{{contract4.basicAnnexes[0].fileURL}}"></image>
-              <van-uploader class="van-uploaders" data-obj="contract4" bind:after-read="afterRead">
-              </van-uploader>
-            </view>
+                <image src="{{contract4.basicAnnexes[0].fileURL}}"></image>
+                <van-uploader class="van-uploaders" data-obj="contract4" bind:after-read="afterRead">
+                </van-uploader>
+              </view>
             </view>
           </view>
         </view>
@@ -294,13 +301,13 @@
           </view>
         </view>
         <view class="upload">
-          <van-radio-group  value="{{ result2.option }}" bind:change="onChange2" max="{{ 1 }}">
+          <van-radio-group value="{{ result2.option }}" bind:change="onChange2" max="{{ 1 }}">
             <van-cell-group>
               <van-cell wx:for="{{dicObj[58]}}" wx:key="index" wx:for-item="item">
                 <van-radio shape="square" name="{{item.code}}">{{item.name}}</van-radio>
               </van-cell>
             </van-cell-group>
-          </van-radio-group >
+          </van-radio-group>
         </view>
       </view>
 
@@ -360,7 +367,7 @@
     </van-tab>
   </van-tabs>
   <van-popup show="{{showPickerAreas}}" position="bottom">
-    <van-area area-list="{{ areaList }}" bind:cancel="cancelshowPickerArea" bind:confirm="confirms" />
+    <van-picker show-toolbar columns="{{ areaList }}" bind:change="changes" value-key="text" bind:cancel="cancelshowPickerArea" bind:confirm="confirms" />
     <!-- <van-picker show-toolbar :columns="columns" bind:cancel="cancelshowPickerArea" bind:confirm="cancelshowPickerArea"/> -->
   </van-popup>
 </view>

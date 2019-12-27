@@ -9,6 +9,7 @@
                     王麒麟
                 </view>
                 <view class="tip">
+                 <icon class="iconfont icon-yirenzheng"></icon>
                     实名认证
                 </view>
             </view>
@@ -26,7 +27,7 @@
     <view class="entrance">
         <block wx:for="{{navigates}}" wx:key="index">
             <navigator class="item" url="{{item.path}}">
-                <van-image round width="60rpx" height="60rpx" fit="cover" src="{{item.imgUrl}}" />
+                <van-image width="60rpx" height="60rpx" fit="cover" src="{{item.imgUrl}}" />
                 <view class="title">
                     {{item.text}}
                 </view>

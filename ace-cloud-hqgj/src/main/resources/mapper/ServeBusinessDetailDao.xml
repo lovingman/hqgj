@@ -165,7 +165,7 @@
     </delete>
 
     <resultMap id="annexResultMap" type="com.huacainfo.ace.hqgj.vo.AnnexVo">
-            <result column="id" jdbcType="VARCHAR" property="id"/>
+            <result column="did" jdbcType="VARCHAR" property="id"/>
             <result column="dtype" jdbcType="VARCHAR" property="dtype"/>
             <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
             <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
@@ -179,7 +179,7 @@
     </update>
     <select id="annexList" parameterType="java.lang.String" resultMap="annexResultMap">
   SELECT DISTINCT
-	d.id,
+	d.id did,
 	d.type dtype,
 	d.createDate,
 	ba.fileName,
@@ -192,12 +192,13 @@
 		LEFT JOIN serve_business b ON b.id = d.businessId
 		WHERE
 			b.id = #{id,jdbcType=VARCHAR}
-		AND d.type = dtype
+		AND did = ba.relationId
 	) AS annexNum
-FROM
+    FROM
 	`basic_annex` ba
-LEFT JOIN serve_business_detail d ON ba.relationId = d.id
-WHERE
-	ba.type = '3'
+    LEFT JOIN serve_business_detail d ON ba.relationId = d.id
+    LEFT JOIN serve_business b ON b.id = d.businessId
+    WHERE
+	ba.type = '3' and b.id = #{id,jdbcType=VARCHAR}
     </select>
 </mapper>

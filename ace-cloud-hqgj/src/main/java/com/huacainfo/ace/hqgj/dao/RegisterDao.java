@@ -1,6 +1,7 @@
 package com.huacainfo.ace.hqgj.dao;
 
 import com.huacainfo.ace.common.security.model.Users;
+import com.huacainfo.ace.hqgj.model.MapWechatSys;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -45,4 +46,6 @@ public interface RegisterDao {
     Users selectUserInfo(String userId);
 
     int updateUserType(@Param("userType") String userType,@Param("userId") String userId);
+
+    int insertMapWechatSys(MapWechatSys mapWechatSys);
 }

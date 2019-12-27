@@ -59,10 +59,6 @@
     margin-right: 0;
 }
 
-.entrance .item .title {
-    margin-top: 6rpx;
-}
-
 .popular {
     background: #f7f9fc;
 }

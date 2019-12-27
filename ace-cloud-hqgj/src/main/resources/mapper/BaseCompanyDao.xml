@@ -10,6 +10,7 @@
         <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
         <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
         <result column="companyAddress" jdbcType="VARCHAR" property="companyAddress"/>
+        <result column="completeAddress" jdbcType="VARCHAR" property="completeAddress"/>
         <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
         <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
         <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
@@ -20,7 +21,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, companyName, creditCode, legalPerson, contactPersonName, contactPersonTel, areaCode,
-    companyAddress, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
+    companyAddress, completeAddress, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
     modifyDate, status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -36,13 +37,13 @@
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseCompany">
     insert into base_company (id, companyName, creditCode,
       legalPerson, contactPersonName, contactPersonTel,
-      areaCode, companyAddress, createUserId,
+      areaCode, companyAddress, completeAddress, createUserId,
       createUserName, createDate, modifyUserId,
       modifyUserName, modifyDate, status
       )
     values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR},
       #{legalPerson,jdbcType=VARCHAR}, #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR},
-      #{areaCode,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{completeAddress,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR},
       #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
       )
@@ -56,6 +57,7 @@
       contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
       areaCode = #{areaCode,jdbcType=VARCHAR},
       companyAddress = #{companyAddress,jdbcType=VARCHAR},
+      completeAddress = #{completeAddress,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
@@ -66,7 +68,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.companyName, t.creditCode, t.legalPerson, t.contactPersonName, t.contactPersonTel, t.areaCode, t.companyAddress, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.companyName, t.creditCode, t.legalPerson, t.contactPersonName, t.contactPersonTel, t.areaCode, t.companyAddress, t.completeAddress, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM base_company t

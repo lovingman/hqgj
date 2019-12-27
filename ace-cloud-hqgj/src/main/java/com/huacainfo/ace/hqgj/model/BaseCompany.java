@@ -62,6 +62,12 @@ public class BaseCompany extends BaseModel {
     private String companyAddress;
 
     /**
+     * 字段名：base_company.completeAddress
+     * 注释：完整地址（保存areaCode对应的地址加上详细地址）
+     */
+    private String completeAddress;
+
+    /**
      * 字段名：base_company.createUserId
      * 注释：创建人ID
      */
@@ -223,5 +229,13 @@ public class BaseCompany extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(String completeAddress) {
+        this.completeAddress = completeAddress;
     }
 }

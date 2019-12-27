@@ -7,13 +7,9 @@ import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.CommonUtils;
 
 import com.huacainfo.ace.common.vo.UserProp;
-import com.huacainfo.ace.hqgj.dao.BaseCompanyMemberDao;
-import com.huacainfo.ace.hqgj.dao.BaseOrganizationDao;
-import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
-import com.huacainfo.ace.hqgj.dao.RegisterDao;
+import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
-import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +34,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     private BaseOrganizationMemberDao organizationMemberDao;
     @Resource
     private BaseOrganizationDao baseOrganizationDao;
+    @Resource
+    private PersonCenterDao personCenterDao;
     /**
      * 用户绑定企业或者机构
      * @param id 企业id或机构id
@@ -54,21 +52,31 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                 o.setId(userProp.getUserId());
              int temp = this.baseCompanyMemberDao.isExist(o);
              if (temp > 0) {
-                return new ResponseDTO(ResultCode.FAIL, "已经存在！");
+                 o.setCompanyId(id);
+                 o.setName(userProp.getName());
+                 o.setIdCard(user.getIdCard());
+                 o.setMobile(user.getMobile());
+                 o.setCreateDate(new Date());
+                 o.setStatus("1");
+                 o.setCreateUserName(userProp.getName());
+                 o.setCreateUserId(userProp.getUserId());
+                 o.setModifyDate(new Date());
+               this.baseCompanyMemberDao.updateByPrimaryKey(o);
+             }else {
+                 o.setCompanyId(id);
+                 o.setName(userProp.getName());
+                 o.setIdCard(user.getIdCard());
+                 o.setMobile(user.getMobile());
+                 o.setCreateDate(new Date());
+                 o.setStatus("1");
+                 o.setCreateUserName(userProp.getName());
+                 o.setCreateUserId(userProp.getUserId());
+                 o.setModifyDate(new Date());
+                 int i = this.baseCompanyMemberDao.insert(o);
+                 if(i<=0){
+                     return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
+                 }
              }
-                o.setCompanyId(id);
-                o.setName(userProp.getName());
-                o.setIdCard(user.getIdCard());
-                o.setMobile(user.getMobile());
-                o.setCreateDate(new Date());
-                o.setStatus("1");
-                o.setCreateUserName(userProp.getName());
-                o.setCreateUserId(userProp.getUserId());
-                o.setModifyDate(new Date());
-               int i= this.baseCompanyMemberDao.insert(o);
-            if(i<=0){
-                return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
-            }
             registerDao.updateUserType("5",userProp.getUserId());
         }else{
             //机构
@@ -96,8 +104,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      */
     @Override
     public ResponseDTO homePage(UserProp userProp) {
-        Users user= registerDao.selectUserInfo(userProp.getUserId());
-        ResponseDTO dto=new ResponseDTO();
+        Users user= personCenterDao.selectUserInfo(userProp.getUserId());
+       /* ResponseDTO dto=new ResponseDTO();
           if(user.getUserType().equals("5")){
               BaseCompanyMember m= baseCompanyMemberDao.selectVoByPrimaryKey(userProp.getUserId());
               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
@@ -106,8 +114,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
           }else{
               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",userProp);
-          }
-        return dto;
+          }*/
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！",user);
     }
 
 

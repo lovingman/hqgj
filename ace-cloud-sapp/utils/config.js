@@ -21,8 +21,8 @@ var config = {
   lawServeByIdUrl: `${server}/hqgj/www/lawServe/policyGetById`, //政策服务详情
   serveBusinessCreateUrl: `${server}/hqgj/serveBusiness/create`, //新增创业服务
   serveCultivateEnrollUrl: `${server}/hqgj/serveCultivateEnroll/create`, //培训提升服务报名
-  isLoginUrl: `${server}/hqgj/www/reg/isLogin`, //判断是否登录    
-  enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看    
+  isLoginUrl: `${server}/hqgj/www/reg/isLogin`, //判断是否登录
+  enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
 };
 
 

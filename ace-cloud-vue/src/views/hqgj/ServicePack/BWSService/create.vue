@@ -39,6 +39,7 @@
                     companyNameObj:[],
                     companyName: "",
                     getIntegral: "500",
+                    surplusIntegral:"500",
                     register: "2"
                 },
                 dict: [],
