@@ -18,8 +18,6 @@
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>{{form.areaCode}}</span>
-                    <br>
                     <span>{{form.companyAddress}}</span>
                 </el-form-item>
                 <el-form-item>
@@ -50,7 +48,6 @@
                         this.loading = false;
                         this.form=response.data;
                     })
-
             },
             back(){
                 this.$router.push({ path: "/hqgj/BasicData/enterprise" });

@@ -118,8 +118,8 @@
                         this.form = response.data;
                         this.areaCode = [];
                         var str = this.form.areaCode;
-                        var arr = [4, 6, 9, 12];
-                        for (var i = 0; i < 4; i++) {
+                        var arr = [6, 9, 12];
+                        for (var i = 0; i < 3; i++) {
                             this.areaCode[i] = str.substring(0, arr[i]);
                         }
                     })
