@@ -2,7 +2,7 @@
 var cfg = require("../../utils/config.js");
 var util = require("../../utils/util.js");
 var request = require("../../utils/request.js");
-import Toast from '/@vant/weapp/toast/toast';
+import Toast from '../../vant/weapp/toast/toast';
 const app = getApp()
 Page({
 

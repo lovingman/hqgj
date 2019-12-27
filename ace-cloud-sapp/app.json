@@ -36,9 +36,9 @@
         "navigationBarTitleText": "WeChat",
         "navigationBarTextStyle": "black"
     },
+    "component": true,
     "sitemapLocation": "sitemap.json",
     "usingComponents": {
-        "van-toast": "/@vant/weapp/toast/index"
+        "van-toast": "/vant/weapp/toast/index"
     }
-
 }

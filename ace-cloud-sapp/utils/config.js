@@ -1,4 +1,4 @@
-var server = "http://192.168.2.114";
+var server = "http://test.huacainfo.com";
 var config = {
   login: `${server}/hqgj-portal/security/login`,
   authority: `${server}/wxms/www/mini/authority`, //微信授权
