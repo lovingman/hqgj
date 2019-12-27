@@ -148,7 +148,6 @@
                 <foreach collection="condition.statuss" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
-
             </if>
         </where>
     </sql>

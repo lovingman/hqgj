@@ -57,6 +57,9 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
     @Override
     public PageDTO<ServeCultivateEnrollVo> page(ServeCultivateEnrollQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<ServeCultivateEnrollVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getStatus())){
+            condition.setStatuss(condition.getStatus().split(","));
+        }
         List<ServeCultivateEnrollVo> list = this.serveCultivateEnrollDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
@@ -89,6 +92,8 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         o.setIsSign("n");
         o.setCreateDate(new Date());
         o.setStatus("0");
+        o.setEnrollUserId(userProp.getUserId());
+        o.setEnrollName(userProp.getName());
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
