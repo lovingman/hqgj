@@ -7,32 +7,32 @@ Page({
     navigates: [
       {
         text: '创业服务包',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-2.png',
         path: '../RegEnterprise/index'
       },
       {
         text: '财税服务包',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-3.png',
         path: '../FinanceTax/index'
       },
       {
         text: '财税专家问诊',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-4.png',
         path: '../ExpertConsultation/index'
       },
       {
         text: '培训提升服务',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-5.png',
         path: '../TrainingService/index'
       },
       {
         text: '法律服务',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-6.png',
         path: '../LawyerService/index'
       },
       {
         text: '政策服务',
-        imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+        imgUrl: '/assets/image/icon1-7.png',
         path: '../PolicyService/index'
       }
     ]
