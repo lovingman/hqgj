@@ -1,6 +1,7 @@
 // pages/TrainingService/index.js
 var cfg = require("../../utils/config.js");
 var request = require("../../utils/request.js");
+const app = getApp()
 Page({
 
   /**
@@ -36,7 +37,8 @@ Page({
       }
     ],
     value1: 0,
-    value2: 'a'
+    value2: 'a',
+    quotaShow: true, //是否显示名额
   },
   //请求page数据渲染列表
   getList: function() {
@@ -78,7 +80,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.getList();
   },
 
   /**

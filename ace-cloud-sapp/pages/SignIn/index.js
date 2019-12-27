@@ -1,4 +1,4 @@
-// pages/ SignIn/index.js
+// pages/SignIn/index.js
 
 var Auth = require('../../utils/auth.js');
 var request = require('../../utils/request.js');
