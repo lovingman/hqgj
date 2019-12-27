@@ -69,7 +69,7 @@
                             <el-col :span="12">
                                 <el-form-item label="地点：" prop="address">
                                     <el-button @click="getAddress" class="get-address">
-                                        <span v-if="basicForm.address!=''">{{basicForm.address}}</span>
+                                        <el-input v-if="basicForm.address!=''" v-model="basicForm.address"></el-input>
                                         <i class="el-icon-plus" v-if="basicForm.address==''"></i><span v-if="basicForm.address==''">获取地点</span>
                                     </el-button>
                                 </el-form-item>
