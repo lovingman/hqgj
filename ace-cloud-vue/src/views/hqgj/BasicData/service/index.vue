@@ -48,13 +48,12 @@
             <el-table
                     :data="list"
                     @selection-change="handleSelectionChange"
-                    @sort-change="handleSort"
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="机构名称" prop="orgName" sortable='custom'>
+                <el-table-column label="机构名称" prop="orgName">
                 </el-table-column>
                 <el-table-column label="机构类型" prop="type" width="250">
                     <template slot-scope="scope">

@@ -9,7 +9,6 @@
                     <el-col :span="4">
                         <el-input
                                 v-model="query.companyName"
-                                @change="toggleChange"
                                 clearable
                                 class="input-with-select"
                                 placeholder="请输入企业名称"
@@ -24,14 +23,12 @@
             </div>
             <el-table
                     :data="list"
-                    @selection-change="handleSelectionChange"
-                    @sort-change="handleSort"
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="企业名称" prop="companyName" sortable='custom' >
+                <el-table-column label="企业名称" prop="companyName">
                 </el-table-column>
                 <el-table-column width="200" label="注册方式" prop="register">
                     <template slot-scope="scope">
@@ -75,6 +72,7 @@
         name: "index",
         data() {
             return {
+                loading:false,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
@@ -106,6 +104,7 @@
             },
             //获取列表数据
             getlist() {
+                this.loading=true;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
                     pageSize: this.pagesize,
@@ -114,7 +113,7 @@
                 getPage(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
-                    console.log(response);
+                    this.loading=false;
                 })
             },
             //搜索

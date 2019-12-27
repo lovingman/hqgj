@@ -21,6 +21,7 @@
                     <el-cascader
                             placeholder="请选择行政区划"
                             @change="handleChange"
+                            ref="myCascader"
                             v-model="form.areaCodes"
                             :options="areaCodeOptions"
                             :props="areaCodeProps"

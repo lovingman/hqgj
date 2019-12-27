@@ -18,6 +18,8 @@
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
+                            @change="handleChange"
+                            ref="myCascader"
                             change-on-select
                             clearable
                             filterable
@@ -82,6 +84,7 @@
         name: "create",
         data() {
             return {
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -94,6 +97,7 @@
                     contactPersonTel: "",
                     areaCode: "",
                     orgAddress: "",
+                    completeAddress:"",
                     content: "",
                     type: "",
                     areaCodes: []
@@ -125,12 +129,16 @@
             this.AreaCodeQuery();
         },
         methods: {
+            handleChange(value) {
+                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
+            },
             handleadd(formName){
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         for (let e of this.addform.areaCodes) {
                             this.addform.areaCode = e;
                         }
+                        this.addform.completeAddress = this.allAddress + this.addform.orgAddress;
                         create(this.addform).then(response => {
                             if (response.status == 1) {
                                 this.$message.success("创建成功");
@@ -150,7 +158,7 @@
             },
             //获取行政区划数据
             AreaCodeQuery() {
-                getAreaTree({pid: 4307, type: 1, hasSelf: "true"})
+                getAreaTree({pid: 430702, type: 1, hasSelf: "true"})
                     .then(response => {
                         this.areaCodeOptions = response.data;
                     })
