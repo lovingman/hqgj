@@ -25,6 +25,8 @@ public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
     private String fmUrl;
     //手机号
     private String mobile;
+    //头像
+    private String avatarUrl;
 
     public String getName() {
         return name;
@@ -82,5 +84,13 @@ public class ServeCultivateEnrollVo extends ServeCultivateEnroll {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

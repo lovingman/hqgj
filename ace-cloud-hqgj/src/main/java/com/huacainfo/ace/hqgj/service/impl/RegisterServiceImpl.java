@@ -11,6 +11,7 @@ import com.huacainfo.ace.common.vo.UserProp;
 
 import com.huacainfo.ace.hqgj.constant.CommonConstant;
 import com.huacainfo.ace.hqgj.dao.RegisterDao;
+import com.huacainfo.ace.hqgj.model.MapWechatSys;
 import com.huacainfo.ace.hqgj.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,13 @@ public class RegisterServiceImpl implements RegisterService {
         if (CommonUtils.isBlank(dto.getIdCard())) {
             return new ResponseDTO(ResultCode.FAIL, "身份证不能为空！");
         }
+        if (CommonUtils.isBlank(dto.getUnionId())) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        int temp = registerDao.isUnionid(dto.getUnionId());
+        if (temp > 0) {
+            return new ResponseDTO(ResultCode.FAIL, "微信已存在！");
+        }
         dto.setUserId(GUIDUtil.getGUID());
         dto.setAccount(dto.getAccount());
         dto.setName(dto.getName());
@@ -69,21 +77,17 @@ public class RegisterServiceImpl implements RegisterService {
         dto.setStatus(CommonConstant.User_State_VALID);
         dto.setCurSyid(CommonConstant.SYS_ID);
         dto.setCorpId(CommonConstant.CORP_ID);
-      /*  if (CommonUtils.isBlank(dto.getUnionid())) {
-            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
-        }
-
-        int temp = registerDao.isUnionid(dto.getUnionid());
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "微信已存在！");
-        }
-        dto.setUnionid(dto.getUnionid());*/
         dto.setBirthday(getBirthday(dto.getIdCard()));
         ResponseDTO r = insertUser(dto);
         if (r.getStatus() == ResultCode.FAIL) {
             throw new CustomException(ResultCode.FAIL, r.getMessage());
         }
+         r =insertMapWechatSys(dto);
+        if (r.getStatus() == ResultCode.FAIL) {
+            throw new CustomException(ResultCode.FAIL, r.getMessage());
+        }
         return r;
+
     }
 
     /**
@@ -196,6 +200,16 @@ public class RegisterServiceImpl implements RegisterService {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
+    @Log(operationObj = "微信和用户绑定", operationType = "创建", detail = "创建系统登录账户")
+    private ResponseDTO insertMapWechatSys(Users dto){
+        MapWechatSys sys=new MapWechatSys();
+        sys.setId(GUIDUtil.getGUID());
+        sys.setUserId(dto.getUserId());
+        sys.setUnionId(dto.getUnionId());
+        sys.setCreateDate(new Date());
+        registerDao.insertMapWechatSys(sys);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
     /**
      * 对密码进行BCrypt加密
      */
@@ -236,4 +250,5 @@ public class RegisterServiceImpl implements RegisterService {
         Date date = sdf.parse(birthday);
         return date;
     }
+
 }

@@ -7,10 +7,7 @@ import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.CommonUtils;
 
 import com.huacainfo.ace.common.vo.UserProp;
-import com.huacainfo.ace.hqgj.dao.BaseCompanyMemberDao;
-import com.huacainfo.ace.hqgj.dao.BaseOrganizationDao;
-import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
-import com.huacainfo.ace.hqgj.dao.RegisterDao;
+import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
 import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
@@ -38,6 +35,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     private BaseOrganizationMemberDao organizationMemberDao;
     @Resource
     private BaseOrganizationDao baseOrganizationDao;
+    @Resource
+    private PersonCenterDao personCenterDao;
     /**
      * 用户绑定企业或者机构
      * @param id 企业id或机构id
@@ -96,8 +95,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      */
     @Override
     public ResponseDTO homePage(UserProp userProp) {
-        Users user= registerDao.selectUserInfo(userProp.getUserId());
-        ResponseDTO dto=new ResponseDTO();
+        Users user= personCenterDao.selectUserInfo(userProp.getUserId());
+       /* ResponseDTO dto=new ResponseDTO();
           if(user.getUserType().equals("5")){
               BaseCompanyMember m= baseCompanyMemberDao.selectVoByPrimaryKey(userProp.getUserId());
               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
@@ -106,8 +105,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
           }else{
               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",userProp);
-          }
-        return dto;
+          }*/
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！",user);
     }
 
 
