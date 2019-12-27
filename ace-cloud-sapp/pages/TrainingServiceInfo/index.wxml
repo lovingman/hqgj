@@ -21,15 +21,8 @@
       报名企业
     </view>
     <view class="list">
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <van-image width="66rpx" round fit="cover" height="66rpx" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <view class="right-icon">
+      <van-image wx:for="{{enrollForm}}" wx:key="{{index}}" wx:for-item="item" bindtap="scheduleClcik" data-index='{{index}}' width="66rpx" round fit="cover" height="66rpx" src="{{item.fmUrl}}" />
+      <view class="right-icon" bindtap="registrationEnterpriseClick">
         <van-icon name="weapp-nav" />
         <van-icon name="arrow" />
       </view>
@@ -90,7 +83,12 @@
     </van-tab>
   </van-tabs>
   <view class="btn">
-    <van-button round type="info" size="large">立即报名
+    <van-button round type="info" size="large" bindtap="isSign" wx:if="{{basicForm.status == 1 && basicForm.surplusQuota !=0 && basicForm.isEnroll <= 0 }}">立即报名
       <text class="remark">仅剩{{basicForm.surplusQuota}}个名额</text> </van-button>
+    <van-button round disabled type="info" size="large" wx:if="{{basicForm.isEnroll > 0}}">已报名 </van-button>
+    <van-button round disabled type="info" size="large" wx:if="{{basicForm.status == 3}}">已结束 </van-button>
+    <van-button round disabled type="info" size="large" wx:if="{{basicForm.surplusQuota == 0}}">已满员 </van-button>
   </view>
+
+  <van-toast id="van-toast" />
 </view>

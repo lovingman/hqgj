@@ -177,6 +177,7 @@
     bottom: 80rpx;
     left: 50%;
     transform: translate(-50%, 0);
+    background-color: #fff;
 }
 
 .btn .remark {

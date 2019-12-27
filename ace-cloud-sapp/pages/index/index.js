@@ -4,8 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    navigates: [
-      {
+    navigates: [{
         text: '创业服务包',
         imgUrl: '/assets/image/icon1-2.png',
         path: '../RegEnterprise/index'
@@ -38,12 +37,12 @@ Page({
     ]
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function() {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -71,7 +70,7 @@ Page({
       })
     }
   },
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
