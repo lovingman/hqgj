@@ -4,13 +4,13 @@
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称" v-model="form.companyName" style="width: 50%"></el-input>
+                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit v-model="form.companyName" style="width: 50%"></el-input>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="creditCode">
-                    <el-input placeholder="请输入18位统一社会信用代码" v-model="form.creditCode" style="width: 50%"></el-input>
-                </el-form-item>
-                <el-form-item label="法定代表人:" prop="legalPerson">
-                    <el-input placeholder="请输入法定代表人姓名" v-model="form.legalPerson" style="width: 50%"></el-input>
+                <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
+                    <!--<el-input placeholder="请输入18位统一社会信用代码" v-model="form.creditCode" style="width: 50%"></el-input>-->
+                <!--</el-form-item>-->
+                <el-form-item label="法人代表:" prop="legalPerson">
+                    <el-input placeholder="请输入法人代表姓名" v-model="form.legalPerson" style="width: 50%"></el-input>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="contactPersonTel">
                     <el-input placeholder="联系人姓名" v-model="form.contactPersonName" style="width: 21%"></el-input>
@@ -91,11 +91,11 @@
                         { required: true, message: "请输入企业名称", trigger: "blur" },
                     ],
                     legalPerson: [
-                        { required: true, message: "请输入法定代表人姓名", trigger: "blur" },
+                        { required: true, message: "请输入法人代表姓名", trigger: "blur" },
                     ],
-                    contactPersonTel: [
-                        { required: true, message: "联系方式", trigger: "blur" },
-                    ],
+                    // contactPersonTel: [
+                    //     { required: true, message: "联系方式", trigger: "blur" },
+                    // ],
                     areaCode: [
                         { required: true, message: "请选择所属单位", trigger: "change" }
                     ],
@@ -118,8 +118,8 @@
                         this.form = response.data;
                         this.areaCode = [];
                         var str = this.form.areaCode;
-                        var arr = [4, 6, 9, 12];
-                        for (var i = 0; i < 4; i++) {
+                        var arr = [6, 9, 12];
+                        for (var i = 0; i < 3; i++) {
                             this.areaCode[i] = str.substring(0, arr[i]);
                         }
                     })
@@ -147,7 +147,7 @@
             },
             //获取行政区划数据
             AreaCodeQuery() {
-                getAreaTree({pid: 4307, type: 1, hasSelf: "true"})
+                getAreaTree({pid: 430702, type: 1, hasSelf: "true"})
                     .then(response => {
                         this.areaCodeOptions = response.data;
                     })

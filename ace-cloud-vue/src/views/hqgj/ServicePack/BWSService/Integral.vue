@@ -35,8 +35,8 @@
                 </el-table-column>
                 <el-table-column width="200" label="注册方式" prop="register">
                     <template slot-scope="scope">
-                        <div type="text" v-if="scope.row.register=='1'">平台</div>
-                        <div type="text" v-if="scope.row.register=='2'">线下</div>
+                        <div type="text" v-if="scope.row.register=='1'">小程序</div>
+                        <div type="text" v-if="scope.row.register=='2'">线下窗口</div>
                     </template>
                 </el-table-column>
                 <el-table-column width="150" label="获得积分" prop="getIntegral">

@@ -71,9 +71,9 @@
                                    height="40" type="text" v-if="scope.row.status=='0' || scope.row.status=='2'">审核
                         </el-button>
                         <el-button @click="progress(scope.$index,scope.row)" height="40" type="text"
-                                   v-if="scope.row.status=='1' || scope.row.status=='3'">进度标记
+                                   v-if="scope.row.status=='1'">进度标记
                         </el-button>
-                        <!--<el-button v-if="scope.list.status=='3'" @click="" height="40" type="text" @click="edit">进度记录</el-button>-->
+                        <el-button v-if="scope.row.status=='3'" @click="progress(scope.$index,scope.row)" height="40" type="text">进度记录</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="" type="text">删除</el-button>
                         <span class="strightline">|</span>

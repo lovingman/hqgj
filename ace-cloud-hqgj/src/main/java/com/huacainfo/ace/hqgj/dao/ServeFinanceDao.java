@@ -29,5 +29,6 @@ public interface ServeFinanceDao {
 
     int updateCoverUrl(@Param("id") String id, @Param("coverUrl") String coverUrl);
 
-    int updateStatus(@Param("id") String id,@Param("status") String status);
+    int updateStatus(@Param("id") String id,@Param("status") String status,@Param("reason") String reason);
+
 }

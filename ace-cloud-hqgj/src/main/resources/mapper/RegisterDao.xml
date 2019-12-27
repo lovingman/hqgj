@@ -105,7 +105,7 @@
   </update>
 
     <select id="selectUserInfo" resultType="com.huacainfo.ace.common.security.model.Users">
-      select t.user_id userId, t.account, t.password, t.sex, t.idCard, t.userType, t.name, t.corpId,
+      select t.user_id userId, t.account, t.sex, t.idCard, t.userType, t.name, t.corpId,
       t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName
         from portal_hqgj.users t
         left join hqgj.base_organization o on t.corpId=o.id
@@ -118,4 +118,15 @@
     set userType = #{userType,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+
+    <insert id="insertMapWechatSys" parameterType="com.huacainfo.ace.hqgj.model.MapWechatSys">
+    insert into ace_hqgj_wxms.map_wechat_sys (id, appType, unionId,
+      userId, status, remark,
+      createDate, appId, sysId
+      )
+    values (#{id,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}
+      )
+  </insert>
 </mapper>
