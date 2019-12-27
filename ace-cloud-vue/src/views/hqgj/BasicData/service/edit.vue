@@ -14,7 +14,7 @@
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
                     <el-input v-model="form.contactPersonTel" style="width: 26%" placeholder="联系电话"></el-input>
                 </el-form-item>
-                <el-form-item label="地址:" prop="areaCode">
+                <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
@@ -23,7 +23,7 @@
                             filterable
                             placeholder="请选择行政区划"
                             style="width: 50%"
-                            v-model="areaCode"/>
+                            v-model="form.areaCodes"/>
                     <!--<el-select  placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
                         <!--<el-option label="区域一" value="shanghai"></el-option>-->
                         <!--<el-option label="区域二" value="beijing"></el-option>-->
@@ -52,6 +52,8 @@
                 <el-form-item label="简介:" prop="content">
                     <el-input
                             v-model="form.content"
+                            @change="handleChange"
+                            ref="myCascader"
                             type="textarea"
                             maxlength="500"
                             rows="4"
@@ -86,7 +88,7 @@
         name: "edit",
         data() {
             return {
-                areaCode: [], //编辑行政区划
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -100,6 +102,7 @@
                     contactPersonTel: "",
                     areaCode: "",
                     orgAddress: "",
+                    completeAddress:"",
                     content: "",
                     type: "",
                     areaCodes: []
@@ -116,19 +119,23 @@
                 getById(this.id)
                     .then(response => {
                         this.form = response.data;
-                        this.areaCode = [];
+                        this.form.areaCodes = [];
                         var str = this.form.areaCode;
                         var arr = [6, 9, 12];
                         for (var i = 0; i < 3; i++) {
-                            this.areaCode[i] = str.substring(0, arr[i]);
+                            this.form.areaCodes[i] = str.substring(0, arr[i]);
                         }
                     })
 
+            },
+            handleChange(value) {
+                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
             },
             handleEdit(){
                 for (let e of this.areaCode) {
                     this.form.areaCode = e;
                 }
+                this.form.completeAddress = this.allAddress + this.form.orgAddress;
                 update(this.form).then(response => {
                     if (response.status == 1){
                         this.$message.success("编辑成功");

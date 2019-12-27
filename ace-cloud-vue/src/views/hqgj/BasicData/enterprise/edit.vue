@@ -17,10 +17,12 @@
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
                     <el-input placeholder="联系电话" v-model="form.contactPersonTel" style="width: 26%"></el-input>
                 </el-form-item>
-                <el-form-item label="地址:" prop="areaCode">
+                <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
                             placeholder="请选择行政区划"
-                            v-model="areaCode"
+                            @change="handleChange"
+                            ref="myCascader"
+                            v-model="form.areaCodes"
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
                             clearable
@@ -67,7 +69,7 @@
         name: "edit",
         data() {
             return {
-                areaCode: [], //编辑行政区划
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -82,8 +84,10 @@
                     contactPersonTel: "",
                     areaCode: "",
                     companyAddress: "",
+                    completeAddress:"",
                     createUserId: "",
                     createUserName: "",
+                    areaCodes: [], //编辑行政区划
                     createDate: ""
                 },
                 rules: {
@@ -96,7 +100,7 @@
                     // contactPersonTel: [
                     //     { required: true, message: "联系方式", trigger: "blur" },
                     // ],
-                    areaCode: [
+                    areaCodes: [
                         { required: true, message: "请选择所属单位", trigger: "change" }
                     ],
                     companyAddress: [
@@ -110,17 +114,20 @@
             this.AreaCodeQuery();
         },
         methods: {
+            handleChange(value) {
+                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
+            },
             getDetails() {
                 this.id = this.$route.query.id;
                 getById(this.id)
                     .then(response => {
                         this.loading = false;
                         this.form = response.data;
-                        this.areaCode = [];
+                        this.form.areaCodes = [];
                         var str = this.form.areaCode;
                         var arr = [6, 9, 12];
                         for (var i = 0; i < 3; i++) {
-                            this.areaCode[i] = str.substring(0, arr[i]);
+                            this.form.areaCodes[i] = str.substring(0, arr[i]);
                         }
                     })
 
@@ -134,6 +141,7 @@
                         for (let e of this.areaCode) {
                             this.form.areaCode = e;
                         }
+                        this.form.completeAddress = this.allAddress + this.form.companyAddress;
                         update(this.form).then(response => {
                             if (response.status == 1){
                                 this.$message.success("编辑成功");
