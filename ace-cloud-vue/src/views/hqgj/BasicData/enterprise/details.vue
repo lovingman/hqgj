@@ -18,7 +18,7 @@
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>{{form.companyAddress}}</span>
+                    <span>湖南省,常德市,{{form.completeAddress}}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="back">确认</el-button>

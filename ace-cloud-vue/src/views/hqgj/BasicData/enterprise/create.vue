@@ -4,10 +4,10 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称"  style="width: 50%" v-model="addform.companyName"></el-input>
+                    <el-input placeholder="请输入企业名称" style="width: 50%" v-model="addform.companyName"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
-                    <!--<el-input placeholder="请输入18位统一社会信用代码"  style="width: 50%" v-model="addform.creditCode"></el-input>-->
+                <!--<el-input placeholder="请输入18位统一社会信用代码"  style="width: 50%" v-model="addform.creditCode"></el-input>-->
                 <!--</el-form-item>-->
                 <el-form-item label="法人代表:" prop="legalPerson">
                     <el-input placeholder="请输入法人代表姓名" style="width: 50%" v-model="addform.legalPerson"></el-input>
@@ -21,10 +21,12 @@
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
+                            @change="handleChange"
                             change-on-select
                             clearable
                             filterable
                             placeholder="请选择行政区划"
+                            ref="myCascader"
                             style="width: 50%"
                             v-model="addform.areaCodes"/>
                     <!--<el-select placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
@@ -68,6 +70,7 @@
         name: "create",
         data() {
             return {
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -82,6 +85,7 @@
                     contactPersonTel: "",
                     areaCode: "",
                     companyAddress: "",
+                    completeAddress: "",
                     createUserId: "",
                     createUserName: "",
                     createDate: "",
@@ -110,12 +114,16 @@
             this.AreaCodeQuery();
         },
         methods: {
+            handleChange(value) {
+                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
+            },
             addhandle(formName) {
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         for (let e of this.addform.areaCodes) {
                             this.addform.areaCode = e;
                         }
+                        this.addform.completeAddress = this.allAddress + this.addform.companyAddress;
                         create(this.addform).then(response => {
                             if (response.status == 1) {
                                 this.$message.success("创建成功");
@@ -132,7 +140,7 @@
             },
             //获取行政区划数据
             AreaCodeQuery() {
-                getAreaTree({pid:430702, type: 1, hasSelf: "true"})
+                getAreaTree({pid: 430702, type: 1, hasSelf: "true"})
                     .then(response => {
                         this.areaCodeOptions = response.data;
                     })
