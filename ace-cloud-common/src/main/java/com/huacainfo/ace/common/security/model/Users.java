@@ -121,6 +121,9 @@ public class Users implements java.io.Serializable {
      */
     private String userType;
 
+    //微信标识id
+    private String unionId;
+
     public String getUserType() {
         return userType;
     }
@@ -316,4 +319,11 @@ public class Users implements java.io.Serializable {
                 '}';
     }
 
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
 }
