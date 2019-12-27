@@ -42,6 +42,14 @@
     text-align: center;
     font-family: Arial;
     margin-top: 16rpx;
+    display: flex;
+    align-items: center;
+}
+
+.baseInfo .left .tip .iconfont{
+   display: inline-flex;
+   font-size: 24rpx;
+   margin-right: 6rpx;
 }
 
 .baseInfo .right {
