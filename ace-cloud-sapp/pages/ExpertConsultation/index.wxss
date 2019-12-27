@@ -2,14 +2,10 @@
 
 .banner {
     width: 680rpx;
-    padding: 60rpx 0;
-    margin: auto;
+    height: 212rpx;
     border-radius: 20rpx;
-    background-color: rgba(46, 136, 242, 1);
-    color: rgba(255, 255, 255, 1);
-    font-size: 32rpx;
-    text-align: center;
-    font-family: Arial;
+    overflow: hidden;
+    margin: auto;
 }
 
 .banner .title {
@@ -51,6 +47,10 @@
 
 .list .item .info {
     width: 520rpx;
+    
+}
+.item .info .info1,.item .info .info2{
+    display: flex;
 }
 
 .item .info .info1 .name {
@@ -58,18 +58,24 @@
     font-size: 28rpx;
     font-family: PingFangSC-bold;
     font-weight: bold;
-    line-height: 35rpx;
-}   
+    display: inline
+}
 
 .item .info .info1 .sign {
     color: rgba(255, 125, 24, 1);
     font-size: 20rpx;
     font-family: Arial;
+    margin-left: 10rpx;
+    display: flex;
+    align-items: center;
+}
+.item .info  .iconfont{
+    font-size: 20rpx;
+    display: inline-flex
 }
 
 .item .info .info1 .num {
     display: inline-block;
-    float: right;
     padding: 0 20rpx;
     height: 40rpx;
     line-height: 40rpx;
@@ -78,6 +84,8 @@
     color: #FF7D18; 
     font-size: 20rpx;
     font-family: Arial;
+    align-content: center;
+    margin-left: auto;
 }
 
 .item .info .info2 {
@@ -86,6 +94,9 @@
     font-family: PingFangSC-regular;
 }
 
+.item .info .info2 .iconfont{
+    font-size: 30rpx;
+}
 .item .info .info3 {
     color: rgba(160, 167, 182, 1);
     font-size: 22rpx;

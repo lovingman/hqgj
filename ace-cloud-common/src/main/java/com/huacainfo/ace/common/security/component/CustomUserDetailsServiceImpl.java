@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -37,20 +38,20 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         this.logger.info("登录 {}", username);
 
-        //特权账号识别
+        //小程序登录识别
         String[] arr = username.split("\\|");
-        if (CommonKeys.UN_VERIFICATION_TAG.equals(arr[0])) {
+        if (CommonKeys.WX_LOGIN_TAG.equals(arr[0])) {
             //指定用户授权登录信息
-//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//            String password = encoder.encode(CommonKeys.UN_VERIFICATION_PWD);
-            return commonLogin(arr[1], "","y");
-        } else {
-            /**
-             * 用户名/密码正常校验登录
-             */
-            return commonLogin(username, "","n");
+            String account = feignSecurityService.selectUsersByWx(arr[1]);
+            // 指定用户授权登录信息
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String password = encoder.encode(CommonKeys.WX_LOGIN_PWD);
+            return commonLogin(account, password);
         }
-
+        /**
+         * 用户名/密码正常校验登录
+         */
+        return commonLogin(username, "");
     }
 
     /**
@@ -59,14 +60,10 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
      * @param username 用户名
      * @return UserDetails
      */
-    private UserDetails commonLogin(String username, String password,String type ) {
+    private UserDetails commonLogin(String username, String password) {
         //Users users = feignSecurityService.selectUsersByAccount(username);
-        Users users=null;
-        if(type.equals("y")) {
-            users = feignSecurityService.selectUsersByAccount1(username);
-        }else{
-            users = feignSecurityService.selectUsersByAccount2(username);
-        }
+        Users users = null;
+        users = feignSecurityService.selectUsersByAccount(username);
 
         if (!StringUtils.isEmpty(users)) {
             this.logger.info("开始加载角色");

@@ -18,8 +18,10 @@ import java.util.Map;
 public interface SecurityDao {
 
     Users selectUsersByAccount(@Param("account") String account);
+    Users selectUsersByOpenId(@Param("account") String account);
     Users selectUsersByAccount1(@Param("account") String account);
     Users selectUsersByAccount2(@Param("account") String account);
+    String selectUsersByWx(@Param("account") String account);
 
     List<Map<String, String>> selectRoleListByUserId(@Param("userId") String userId);
 

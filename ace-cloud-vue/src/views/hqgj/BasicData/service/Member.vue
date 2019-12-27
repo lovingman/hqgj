@@ -22,6 +22,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-input
+                                v-model="query.name"
                                 @change="toggleChange"
                                 class="input-with-select"
                                 placeholder="请输入姓名或手机号码"
@@ -39,13 +40,14 @@
                     :data="rows"
                     @selection-change="handleSelectionChange"
                     @sort-change="handleSort"
-                    border
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
                 <el-table-column label="姓名" prop="name" sortable='custom' width="300">
+                </el-table-column>
+                <el-table-column label="职务/职称" prop="jobs" sortable='custom' width="300">
                 </el-table-column>
                 <el-table-column label="手机号码" prop="mobile">
                 </el-table-column>
@@ -88,11 +90,9 @@
                 multipleSelection: [],//选中行数据
                 rows: [],
                 query: {
-                    orgId: "",
                     name: ""
                 },
                 exportDatas:{
-                    orgId: "",
                     name:""
                 }
             };
@@ -129,6 +129,10 @@
                     console.log(response);
                 })
             },
+            //搜索
+            search(){
+                this.handleQuery();
+            },
             Delete(index, data) {
                 console.log(data)
                 this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -156,7 +160,6 @@
                 }
                 //导出
                 if (command == 'exportXls') {
-                    this.exportDatas.orgId = this.query.orgId;
                     this.exportDatas.name = this.query.name;
                     exportXlsPerson(this.exportDatas).then(response => {
                         const blob = new Blob([response], {type: 'application/vnd.ms-excel'});

@@ -1,7 +1,6 @@
 <view>
   <view class="banner">
-    <view class="title">专业问诊，免费为您服务</view>
-    <view class="subTitle">名额有限，抢先预约咨询</view>
+    <van-image width="100%" height="100%" fit="cover" src="/assets/image/icon-banner1.png" />
   </view>
   <van-sticky>
     <view class="title1">
@@ -16,7 +15,9 @@
       <view class="info">
         <view class="info1">
           <text class="name">{{item.baseOrganizationMember.name}}</text>
-          <text class="sign">已认证</text>
+          <view class="sign">
+          <icon class="iconfont icon-yirenzheng"></icon>
+          已认证</view>
           <text class="num">仅剩{{item.surplusQuota}}个名额</text>
         </view>
         <view class="info2 van-ellipsis">

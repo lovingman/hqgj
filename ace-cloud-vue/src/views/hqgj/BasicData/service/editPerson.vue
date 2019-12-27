@@ -55,7 +55,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="形象照:" prop="imagePhoto">
+                        <el-form-item label="形象照:" prop="imagePhotoarr">
                             <el-upload
                                     :before-upload="beforeAvatarUpload"
                                     :class="{hide:hideUpload}"
@@ -74,7 +74,7 @@
                                 <img :src="dialogImageUrl" alt="" width="100%">
                             </el-dialog>
                         </el-form-item>
-                        <el-form-item label="微信二维码:" prop="wechatPhoto">
+                        <el-form-item label="微信二维码:" prop="wechatPhotoarr">
                             <el-upload
                                     :before-upload="beforeAvatarUpload2"
                                     :class="{hide2:hideUpload2}"
@@ -97,7 +97,7 @@
                 </el-row>
                 <el-form-item style="bottom: 10px;margin-left: 300px">
                     <el-button @click="back">取消</el-button>
-                    <el-button @click="handleEdit" type="primary">提交</el-button>
+                    <el-button @click="handleEdit('ruleForm')" type="primary">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -133,6 +133,29 @@
                     imagePhotoarr: [],
                     wechatPhoto: "",
                     wechatPhotoarr: [],
+                },
+                rules: {
+                    name: [
+                        {required: true, message: "请输入姓名", trigger: "blur"},
+                    ],
+                    mobile: [
+                        {required: true, message: "请输入联系方式", trigger: "blur"},
+                    ],
+                    idCard: [
+                        {required: true, message: "请输入身份证号", trigger: "blur"},
+                    ],
+                    jobs: [
+                        {required: true, message: "请输入职务/职称", trigger: "blur"}
+                    ],
+                    content: [
+                        {required: true, message: "请输入简介", trigger: "blur"},
+                    ],
+                    imagePhotoarr: [
+                        {required: true, message: "请上传形象照"}
+                    ],
+                    wechatPhotoarr: [
+                        {required: true, message: "请上传微信二维码"}
+                    ],
                 },
 
             };
@@ -177,14 +200,21 @@
                 this.hideUpload2 = true; // 隐藏上传按钮
 
             },
-            handleEdit() {
-                this.form.speciality = this.specialityarr.join();
-                updatePerson(this.form).then(response => {
-                    if (response.status == 1) {
-                        this.$message.success("编辑成功");
-                        this.back();
+            handleEdit(formName) {
+                this.$refs[formName].validate(valid => {
+                    if (valid) {
+                        this.form.speciality = this.specialityarr.join();
+                        updatePerson(this.form).then(response => {
+                            if (response.status == 1) {
+                                this.$message.success("编辑成功");
+                                this.back();
+                            }
+                        })
+                    } else {
+                        return false;
                     }
-                })
+                });
+
             },
             back() {
                 this.$router.push({path: "/hqgj/BasicData/service/Member", query: {id: this.form.orgId}});
@@ -366,8 +396,8 @@
             },
             // 形象照预览
             unitPictureCardPreview(file) {
-                this.unitImageUrl = file.url;
-                this.dialogUnitVisible = true;
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
             },
             //微信二维码上传
             unitPictrueUploadSuccess2(response, file, fileList) {
@@ -525,8 +555,8 @@
             },
             // 微信二维码预览
             unitPictureCardPreview2(file) {
-                this.unitImageUrl = file.url;
-                this.dialogUnitVisible = true;
+                this.dialogImageUrl2 = file.url;
+                this.dialogVisible2 = true;
             },
 
 

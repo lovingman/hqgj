@@ -180,4 +180,17 @@ public class ServeCultivateEnrollController extends BaseController {
     }
 
 
+    /**
+     * 取消报名
+     */
+    @ApiOperation(value = "/cancelEnroll", notes = "更新培训提升-报名管理")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "jsons", value = "ServeCultivateEnroll的json化对象", required = true, dataType = "String",
+                    paramType = "form"),
+    })
+    @PostMapping(value = "/cancelEnroll", produces = "application/json;charset=UTF-8")
+    public ResponseDTO cancelEnroll(String id) throws Exception {
+        return this.serveCultivateEnrollService.cancelEnroll(id);
+    }
+
 }

@@ -16,10 +16,7 @@ import com.huacainfo.ace.hqgj.model.ServeCultivateEnroll;
 import com.huacainfo.ace.hqgj.service.ServeCultivateEnrollService;
 import com.huacainfo.ace.hqgj.service.ServeCultivateScheduleService;
 import com.huacainfo.ace.hqgj.service.ServeCultivateService;
-import com.huacainfo.ace.hqgj.vo.ServeCultivateQVo;
-import com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleQVo;
-import com.huacainfo.ace.hqgj.vo.ServeCultivateScheduleVo;
-import com.huacainfo.ace.hqgj.vo.ServeCultivateVo;
+import com.huacainfo.ace.hqgj.vo.*;
 import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -92,6 +89,32 @@ public class WServeCultivateController extends BaseController {
     @GetMapping(value = "/schedulePage", produces = "application/json;charset=UTF-8")
     public PageDTO<ServeCultivateScheduleVo> page(ServeCultivateScheduleQVo condition, PageParam page) throws Exception {
         PageDTO<ServeCultivateScheduleVo> rst = this.serveCultivateScheduleService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+
+    /**
+     * @throws
+     * @Title:page
+     * @Description: TODO(分页查询)
+     * @param: @param condition
+     * @param: @param page
+     * @param: @return
+     * @param: @throws Exception
+     * @return: NewPageDTO
+     * <ServeCultivateEnrollVo>
+     * @author: 何双
+     * @version: 2019-12-09
+     */
+    @ApiOperation(value = "/enrollPage", notes = "获取培训提升-报名管理数据集合，支持分页查询")
+    @GetMapping(value = "/enrollPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <ServeCultivateEnrollVo> enrollPage(ServeCultivateEnrollQVo condition, PageParam page) throws Exception {
+
+        PageDTO<ServeCultivateEnrollVo> rst = this.serveCultivateEnrollService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
         if (page.getStart() > 1) {
             rst.setTotal(page.getTotalRecord());
         }

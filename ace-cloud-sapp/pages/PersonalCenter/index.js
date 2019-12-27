@@ -6,33 +6,23 @@ Page({
      */
     data: {
         navigates: [{
-                text: '创业服务包',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+                text: '注册记录',
+            imgUrl: '/assets/image/icon3-1.png',
                 path: '/'
             },
             {
-                text: '财税服务包',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+                text: '培训记录',
+                imgUrl: '/assets/image/icon3-2.png',
                 path: '/'
             },
             {
-                text: '财税专家',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+                text: '问诊记录',
+                imgUrl: '/assets/image/icon3-3.png',
                 path: '/'
             },
             {
-                text: '培训提升',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-                path: '/'
-            },
-            {
-                text: '法律服务',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
-                path: '/'
-            },
-            {
-                text: '政策服务',
-                imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg',
+                text: '财税订单',
+                imgUrl: '/assets/image/icon3-4.png',
                 path: '/'
             }
         ]

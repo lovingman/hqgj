@@ -4,8 +4,8 @@
             <el-row>
                 <el-button @click="create" style="float:left;" type="primary">创建</el-button>
                 <el-col :span="10" class="selectSearch">
-                    <el-input class="input-with-select" clearable placeholder="请输入名称" v-model="query.name">
-                        <el-button slot="append">搜索</el-button>
+                    <el-input class="input-with-select" clearable placeholder="请输入名称" v-model="query.title">
+                        <el-button @click="search" slot="append">搜索</el-button>
                     </el-input>
                 </el-col>
             </el-row>
@@ -53,24 +53,7 @@
                 query2: {
                     relationId: "" //搜索
                 },
-                tableData: [
-                    {
-                        name: "我去",
-                        time: "2019-05-01"
-                    },
-                    {
-                        name: "我去2",
-                        time: "2019-05-11"
-                    },
-                    {
-                        name: "我去3",
-                        time: "2019-05-12"
-                    },
-                    {
-                        name: "我去4",
-                        time: "2019-05-22"
-                    }
-                ]
+                tableData: []
             };
         },
         created(){
@@ -102,6 +85,10 @@
                     this.tableData = response.rows
                 })
             },
+            //搜索
+            search(){
+                this.handleQuery();
+            },
             //删除
             handleDele(index, data) {
                 this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -117,7 +104,7 @@
                         });
                     })
                     .catch(() => {
-                        this.$message.error('error')
+                        // this.$message('已取消下载')
                     });
             },
             //下载
@@ -130,16 +117,17 @@
                     .then(() => {
                         this.query2.relationId = data.id;
                         getAnnex(this.query2).then(response => {
-                            for(var i=0;i<response.data.length;i++){
-                                // let link = document.createElement('a')
-                                // link.href = response.data[i].fileURL;
-                                // link.download = data.fileName + '.png'
-                                // link.click()
+                            for(var i=0;i<response.rows.length;i++){
+                                let link = document.createElement('a')
+                                link.href = response.rows[i].fileURL;
+                                // link.download = response.rows[i].fileName + '.'+response.rows[i].fileURL.substr(response.rows[i].fileURL.lastIndexOf(".") + 1)
+                                // link.download = '武陵区中小企业公共服务平台免费服务申请表.doc';
+                                link.click()
                             }
                         });
                     })
                     .catch(() => {
-                        this.$message.error('error')
+                        // this.$message.error('error')
                     });
             },
             //选择tableSize事件

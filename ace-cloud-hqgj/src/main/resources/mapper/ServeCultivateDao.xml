@@ -148,7 +148,6 @@
                 <foreach collection="condition.statuss" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
-
             </if>
         </where>
     </sql>
@@ -216,6 +215,11 @@
     <update id="addEnrollNum" parameterType="java.lang.String">
 		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber+1 where  id = #{id,jdbcType=VARCHAR}
   </update>
+
+    <update id="cancalEnrollNum" parameterType="java.lang.String">
+		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber-1 where  id = #{id,jdbcType=VARCHAR}
+  </update>
+
 
     <resultMap extends="BaseResultMap" id="DetailsResultMap" type="com.huacainfo.ace.hqgj.vo.ServeCultivateDetail">
         <result column="surplusQuota" jdbcType="INTEGER" property="surplusQuota"/>

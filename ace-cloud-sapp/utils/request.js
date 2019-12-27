@@ -2,10 +2,12 @@ function wxPromisify(fn) {
     return function (obj = {}) {
         return new Promise((resolve, reject) => {
             obj.success = function (res) {
+                console.log(1)
                 resolve(res)
             }
             obj.fail = function (res) {
                 //失败
+                console.log(2)
                 reject(res)
             }
             fn(obj)

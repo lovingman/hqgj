@@ -99,4 +99,11 @@ public interface ServeCultivateEnrollService {
      */
     ResponseDTO updateStatus(String status,String[] ids)throws Exception;
 
+    /**
+     * 取消报名
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO cancelEnroll(String id)throws Exception;
 }

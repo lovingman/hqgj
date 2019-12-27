@@ -16,7 +16,8 @@
         "pages/TrainingInstitutions/index",
         "pages/TrainingEnrollmentManagement/index",
         "pages/ServiceAccounting/index",
-        "pages/ SignIn/index",
+        "pages/SignIn/index",
+        "pages/RegisterVerifies/index",
         "pages/Register/index",
         "pages/PersonalCenter/index",
         "pages/RecordTrain/index",
@@ -24,6 +25,7 @@
         "pages/TrainingServiceInfo/index",
         "pages/TrainingScheduleDetails/index",
         "pages/LawyerService/index",
+        "pages/Forget/index",
         "pages/LawFirm/index",
         "pages/PolicyService/index",
         "pages/PolicyServiceDetail/index"
@@ -34,5 +36,8 @@
         "navigationBarTitleText": "WeChat",
         "navigationBarTextStyle": "black"
     },
-    "sitemapLocation": "sitemap.json"
+    "sitemapLocation": "sitemap.json",
+    "usingComponents": {
+        "van-toast": "/@vant/weapp/toast/index"
+    }
 }

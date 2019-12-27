@@ -4,13 +4,13 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称" style="width: 50%" v-model="addform.companyName"></el-input>
+                    <el-input placeholder="请输入企业名称"  style="width: 50%" v-model="addform.companyName"></el-input>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="creditCode">
-                    <el-input placeholder="请输入18位统一社会信用代码" style="width: 50%" v-model="addform.creditCode"></el-input>
-                </el-form-item>
-                <el-form-item label="法定代表人:" prop="legalPerson">
-                    <el-input placeholder="请输入法定代表人姓名" style="width: 50%" v-model="addform.legalPerson"></el-input>
+                <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
+                    <!--<el-input placeholder="请输入18位统一社会信用代码"  style="width: 50%" v-model="addform.creditCode"></el-input>-->
+                <!--</el-form-item>-->
+                <el-form-item label="法人代表:" prop="legalPerson">
+                    <el-input placeholder="请输入法人代表姓名" style="width: 50%" v-model="addform.legalPerson"></el-input>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="contactPersonTel">
                     <el-input placeholder="联系人姓名" style="width: 21%" v-model="addform.contactPersonName"></el-input>
@@ -92,11 +92,11 @@
                         {required: true, message: "请输入企业名称", trigger: "blur"},
                     ],
                     legalPerson: [
-                        {required: true, message: "请输入法定代表人姓名", trigger: "blur"},
+                        {required: true, message: "请输入法人代表姓名", trigger: "blur"},
                     ],
-                    contactPersonTel: [
-                        {required: true, message: "联系方式", trigger: "blur"},
-                    ],
+                    // contactPersonTel: [
+                    //     {required: true, message: "联系方式", trigger: "blur"},
+                    // ],
                     areaCodes: [
                         {required: true, message: "请选择所属单位", trigger: "change"}
                     ],
@@ -132,7 +132,7 @@
             },
             //获取行政区划数据
             AreaCodeQuery() {
-                getAreaTree({pid: 4307, type: 1, hasSelf: "true"})
+                getAreaTree({pid:430702, type: 1, hasSelf: "true"})
                     .then(response => {
                         this.areaCodeOptions = response.data;
                     })

@@ -1,0 +1,23 @@
+<!--pages/Register/index.wxml-->
+<view>
+    <view class="title">
+        找回密码
+    </view>
+    <view class="content">
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ mobile }}" error="{{mobileState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="手机号码" border="{{ false }}" data-field="mobile" bind:change="onChange"/>
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ captcha }}" data-field="captcha" clearable placeholder="输入验证码" border="{{ false }}" bind:change="onChange">
+                <van-button bindtap="getcode" disabled="{{disabled}}"  use-button-slot slot="button" size="small" type="info">{{captchaTxt}}</van-button>
+            </van-field>
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ newPassword }}" type="password" error="{{newPasswordState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="输入6位以上密码" border="{{ false }}" data-field="newPassword" bind:change="onChange"/>
+        </view>
+        <view class="btn">
+            <van-button bindtap="next" round type="info" size="large">确定</van-button>
+        </view>
+    </view>
+    <van-toast id="van-toast" />
+</view>

@@ -26,6 +26,41 @@
             t.account=#{account}
     </select>
 
+    <select id="selectUsersByOpenId" resultType="com.huacainfo.ace.common.security.model.Users">
+select t.user_id userId,
+               t.account,
+               t.password,
+               t.sex,
+               t.idCard,
+               t.name,
+               t.corpId,
+               t.deptId,
+               a.areaCode,
+               t.birthday,
+               t.status,
+               t.lastLoginTime,
+               t.mobile,
+               t.email,
+               t.createTime,
+               a.pid parentCorpId,
+               a.name corpName,
+               t.curSyid,
+               t.locked
+                from users t
+                left join corp a on t.corpId=a.id where
+                t.user_id = (SELECT wx.userId FROM ace_hqgj_wxms.map_wechat_sys wx
+					WHERE wx.unionId=#{account})
+    </select>
+
+
+    <select id="selectUsersByWx" resultType="java.lang.String">
+select  t.account
+                from users t  where
+                t.user_id = (SELECT wx.userId FROM ace_hqgj_wxms.map_wechat_sys wx
+					WHERE wx.unionId=#{account})
+    </select>
+
+
     <select id="selectUsersByAccount1" resultType="com.huacainfo.ace.common.security.model.Users">
         select t.user_id userId,
                t.account,
