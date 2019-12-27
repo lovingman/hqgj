@@ -1,5 +1,4 @@
 // pages/RegProcess/index.js
-var areaList = require("../../utils/area.js");
 var cfg = require("../../utils/config.js");
 var request = require("../../utils/request.js");
 Page({
@@ -42,7 +41,7 @@ Page({
       legalPerson: '',
       regBonus: '',
       areaCode: '',
-      areaType: '',
+      areaType: '请选择区域',
       companyAddress: '',
       manageExtent: ''
     },
@@ -74,7 +73,21 @@ Page({
         fileType: 2
       }]
     },
-    supervisor: { //监事
+    shareholder: [{ //股东
+      name: "",
+      sharesProportion: "",
+      type: 3,
+      basicAnnexes: [{
+        fileURL: "",
+        fileName: "股东身份证附件",
+        fileType: 1
+      }, {
+        fileURL: "",
+        fileName: "股东身份证附件",
+        fileType: 2
+      }]
+    }],
+    supervisor: [{ //监事
       name: "",
       mobile: "",
       type: 2,
@@ -87,7 +100,7 @@ Page({
         fileName: "监事身份证附件",
         fileType: 2
       }]
-    },
+    }],
     contract1: { //房产证复印件
       name: "房产证复印件",
       type: 6,
@@ -120,21 +133,7 @@ Page({
         fileURL: ""
       }]
     },
-    shareholder: [{ //股东
-      name: "",
-      sharesProportion: "",
-      type: 3,
-      basicAnnexes: [{
-        fileURL: "",
-        fileName: "股东身份证附件",
-        fileType: 1
-      }, {
-        fileURL: "",
-        fileName: "股东身份证附件",
-        fileType: 2
-      }]
-    }],
-    areaList: {}
+    areaList: []
   },
   onChange1(event) {
     this.data.result1.option = event.detail
@@ -179,6 +178,76 @@ Page({
           dicObj: res.data
         })
       }
+    })
+  },
+  changes(e) {
+    console.log(e)
+    if (e.detail.index == 1) {
+      this.data.areaList.forEach((item) => {
+        if (item.className == "column2") {
+          item.values = e.detail.value[e.detail.index].children;
+        }
+      })
+    }
+    this.setData({
+      areaList: this.data.areaList
+    })
+  },
+  //获取武陵区行政区划
+  getAreaTree() {
+    let that = this;
+    request.getJSON(cfg.getAreaTreeUrl + "?pid=430702&type=1&hasSelf=true", {}).then(rst => {
+      console.log(rst);
+      let res = rst.data;
+      if (res.status == 1) {
+        console.log(res.data[0])
+        let obj = [];
+        // obj[]  
+        for (var i = 0; i < res.data[0].children.length; i++) {
+          obj = obj.concat(res.data[0].children[i].children)
+        }
+        console.log(obj)
+        that.data.areaList = [{
+            values: res.data,
+            className: 'column0'
+          },
+          {
+            values: res.data[0].children,
+            className: 'column1'
+          },
+          {
+            values: res.data[0].children[0].children,
+            className: 'column2',
+            defaultIndex: 0
+          }
+        ]
+        that.setData({
+          areaList: that.data.areaList
+        })
+        // this.data.areaList.province_list[res.data[0].id] = res.data[0].text;
+        // console.log(this.data.areaList)
+      }
+    })
+  },
+  //添加监事
+  addSupervisor(){
+    let obj = {
+      name: "",
+      mobile: "",
+      type: 2,
+      basicAnnexes: [{
+        fileURL: "",
+        fileName: "监事身份证附件",
+        fileType: 1
+      }, {
+        fileURL: "",
+        fileName: "监事身份证附件",
+        fileType: 2
+      }]
+    };
+    this.data.supervisor.push(obj);
+    this.setData({
+      supervisor: this.data.supervisor
     })
   },
   //添加股东
@@ -231,7 +300,13 @@ Page({
             } else {
               that.data.shareholder[index].basicAnnexes[1].fileURL = JSON.parse(res.data).data;
             }
-          } else {
+          } else if (event.currentTarget.dataset.obj == "supervisor"){
+            if (event.currentTarget.dataset.file == 1) {
+              that.data.supervisor[index].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
+            } else {
+              that.data.supervisor[index].basicAnnexes[1].fileURL = JSON.parse(res.data).data;
+            }
+          }else{
             if (event.currentTarget.dataset.file == 1) {
               that.data[event.currentTarget.dataset.obj].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
             } else {
@@ -259,6 +334,13 @@ Page({
       shareholder: this.data.shareholder
     })
   },
+  //监事双向绑定
+  bindinputy:function(e){
+    this.data.supervisor[e.currentTarget.dataset.index][e.currentTarget.dataset.model] = e.detail;
+    this.setData({
+      supervisor: this.data.supervisor
+    })
+  },
   showPickerArea: function() {
     console.log(123)
     this.setData({
@@ -271,12 +353,10 @@ Page({
     })
   },
   confirms: function(e) {
-    console.log(e.detail.values[e.detail.values.length - 1].code)
-    console.log(e.detail.values[e.detail.values.length - 1].name)
-    this.data.serveBusiness.areaCode = e.detail.values[e.detail.values.length - 1].code;
+    this.data.serveBusiness.areaCode = e.detail.value[e.detail.value.length - 1].id;
     let str = [];
-    e.detail.values.forEach((item) => {
-      str.push(item.name)
+    e.detail.value.forEach((item) => {
+      str.push(item.text)
     })
     this.data.serveBusiness.areaType = str.join(',');
     this.setData({
@@ -288,10 +368,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(areaList.default)
-    this.setData({
-      areaList: areaList.default
-    })
+    this.getAreaTree()
+    // console.log(areaList.default)
+    // this.setData({
+    //   areaList: areaList.default
+    // })
   },
   clickTab: function(e) {
     this.setData({
@@ -332,9 +413,14 @@ Page({
       serveBusinessAppend: []
     }
     obj.serveBusiness = this.data.serveBusiness;
-    obj.serveBusinessDetail = [this.data.legalPerson, this.data.supervisor, this.data.finance, this.data.contract1, this.data.contract2, this.data.contract3, this.data.contract4];
+    obj.serveBusinessDetail = [this.data.legalPerson, this.data.finance, this.data.contract1, this.data.contract2, this.data.contract3, this.data.contract4];
     if (this.data.shareholder.length > 0) {
       this.data.shareholder.forEach((item) => {
+        obj.serveBusinessDetail.push(item);
+      })
+    }
+    if (this.data.supervisor.length > 0) {
+      this.data.supervisor.forEach((item) => {
         obj.serveBusinessDetail.push(item);
       })
     }

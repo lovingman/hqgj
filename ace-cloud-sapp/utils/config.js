@@ -2,6 +2,7 @@ var server = "http://192.168.2.114";
 var config = {
   login: `${server}/hqgj-portal/security/login`,
   getByCategoryUrl: `${server}/hqgj-portal/dict/getByCategoryIds`,//字典
+  getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`,//行政区划
   trainPageUrl: `${server}/hqgj/www/serveCultivate/page`,  //培训列表page请求
   selectByIdDetailsUrl: `${server}/hqgj/www/serveCultivate/selectByIdDetails`,  //培训列表详情请求
   schedulePageUrl: `${server}/hqgj/www/serveCultivate/schedulePage`,  //日程请求列表
