@@ -68,9 +68,11 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="地点：" prop="address">
+                                    <el-input v-if="basicForm.address!=''" clearable v-model="basicForm.address"></el-input>
                                     <el-button @click="getAddress" class="get-address">
-                                        <el-input v-if="basicForm.address!=''" v-model="basicForm.address"></el-input>
-                                        <i class="el-icon-plus" v-if="basicForm.address==''"></i><span v-if="basicForm.address==''">获取地点</span>
+                                        <i class="el-icon-plus"></i>
+                                        <span>获取地点</span>
+                                        <!--<span v-if="basicForm.address==''">重新获取地点</span>-->
                                     </el-button>
                                 </el-form-item>
                             </el-col>
@@ -293,6 +295,7 @@
                 disabled: true, //机构是否禁止选择
                 //附件列表
                 fileList: [],
+                filelist: [],
                 //基本信息
                 basicForm: {
                     orgName: "", //机构
@@ -727,14 +730,17 @@
                 this.actionUrls = "/hqgj-portal/www/uploadFile";
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
-                        this.fileList.push({name: obj.file.name, url: response.data});
-                        this.uploadSuccess(response, obj.file, this.fileList);
+                        this.filelist.push({
+
+                            name: obj.file.name, url: response.data
+                        });
+                        this.uploadSuccess(response, obj.file, this.filelist);
                     } else {
                         this.$message({
                             message: response.message,
                             type: "warning"
                         });
-                        this.uploadError(response, obj.file, this.fileList);
+                        this.uploadError(response, obj.file, this.filelist);
                     }
                     return response.status;
                 });
@@ -775,6 +781,11 @@
                     this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
                 }
                 console.log(this.uploadfileindex);
+
+                this.fileList.push({
+                    fileArr:[]
+                });
+
                 this.fileList = fileList;
                 console.log(this.fileList);
             },
