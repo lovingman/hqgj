@@ -20,11 +20,12 @@
         <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
         <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, orgId, orgName, contactPersonName, contactPersonTel, address, quota, type, fmUrl, 
     content, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
-    modifyDate, status,contactId
+    modifyDate, status,contactId,reason
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -42,13 +43,13 @@
       quota, type, fmUrl, 
       content, createUserId, createUserName, 
       createDate, modifyUserId, modifyUserName, 
-      modifyDate, status)
+      modifyDate, status,reason)
     values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{contactId,jdbcType=VARCHAR},
       #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{quota,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR})
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.ServeFinance">
     update serve_finance
@@ -100,7 +101,7 @@
         </collection>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orgId, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId
+    t.id, t.orgId, t.contactPersonName, t.contactPersonTel, t.address, t.quota, t.type, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status,t.contactId,t.reason
   </sql>
     <sql id="From_Statement">
     FROM serve_finance t
@@ -221,6 +222,13 @@
     <update id="updateStatus">
       update serve_finance
       set status = #{status,jdbcType=VARCHAR}
+        <if test='status =="2" and reason != null and reason!= ""'>
+            , reason = #{reason,jdbcType=VARCHAR}
+        </if>
+        <if test='status!="2"'>
+            , reason = null
+        </if>
       where id = #{id,jdbcType=VARCHAR}
     </update>
+
 </mapper>

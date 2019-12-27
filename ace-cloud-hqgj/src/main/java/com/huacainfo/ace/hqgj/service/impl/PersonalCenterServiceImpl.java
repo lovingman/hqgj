@@ -10,7 +10,6 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
-import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

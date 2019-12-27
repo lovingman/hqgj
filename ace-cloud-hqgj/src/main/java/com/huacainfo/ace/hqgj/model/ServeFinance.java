@@ -122,6 +122,11 @@ public class ServeFinance extends BaseModel {
      */
     private String status;
 
+    /**
+     * 审核不通过原因备注
+     */
+    private String reason;
+
     private List<ServeFinanceItem> financeItemList;
 
     public String getId() {
@@ -274,5 +279,13 @@ public class ServeFinance extends BaseModel {
 
     public void setContactId(String contactId) {
         this.contactId = contactId;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
