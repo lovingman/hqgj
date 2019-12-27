@@ -30,16 +30,15 @@
         <view class="title">
           全部模板（{{basicLength}}）
         </view>
-        <view class="file" wx:for="{{basicAnnexArr}}" wx:key="{{index}}" wx:for-item="item" catchtap='downloadFile' data-index='{{index}}'>
+        <view class="file" wx:for="{{basicAnnexArr}}" wx:key="{{index}}" wx:for-item="item" catchtap='openFile' data-src='{{item.fileURL}}'>
           <view class="name">
             {{item.fileName}}
           </view>
           <view class="other">
             <view>{{item.createDate}} </view>
-            <view class="download">下载</view>
+            <view data-url='{{item.fileURL}}' catchtap="downloadFile" class="download">下载</view>
           </view>
         </view>
-
       </view>
     </van-tab>
   </van-tabs>

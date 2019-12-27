@@ -66,6 +66,8 @@
 
 .wrap .bottom .sign .iconfont {
     margin-right: 6rpx;
+    display: inline-flex;
+    font-size: 26rpx;
 }
 
 .search {
