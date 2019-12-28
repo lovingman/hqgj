@@ -66,4 +66,17 @@
 
 .wrap .bottom .sign .iconfont {
     margin-right: 6rpx;
+    font-size: 26rpx;
+    display: inline-flex;
+}
+
+.wrap .bottom .fine {
+    width: 128rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    border-radius: erpx;
+    background-color: rgba(255, 232, 220, 0.42);
+    color: rgba(255, 125, 24, 1);
+    font-size: 24rpx;
+    text-align: center;
 }
