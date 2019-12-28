@@ -1,4 +1,8 @@
 {
+    "enablePullDownRefresh": true,
+    "navigationBarBackgroundColor": "#2E88F2",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "个人中心",
     "usingComponents": {
         "van-icon": "/vant/weapp/icon/index",
         "van-image": "/vant/weapp/image/index",

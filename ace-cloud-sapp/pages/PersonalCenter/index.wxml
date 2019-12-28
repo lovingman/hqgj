@@ -2,7 +2,7 @@
     <view class="baseInfo hat">
         <view class="left">
             <view class="headImg">
-                <van-image width="100%" height="100%" round fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                <van-image width="100%" height="100%" round fit="cover" src="" />
             </view>
             <view>
                 <view class="name">
@@ -38,7 +38,7 @@
         绑定企业
     </view>
     <view class="binding">
-        <view>暂未绑定企业</view>
+        <view>暂未绑定企业/机构</view>
         <view class="btn">
             <van-button round type="info" size="large">绑定</van-button>
         </view>
@@ -47,8 +47,8 @@
         <van-cell icon="lock" is-link border="{{false}}" title="修改密码" link-type="navigateTo" url="/pages/dashboard/index" />
         <van-cell icon="chat" is-link border="{{false}}" title="解绑微信" link-type="navigateTo" url="/pages/dashboard/index" />
     </view>
-
     <view class="signOut">
         <van-button round plain hairline size="large">退出登录</van-button>
     </view>
+    
 </view>
