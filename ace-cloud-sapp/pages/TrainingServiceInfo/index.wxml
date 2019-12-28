@@ -29,7 +29,7 @@
     </view>
   </view>
 
-  <van-tabs line-width="24" line-height="4" color="#2E88F2" swipeable sticky animated bind:click="tabClick">
+  <van-tabs line-width="24" line-height="4" color="#2E88F2" swipeable sticky animated bind:change="tabClick">
     <van-tab title="培训介绍">
       <view class="content">
         <view class="title">
@@ -44,27 +44,11 @@
           <text class="remark">报名后现场签到，才能下载资料</text>
         </view>
         <view class="files">
-          <view class="file">
+          <view class="file" wx:for="{{basicAnnexList}}" wx:key="{{index}}" wx:for-item="item" catchtap='openFile' data-index='{{index}}' data-src='{{item.fileURL}}'>
             <view class="name">
-              企业管理在实际中的应用.pptx
+              {{item.fileName}}
             </view>
-            <view class="downBtn">
-              下载
-            </view>
-          </view>
-          <view class="file">
-            <view class="name">
-              企业管理在实际中的应用.pptx
-            </view>
-            <view class="downBtn">
-              下载
-            </view>
-          </view>
-          <view class="file">
-            <view class="name">
-              企业管理在实际中的应用.pptx
-            </view>
-            <view class="downBtn">
+            <view class="downBtn" data-url='{{item.fileURL}}' catchtap="downloadFile">
               下载
             </view>
           </view>

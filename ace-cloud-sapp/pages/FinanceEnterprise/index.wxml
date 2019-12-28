@@ -45,7 +45,7 @@
     </view>
   </view>
   <view class="footer">
-    <view class="phone">
+    <view class="phone" catchtap="telePhoneClick" data-id="{{detailsForm.contactPersonTel}}">
       <view>
         <van-icon name="phone" />
       </view>
@@ -54,7 +54,8 @@
       </view>
     </view>
     <view class="btn">
-      <van-button round type="info" size="large">立即下单</van-button>
+      <van-button round type="info" size="large" wx:if="{{detailsForm.type == 2}}" bindtap="orderClick">立即下单</van-button>
+      <van-button round type="info" size="large" wx:if="{{detailsForm.integral <= 500 && detailsForm.type != 2}}" bindtap="orderClick">500积分抵扣</van-button>
     </view>
   </view>
   <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
@@ -92,7 +93,9 @@
       </van-radio-group> -->
     </view>
     <view class="btn orderBtn">
-      <van-button round type="info" size="large">确定</van-button>
+      <van-button round type="info" size="large" bindtap="orderDetermine">确定</van-button>
     </view>
   </van-popup>
+  <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
 </view>
