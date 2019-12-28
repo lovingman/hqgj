@@ -104,9 +104,9 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectUserInfo" resultType="com.huacainfo.ace.common.security.model.Users">
+    <select id="selectUserInfo" resultType="com.huacainfo.ace.hqgj.vo.UsersVo">
       select t.user_id userId, t.account, t.sex, t.idCard, t.userType, t.name, t.corpId,
-      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName,
+      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName,o.contactPersonTel orgTel
         from portal_hqgj.users t
         left join hqgj.base_organization o on t.corpId=o.id
         where t.user_id = #{userId}

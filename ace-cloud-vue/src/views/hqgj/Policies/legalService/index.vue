@@ -117,12 +117,13 @@
                     .then(() => {
                         this.query2.relationId = data.id;
                         getAnnex(this.query2).then(response => {
-                            for(var i=0;i<response.rows.length;i++){
+                            for(var i=0;i<response.rows.length;i++ ){
                                 let link = document.createElement('a')
                                 link.href = response.rows[i].fileURL;
                                 // link.download = response.rows[i].fileName + '.'+response.rows[i].fileURL.substr(response.rows[i].fileURL.lastIndexOf(".") + 1)
                                 // link.download = '武陵区中小企业公共服务平台免费服务申请表.doc';
-                                link.click()
+                                link.click();
+                                console.log(123);
                             }
                         });
                     })
