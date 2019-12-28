@@ -15,7 +15,7 @@ Page({
             {
                 text: '培训记录',
                 imgUrl: '/assets/image/icon3-2.png',
-                path: '/'
+                path: '/pages/RecordTrain/index'
             },
             {
                 text: '问诊记录',

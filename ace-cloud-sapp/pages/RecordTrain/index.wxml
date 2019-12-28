@@ -1,298 +1,33 @@
 <!--pages/FinanceTax/index.wxml-->
+<wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
 <view class="index">
-    <van-tabs line-width="30" color="#2E88F2" sticky animated swipeable active="{{ active }}">
-        <block wx:for="{{tabs}}" wx:key="idnex">
+    <van-tabs line-width="30" bind:change="changeTabHandler" color="#2E88F2" sticky animated swipeable active="{{ active }}">
+        <block wx:for="{{tabs}}" wx:key="index" wx:for-index="index" wx:for-item="item">
             <van-tab title-style="color:#2E88F2" title="{{item.name}}">
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                <view>
+                    <view class="modal" wx:for="{{item.list}}" wx:for-index="idx" wx:for-item="itm">
+                        <view class="card">
+                            <view class="img">
+                                <van-image width="100%" height="100%" fit="cover" src="{{itm.fmUrl}}" />
+                            </view>
+                            <view class="info">
+                                <view class="name van-multi-ellipsis--l2">{{itm.companyName}}</view>
+                                <view class="org">
+                                    <van-icon name="clock-o" />{{ astFilter.timeMDHM(itm.startDate)}}-{{astFilter.timeHM(itm.endDate)}}</view>
+                            </view>
                         </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
+                        <view class="handler">
+                            <view class="state">{{astFilter.trainingStatus(itm.status)}}</view>
+                            <view>
+                                <van-button class="btnStyle1" catchtap="cancelEnroll" data-id="{{itm.id}}" plain hairline round size="small">取消报名</van-button>
+                                <van-button class="del" catchtap="cancelEnroll" data-id="{{itm.id}}" plain round hairline size="small">删除</van-button>
+                                <!-- <van-button plain round type="info" size="small">评价</van-button> -->
+                            </view>
                         </view>
                     </view>
                 </view>
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-
-                <view class="modal">
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis--l2">王麒霖王麒麒霖</view>
-                            <view class="org">
-                                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="state">状态</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="header">
-                        <view class="order">
-                            订单编号：456598985
-                        </view>
-                        <view class="state">
-                            待完成
-                        </view>
-                    </view>
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis">王麒霖王麒麒霖</view>
-                            <view class="service">服务项目：一般规模纳税服务</view>
-                            <view class="price">￥2000</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="type">#代理记账</view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="modal">
-                    <view class="header">
-                        <view class="order">
-                            订单编号：456598985
-                        </view>
-                        <view class="state">
-                            待完成
-                        </view>
-                    </view>
-                    <view class="card">
-                        <view class="img">
-                            <van-image width="100%" height="100%" round fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                        </view>
-                        <view class="info">
-                            <view class="name van-multi-ellipsis">王麒霖王麒麒霖</view>
-                            <view class="service">服务项目：一般规模纳税服务</view>
-                            <view class="price">￥2000</view>
-                        </view>
-                    </view>
-                    <view class="handler">
-                        <view class="type"></view>
-                        <view>
-                            <van-button class="btnStyle1" plain hairline round size="small">取消报名</van-button>
-                            <van-button class="del" plain round hairline size="small">删除</van-button>
-                            <van-button plain round type="info" size="small">评价</van-button>
-                        </view>
-                    </view>
-                </view>
-
+                <view wx:if="{{item.isload}}" class="loadState">已经没有了</view>
+                <view wx:if="{{item.loading}}" class="loadState">正在加载中</view>
             </van-tab>
         </block>
     </van-tabs>
@@ -300,6 +35,6 @@
         <view class="score">
             <van-rate color="#2E88F2" value="{{ value }}" bind:change="onChange" />
         </view>
-        <textarea class="textarea" fixed placeholder="placeholder颜色是红色的" placeholder-style="color:#798092;font-size:28rpx;"  />
+        <textarea class="textarea" fixed placeholder="placeholder颜色是红色的" placeholder-style="color:#798092;font-size:28rpx;" />
     </van-dialog>
 </view>

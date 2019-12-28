@@ -25,7 +25,8 @@ var config = {
     serveCultivateEnrollUrl: `${server}/hqgj/serveCultivateEnroll/create`, //培训提升服务报名
     isLoginUrl: `${server}/hqgj/www/reg/isLogin`, //判断是否登录
     enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
-
+    myEnrollPage: `${server}/hqgj/serveCultivateEnroll/enrollPage`, //我的培训列表
+    cancelEnroll: `${server}/hqgj/serveCultivateEnroll/cancelEnroll`, //取消报名
 };
 
 

@@ -1,0 +1,25 @@
+module.exports = {
+    timeMDHM: function(str) {
+        if(str){
+            return str.substring(5, 16)+" ";
+        }
+        return '00-00 00:00 '
+    },
+    timeHM: function(str) {
+        if (str) {
+            return str.substring(10, 16);
+        }
+        return ' 00:00'
+        
+    },
+    trainingStatus: function(str) {
+        switch (str) {
+            case '0':
+                return '待完成';
+            case '1':
+                return '已取消';
+            case '2':
+                return '已完成';
+        }
+    }
+}
