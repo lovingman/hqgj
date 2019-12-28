@@ -91,7 +91,7 @@
         </van-radio>
       </van-radio-group> -->
     </view>
-    <view class="btn">
+    <view class="btn orderBtn">
       <van-button round type="info" size="large">确定</van-button>
     </view>
   </van-popup>

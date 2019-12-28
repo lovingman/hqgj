@@ -5,8 +5,11 @@ page {
 }
 
 .index {
-    background: #f7f9fc;
+    background:#F7F9FC;
     min-height: 100%;
+}
+.van-tabs__nav {
+    background: #2E88F2;
 }
 
 .index .van-tabs--line .van-tabs__wrap {
@@ -18,6 +21,12 @@ page {
 .index .van-tabs__scroll--line {
     height: auto;
     background: #2e88f2;
+}
+.index .van-tabs--line .van-sticky{
+     background: green;
+}
+.van-hairline--top-bottom::after{
+    border-width: 0 !important;
 }
 
 .van-tabs__wrap--scrollable .van-tab {
