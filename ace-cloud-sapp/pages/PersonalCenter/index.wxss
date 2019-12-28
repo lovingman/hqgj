@@ -1,6 +1,7 @@
-.index{
+.index {
     padding-bottom: 80rpx;
 }
+
 .baseInfo {
     height: 280rpx;
     padding: 0 40rpx 40rpx;
@@ -46,10 +47,10 @@
     align-items: center;
 }
 
-.baseInfo .left .tip .iconfont{
-   display: inline-flex;
-   font-size: 24rpx;
-   margin-right: 6rpx;
+.baseInfo .left .tip .iconfont {
+    display: inline-flex;
+    font-size: 24rpx;
+    margin-right: 6rpx;
 }
 
 .baseInfo .right {
@@ -153,4 +154,64 @@
 
 .signOut .van-button__text {
     color: rgba(160, 167, 182, 1);
+}
+
+.wrapper_org {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.wrapper_org .block {
+    width: 660rpx;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 40rpx;
+    padding: 48rpx 42rpx;
+}
+
+.wrapper_org .block .item {
+    height: 170rpx;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 9rpx 37rpx 6rpx rgba(246, 247, 250, 0.76);
+    border-radius: 20rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 32rpx 0 40rpx;
+    margin-top: 25rpx;
+}
+
+.wrapper_org .block .item .title {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(30, 42, 69, 1);
+}
+
+.wrapper_org .block .item .subtitle {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: rgba(160, 167, 182, 1);
+}
+
+.wrapper_org .block .item .text {
+    flex-grow: 1;
+    margin-left: 40rpx;
+}
+
+.wrapper_org .block .item .van-icon {
+    font-size: 40rpx;
+    color: #2e88f2;
+}
+
+.wrapper_org .block  .van-button--large {
+    margin-top: 70rpx;
+    height: 100rpx !important;
+}
+
+.wrapper_org .block  .van-button__text {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
 }
