@@ -73,7 +73,6 @@
                                     <el-button @click="getAddress" class="get-address">
                                         <i class="el-icon-plus"></i>
                                         <span>获取地点</span>
-                                        <!--<span v-if="basicForm.address==''">重新获取地点</span>-->
                                     </el-button>
                                 </el-form-item>
                             </el-col>
@@ -459,8 +458,7 @@
                     //调用获取位置方法
                     that.geocoder.getAddress(marker.position);
                     //打印地图信息
-                    this.latitude = marker.position;
-                    console.log(this.latitude);
+                    that.latitude = marker.position;
                 });
                 var latlngBounds = new qq.maps.LatLngBounds();
                 //设置Poi检索服务，用于本地检索、周边检索
@@ -516,6 +514,15 @@
                 // searchService.setLocation("北京");
                 //根据输入的关键字在搜索范围内检索
                 this.searchService.search(keyword);
+            },
+            //获取地理位置弹窗
+            getAddress() {
+                this.addressVisible = true;
+                clearTimeout(this.timer); //清除延迟执行
+                this.timer = setTimeout(() => {
+                    //设置延迟执行
+                    this.intMap();
+                }, 500);
             },
             //确认传递地址信息
             enterAddress() {
@@ -608,15 +615,6 @@
                     });
                 }
             },
-            //获取地理位置弹窗
-            getAddress() {
-                this.addressVisible = true;
-                clearTimeout(this.timer); //清除延迟执行
-                this.timer = setTimeout(() => {
-                    //设置延迟执行
-                    this.intMap();
-                }, 500);
-            },
 
             //返回
             black() {
@@ -655,13 +653,14 @@
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         //基本信息
+                        console.log(this.basicForm.startLng,this.basicForm.startLat)
                         let serveCultivate = {
                             title: this.basicForm.title, //标题
                             orgId: this.basicForm.orgId, //机构ID
                             orgName: this.basicForm.orgName, //机构名称
                             startLng:this.basicForm.startLng,//地点经度
                             startLat:this.basicForm.startLat,//地点纬度
-                            detailedAddress:this.basicForm.detailedAddress,//
+                            detailedAddress:this.basicForm.detailedAddress,//详细地址
                             cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
                             fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
                             startDate:
@@ -712,6 +711,7 @@
             },
             //添加日程
             addSchedule() {
+                this.basicAnnexesArr=[];
                 this.scheduleForm.scheduleModels.push({
                     title: "", //名称
                     detailedAddress: "", //地点
@@ -790,13 +790,13 @@
             uploadSuccess(response, file, fileList) {
                 console.log(fileList);
                 for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr.push({
+                    this.basicAnnexesArr[i]={
                         fileName: fileList[i].name.substring(
                             0,
                             fileList[i].name.indexOf(".")
                         ),
                         fileURL: fileList[i].url
-                    });
+                    };
                 }
                 console.log(this.basicAnnexesArr);
                 // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {

@@ -52,6 +52,7 @@ Page({
                     key: "Authorization",
                     data: tokenStr
                 })
+                app.getUserInfo();
             }
         })
     },

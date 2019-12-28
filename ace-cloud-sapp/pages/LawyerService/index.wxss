@@ -5,7 +5,7 @@
 }
 
 .van-tabs__nav {
-    background: #4b90ff;
+    background: #2E88F2;
 }
 
 .van-tabs__line {
@@ -72,7 +72,7 @@
 
 .search {
     height: 200rpx;
-    background: #4b90ff;
+    background: #2E88F2;
     display: flex;
     flex-direction: column;
     justify-content: center;

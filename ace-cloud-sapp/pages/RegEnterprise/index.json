@@ -1,4 +1,7 @@
 {
+        "enablePullDownRefresh": true,
+        "navigationBarBackgroundColor": "#2E88F2",
+        "navigationBarTextStyle": "white",
   "navigationBarTitleText": "创业服务包",
   "usingComponents": {
     "van-icon": "/vant/weapp/icon/index",

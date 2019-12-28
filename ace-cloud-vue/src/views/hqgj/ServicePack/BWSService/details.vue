@@ -384,7 +384,7 @@
     import {getAreaTree, getDict} from "@/api/sys";
 
     export default {
-        name: "Examine",
+        name: "details",
         data() {
             return {
                 lookingVisible: false,

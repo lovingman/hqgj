@@ -4,7 +4,7 @@
         <div class="handle-box">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
                 <el-form-item label="机构名称:" prop="orgName">
-                    <el-input v-model="form.orgName" style="width: 50%" placeholder="请输入机构名称"></el-input>
+                    <el-input v-model="form.orgName" maxlength="50" show-word-limit style="width: 50%" placeholder="请输入机构名称"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
                     <!--<el-input v-model="form.creditCode" style="width: 50%" placeholder="请输入18位统一社会信用代码"></el-input>-->
@@ -36,8 +36,6 @@
                 <el-form-item label="简介:" prop="content">
                     <el-input
                             v-model="form.content"
-                            @change="handleChange"
-                            ref="myCascader"
                             type="textarea"
                             maxlength="500"
                             rows="4"
