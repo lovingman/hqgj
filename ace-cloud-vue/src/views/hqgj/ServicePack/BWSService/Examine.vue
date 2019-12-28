@@ -529,19 +529,26 @@
             },
             //下载
             FileDownload(index, data) {
-                console.log(data);
-                this.relationId = data.id;
-                console.log(this.relationId);
-                downloadimg(this.relationId).then(response => {
-                    for (var i = 0; i < response.data.length; i++) {
-                        let link = document.createElement('a')
-                        link.href = 'data:image/png;base64,' + response.data[i]
-                        link.download = data.fileName + '.png'
-                        link.click()
-                    }
+                if(data.fileName!=''){
+                    console.log(data);
+                    this.relationId = data.id;
+                    console.log(this.relationId);
+                    downloadimg(this.relationId).then(response => {
+                        if(response.data!=[]){
+                            for (var i = 0; i < response.data.length; i++) {
+                                let link = document.createElement('a')
+                                link.href = 'data:image/png;base64,' + response.data[i]
+                                link.download = data.fileName + '.png'
+                                link.click()
+                            }
+                        }else{
+                            this.$message.warning(`附件数据丢失`);
+                        }
+                    })
+                }else {
+                    this.$message.warning(`数据缺失`);
+                }
 
-
-                })
             },
             //标签页查看
             handleClick(tab, event) {

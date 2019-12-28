@@ -4,7 +4,7 @@
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit v-model="form.companyName" style="width: 50%"></el-input>
+                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit show-word-limit v-model="form.companyName" style="width: 50%"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
                     <!--<el-input placeholder="请输入18位统一社会信用代码" v-model="form.creditCode" style="width: 50%"></el-input>-->
