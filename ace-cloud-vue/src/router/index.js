@@ -84,7 +84,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/dashboard',
-        component: () => import('@/views/hqgj/Statistics/index'),
+        component: () => import('@/views/hqgj/BasicData/enterprise/index'),
         hidden: true,
         // name: '统计分析'
         // meta: { title: '个人工作台', icon: '工作台', affix: true }

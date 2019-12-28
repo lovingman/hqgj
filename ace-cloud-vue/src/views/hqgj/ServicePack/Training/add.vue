@@ -712,6 +712,7 @@
             },
             //添加日程
             addSchedule() {
+                this.basicAnnexesArr=[];
                 this.scheduleForm.scheduleModels.push({
                     title: "", //名称
                     detailedAddress: "", //地点
@@ -790,13 +791,13 @@
             uploadSuccess(response, file, fileList) {
                 console.log(fileList);
                 for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr.push({
+                    this.basicAnnexesArr[i]={
                         fileName: fileList[i].name.substring(
                             0,
                             fileList[i].name.indexOf(".")
                         ),
                         fileURL: fileList[i].url
-                    });
+                    };
                 }
                 console.log(this.basicAnnexesArr);
                 // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {

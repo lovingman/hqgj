@@ -3,35 +3,27 @@
         <div class="table">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="2">
+                    <el-col :span="16">
                         <el-button @click="createPerson" icon="el-icon-plus" style="float: left" type="primary">添加
                         </el-button>
                     </el-col>
-                    <el-col :span="14">
-                        <el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">
-                            <el-button>
-                                批量操作<i class="el-icon-arrow-down el-icon--right"></i>
-                            </el-button>
-                            <!--<span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></span>-->
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="importXls">批量导入</el-dropdown-item>
-                                <el-dropdown-item command="exportXls">批量导出</el-dropdown-item>
-                                <el-dropdown-item command="deleteIds">批量删除</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-input
-                                v-model="query.name"
-                                clearable
-                                class="input-with-select"
-                                placeholder="请输入姓名或手机号码"
-                                style="float: right"
-                        ></el-input>
-                    </el-col>
-                    <el-col :span="2">
-                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
-                        </el-button>
+                    <!--<el-col :span="14">-->
+                        <!--<el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">-->
+                            <!--<el-button>-->
+                                <!--批量操作<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+                            <!--</el-button>-->
+                            <!--&lt;!&ndash;<span style="color: black" >批量操作<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></span>&ndash;&gt;-->
+                            <!--<el-dropdown-menu slot="dropdown">-->
+                                <!--<el-dropdown-item command="importXls">批量导入</el-dropdown-item>-->
+                                <!--<el-dropdown-item command="exportXls">批量导出</el-dropdown-item>-->
+                                <!--<el-dropdown-item command="deleteIds">批量删除</el-dropdown-item>-->
+                            <!--</el-dropdown-menu>-->
+                        <!--</el-dropdown>-->
+                    <!--</el-col>-->
+                    <el-col :span="8">
+                        <el-input class="input-with-select" clearable placeholder="请输入姓名或手机号码" v-model="query.name">
+                            <el-button @click="search" type="primary" slot="append">搜索</el-button>
+                        </el-input>
                     </el-col>
                 </el-row>
 
@@ -228,5 +220,15 @@
     .container {
         padding: 20px;
         background-color: #fff;
+    }
+    .input-with-select{
+        float: right;
+        width: 350px;
+    }
+    .selectSearch/deep/ .el-button--medium {
+        color: #fff;
+        background-color: #007cff;
+        border-color: #007cff;
+        border-radius: 0;
     }
 </style>
