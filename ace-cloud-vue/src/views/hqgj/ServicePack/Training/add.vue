@@ -68,7 +68,8 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="地点：" prop="address">
-                                    <el-input v-if="basicForm.address!=''" clearable v-model="basicForm.address"></el-input>
+                                    <el-input clearable v-if="basicForm.detailedAddress!=''"
+                                              v-model="basicForm.detailedAddress"></el-input>
                                     <el-button @click="getAddress" class="get-address">
                                         <i class="el-icon-plus"></i>
                                         <span>获取地点</span>
@@ -212,7 +213,7 @@
                                     <div @click="getImageTypeIndex(index)">
                                         <el-upload
                                                 :before-upload="beforeAvatarUpload"
-                                                :file-list="fileList"
+                                                :file-list="showList[index].fileArr"
                                                 :http-request="uploadServer"
                                                 :on-error="uploadError"
                                                 :on-success="uploadSuccess"
@@ -282,9 +283,9 @@
         name: "add",
         data() {
             return {
-                uploadfileindex:"",//上传标识
+                uploadfileindex: "",//上传标识
                 address: '',//详细地址
-                latitude:[],//经纬度
+                latitude: [],//经纬度
                 markers: [],
                 searchService: [],
                 geocoder: [],
@@ -294,15 +295,19 @@
                 isShow: true, //是否显示
                 disabled: true, //机构是否禁止选择
                 //附件列表
-                fileList: [],
+                showList: [],
                 filelist: [],
+                filelistArr: [],
+                fileArr: [],
                 //基本信息
                 basicForm: {
                     orgName: "", //机构
                     orgId: "", //机构ID
                     title: "", //标题
                     cultivatePersonNumber: "", //人数
-                    address: "", //地点
+                    detailedAddress: "", //地点
+                    startLng: "",//地点经度
+                    startLat: "",//地点纬度
                     content: "", //内容
                     timeArr: [] //基本时间数组
                 },
@@ -454,7 +459,8 @@
                     //调用获取位置方法
                     that.geocoder.getAddress(marker.position);
                     //打印地图信息
-                    console.log(marker);
+                    this.latitude = marker.position;
+                    console.log(this.latitude);
                 });
                 var latlngBounds = new qq.maps.LatLngBounds();
                 //设置Poi检索服务，用于本地检索、周边检索
@@ -513,8 +519,11 @@
             },
             //确认传递地址信息
             enterAddress() {
-                console.log(this.address)
-                this.basicForm.address = this.address;
+                //地点经度
+                this.basicForm.startLng =this.latitude.lng;
+                //地点纬度
+                this.basicForm.startLat = this.latitude.lat;
+                this.basicForm.detailedAddress = this.address;
                 this.addressVisible = false;
             },
             //获取用户信息
@@ -650,6 +659,9 @@
                             title: this.basicForm.title, //标题
                             orgId: this.basicForm.orgId, //机构ID
                             orgName: this.basicForm.orgName, //机构名称
+                            startLng:this.basicForm.startLng,//地点经度
+                            startLat:this.basicForm.startLat,//地点纬度
+                            detailedAddress:this.basicForm.detailedAddress,//
                             cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
                             fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
                             startDate:
@@ -709,9 +721,17 @@
                     mechanismValue: "", //机构id
                     mechanismName: "", //机构name
                     content: "", //简介
-                    basicAnnexes: [], //课件
+                    basicAnnexes:this.basicAnnexesArr, //课件
                     key: Date.now()
                 });
+                this.filelistArr = [];
+                this.filelist.push({
+                    filelistArr: this.filelistArr
+                });
+                this.fileArr = [];
+                this.showList.push({
+                    fileArr: this.fileArr
+                })
             },
             //删除日程
             removeModel(item) {
@@ -721,7 +741,7 @@
                 }
             },
             //获取上传组件的标识
-            getImageTypeIndex:function (index) {
+            getImageTypeIndex: function (index) {
                 this.uploadfileindex = index  //先在data里定义下，此处省略定义
             },
             //上传文件
@@ -730,17 +750,15 @@
                 this.actionUrls = "/hqgj-portal/www/uploadFile";
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
-                        this.filelist.push({
-
-                            name: obj.file.name, url: response.data
-                        });
-                        this.uploadSuccess(response, obj.file, this.filelist);
+                        this.filelistArr.push({name: obj.file.name, url: response.data});
+                        console.log(this.filelist);
+                        this.uploadSuccess(response, obj.file, this.filelist[this.uploadfileindex].filelistArr);
                     } else {
                         this.$message({
                             message: response.message,
                             type: "warning"
                         });
-                        this.uploadError(response, obj.file, this.filelist);
+                        this.uploadError(response, obj.file, this.filelist[this.uploadfileindex].filelistArr);
                     }
                     return response.status;
                 });
@@ -763,11 +781,14 @@
                         fileURL: fileList[i].url
                     });
                 }
-                this.scheduleForm.scheduleModels.basicAnnexes = this.basicAnnexesArr;
-                this.fileList = fileList;
+                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                }
+                this.fileArr = fileList;
             },
             //文件上传成功
             uploadSuccess(response, file, fileList) {
+                console.log(fileList);
                 for (var i = 0; i < fileList.length; i++) {
                     this.basicAnnexesArr.push({
                         fileName: fileList[i].name.substring(
@@ -777,17 +798,11 @@
                         fileURL: fileList[i].url
                     });
                 }
-                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
-                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
-                }
-                console.log(this.uploadfileindex);
-
-                this.fileList.push({
-                    fileArr:[]
-                });
-
-                this.fileList = fileList;
-                console.log(this.fileList);
+                console.log(this.basicAnnexesArr);
+                // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                //     this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                // }
+                this.fileArr = fileList;
             },
             //文件上传失败
             uploadError(response, file, fileList) {
@@ -899,8 +914,8 @@
         }
 
         /*.noClick /deep/ .el-tabs__item {*/
-            /*pointer-events: none;*/
-            /*cursor: default;*/
+        /*pointer-events: none;*/
+        /*cursor: default;*/
         /*}*/
 
         .formBox {

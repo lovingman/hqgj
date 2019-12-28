@@ -21,7 +21,6 @@
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
-                            @change="handleChange"
                             change-on-select
                             clearable
                             filterable
@@ -29,22 +28,6 @@
                             ref="myCascader"
                             style="width: 50%"
                             v-model="addform.areaCodes"/>
-                    <!--<el-select placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
-                    <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                    <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择市" style="width: 10%;margin-right: 5px">-->
-                    <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                    <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择区县" style="width: 12%;margin-right: 5px">-->
-                    <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                    <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择乡镇街道" style="width: 15%;margin-right: 5px">-->
-                    <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                    <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item prop="companyAddress">
                     <el-input
@@ -114,12 +97,10 @@
             this.AreaCodeQuery();
         },
         methods: {
-            handleChange(value) {
-                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
-            },
             addhandle(formName) {
                 this.$refs[formName].validate(valid => {
                     if (valid) {
+                        this.allAddress = this.$refs.myCascader.getCheckedNodes(this.addform.areaCodes)[0].pathLabels.join('').replace(/,/g,"");
                         for (let e of this.addform.areaCodes) {
                             this.addform.areaCode = e;
                         }
