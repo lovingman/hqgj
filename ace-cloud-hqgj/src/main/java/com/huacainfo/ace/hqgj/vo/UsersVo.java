@@ -8,6 +8,8 @@ public class UsersVo extends Users {
     private String orgId;
     //机构名称
     private String orgName;
+    //机构联系电话
+    private String orgTel;
     //企业id
     private String companyId;
     //企业名称
@@ -53,5 +55,13 @@ public class UsersVo extends Users {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getOrgTel() {
+        return orgTel;
+    }
+
+    public void setOrgTel(String orgTel) {
+        this.orgTel = orgTel;
     }
 }

@@ -130,6 +130,9 @@
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
+            <if test="condition.createUserId != null and condition.createUserId != ''">
+                and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
@@ -178,6 +181,7 @@
             <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
             <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
             <result column="type" jdbcType="VARCHAR" property="type"/>
+            <result column="sharesProportion" jdbcType="VARCHAR" property="sharesProportion"/>
             <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
                 <result column="anId" jdbcType="VARCHAR" property="id"/>
                 <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
@@ -195,8 +199,8 @@
     </resultMap>
 
     <select id="previewInfo" parameterType="java.lang.String" resultMap="previewResultMap">
-         select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress,
-         d.id did,d.name,d.mobile,d.type,
+         select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress, s.status,s.tab,s.basicStatus
+         d.id did,d.name,d.mobile,d.type,d.sharesProportion,
          a.id appendId, a.type appendType,a.`option`,a.content,
          an.id anid,an.fileName,an.fileType,an.fileURL,an.relationId
          from serve_business s
@@ -209,6 +213,15 @@
     <update id="updateBasicStatus">
       update serve_business
       set ${type} = #{status,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateShUserId">
+      update serve_business
+      set shUserId = #{shUserId,jdbcType=VARCHAR},
+      shUserName = #{shUserName,jdbcType=VARCHAR},
+      shDate = now(),
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
       where id = #{id,jdbcType=VARCHAR}
     </update>
 
