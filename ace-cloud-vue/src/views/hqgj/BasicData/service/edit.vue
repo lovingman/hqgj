@@ -6,9 +6,9 @@
                 <el-form-item label="机构名称:" prop="orgName">
                     <el-input v-model="form.orgName" style="width: 50%" placeholder="请输入机构名称"></el-input>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="creditCode">
-                    <el-input v-model="form.creditCode" style="width: 50%" placeholder="请输入18位统一社会信用代码"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
+                    <!--<el-input v-model="form.creditCode" style="width: 50%" placeholder="请输入18位统一社会信用代码"></el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item label="联系方式:" prop="contactPersonTel">
                     <el-input v-model="form.contactPersonName" style="width: 21%" placeholder="联系人姓名"></el-input>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
@@ -18,29 +18,13 @@
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
+                            ref="myCascader"
                             change-on-select
                             clearable
                             filterable
                             placeholder="请选择行政区划"
                             style="width: 50%"
                             v-model="form.areaCodes"/>
-                    <!--<el-select  placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select  placeholder="请选择市" style="width: 10%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select  placeholder="请选择区县" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select  placeholder="请选择乡镇街道" style="width: 15%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-
                 </el-form-item>
                 <el-form-item prop="orgAddress">
                     <el-input
@@ -74,7 +58,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="back">取消</el-button>
-                    <el-button type="primary" @click="handleEdit">提交</el-button>
+                    <el-button type="primary" @click="handleEdit('ruleForm')">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -107,6 +91,26 @@
                     type: "",
                     areaCodes: []
                 },
+                rules: {
+                    orgName: [
+                        {required: true, message: "请输入机构名称", trigger: "blur"},
+                    ],
+                    contactPersonTel: [
+                        {required: true, message: "请输入联系方式", trigger: "blur"},
+                    ],
+                    areaCodes: [
+                        {required: true, message: "请选择所属行政区划", trigger: "change"}
+                    ],
+                    orgAddress: [
+                        {required: true, message: "请输入机构详细地址", trigger: "blur"},
+                    ],
+                    content: [
+                        {required: true, message: "请输入机构简介", trigger: "blur"},
+                    ],
+                    type: [
+                        {required: true, message: "请选择机构类型", trigger: "change"}
+                    ],
+                },
             };
         },
         created(){
@@ -128,20 +132,24 @@
                     })
 
             },
-            handleChange(value) {
-                this.allAddress = this.$refs.myCascader.getCheckedNodes(value)[0].pathLabels.join(',');
-            },
-            handleEdit(){
-                for (let e of this.areaCode) {
-                    this.form.areaCode = e;
-                }
-                this.form.completeAddress = this.allAddress + this.form.orgAddress;
-                update(this.form).then(response => {
-                    if (response.status == 1){
-                        this.$message.success("编辑成功");
-                        this.back();
+            handleEdit(formName){
+                this.$refs[formName].validate(valid => {
+                    if (valid) {
+                        this.allAddress = this.$refs.myCascader.getCheckedNodes(this.form.areaCodes)[0].pathLabels.join('').replace(/,/g,"");
+                        for (let e of this.form.areaCodes) {
+                            this.form.areaCode = e;
+                        }
+                        this.form.completeAddress = this.allAddress + this.form.orgAddress;
+                        update(this.form).then(response => {
+                            if (response.status == 1){
+                                this.$message.success("编辑成功");
+                                this.back();
+                            }
+                        })
+                    } else {
+                        return false;
                     }
-                })
+                });
             },
             back(){
                 this.$router.push({ path: "/hqgj/BasicData/service" });

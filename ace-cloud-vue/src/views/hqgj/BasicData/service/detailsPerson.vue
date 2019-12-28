@@ -37,7 +37,7 @@
                     </el-col>
                 </el-row>
                 <el-form-item  style="bottom: 10px;margin-left: 300px">
-                    <el-button type="primary" @click="back">确定</el-button>
+                    <el-button type="primary" @click="back">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>
