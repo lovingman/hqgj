@@ -248,7 +248,7 @@
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'examine'}});
             },
             preview(index, data) {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'preview'}});
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/details", query: {id: data.id,word:'preview'}});
             },
             progress(index, data) {
                 this.getdata(data.id);
