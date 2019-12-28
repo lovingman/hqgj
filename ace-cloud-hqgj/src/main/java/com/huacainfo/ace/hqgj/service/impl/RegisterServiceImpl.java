@@ -72,12 +72,12 @@ public class RegisterServiceImpl implements RegisterService {
         dto.setName(dto.getName());
         dto.setSex(getSex(dto.getIdCard()));
         dto.setMobile(dto.getAccount());
+
         //常量设置
         dto.setCreateTime(new Date());
         dto.setStatus(CommonConstant.User_State_VALID);
         dto.setCurSyid(CommonConstant.SYS_ID);
         dto.setCorpId(CommonConstant.CORP_ID);
-        dto.setBirthday(getBirthday(dto.getIdCard()));
         ResponseDTO r = insertUser(dto);
         if (r.getStatus() == ResultCode.FAIL) {
             throw new CustomException(ResultCode.FAIL, r.getMessage());
@@ -202,11 +202,17 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Log(operationObj = "微信和用户绑定", operationType = "创建", detail = "创建系统登录账户")
     private ResponseDTO insertMapWechatSys(Users dto){
+        String appId=registerDao.selectAppId();
+        if (CommonUtils.isBlank(appId)) {
+            return new ResponseDTO(ResultCode.FAIL, "未找到数据！");
+        }
         MapWechatSys sys=new MapWechatSys();
         sys.setId(GUIDUtil.getGUID());
         sys.setUserId(dto.getUserId());
         sys.setUnionId(dto.getUnionId());
         sys.setCreateDate(new Date());
+        sys.setAppId(appId);
+        sys.setSysId("hqgj");
         registerDao.insertMapWechatSys(sys);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
@@ -216,39 +222,6 @@ public class RegisterServiceImpl implements RegisterService {
     private String pwdEncoder(String pwd) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(pwd);
-    }
-
-    //根据身份证获取出生日期
-    public Date getBirthday(String certificateNo) throws Exception {
-        String birthday = "";
-        char[] number = certificateNo.toCharArray();
-        boolean flag = true;
-        if (number.length == 15) {
-            for (int x = 0; x < number.length; x++) {
-                if (!flag) return null;
-                flag = Character.isDigit(number[x]);
-            }
-        } else if (number.length == 18) {
-            for (int x = 0; x < number.length - 1; x++) {
-                if (!flag) return null;
-                flag = Character.isDigit(number[x]);
-            }
-        }
-        if (flag && certificateNo.length() == 15) {
-            birthday = "19" + certificateNo.substring(6, 8) + "-"
-                    + certificateNo.substring(8, 10) + "-"
-                    + certificateNo.substring(10, 12);
-
-        } else if (flag && certificateNo.length() == 18) {
-            birthday = certificateNo.substring(6, 10) + "-"
-                    + certificateNo.substring(10, 12) + "-"
-                    + certificateNo.substring(12, 14);
-
-        }
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+08"));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(birthday);
-        return date;
     }
 
 }
