@@ -36,8 +36,6 @@
                 <el-form-item label="简介:" prop="content">
                     <el-input
                             v-model="form.content"
-                            @change="handleChange"
-                            ref="myCascader"
                             type="textarea"
                             maxlength="500"
                             rows="4"

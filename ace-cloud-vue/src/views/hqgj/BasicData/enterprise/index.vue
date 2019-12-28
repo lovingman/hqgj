@@ -40,13 +40,12 @@
             <el-table
                     :data="list"
                     @selection-change="handleSelectionChange"
-                    @sort-change="handleSort"
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
-                <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="企业名称" prop="companyName" sortable='custom'>
+                <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+                <el-table-column label="企业名称" prop="companyName" width="350">
                 </el-table-column>
                 <!--<el-table-column label="来源" prop="companyName" sortable='custom'>-->
                 <!--</el-table-column>-->
@@ -54,7 +53,7 @@
                 </el-table-column>
                 <el-table-column label="联系方式" prop="contactPersonTel" width="300">
                 </el-table-column>
-                <el-table-column label="地址" prop="companyAddress" width="350">
+                <el-table-column label="地址" :show-overflow-tooltip="true" prop="completeAddress">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
@@ -88,6 +87,7 @@
         name: "index",
         data() {
             return {
+                loading:false,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
@@ -123,6 +123,7 @@
             },
             //获取列表数据
             getlist() {
+                this.loading=true;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
                     pageSize: this.pagesize,
@@ -131,7 +132,7 @@
                 getList(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
-                    console.log(response);
+                    this.loading=false;
                 })
             },
             //搜索

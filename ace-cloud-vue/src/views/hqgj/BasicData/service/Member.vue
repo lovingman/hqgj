@@ -31,15 +31,14 @@
             <el-table
                     :data="rows"
                     @selection-change="handleSelectionChange"
-                    @sort-change="handleSort"
                     class="table"
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
-                <el-table-column align="center" type="selection" width="55"></el-table-column>
-                <el-table-column label="姓名" prop="name" sortable='custom' width="300">
+                <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+                <el-table-column label="姓名" prop="name" width="300">
                 </el-table-column>
-                <el-table-column label="职务/职称" prop="jobs" sortable='custom' width="300">
+                <el-table-column label="职务/职称" prop="jobs" width="300">
                 </el-table-column>
                 <el-table-column label="手机号码" prop="mobile">
                 </el-table-column>
@@ -75,6 +74,7 @@
         name: "Member",
         data() {
             return {
+                loading:false,
                 orgId: "",//机构id
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
@@ -109,6 +109,7 @@
                 this.getlist();
             },
             getlist() {
+                this.loading=true;
                 this.query.orgId = this.$route.query.id;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
@@ -118,7 +119,7 @@
                 personPage(this.query).then(response => {
                     this.total = response.total;
                     this.rows = response.rows;
-                    console.log(response);
+                    this.loading=false;
                 })
             },
             //搜索
