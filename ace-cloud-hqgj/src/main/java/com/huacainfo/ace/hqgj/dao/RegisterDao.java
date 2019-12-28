@@ -2,6 +2,7 @@ package com.huacainfo.ace.hqgj.dao;
 
 import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.hqgj.model.MapWechatSys;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public interface RegisterDao {
 
     int updateUsers(Users o);
 
-    Users selectUserInfo(String userId);
+    UsersVo selectUserInfo(String userId);
 
     int updateUserType(@Param("userType") String userType,@Param("userId") String userId);
 

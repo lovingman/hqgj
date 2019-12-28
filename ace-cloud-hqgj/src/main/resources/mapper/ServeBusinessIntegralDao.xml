@@ -159,4 +159,10 @@
       UNION ALL
     (select o.createDate,"-500" as integral,"购买代理记账服务抵扣费用" as remark from serve_finance_order o where o.companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and o.type='1')
     </select>
+
+    <update id="updateIntegral" parameterType="java.lang.String">
+    update serve_business_integral
+    set surplusIntegral =surplusIntegral-500
+    where companyId=(select m.companyId from base_company_member m where m.id=#{userId})
+    </update>
 </mapper>

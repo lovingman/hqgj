@@ -13,6 +13,7 @@ import com.huacainfo.ace.hqgj.constant.CommonConstant;
 import com.huacainfo.ace.hqgj.dao.RegisterDao;
 import com.huacainfo.ace.hqgj.model.MapWechatSys;
 import com.huacainfo.ace.hqgj.service.RegisterService;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -114,11 +115,11 @@ public class RegisterServiceImpl implements RegisterService {
      * @return
      */
     @Override
-    public ResponseDTO<Users> selectUserInfo(String userId) {
+    public ResponseDTO<UsersVo> selectUserInfo(String userId) {
         if (CommonUtils.isBlank(userId)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误!");
         }
-        Users users=registerDao.selectUserInfo(userId);
+        UsersVo users=registerDao.selectUserInfo(userId);
         if (users==null) {
             return new ResponseDTO(ResultCode.FAIL, "信息错误!");
         }

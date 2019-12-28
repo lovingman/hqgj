@@ -1,7 +1,7 @@
 package com.huacainfo.ace.hqgj.controller;
 
-import com.huacainfo.ace.common.constant.ResultCode;
-import com.huacainfo.ace.common.tools.CommonUtils;
+
+import com.huacainfo.ace.common.vo.UserProp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -55,6 +55,25 @@ public class ServeBusinessController extends BaseController {
     @ApiOperation(value = "/page", notes = "获取创业服务包数据集合，支持分页查询")
     @GetMapping(value = "/page", produces = "application/json;charset=UTF-8")
     public PageDTO<ServeBusinessVo> page(ServeBusinessQVo condition, PageParam page) throws Exception {
+        PageDTO<ServeBusinessVo> rst = this.serveBusinessService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+    /**
+     * 手机端个人提交列表
+     * @param condition
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/businessPage", notes = "获取创业服务包数据集合，支持分页查询")
+    @GetMapping(value = "/businessPage", produces = "application/json;charset=UTF-8")
+    public PageDTO<ServeBusinessVo> businessPage(ServeBusinessQVo condition, PageParam page) throws Exception {
+        UserProp userProp=this.getCurUserProp();
+        condition.setCreateUserId(userProp.getUserId());
         PageDTO<ServeBusinessVo> rst = this.serveBusinessService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
         if (page.getStart() > 1) {
             rst.setTotal(page.getTotalRecord());
