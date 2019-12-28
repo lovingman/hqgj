@@ -29,7 +29,9 @@ Page({
     },
     getUserInfo: function(e) {
         let that = this;
-        Auth.checkAgreeGetUser(e, app, that, '0');
+        Auth.wxUserInfo(e).then(rst=>{
+            console.log(rst);
+        });
     },
     onChange(e) {
         let that = this;

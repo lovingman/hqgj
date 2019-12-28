@@ -78,8 +78,8 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/RegProgress/index",
+					"id": 3,
+					"name": "进度",
 					"pathName": "pages/RegProgress/index",
 					"query": "",
 					"scene": null

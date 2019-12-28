@@ -1,8 +1,13 @@
+
+
 function wxPromisify(fn) {
   return function(obj = {}) {
     return new Promise((resolve, reject) => {
       obj.success = function(res) {
-        console.log(1)
+          if (res.data.status!=1){
+              const app = getApp()
+              app.globalData.islogin=false;
+          }
         resolve(res)
       }
       obj.fail = function(res) {

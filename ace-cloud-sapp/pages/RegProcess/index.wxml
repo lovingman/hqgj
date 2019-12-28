@@ -1,5 +1,5 @@
 <view class="index">
-  <van-tabs animated active="{{ active }}" data-active="{{active}}" bind:click="clickTab">
+  <van-tabs  sticky animated swipeable active="{{ active }}" data-active="{{active}}" bind:click="clickTab">
     <van-tab title="基本信息">
       <view>
         <van-cell-group class="style1">
