@@ -1,5 +1,6 @@
+var request = require('./utils/request.js');
+var config = require('./utils/config.js');
 App({
-
     onLaunch: function () {
         //调用API从本地缓存中获取数据
         var logs = wx.getStorageSync('logs') || []
@@ -7,27 +8,16 @@ App({
         wx.setStorageSync('logs', logs)
         // 小程序主动更新
         this.updateManager();
-
-
+        this.getUserInfo();
     },
     getUserInfo: function (cb) {
         var that = this
-        console.log(1);
-        if (this.globalData.userInfo) {
-            typeof cb == "function" && cb(this.globalData.userInfo)
-        } else {
-            //调用登录接口
-            wx.login({
-                success: function () {
-                    wx.getUserInfo({
-                        success: function (res) {
-                            that.globalData.userInfo = res.userInfo
-                            typeof cb == "function" && cb(that.globalData.userInfo)
-                        }
-                    })
-                }
-            })
-        }
+        request.getJSON(config.getUserInfo).then(rst=>{
+            let res=rst.data;
+            if (res.status==1){
+                that.globalData.userInfo=res.data;    
+            }
+        })
     },/*小程序主动更新
     */
     updateManager() {
@@ -60,6 +50,7 @@ App({
     globalData: {
         userInfo: null,
         openid: '',
+        islogin:false,
         isGetUserInfo: false,
         isGetOpenid: false
 

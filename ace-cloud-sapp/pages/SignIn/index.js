@@ -4,7 +4,7 @@ var Auth = require('../../utils/auth.js');
 var request = require('../../utils/request.js');
 var config = require('../../utils/config.js');
 var validate = require('../../utils/validate.js');
-import Toast from '/@vant/weapp/toast/toast';
+import Toast from '../../vant/weapp/toast/toast';
 var app = getApp();
 Page({
 
@@ -29,7 +29,9 @@ Page({
     },
     getUserInfo: function(e) {
         let that = this;
-        Auth.checkAgreeGetUser(e, app, that, '0');
+        Auth.wxUserInfo(e).then(rst=>{
+            console.log(rst);
+        });
     },
     onChange(e) {
         let that = this;

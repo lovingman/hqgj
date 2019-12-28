@@ -362,6 +362,14 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
+        if(type.equals("basicStatus") && status.equals("2") ){
+            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
+            serveBusinessDao.updateBasicStatus(id,"2","status");
+        }
+        if(type.equals("status") && status.equals("1") ){
+            serveBusinessDao.updateBasicStatus(id,"0","tab");
+            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
+        }
         if(type.equals("tab") && status.equals("7")){
             serveBusinessDao.updateBasicStatus(id,"3","status");
             //新增企业和积分

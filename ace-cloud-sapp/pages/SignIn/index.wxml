@@ -1,6 +1,6 @@
 <view class="index">
     <view class="banner hat">
-        <van-image width="120rpx" height="120rpx" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        <van-image width="100rpx" height="100rpx" fit="cover" src="/assets/image/logo.png" />
         <view>慧企管家</view>
     </view>
     <view class="content">

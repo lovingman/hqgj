@@ -263,6 +263,13 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         if (CommonUtils.isBlank(serveBusinessDetail.getStatus())) {
             return new ResponseDTO(ResultCode.FAIL, "状态不能为空！");
         }
+        if (CommonUtils.isBlank(serveBusinessDetail.getBusinessId())) {
+            return new ResponseDTO(ResultCode.FAIL, "创业id不能为空！");
+        }
+        if(serveBusinessDetail.getStatus().equals("2")){
+            serveBusinessDao.updateBasicStatus(serveBusinessDetail.getBusinessId(),"2","status");
+        }
+
         this.serveBusinessDetailDao.updateState(serveBusinessDetail);
         return new ResponseDTO(ResultCode.SUCCESS, "成功");
     }

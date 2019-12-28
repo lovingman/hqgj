@@ -3,10 +3,11 @@
     "navigationBarBackgroundColor": "#2E88F2",
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "首页",
+    "component": true,
     "usingComponents": {
-        "van-image": "/@vant/weapp/image/index",
-        "van-icon": "/@vant/weapp/icon/index",
-        "van-sticky": "/@vant/weapp/sticky/index",
-        "van-area": "/@vant/weapp/area/index"
+        "van-image": "/vant/weapp/image/index",
+        "van-icon": "/vant/weapp/icon/index",
+        "van-sticky": "/vant/weapp/sticky/index",
+        "van-area": "/vant/weapp/area/index"
     }
 }

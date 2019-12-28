@@ -16,7 +16,7 @@
     <view class="entrance">
         <block wx:for="{{navigates}}" wx:key="index">
             <navigator class="item" url="{{item.path}}">
-                <van-image round width="90rpx" height="90rpx" fit="cover" src="{{item.imgUrl}}" />
+                <van-image info="5" round width="90rpx" height="90rpx" fit="cover" src="{{item.imgUrl}}" />
                 <view class="title">
                     {{item.text}}
                 </view>

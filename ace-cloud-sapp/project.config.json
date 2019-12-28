@@ -19,12 +19,13 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"enhance": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
 	"appid": "wxd99073fbc6bd1b6f",
-	"projectname": "智企管家",
+	"projectname": "%E6%99%BA%E4%BC%81%E7%AE%A1%E5%AE%B6",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -77,8 +78,8 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/RegProgress/index",
+					"id": 3,
+					"name": "进度",
 					"pathName": "pages/RegProgress/index",
 					"query": "",
 					"scene": null
@@ -136,13 +137,6 @@
 					"id": -1,
 					"name": "培训报名管理",
 					"pathName": "pages/TrainingEnrollmentManagement/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "登录",
-					"pathName": "pages/ SignIn/index",
 					"query": "",
 					"scene": null
 				},
@@ -235,6 +229,13 @@
 					"name": "忘记密码",
 					"pathName": "pages/Forget/index",
 					"query": "account=18277177517&captcha=52003&password=123123",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/SignIn/index",
+					"query": "",
 					"scene": null
 				}
 			]
