@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.PersonCenterDao;
+import com.huacainfo.ace.hqgj.dao.ServeBusinessIntegralDao;
+import com.huacainfo.ace.hqgj.dao.ServeFinanceDao;
+import com.huacainfo.ace.hqgj.model.ServeFinance;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -35,7 +40,12 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeFinanceOrderDao serveFinanceOrderDao;
-
+    @Resource
+    private ServeFinanceDao serveFinanceDao;
+    @Resource
+    private PersonCenterDao personCenterDao;
+    @Resource
+    private ServeBusinessIntegralDao serveBusinessIntegralDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -63,6 +73,9 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         if (!CommonUtils.isBlank(condition.getStartTime())) {
             String startTime = sdf.format(condition.getStartTime()) + " 00:00:00 ";
             condition.setStartTime(sdf2.parse(startTime));
+        }
+        if(!CommonUtils.isBlank(condition.getType())){
+            condition.setTypes(condition.getType().split(","));
         }
         List<ServeFinanceOrderVo> list = this.serveFinanceOrderDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
@@ -110,18 +123,24 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
                 orderNo=new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
         }
         o.setOrderNo(orderNo);
+        if(o.getType().equals("2")){
+          if (CommonUtils.isBlank(o.getItemId())) {
+              return new ResponseDTO(ResultCode.FAIL, "参数错误");
+          }
+       }
+        if(o.getType().equals("3")){
+            if (CommonUtils.isBlank(o.getContactId())) {
+                return new ResponseDTO(ResultCode.FAIL, "参数错误");
+            }
+        }
+        ServeFinance f =serveFinanceDao.selectVoByPrimaryKey(o.getFinanceId(),userProp.getUserId());
+        if (f ==null) {
+            return new ResponseDTO(ResultCode.FAIL, "数据错误");
+        }
+        UsersVo vo =personCenterDao.selectUserInfo(userProp.getUserId());
 
-        if (CommonUtils.isBlank(o.getOrgId())) {
-            return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
-        }
-        if (CommonUtils.isBlank(o.getCompanyId())) {
-            return new ResponseDTO(ResultCode.FAIL, "企业ID（关联base_company表id）不能为空！");
-        }
-
-        int temp = this.serveFinanceOrderDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "财税服务订单表名称重复！");
-        }
+        o.setCompanyId(vo.getCompanyId());
+        o.setOrgId(f.getOrgId());
 
         o.setCreateDate(new Date());
         o.setStatus("1");
@@ -129,6 +148,8 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.serveFinanceOrderDao.insert(o);
+        //下单成功减去积分
+        serveBusinessIntegralDao.updateIntegral(userProp.getUserId());
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
