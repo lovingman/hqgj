@@ -35,6 +35,7 @@
                                 class="input-with-select"
                                 placeholder="请输入机构名称"
                                 style="float: right"
+                                clearable
                                 v-model="query.orgName"
                         ></el-input>
                     </el-col>

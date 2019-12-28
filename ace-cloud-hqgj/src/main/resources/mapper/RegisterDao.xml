@@ -89,8 +89,8 @@
 
     <select id="isUnionid" parameterType="java.lang.String" resultType="int">
             select count(1)
-        from base_volunteer
-        where unionid = #{unionid,jdbcType=VARCHAR}
+        from ace_hqgj_wxms.map_wechat_sys
+        where unionId = #{unionid,jdbcType=VARCHAR}
   </select>
 
     <update id="updateUsers" parameterType="com.huacainfo.ace.common.security.model.Users">
@@ -129,4 +129,10 @@
       #{createDate,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}
       )
   </insert>
+
+    <select id="selectAppId" resultType="java.lang.String">
+    select appId
+    from ace_hqgj_wxms.wechat_config
+    where sysId = 'hqgj'
+    </select>
 </mapper>

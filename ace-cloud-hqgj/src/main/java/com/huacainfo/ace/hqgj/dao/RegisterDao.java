@@ -48,4 +48,6 @@ public interface RegisterDao {
     int updateUserType(@Param("userType") String userType,@Param("userId") String userId);
 
     int insertMapWechatSys(MapWechatSys mapWechatSys);
+
+    String selectAppId();
 }

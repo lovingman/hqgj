@@ -16,8 +16,7 @@
                     <span>{{serviceForm.content}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button @click="back" type="primary">提交</el-button>
+                    <el-button @click="back" type="primary">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>

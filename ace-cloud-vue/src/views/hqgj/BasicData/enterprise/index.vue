@@ -35,6 +35,7 @@
                                 class="input-with-select"
                                 placeholder="请输入企业名称"
                                 style="float: right"
+                                clearable
                                 v-model="query.companyName"
                         ></el-input>
                     </el-col>

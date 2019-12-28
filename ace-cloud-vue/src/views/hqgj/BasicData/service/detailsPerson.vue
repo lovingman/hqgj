@@ -31,13 +31,13 @@
                                 <img :src="dialogImageUrl" alt="" width="100%">
                             </el-dialog>
                         </el-form-item>
-                        <el-form-item label="微信二维码:" prop="name">
-                            <i @click="Preview(form.wechatPhoto)"><img :src="form.wechatPhoto" alt="" class="img"></i>
-                        </el-form-item>
+                        <!--<el-form-item label="微信二维码:" prop="name">-->
+                            <!--<i @click="Preview(form.wechatPhoto)"><img :src="form.wechatPhoto" alt="" class="img"></i>-->
+                        <!--</el-form-item>-->
                     </el-col>
                 </el-row>
                 <el-form-item  style="bottom: 10px;margin-left: 300px">
-                    <el-button type="primary" @click="back">确定</el-button>
+                    <el-button type="primary" @click="back">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>

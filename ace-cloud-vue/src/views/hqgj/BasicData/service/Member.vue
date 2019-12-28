@@ -23,7 +23,7 @@
                     <el-col :span="6">
                         <el-input
                                 v-model="query.name"
-                                @change="toggleChange"
+                                clearable
                                 class="input-with-select"
                                 placeholder="请输入姓名或手机号码"
                                 style="float: right"
