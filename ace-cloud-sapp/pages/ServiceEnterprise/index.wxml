@@ -1,5 +1,5 @@
 <view class="index">
-    <view class="modal">
+    <view class="modal" wx:for="{{servicePack}}" wx:key="index" wx:for-item="item">
         <view class="header van-hairline--bottom">
             <text>企业注册申请</text>
             <view class="right">进度查询
@@ -7,10 +7,13 @@
             </view>
         </view>
         <view class="content">
-            <view class="title">湖南常德市武陵区风天有限公司</view>
+            <view class="title">{{item.companyName}}</view>
             <view class="footer">
-                <text>申请时间：2019-10-11 12:00:00</text>
-                <text class="state">待审核</text>
+                <text>申请时间：{{item.createDate}}</text>
+                <text class="state" wx:if="{{item.status==0}}">待审核</text>
+                <text class="state" wx:if="{{item.status==1}}">办理中</text>
+                <text class="state" wx:if="{{item.status==2}}">驳回修改</text>
+                <text class="state" wx:if="{{item.status==3}}">注册成功</text>
             </view>
         </view>
     </view>

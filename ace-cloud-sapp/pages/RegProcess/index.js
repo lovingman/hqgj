@@ -430,7 +430,7 @@ Page({
     }
     obj.serveBusinessAppend = [result1, this.data.result2, this.data.result3, this.data.result4, this.data.special];
     console.log(JSON.stringify(obj))
-    request.posts(cfg.serveBusinessCreateUrl, obj).then(rst => {
+    request.postJSON(cfg.serveBusinessCreateUrl, obj).then(rst => {
       console.log(rst);
       let res = rst.data;
       if (res.status == 1) {

@@ -4,7 +4,8 @@
    <select id="selectUserInfo" resultType="com.huacainfo.ace.hqgj.vo.UsersVo">
     select t.user_id userId, t.account, t.sex, t.idCard, t.userType, t.name, t.corpId,
       t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.id orgId,o.orgName orgName,o.contactPersonTel orgTel,
-      m.id companyId,c.companyName,mu.unionId,mu.avatarUrl
+      m.id companyId,c.companyName,mu.unionId,mu.avatarUrl,
+      (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) as integral
         from portal_hqgj.users t
         left join hqgj.base_organization_member b on b.userId=t.user_id
         left join hqgj.base_organization o on b.orgId=o.id

@@ -2,20 +2,20 @@
     <div class="container">
         <div class="title" style="margin-bottom: 30px">编辑企业</div>
         <div class="handle-box">
-            <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
+            <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit v-model="form.companyName" style="width: 50%"></el-input>
+                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit v-model="form.companyName" style="width: 30%"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
                     <!--<el-input placeholder="请输入18位统一社会信用代码" v-model="form.creditCode" style="width: 50%"></el-input>-->
                 <!--</el-form-item>-->
                 <el-form-item label="法人代表:" prop="legalPerson">
-                    <el-input placeholder="请输入法人代表姓名" v-model="form.legalPerson" style="width: 50%"></el-input>
+                    <el-input placeholder="请输入法人代表姓名" v-model="form.legalPerson" style="width: 30%"></el-input>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="contactPersonTel">
-                    <el-input placeholder="联系人姓名" v-model="form.contactPersonName" style="width: 21%"></el-input>
+                    <el-input placeholder="联系人姓名" v-model="form.contactPersonName" style="width: 12%"></el-input>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
-                    <el-input placeholder="联系电话" v-model="form.contactPersonTel" style="width: 26%"></el-input>
+                    <el-input placeholder="联系电话" v-model="form.contactPersonTel" style="width: 16%"></el-input>
                 </el-form-item>
                 <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
@@ -27,13 +27,13 @@
                             clearable
                             change-on-select
                             filterable
-                            style="width: 50%"/>
+                            style="width: 30%"/>
                 </el-form-item>
                 <el-form-item prop="companyAddress">
                     <el-input
                             v-model="form.companyAddress"
                             placeholder="请输入企业详细地址，xx社区xx路xx号(xx小区xx栋xx楼xx号）"
-                            style="width: 50%"
+                            style="width: 30%"
                             type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item>

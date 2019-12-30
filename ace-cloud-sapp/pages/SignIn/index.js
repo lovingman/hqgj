@@ -37,6 +37,14 @@ Page({
         let that = this;
         that.data[e.target.dataset.field] = e.detail;
     },
+    getUser(){
+      request.getJSON(config.homePage, {}).then(rst => {
+        const res = rst.data;
+        if (res.status == 1) {
+          app.globalData.userObj = res.data;
+        }
+      })
+    },
     submitForm() {
         let that = this;
         // if (!that.validateHandler('username')) {
@@ -48,6 +56,7 @@ Page({
             let res=rst.data;
             if (res.status==1){
                 const tokenStr = res.data.tokenHead + res.data.token;
+                that.getUser();
                 wx.setStorage({
                     key: "Authorization",
                     data: tokenStr

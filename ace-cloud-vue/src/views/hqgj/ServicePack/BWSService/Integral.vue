@@ -27,7 +27,7 @@
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
-                <el-table-column align="center" type="selection" width="55"></el-table-column>
+                <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                 <el-table-column label="企业名称" prop="companyName">
                 </el-table-column>
                 <el-table-column width="200" label="注册方式" prop="register">

@@ -22,7 +22,7 @@
                     <!--</el-col>-->
                     <el-col :span="8">
                         <el-input class="input-with-select" clearable placeholder="请输入姓名或手机号码" v-model="query.name">
-                            <el-button @click="search" type="primary" slot="append">搜索</el-button>
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
                         </el-input>
                     </el-col>
                 </el-row>
