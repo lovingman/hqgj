@@ -1,5 +1,7 @@
 //index.js
 //获取应用实例
+var cfg = require("../../utils/config.js");
+var request = require("../../utils/request.js");
 const app = getApp()
 
 Page({
@@ -43,7 +45,16 @@ Page({
       url: '../logs/logs'
     })
   },
+  getUser() {
+    request.getJSON(cfg.homePage, {}).then(rst => {
+      const res = rst.data;
+      if (res.status == 1) {
+        app.globalData.userObj = res.data;
+      }
+    })
+  },
   onLoad: function () {
+    this.getUser();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

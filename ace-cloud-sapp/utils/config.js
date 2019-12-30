@@ -2,6 +2,7 @@ var server = "http://192.168.2.114";
 var config = {
   login: `${server}/hqgj-portal/security/login`, //登录
   authority: `${server}/wxms/www/mini/authority`, //微信授权
+  homePage: `${server}/hqgj/personalCenter/homePage`, //微信授权
   getCaptcha: `${server}/hqgj/www/reg/captcha`, //验证码
   register: `${server}/hqgj/www/reg/register`, //注册
   captchaForgetPwd: `${server}/hqgj/www/reg/captchaForgetPwd`, //   验证码获取接口
@@ -15,6 +16,8 @@ var config = {
   getByCategoryUrl: `${server}/hqgj-portal/dict/getByCategoryIds`, //字典
   getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`, //行政区划
   serveBusinessCreateUrl: `${server}/hqgj/serveBusiness/create`, //新增创业服务
+  serveBusinessPageUrl: `${server}/hqgj/serveBusiness/page`, //创业服务page
+  serveBusinessPreviewInfoUrl: `${server}/hqgj/serveBusiness/previewInfo`, //创业服务详情
 };
 
 module.exports = config

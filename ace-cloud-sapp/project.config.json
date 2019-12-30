@@ -23,7 +23,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
-	"appid": "wx70ba7c5dca85e4da",
+	"appid": "wxd99073fbc6bd1b6f",
 	"projectname": "%E4%BC%97%E5%88%9B%E5%B9%B3%E5%AE%89",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -70,15 +70,15 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/RegProcess/index",
+					"id": 2,
+					"name": "创业服务包新增修改",
 					"pathName": "pages/RegProcess/index",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/RegProgress/index",
+					"id": 3,
+					"name": "创业服务包进度条",
 					"pathName": "pages/RegProgress/index",
 					"query": "",
 					"scene": null
@@ -140,9 +140,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 12,
 					"name": "登录",
-					"pathName": "pages/ SignIn/index",
+					"pathName": "pages/SignIn/index",
 					"query": "",
 					"scene": null
 				},
@@ -235,6 +235,13 @@
 					"name": "忘记密码",
 					"pathName": "pages/Forget/index",
 					"query": "account=18277177517&captcha=52003&password=123123",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/SignIn/index",
+					"pathName": "pages/SignIn/index",
+					"query": "",
 					"scene": null
 				}
 			]
