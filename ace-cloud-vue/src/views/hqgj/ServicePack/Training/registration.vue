@@ -20,15 +20,21 @@
               clearable
               class="input-with-select"
             >
-              <el-button slot="append" @click="search">搜索</el-button>
+              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column type="selection" width="80"></el-table-column>
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        v-loading="loading"
+        element-loading-text="加载中"
+        element-loading-spinner="el-icon-loading"
+      >
+        <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
         <el-table-column prop="enrollName" sortable label="姓名"></el-table-column>
         <el-table-column prop="enrollMobile" sortable label="手机号码"></el-table-column>
@@ -74,6 +80,7 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
+      loading: false, //加载状态
       //搜索
       query: {
         serveCultivateId: "", //id

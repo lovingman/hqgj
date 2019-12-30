@@ -86,6 +86,16 @@ export function orderPage(query) {
     params: query,
   })
 }
+//订单管理查看
+export function ordergetById(id) {
+  return request({
+    url: '/hqgj/serveFinanceOrder/getById',
+    method: 'get',
+    params: {
+      id: id
+    },
+  })
+}
 
 //订单管理确认
 export function orderStatus(id, status) {
@@ -108,6 +118,7 @@ export function evaluatePage(query) {
   })
 }
 
+//评价删除
 export function evaluateDelete(ids) {
   return request({
     url: '/hqgj/serveFinanceEvaluate/deleteByIds',

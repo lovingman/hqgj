@@ -11,7 +11,6 @@
                     <el-table
                             :data="lists"
                             @selection-change="handleSelectionChange"
-                            border
                             class="table"
                             max-height="475"
                             ref="multipleTable"
