@@ -1,2 +1,12 @@
 /* pages/Register/index.wxss */
 @import "../Register/index.wxss";
+
+.van-button__text {
+    display: flex !important;
+    align-items: center;
+}
+
+.iconfont {
+    display: inline-flex;
+    margin-right: 6rpx;
+}

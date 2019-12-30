@@ -76,7 +76,7 @@
 }
 
 .modal .state {
-    color: rgba(16, 16, 16, 1);
+    color: rgba(255, 125, 24, 1);
     font-size: 24rpx;
     font-family: Arial;
 }
@@ -132,4 +132,11 @@
     line-height: 1.5em;
     font-family: PingFangSC-regular;
     color: #1c2843;
+}
+.loadState{
+    color: rgba(121, 128, 146, 1);
+    height: 50rpx;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    text-align: center;
 }

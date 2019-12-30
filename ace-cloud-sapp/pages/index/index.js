@@ -82,9 +82,18 @@ Page({
       url: '/pages/PolicyServiceDetail/index?id=' + listId,
     })
   },
+  getUser() {
+    request.getJSON(cfg.homePage, {}).then(rst => {
+      const res = rst.data;
+      if (res.status == 1) {
+        app.globalData.userObj = res.data;
+      }
+    })
+  },
   onLoad: function() {
     this.getLawServe(); //请求政策服务page
     this.getTrain(); //请求培服务page
+    this.getUser();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

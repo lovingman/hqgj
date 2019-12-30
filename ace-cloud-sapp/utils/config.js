@@ -3,10 +3,13 @@ var server = "http://192.168.2.114";
 var config = {
   login: `${server}/hqgj-portal/security/login`,
   authority: `${server}/wxms/www/mini/authority`, //微信授权
+  homePage: `${server}/hqgj/personalCenter/homePage`, //用户信息
   getCaptcha: `${server}/hqgj/www/reg/captcha`, //验证码
   register: `${server}/hqgj/www/reg/register`, //注册
+  getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`, //获取行政区划
   captchaForgetPwd: `${server}/hqgj/www/reg/captchaForgetPwd`, //   验证码获取接口
   resetPassword: `${server}/hqgj/www/reg/resetPassword`, //重置密码
+  getUserInfo: `${server}/hqgj/personalCenter/homePage`, //获取用户详情
   getByCategoryUrl: `${server}/hqgj-portal/dict/getByCategoryIds`, //字典
   trainPageUrl: `${server}/hqgj/www/serveCultivate/page`, //培训列表page请求
   selectByIdDetailsUrl: `${server}/hqgj/www/serveCultivate/selectByIdDetails`, //培训列表详情请求
@@ -21,13 +24,14 @@ var config = {
   lawServePageUrl: `${server}/hqgj/www/lawServe/policyPage`, //政策服务page
   lawServeByIdUrl: `${server}/hqgj/www/lawServe/policyGetById`, //政策服务详情
   serveBusinessCreateUrl: `${server}/hqgj/serveBusiness/create`, //新增创业服务
+  serveBusinessPageUrl: `${server}/hqgj/serveBusiness/page`, //创业服务page
+  serveBusinessPreviewInfoUrl: `${server}/hqgj/serveBusiness/previewInfo`, //创业服务详情
   serveCultivateEnrollUrl: `${server}/hqgj/serveCultivateEnroll/create`, //培训提升服务报名
   isLoginUrl: `${server}/hqgj/www/reg/isLogin`, //判断是否登录
   enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
-  enrollUpdate: `${server}/hqgj/serveCultivateEnroll/updateStatus`, //签到管理
-  financeOrder: `${server}/hqgj/serveFinanceOrder/create`, //财税下单
+  myEnrollPage: `${server}/hqgj/serveCultivateEnroll/enrollPage`, //我的培训列表
+  cancelEnroll: `${server}/hqgj/serveCultivateEnroll/cancelEnroll`, //取消报名
 };
-
 
 
 module.exports = config
