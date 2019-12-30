@@ -86,7 +86,6 @@ export default {
   },
   methods: {
     initEditForm(getData) {
-      console.log(getData);
       if (getData) {
         //图片格式化
         if (getData.fmUrl != null && getData.fmUrl != "") {
