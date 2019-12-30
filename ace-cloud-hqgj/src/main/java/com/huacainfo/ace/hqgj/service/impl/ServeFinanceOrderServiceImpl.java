@@ -77,6 +77,9 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         if(!CommonUtils.isBlank(condition.getType())){
             condition.setTypes(condition.getType().split(","));
         }
+        if(!CommonUtils.isBlank(condition.getStatus())){
+            condition.setStatuss(condition.getStatus().split(","));
+        }
         List<ServeFinanceOrderVo> list = this.serveFinanceOrderDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
