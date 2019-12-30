@@ -33,25 +33,31 @@
               clearable
               class="input-with-select"
             >
-              <el-button slot="append" @click="search">搜索</el-button>
+              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column type="selection" width="80"></el-table-column>
-        <el-table-column prop="type" sortable label="类型">
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        v-loading="loading"
+        element-loading-text="加载中"
+        element-loading-spinner="el-icon-loading"
+      >
+        <el-table-column type="index" sortable label="序号" width="80"></el-table-column>
+        <el-table-column prop="type" sortable label="类型" width="120">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.type=='1'">代理记账</div>
             <div type="text" v-if="scope.row.type=='2'">财税管理</div>
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
-        <el-table-column prop="contactPersonTel" sortable label="联系方式"></el-table-column>
-        <el-table-column prop="createDate" sortable label="创建时间"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构" width="120"></el-table-column>
+        <el-table-column prop="contactPersonTel" sortable label="联系方式" width="180"></el-table-column>
+        <el-table-column prop="createDate" sortable label="创建时间" width="220"></el-table-column>
         <el-table-column prop="status" sortable label="状态">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待审核</div>
@@ -117,6 +123,7 @@ export default {
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
       examineVisible: false, //审核弹出框是否显示
+      loading: false, //加载状态
       query: {
         orgName: "", //搜索
         orgId: "", //服务机构
@@ -165,6 +172,7 @@ export default {
   methods: {
     //请求page
     getList() {
+      this.loading = true;
       this.query = Object.assign(this.query, {
         pageNum: this.tablePage,
         pageSize: this.tableSize,
@@ -174,6 +182,7 @@ export default {
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;
+          this.loading = false;
         }
       });
     },
@@ -331,12 +340,6 @@ export default {
     }
     .selectSearch {
       float: right;
-      /deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
-      }
     }
   }
   .table-box {
