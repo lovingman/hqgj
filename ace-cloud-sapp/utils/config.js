@@ -24,6 +24,7 @@ var config = {
   lawServePageUrl: `${server}/hqgj/www/lawServe/policyPage`, //政策服务page
   lawServeByIdUrl: `${server}/hqgj/www/lawServe/policyGetById`, //政策服务详情
   serveBusinessCreateUrl: `${server}/hqgj/serveBusiness/create`, //新增创业服务
+  serveBusinessUpdateUrl: `${server}/hqgj/serveBusiness/update`, //修改创业服务
   serveBusinessPageUrl: `${server}/hqgj/serveBusiness/page`, //创业服务page
   serveBusinessPreviewInfoUrl: `${server}/hqgj/serveBusiness/previewInfo`, //创业服务详情
   serveCultivateEnrollUrl: `${server}/hqgj/serveCultivateEnroll/create`, //培训提升服务报名
