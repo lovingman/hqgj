@@ -5,7 +5,7 @@
         <block wx:for="{{tabs}}" wx:key="index" wx:for-index="index" wx:for-item="item">
             <van-tab title-style="color:#2E88F2" title="{{item.name}}">
                 <view>
-                    <view class="modal" wx:for="{{item.list}}" wx:for-index="idx" wx:for-item="itm">
+                    <view class="modal" wx:for="{{item.list}}" wx:key="idx" wx:for-index="idx" wx:for-item="itm">
                         <view class="card">
                             <view class="img">
                                 <van-image width="100%" height="100%" fit="cover" src="{{itm.fmUrl}}" />
@@ -19,9 +19,8 @@
                         <view class="handler">
                             <view class="state">{{astFilter.trainingStatus(itm.status)}}</view>
                             <view>
-                                <van-button class="btnStyle1" catchtap="cancelEnroll" data-id="{{itm.id}}" plain hairline round size="small">取消报名</van-button>
-                                <van-button class="del" catchtap="cancelEnroll" data-id="{{itm.id}}" plain round hairline size="small">删除</van-button>
-                                <!-- <van-button plain round type="info" size="small">评价</van-button> -->
+                                <van-button wx:if="{{itm.status==0}}" class="btnStyle1" catchtap="cancelEnroll" data-id="{{itm.id}}" data-index="{{idx}}" plain hairline round size="small">取消报名</van-button>
+                                <van-button wx:if="{{itm.status!=0}}" class="del" catchtap="deleteEnroll" data-id="{{itm.id}}" data-index="{{idx}}" plain round hairline size="small">删除</van-button>
                             </view>
                         </view>
                     </view>

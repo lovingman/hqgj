@@ -27,6 +27,8 @@ var config = {
     enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
     myEnrollPage: `${server}/hqgj/serveCultivateEnroll/enrollPage`, //我的培训列表
     cancelEnroll: `${server}/hqgj/serveCultivateEnroll/cancelEnroll`, //取消报名
+    deleteEnroll: `${server}/hqgj/serveCultivate/deleteById`, //删除培训报名
+    
 };
 
 

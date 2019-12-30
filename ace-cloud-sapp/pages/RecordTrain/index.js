@@ -72,7 +72,7 @@ Page({
         request.getJSON(config.myEnrollPage, targetObj.query).then(res => {
             that.hideloading();
             let e = res.data;
-            let len = e.rows.length;
+            let len = e.rows?e.rows.length:0;
             if (len < targetObj.query.pageSize) {
                 let isload = "tabs[" + index + "].isload"
                 that.setData({
@@ -110,7 +110,6 @@ Page({
         })
     },
     changeTabHandler(e) {
-        console.log(e.detail.index);
         let that = this;
         let index = e.detail.index;
         that.data.active = index;
@@ -120,9 +119,36 @@ Page({
         }
     },
     cancelEnroll(e){
-        console.log(e);
-        request.post(config.cancelEnroll,{id:e}).then(rst=>{
-
+        let that=this;
+        let id = e.currentTarget.dataset.id;
+        let index = e.currentTarget.dataset.index;
+        request.post(config.cancelEnroll, { id: id}).then(rst=>{
+            let r = rst.data;
+            if (r.status == 1) {
+                let idx = that.data.active;
+                let targetObj = that.data.tabs[idx];
+                targetObj.list[index].status='1';
+                let list = "tabs[" + idx + "].list"
+                that.setData({
+                    [list]: targetObj.list
+                })
+            }
+        })
+    },
+    deleteEnroll(e){
+        let id = e.currentTarget.dataset.id;
+        let index = e.currentTarget.dataset.index;
+        request.post(config.deleteEnroll, { id: id }).then(rst => {
+            let r=rst.data;
+            if(r.status==1){
+                let idx = that.data.active;
+                let targetObj = that.data.tabs[idx];
+                targetObj.list.splice(index,1);
+                let list = "tabs[" + idx + "].list"
+                that.setData({
+                    [list]: targetObj.list
+                })
+            }
         })
     },
     /**
