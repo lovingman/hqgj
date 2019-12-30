@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.PersonCenterDao;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -35,7 +37,8 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private ServeFinanceEvaluateDao serveFinanceEvaluateDao;
-
+    @Resource
+    private PersonCenterDao personCenterDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -98,15 +101,11 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         if (CommonUtils.isBlank(o.getOrgId())) {
             return new ResponseDTO(ResultCode.FAIL, "服务机构ID（关联base_organization表id）不能为空！");
         }
-        if (CommonUtils.isBlank(o.getCompanyId())) {
-            return new ResponseDTO(ResultCode.FAIL, "企业ID（关联base_company表id）不能为空！");
+        if (CommonUtils.isBlank(o.getEvaluateGrade())) {
+            return new ResponseDTO(ResultCode.FAIL, "评分不能为空！");
         }
-
-        int temp = this.serveFinanceEvaluateDao.isExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "财税服务订单评价表名称重复！");
-        }
-
+        UsersVo vo =personCenterDao.selectUserInfo(userProp.getUserId());
+        o.setCompanyId(vo.getCompanyId());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());

@@ -16,6 +16,8 @@ public class UsersVo extends Users {
     private  String companyName;
     //微信用户头像
     private String avatarUrl;
+   //积分
+    private String integral;
 
     public String getOrgId() {
         return orgId;
@@ -63,5 +65,13 @@ public class UsersVo extends Users {
 
     public void setOrgTel(String orgTel) {
         this.orgTel = orgTel;
+    }
+
+    public String getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(String integral) {
+        this.integral = integral;
     }
 }

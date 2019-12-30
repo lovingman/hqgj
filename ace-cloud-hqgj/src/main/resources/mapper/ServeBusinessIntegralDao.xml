@@ -163,6 +163,6 @@
     <update id="updateIntegral" parameterType="java.lang.String">
     update serve_business_integral
     set surplusIntegral =surplusIntegral-500
-    where companyId=(select m.companyId from base_company_member m where m.id=#{userId})
+    where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>0
     </update>
 </mapper>

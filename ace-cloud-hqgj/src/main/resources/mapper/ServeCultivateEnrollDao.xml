@@ -156,7 +156,7 @@
     <delete id="deleteByIds">
         delete from serve_cultivate_enroll
         where id in
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
+        <foreach collection="array" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
