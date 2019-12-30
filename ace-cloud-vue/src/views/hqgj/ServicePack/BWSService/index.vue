@@ -72,7 +72,7 @@
                         </el-button>
                         <el-button v-if="scope.row.status=='3'" @click="progress(scope.$index,scope.row)" height="40" type="text">进度记录</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">删除</el-button>
+                        <el-button @click="dele(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
@@ -204,6 +204,23 @@
             //搜索
             search(){
                 this.handleQuery();
+            },
+            dele(index, data){
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deleteById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+
+                    });
             },
             //企业注册状态搜索框数据
             handleStatus(){

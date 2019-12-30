@@ -214,8 +214,7 @@
                                                 :before-upload="beforeAvatarUpload"
                                                 :file-list="showList[index].fileArr"
                                                 :http-request="uploadServer"
-                                                :on-error="uploadError"
-                                                :on-success="uploadSuccess"
+                                                :before-remove="fileRemove"
                                                 action="none"
                                                 class="upload-demo"
                                                 multipl>
@@ -527,7 +526,7 @@
             //确认传递地址信息
             enterAddress() {
                 //地点经度
-                this.basicForm.startLng =this.latitude.lng;
+                this.basicForm.startLng = this.latitude.lng;
                 //地点纬度
                 this.basicForm.startLat = this.latitude.lat;
                 this.basicForm.detailedAddress = this.address;
@@ -653,14 +652,14 @@
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         //基本信息
-                        console.log(this.basicForm.startLng,this.basicForm.startLat)
+                        console.log(this.basicForm.startLng, this.basicForm.startLat)
                         let serveCultivate = {
                             title: this.basicForm.title, //标题
                             orgId: this.basicForm.orgId, //机构ID
                             orgName: this.basicForm.orgName, //机构名称
-                            startLng:this.basicForm.startLng,//地点经度
-                            startLat:this.basicForm.startLat,//地点纬度
-                            detailedAddress:this.basicForm.detailedAddress,//详细地址
+                            startLng: this.basicForm.startLng,//地点经度
+                            startLat: this.basicForm.startLat,//地点纬度
+                            detailedAddress: this.basicForm.detailedAddress,//详细地址
                             cultivatePersonNumber: this.basicForm.cultivatePersonNumber, //人数
                             fmUrl: this.$refs.imgUpload.photoForm.fmUrl, //封面照片
                             startDate:
@@ -711,7 +710,7 @@
             },
             //添加日程
             addSchedule() {
-                this.basicAnnexesArr=[];
+                this.basicAnnexesArr = [];
                 this.scheduleForm.scheduleModels.push({
                     title: "", //名称
                     detailedAddress: "", //地点
@@ -721,7 +720,7 @@
                     mechanismValue: "", //机构id
                     mechanismName: "", //机构name
                     content: "", //简介
-                    basicAnnexes:this.basicAnnexesArr, //课件
+                    basicAnnexes: this.basicAnnexesArr, //课件
                     key: Date.now()
                 });
                 this.filelistArr = [];
@@ -768,29 +767,33 @@
                 let obj = {};
                 obj.file = param.file;
                 this.FileUpload(obj);
-                return true;
+                const prom = new Promise((resolve, reject) => {})
+                prom.abort = () => {}
+                return prom
+                // return true;
             },
             //文件移除
             fileRemove(file, fileList) {
+                console.log(123)
                 for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr.push({
+                    this.basicAnnexesArr[i] = {
                         fileName: fileList[i].name.substring(
                             0,
                             fileList[i].name.indexOf(".")
                         ),
                         fileURL: fileList[i].url
-                    });
+                    };
                 }
-                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
-                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
-                }
+                // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                //     this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                // }
                 this.fileArr = fileList;
             },
             //文件上传成功
             uploadSuccess(response, file, fileList) {
                 console.log(fileList);
                 for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr[i]={
+                    this.basicAnnexesArr[i] = {
                         fileName: fileList[i].name.substring(
                             0,
                             fileList[i].name.indexOf(".")
@@ -810,23 +813,10 @@
             },
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
-                const extension = file.name.split(".")[1] === "xls";
-                const extension2 = file.name.split(".")[1] === "xlsx";
-                const extension3 = file.name.split(".")[1] === "doc";
-                const extension4 = file.name.split(".")[1] === "docx";
-                const extension5 = file.name.split(".")[1] === "pptx";
-                const extension6 = file.name.split(".")[1] === "rar";
-                const extension7 = file.name.split(".")[1] === "zip";
+                console.log(file)
+                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.rar$|\.zip$/i.test(file.name);
                 const isLt2M = file.size / 1024 / 1024 < 10;
-                if (
-                    !extension &&
-                    !extension2 &&
-                    !extension3 &&
-                    !extension4 &&
-                    !extension5 &&
-                    !extension6 &&
-                    !extension7
-                ) {
+                if (!isRightType) {
                     this.$message.warning(
                         "上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!"
                     );
@@ -834,16 +824,7 @@
                 if (!isLt2M) {
                     this.$message.warning("上传模板大小不能超过 10MB!");
                 }
-                return (
-                    (extension ||
-                        extension2 ||
-                        extension3 ||
-                        extension4 ||
-                        extension5 ||
-                        extension6 ||
-                        extension7) &&
-                    isLt2M
-                );
+                return (isRightType && isLt2M);
             }
         }
     };

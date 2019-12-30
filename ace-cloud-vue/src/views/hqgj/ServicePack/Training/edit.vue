@@ -210,13 +210,12 @@
                             <el-row>
                                 <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
                                     <!--:file-list="showList[index].fileArr"-->
-                                    <div @click="getImageTypeIndex(index)">
+                                    <div @mouseover="getImageTypeIndex(index)">
                                         <el-upload
-                                                :file-list="scheduleModel.showbasicAnnexes"
+                                                :on-remove="fileRemove"
                                                 :before-upload="beforeAvatarUpload"
+                                                :file-list="scheduleModel.showbasicAnnexes"
                                                 :http-request="uploadServer"
-                                                :on-error="uploadError"
-                                                :on-success="uploadSuccess"
                                                 action="none"
                                                 class="upload-demo"
                                                 multipl>
@@ -271,7 +270,7 @@
 
 <script>
     import {update, getById} from "@/api/hqgj/training";
-    import {getUser, lecturerMechanism, lecturerPage} from "@/api/sys";
+    import {getUser, lecturerMechanism, lecturerPage,fileUpload} from "@/api/sys";
     import EditorBar from "../../publicTemplate/wangEnduit";
     import photo from "../../publicTemplate/photo";
 
@@ -280,11 +279,10 @@
         name: "edit",
         data() {
             return {
+                basicAnnexesArr:[],
                 //附件列表
-                showList: [],
                 filelist: [],
                 filelistArr: [],
-                fileArr: [],
                 uploadfileindex: "",//上传标识
                 address: '',//详细地址
                 latitude: [],//经纬度
@@ -456,8 +454,6 @@
                                         name: scheduleModelsArr2[i].basicAnnexes[j].fileName + "." + scheduleModelsArr2[i].basicAnnexes[j].fileURL.substr(scheduleModelsArr2[i].basicAnnexes[j].fileURL.lastIndexOf(".") + 1),
                                         url: scheduleModelsArr2[i].basicAnnexes[j].fileURL
                                     })
-                                    console.log(obj)
-                                    // obj.push(scheduleModelsArr2[i].basicAnnexes[j].fileURL);
                                 }
                                 console.log(obj)
                                 scheduleModelsArr2[i].showbasicAnnexes = obj;
@@ -641,7 +637,6 @@
             },
             //添加日程
             addSchedule() {
-                this.basicAnnexesArr=[];
                 this.scheduleForm.scheduleModels.push({
                     title: "", //名称
                     lecturerId: "", //讲师Id
@@ -649,13 +644,9 @@
                     detailedAddress: "", //地点
                     timeArr: [], //时间
                     content: "", //简介
-                    basicAnnexes: this.basicAnnexesArr, //课件
+                    basicAnnexes: [], //课件
                     key: Date.now()
                 });
-                this.fileArr = [];
-                this.showList.push({
-                    fileArr: this.fileArr
-                })
             },
             //删除日程
             removeModel(item) {
@@ -664,10 +655,6 @@
                     this.scheduleForm.scheduleModels.splice(index, 1);
                 }
             },
-            //获取上传组件的标识
-            getImageTypeIndex: function (index) {
-                this.uploadfileindex = index  //先在data里定义下，此处省略定义
-            },
             //上传文件
             FileUpload(obj) {
                 console.log(obj);
@@ -675,8 +662,8 @@
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
                         this.filelistArr.push({name: obj.file.name, url: response.data});
-                        console.log(this.filelist);
-                        this.uploadSuccess(response, obj.file, this.filelist[this.uploadfileindex].filelistArr);
+                        // this.filelist.push={filelistArrs:this.filelistArr};
+                        this.uploadSuccess(response, obj.file, this.filelist[this.uploadfileindex].filelistArrs);
                     } else {
                         this.$message({
                             message: response.message,
@@ -692,29 +679,19 @@
                 let obj = {};
                 obj.file = param.file;
                 this.FileUpload(obj);
-                return true;
+                const prom = new Promise((resolve, reject) => {
+                });
+                prom.abort = () => {
+                };
+                return prom
+                // return true;
             },
             //文件移除
             fileRemove(file, fileList) {
-                for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr.push({
-                        fileName: fileList[i].name.substring(
-                            0,
-                            fileList[i].name.indexOf(".")
-                        ),
-                        fileURL: fileList[i].url
-                    });
-                }
-                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
-                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
-                }
-                this.fileArr = fileList;
-            },
-            //文件上传成功
-            uploadSuccess(response, file, fileList) {
+                console.log(this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes)
                 console.log(fileList);
                 for (var i = 0; i < fileList.length; i++) {
-                    this.basicAnnexesArr[i]={
+                    this.basicAnnexesArr[i] = {
                         fileName: fileList[i].name.substring(
                             0,
                             fileList[i].name.indexOf(".")
@@ -722,11 +699,42 @@
                         fileURL: fileList[i].url
                     };
                 }
-                console.log(this.basicAnnexesArr);
-                // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
-                //     this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
-                // }
-                this.fileArr = fileList;
+                this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes =  this.basicAnnexesArr;
+                console.log(this.uploadfileindex);
+                console.log(this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes)
+                var obj = [];
+                for (let j = 0; j < fileList.length; j++) {
+                    obj.push({
+                        name: fileList[j].name,
+                        url: fileList[j].url
+                    })
+                    console.log(obj)
+                }
+                this.scheduleForm.scheduleModels[this.uploadfileindex].showbasicAnnexes = obj;
+                 console.log(this.scheduleForm.scheduleModels)
+            },
+            //文件上传成功
+            uploadSuccess(response, file, fileList) {
+                console.log(fileList);
+                for (var i = 0; i < fileList.length; i++) {
+                    this.basicAnnexesArr[i] = {
+                        fileName: fileList[i].name.substring(
+                            0,
+                            fileList[i].name.indexOf(".")
+                        ),
+                        fileURL: fileList[i].url
+                    };
+                }
+                this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes =  this.basicAnnexesArr;
+                var obj = [];
+                for (let j = 0; j < fileList.length; j++) {
+                    obj.push({
+                        name: fileList[j].name,
+                        url: fileList[j].url
+                    })
+                    console.log(obj)
+                }
+                this.scheduleForm.scheduleModels[this.uploadfileindex].showbasicAnnexes = obj;
             },
             //文件上传失败
             uploadError(response, file, fileList) {
@@ -734,23 +742,9 @@
             },
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
-                const extension = file.name.split(".")[1] === "xls";
-                const extension2 = file.name.split(".")[1] === "xlsx";
-                const extension3 = file.name.split(".")[1] === "doc";
-                const extension4 = file.name.split(".")[1] === "docx";
-                const extension5 = file.name.split(".")[1] === "pptx";
-                const extension6 = file.name.split(".")[1] === "rar";
-                const extension7 = file.name.split(".")[1] === "zip";
+                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.rar$|\.zip$/i.test(file.name);
                 const isLt2M = file.size / 1024 / 1024 < 10;
-                if (
-                    !extension &&
-                    !extension2 &&
-                    !extension3 &&
-                    !extension4 &&
-                    !extension5 &&
-                    !extension6 &&
-                    !extension7
-                ) {
+                if (!isRightType) {
                     this.$message.warning(
                         "上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!"
                     );
@@ -758,16 +752,12 @@
                 if (!isLt2M) {
                     this.$message.warning("上传模板大小不能超过 10MB!");
                 }
-                return (
-                    (extension ||
-                        extension2 ||
-                        extension3 ||
-                        extension4 ||
-                        extension5 ||
-                        extension6 ||
-                        extension7) &&
-                    isLt2M
-                );
+                return (isRightType && isLt2M);
+            },
+            //获取上传组件的标识
+            getImageTypeIndex: function (index) {
+                this.uploadfileindex = index  //先在data里定义下，此处省略定义
+                console.log(this.uploadfileindex);
             },
             //地图初始化
             intMap() {
