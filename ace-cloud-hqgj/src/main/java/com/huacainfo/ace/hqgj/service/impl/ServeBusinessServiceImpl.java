@@ -313,7 +313,13 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "批量删除", detail = "批量删除创业服务包")
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
+        //清除
+        List<String> list = serveBusinessDetailDao.selectBusinessIds(ids);
+        String[] sb =new String[list.size()];
         this.serveBusinessDao.deleteByIds(ids);
+        serveBusinessDetailDao.deleteByBusinessIds(ids);
+        serveBusinessAppendDao.deleteByBusinessIds(ids);
+        basicAnnexDao.deleteByRelationIds(list.toArray(sb));
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

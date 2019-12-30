@@ -33,4 +33,6 @@ public interface ServeBusinessDetailDao {
     int updateState(ServeBusinessDetail serveBusinessDetail);
 
     int deleteByBusinessIds(String[] ids);
+
+    List<String> selectBusinessIds(@Param("businessIds") String[] businessIds);
 }
