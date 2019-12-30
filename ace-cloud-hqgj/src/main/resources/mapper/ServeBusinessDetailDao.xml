@@ -201,4 +201,13 @@
     WHERE
 	ba.type = '3' and b.id = #{id,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectBusinessIds" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT DISTINCT t.id FROM
+        serve_business_detail t INNER JOIN serve_business b ON b.id = t.businessId
+        WHERE t.businessId in
+        <foreach item="businessIds" collection="businessIds" open="(" separator="," close=")">
+            #{businessIds}
+        </foreach>
+    </select>
 </mapper>
