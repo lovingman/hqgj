@@ -16,15 +16,21 @@
           </el-col>
           <el-col :span="16" :offset="1">
             <el-input placeholder="请输入名称" v-model="query.title" clearable class="input-with-select">
-              <el-button slot="append" @click="search">搜索</el-button>
+              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column type="selection" width="80"></el-table-column>
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        v-loading="loading"
+        element-loading-text="加载中"
+        element-loading-spinner="el-icon-loading"
+      >
+        <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="title" sortable label="培训标题"></el-table-column>
         <el-table-column prop="cultivatePersonNumber" sortable label="培训人数"></el-table-column>
         <el-table-column prop="enrollPersopnNumber" sortable label="报名人数"></el-table-column>
@@ -81,7 +87,6 @@
       </span>
     </el-dialog>
     <!-- end -->
-
   </div>
 </template>
 
@@ -95,6 +100,7 @@ export default {
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
       examineVisible: false, //是否显示审核弹框
+      loading: false, //loading加载状态
       //搜索
       query: {
         title: "", //输入框
@@ -136,6 +142,7 @@ export default {
   methods: {
     //请求page
     getList() {
+      this.loading = true;
       this.query = Object.assign(this.query, {
         pageNum: this.tablePage,
         pageSize: this.tableSize,
@@ -145,6 +152,7 @@ export default {
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;
+          this.loading = false;
         }
       });
     },
@@ -266,12 +274,6 @@ export default {
     }
     .selectSearch {
       float: right;
-      /deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
-      }
     }
   }
   .table-box {
