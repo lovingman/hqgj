@@ -78,23 +78,8 @@ function postJSON(url, data) {
     },
   })
 }
-
-function posts(url, data) {
-  var postRequest = wxPromisify(wx.request)
-  return postRequest({
-    url: url,
-    method: 'POST',
-    data: data,
-    dataType: "json",
-    header: {
-      "Content-Type": "application/json",
-      'Authorization': wx.getStorageSync('Authorization'),
-    },
-  })
-}
 module.exports = {
   post,
-  posts,
   getJSON,
   postJSON
 }
