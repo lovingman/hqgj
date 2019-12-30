@@ -402,7 +402,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     }
 
     /**
-     * 创建企业
+     * 创建企业并获取积分
      * @param id
      */
 
@@ -424,6 +424,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "企业管理名称重复！");
         }
+        o.setSource("2");
         o.setLegalPerson(vo.getName());
         o.setAreaCode(s.getAreaCode());
         o.setCompanyAddress(s.getCompanyAddress());
