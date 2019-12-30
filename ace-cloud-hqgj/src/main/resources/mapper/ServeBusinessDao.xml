@@ -175,6 +175,32 @@
     </delete>
 
     <resultMap extends="BaseResultMap" id="previewResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessVo">
+        <association property="serveBusiness" column="id"  javaType="com.huacainfo.ace.hqgj.model.ServeBusiness">
+            <id column="id" jdbcType="VARCHAR" property="id"/>
+            <id column="lsNo" jdbcType="VARCHAR" property="lsNo"/>
+            <result column="applyPersonName" jdbcType="VARCHAR" property="applyPersonName"/>
+            <result column="applyPersonTel" jdbcType="VARCHAR" property="applyPersonTel"/>
+            <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+            <result column="companyName" jdbcType="VARCHAR" property="companyName"/>
+            <result column="readyName" jdbcType="VARCHAR" property="readyName"/>
+            <result column="legalPerson" jdbcType="VARCHAR" property="legalPerson"/>
+            <result column="regBonus" jdbcType="VARCHAR" property="regBonus"/>
+            <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
+            <result column="companyAddress" jdbcType="VARCHAR" property="companyAddress"/>
+            <result column="manageExtent" jdbcType="VARCHAR" property="manageExtent"/>
+            <result column="createUserId" jdbcType="VARCHAR" property="createUserId"/>
+            <result column="createUserName" jdbcType="VARCHAR" property="createUserName"/>
+            <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+            <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+            <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+            <result column="status" jdbcType="VARCHAR" property="status"/>
+            <result column="tab" jdbcType="VARCHAR" property="tab"/>
+            <result column="shUserId" jdbcType="VARCHAR" property="shUserId"/>
+            <result column="shUserName" jdbcType="VARCHAR" property="shUserName"/>
+            <result column="shDate" jdbcType="TIMESTAMP" property="shDate"/>
+            <result column="basicStatus" jdbcType="VARCHAR" property="basicStatus"/>
+        </association>
         <collection property="businessDetailList" column="id" ofType="com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo">
             <result column="did" jdbcType="VARCHAR" property="id"/>
             <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -199,9 +225,9 @@
     </resultMap>
 
     <select id="previewInfo" parameterType="java.lang.String" resultMap="previewResultMap">
-         select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress, s.status,s.tab,s.basicStatus
+         select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress, s.status,s.tab,s.basicStatus,
          d.id did,d.name,d.mobile,d.type,d.sharesProportion,
-         a.id appendId, a.type appendType,a.`option`,a.content,
+         a.id appendId,a.type appendType,a.`option`,a.content,
          an.id anid,an.fileName,an.fileType,an.fileURL,an.relationId
          from serve_business s
          left join serve_business_detail d on s.id=d.businessId
