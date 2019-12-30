@@ -2,7 +2,7 @@
     <div class="container">
         <div class="title">机构成员详情</div>
         <div class="handle-box">
-            <el-form :rules="rules" ref="ruleForm" label-width="300px" class="demo-ruleForm">
+            <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="姓名:" prop="name">

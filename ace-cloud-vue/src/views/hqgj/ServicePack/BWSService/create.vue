@@ -2,9 +2,9 @@
     <div class="container">
         <div class="title">创建</div>
         <div class="handle-box">
-            <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
+            <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyId">
-                    <el-select clearable placeholder="请选择企业" @change="changeLocationValue" v-model="addform.companyId" style="width: 50%">
+                    <el-select clearable placeholder="请选择企业" @change="changeLocationValue" v-model="addform.companyId" style="width: 30%">
                         <el-option
                                 :key="item.id"
                                 :label="item.companyName"
@@ -15,7 +15,7 @@
                     <!--<el-input placeholder="请输入企业名称" style="width: 50%" v-model="addform.companyName"></el-input>-->
                 </el-form-item>
                 <el-form-item label="获得积分:" prop="getIntegral">
-                    <el-input :disabled="true" placeholder="请输入获得积分" style="width: 50%" v-model="addform.getIntegral"></el-input>
+                    <el-input :disabled="true" placeholder="请输入获得积分" style="width: 30%" v-model="addform.getIntegral"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="back">取消</el-button>
