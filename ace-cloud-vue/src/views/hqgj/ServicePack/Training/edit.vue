@@ -661,9 +661,10 @@
                 this.actionUrls = "/hqgj-portal/www/uploadFile";
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
-                        this.filelistArr.push({name: obj.file.name, url: response.data});
+                        this.scheduleForm.scheduleModels[this.uploadfileindex].showbasicAnnexes.push({name: obj.file.name, url: response.data})
+                        // this.filelistArr.push();
                         // this.filelist.push={filelistArrs:this.filelistArr};
-                        this.uploadSuccess(response, obj.file, this.filelist[this.uploadfileindex].filelistArrs);
+                        this.uploadSuccess(response, obj.file,  this.scheduleForm.scheduleModels[this.uploadfileindex].showbasicAnnexes);
                     } else {
                         this.$message({
                             message: response.message,
@@ -700,8 +701,6 @@
                     };
                 }
                 this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes =  this.basicAnnexesArr;
-                console.log(this.uploadfileindex);
-                console.log(this.scheduleForm.scheduleModels[this.uploadfileindex].basicAnnexes)
                 var obj = [];
                 for (let j = 0; j < fileList.length; j++) {
                     obj.push({
@@ -711,7 +710,6 @@
                     console.log(obj)
                 }
                 this.scheduleForm.scheduleModels[this.uploadfileindex].showbasicAnnexes = obj;
-                 console.log(this.scheduleForm.scheduleModels)
             },
             //文件上传成功
             uploadSuccess(response, file, fileList) {
