@@ -2,7 +2,8 @@
 var request = require('../../utils/request.js');
 var config = require('../../utils/config.js');
 var validate = require('../../utils/validate.js');
-import Toast from '/@vant/weapp/toast/toast';
+var Auth = require('../../utils/auth.js');
+import Toast from '../../vant/weapp/toast/toast';
 Page({
 
     /**
@@ -15,7 +16,9 @@ Page({
         idCard: '',
         idCardState: false,
         idCardVali: 'IdCard',
-        nextData:{}
+        nextData:{},
+        nickName:'',
+        unionId:'',
     },
     submit() {
         let that = this;
@@ -27,9 +30,14 @@ Page({
             Toast.fail('身份证格式错误');
             return;
         }
+        if (!that.data.unionId) {
+            Toast.fail('没有绑定微信');
+            return;
+        }
         let data={
             name:that.data.name,
-            idCard:that.data.idCard
+            idCard:that.data.idCard,
+            unionId: that.data.unionId  
         }
         request.post(config.register, Object.assign(data,that.data.nextData)).then(
             res=>{
@@ -73,6 +81,24 @@ Page({
             [filed]: true
         })
         return false
+    },
+    // 微信授权
+    getUserInfo(e){
+        let that = this;
+        if(that.data.unionId){
+            wx.showToast({
+                title: "已经授权成功",
+                icon: 'none',
+                duration: 2000
+            });
+            return;
+        }
+        Auth.wxUserInfo(e).then(rst => {
+            that.setData({
+                nickName:rst.nickName,
+                unionId: rst.unionId
+            })
+        });
     },
     onChange(e) {
         let that = this;

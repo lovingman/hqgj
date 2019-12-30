@@ -59,21 +59,40 @@ Page({
   },
   //点击下载文件
   downloadFile: function(e) {
-    var that = this;
-    var index = e.currentTarget.dataset.index;
-    var fileURL = that.data.basicAnnexArr[index].fileURL;
-    that.setData({
-      flieUrl: fileURL
-    });
+    console.log(e);
     wx.downloadFile({
-      url: that.data.flieUrl,
+      url: e.currentTarget.dataset.url,
       success: function(res) {
-        console.log(res);
+        const tempFilePath = res.tempFilePath;
+        // 保存文件
+        wx.saveFile({
+          tempFilePath,
+          success: function(res) {
+            const savedFilePath = res.savedFilePath;
+          },
+          fail: function(err) {
+            console.log('保存失败：', err)
+          }
+        });
       },
-      fail: function(res) {
-        console.log('文件下载失败');
+      fail: function(err) {
+        console.log('下载失败：', err);
       },
-      complete: function(res) {},
+    });
+  },
+  openFile(e) {
+    console.log(e)
+    wx.downloadFile({
+      url: e.currentTarget.dataset.src,
+      success: function(res) {
+        const filePath = res.tempFilePath
+        wx.openDocument({
+          filePath: filePath,
+          success: function(res) {
+            console.log('打开文档成功')
+          }
+        })
+      }
     })
   },
   /**

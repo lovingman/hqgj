@@ -1,6 +1,6 @@
 <!--pages/FinanceTax/index.wxml-->
 <view class="index">
-  <van-tabs line-width="30" color="#ffffff" sticky animated swipeable active="{{ active }}" bind:click="tabClick">
+  <van-tabs line-width="30" color="#ffffff" sticky animated swipeable active="{{ active }}" bind:change="tabClick">
     <van-tab title-style="color:#ffffff" title="代理记账">
       <view class="wrap" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
         <view class="img">

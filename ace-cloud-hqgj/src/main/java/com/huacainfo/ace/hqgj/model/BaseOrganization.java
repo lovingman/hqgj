@@ -56,6 +56,12 @@ public class BaseOrganization extends BaseModel {
     private String orgAddress;
 
     /**
+     * 字段名：base_organization.completeAddress
+     * 注释：完整地址（保存areaCode对应的地址加上详细地址）
+     */
+    private String completeAddress;
+
+    /**
      * 字段名：base_organization.content
      * 注释：内容简介
      */
@@ -250,5 +256,13 @@ public class BaseOrganization extends BaseModel {
 
     public void setFmUrl(String fmUrl) {
         this.fmUrl = fmUrl;
+    }
+
+    public String getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(String completeAddress) {
+        this.completeAddress = completeAddress;
     }
 }

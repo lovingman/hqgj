@@ -9,6 +9,7 @@
         <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
         <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
         <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
+        <result column="completeAddress" jdbcType="VARCHAR" property="completeAddress"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="fmUrl" jdbcType="VARCHAR" property="fmUrl"/>
@@ -21,7 +22,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, orgName, creditCode, contactPersonName, contactPersonTel, areaCode, orgAddress,
+    id, orgName, creditCode, contactPersonName, contactPersonTel, areaCode, orgAddress, completeAddress,
     content, type, fmUrl, createUserId, createUserName, createDate, modifyUserId, modifyUserName,
     modifyDate, status
   </sql>
@@ -32,13 +33,13 @@
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BaseOrganization">
     insert into base_organization (id, orgName, creditCode,
       contactPersonName, contactPersonTel, areaCode,
-      orgAddress, content, type, fmUrl,
+      orgAddress, completeAddress, content, type, fmUrl,
       createUserId, createUserName, createDate,
       modifyUserId, modifyUserName, modifyDate,
       status)
     values (#{id,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR},
       #{contactPersonName,jdbcType=VARCHAR}, #{contactPersonTel,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
-      #{orgAddress,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR},
+      #{orgAddress,jdbcType=VARCHAR}, #{completeAddress,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{fmUrl,jdbcType=VARCHAR},
       #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
@@ -51,6 +52,7 @@
       contactPersonTel = #{contactPersonTel,jdbcType=VARCHAR},
       areaCode = #{areaCode,jdbcType=VARCHAR},
       orgAddress = #{orgAddress,jdbcType=VARCHAR},
+      completeAddress = #{completeAddress,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       fmUrl = #{fmUrl,jdbcType=VARCHAR},
@@ -67,7 +69,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orgName, t.creditCode, t.contactPersonName, t.contactPersonTel, t.areaCode, t.orgAddress, t.content, t.type, t.fmUrl, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.orgName, t.creditCode, t.contactPersonName, t.contactPersonTel, t.areaCode, t.orgAddress, t.completeAddress, t.content, t.type, t.fmUrl, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM base_organization t

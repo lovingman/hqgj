@@ -13,6 +13,8 @@ public class ServeFinanceOrderQVo extends ServeFinanceOrder {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endTime;
 
+    private String[] types;
+
     public Date getStartTime() {
         return startTime;
     }
@@ -27,5 +29,13 @@ public class ServeFinanceOrderQVo extends ServeFinanceOrder {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
     }
 }

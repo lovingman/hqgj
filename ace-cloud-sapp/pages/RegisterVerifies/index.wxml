@@ -1,19 +1,24 @@
 <!--pages/Register/index.wxml-->
 <view>
-  <view class="title">
-    实名认证
-  </view>
-  <view class="content">
-    <view class="input van-hairline--bottom">
-    <van-field value="{{ name }}" error="{{nameState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="真实姓名" border="{{ false }}" data-field="name" bind:change="onChange"/>
-      <!-- <van-field value="{{ value }}" clearable placeholder="" border="{{ false }}" bind:change="onChange" /> -->
+    <view class="title">
+        实名认证
     </view>
-    <view class="input van-hairline--bottom">
-          <van-field value="{{ idCard }}" error="{{idCardState}}"  bind:blur="validate" bind:focus="initValidate" clearable placeholder="身份证号码" border="{{ false }}" data-field="idCard" bind:change="onChange"/>
+    <view class="content">
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ name }}" error="{{nameState}}" bind:blur="validate" bind:focus="initValidate" clearable placeholder="真实姓名" border="{{ false }}" data-field="name" bind:change="onChange" />
+            <!-- <van-field value="{{ value }}" clearable placeholder="" border="{{ false }}" bind:change="onChange" /> -->
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ idCard }}" error="{{idCardState}}" bind:blur="validate" bind:focus="initValidate" clearable placeholder="身份证号码" border="{{ false }}" data-field="idCard" bind:change="onChange" />
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ nickName }}" disabled  placeholder="微信昵称" border="{{ false }}">
+                <van-button bindgetuserinfo="getUserInfo" open-type="getUserInfo" use-button-slot slot="button" size="small" type="primary"><icon class="iconfont icon-weixin"></icon> 绑定微信</van-button>
+            </van-field>
+        </view>
+        <view class="btn">
+            <van-button round bindtap="submit" type="info" size="large">确定</van-button>
+        </view>
     </view>
-    <view class="btn">
-      <van-button round bindtap="submit" type="info" size="large">确定</van-button>
-    </view>
-  </view>
-  <van-toast id="van-toast" />
+    <van-toast id="van-toast"/>
 </view>

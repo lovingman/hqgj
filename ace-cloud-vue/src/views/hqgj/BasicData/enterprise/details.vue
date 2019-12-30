@@ -6,9 +6,9 @@
                 <el-form-item label="企业名称:" prop="name">
                     <span>{{form.companyName}}</span>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="name">
-                    <span>{{form.creditCode}}</span>
-                </el-form-item>
+                <!--<el-form-item label="统一社会信用代码:" prop="name">-->
+                    <!--<span>{{form.creditCode}}</span>-->
+                <!--</el-form-item>-->
                 <el-form-item label="法人代表:" prop="name">
                     <span>{{form.legalPerson}}</span>
                 </el-form-item>
@@ -18,10 +18,10 @@
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>{{form.companyAddress}}</span>
+                    <span>湖南省常德市{{form.completeAddress}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="back">确认</el-button>
+                    <el-button type="primary" @click="back">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>

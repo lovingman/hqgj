@@ -6,8 +6,8 @@
                 <el-form-item label="标题名称:" prop="title">
                     <span>{{serviceForm.title}}</span>
                 </el-form-item>
-                <el-form-item label="附件:" prop="basicAnnexes"  v-for="item in serviceForm.basicAnnexes">
-                    <span>{{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}</span>
+                <el-form-item label="附件:" prop="basicAnnexes">
+                    <span v-for="item in serviceForm.basicAnnexes">{{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}<br></span>
                 </el-form-item>
                 <el-form-item label="创建时间:" prop="createDate">
                     <span>{{serviceForm.createDate}}</span>
@@ -16,8 +16,7 @@
                     <span>{{serviceForm.createUserName}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button @click="back" type="primary">提交</el-button>
+                    <el-button @click="back" type="primary">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>

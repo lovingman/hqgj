@@ -469,11 +469,14 @@
                             if (response.data[i] == 5) {
                                 this.type.push("房屋证明");
                             }
+                            if (response.data[i] == 9) {
+                                this.type.push("基本信息");
+                            }
                         }
 
-                        var str = this.type.join();
+                        var str = this.type.join("、");
                         this.$message({
-                            message: str + '未审核',
+                            message: str + '未审核或未通过审核',
                             type: 'warning'
                         });
                     } else {
@@ -486,6 +489,9 @@
                             updateBasicStatus(this.id, 1, 2).then(response => {
                                 if (response.status == 1) {
                                     this.$message.success(`审核通过`);
+                                    this.$router.push({
+                                        path: "/hqgj/ServicePack/BWSService/index"
+                                    });
                                 } else {
                                     this.$message({
                                         message: response.message,
@@ -523,19 +529,26 @@
             },
             //下载
             FileDownload(index, data) {
-                console.log(data);
-                this.relationId = data.id;
-                console.log(this.relationId);
-                downloadimg(this.relationId).then(response => {
-                    for (var i = 0; i < response.data.length; i++) {
-                        let link = document.createElement('a')
-                        link.href = 'data:image/png;base64,' + response.data[i]
-                        link.download = data.fileName + '.png'
-                        link.click()
-                    }
+                if(data.fileName!=''){
+                    console.log(data);
+                    this.relationId = data.id;
+                    console.log(this.relationId);
+                    downloadimg(this.relationId).then(response => {
+                        if(response.data!=[]){
+                            for (var i = 0; i < response.data.length; i++) {
+                                let link = document.createElement('a')
+                                link.href = 'data:image/png;base64,' + response.data[i]
+                                link.download = data.fileName + '.png'
+                                link.click()
+                            }
+                        }else{
+                            this.$message.warning(`附件数据丢失`);
+                        }
+                    })
+                }else {
+                    this.$message.warning(`数据缺失`);
+                }
 
-
-                })
             },
             //标签页查看
             handleClick(tab, event) {

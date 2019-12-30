@@ -3,7 +3,7 @@
 <mapper namespace="com.huacainfo.ace.hqgj.dao.PersonCenterDao">
    <select id="selectUserInfo" resultType="com.huacainfo.ace.hqgj.vo.UsersVo">
     select t.user_id userId, t.account, t.sex, t.idCard, t.userType, t.name, t.corpId,
-      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.id orgId,o.orgName orgName,
+      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.id orgId,o.orgName orgName,o.contactPersonTel orgTel,
       m.id companyId,c.companyName,mu.unionId,mu.avatarUrl
         from portal_hqgj.users t
         left join hqgj.base_organization_member b on b.userId=t.user_id

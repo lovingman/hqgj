@@ -30,4 +30,6 @@ public interface ServeBusinessIntegralDao {
     int deleteByIds(String[] ids);
 
     List<IntegralDetailedVo> integralDetailed(@Param("userId") String userId);
+
+    int updateIntegral(@Param("userId") String userId);
 }

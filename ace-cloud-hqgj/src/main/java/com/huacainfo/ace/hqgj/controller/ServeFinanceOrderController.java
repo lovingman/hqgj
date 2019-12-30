@@ -2,6 +2,7 @@ package com.huacainfo.ace.hqgj.controller;
 
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.tools.CommonUtils;
+import com.huacainfo.ace.common.vo.UserProp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -9,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
 import com.huacainfo.ace.common.vo.PageParam;
@@ -68,6 +66,26 @@ public class ServeFinanceOrderController extends BaseController {
     }
 
     /**
+     * 手机端个人中心列表
+     * @param condition
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/orderPage", notes = "获取财税服务订单表数据集合，支持分页查询")
+    @GetMapping(value = "/orderPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <ServeFinanceOrderVo> orderPage(ServeFinanceOrderQVo condition, PageParam page) throws Exception {
+        UserProp userProp=this.getCurUserProp();
+        condition.setCreateUserId(userProp.getUserId());
+        PageDTO<ServeFinanceOrderVo> rst = this.serveFinanceOrderService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+    /**
      * @Title:insertServeFinanceOrder
      * @Description: TODO(创建财税服务订单表)
      * @param: @param jsons
@@ -81,7 +99,7 @@ public class ServeFinanceOrderController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
-    public ResponseDTO create(String jsons) throws Exception {
+    public ResponseDTO create(@RequestBody String jsons) throws Exception {
         ServeFinanceOrder obj = JSON.parseObject(jsons, ServeFinanceOrder.class);
         return this.serveFinanceOrderService.create(obj, this.getCurUserProp());
     }
@@ -181,4 +199,7 @@ public class ServeFinanceOrderController extends BaseController {
         }
         return serveFinanceOrderService.updateStatus(id,status);
     }
+
+
+
 }

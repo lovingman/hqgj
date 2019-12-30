@@ -52,21 +52,31 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                 o.setId(userProp.getUserId());
              int temp = this.baseCompanyMemberDao.isExist(o);
              if (temp > 0) {
-                return new ResponseDTO(ResultCode.FAIL, "已经存在！");
+                 o.setCompanyId(id);
+                 o.setName(userProp.getName());
+                 o.setIdCard(user.getIdCard());
+                 o.setMobile(user.getMobile());
+                 o.setCreateDate(new Date());
+                 o.setStatus("1");
+                 o.setCreateUserName(userProp.getName());
+                 o.setCreateUserId(userProp.getUserId());
+                 o.setModifyDate(new Date());
+               this.baseCompanyMemberDao.updateByPrimaryKey(o);
+             }else {
+                 o.setCompanyId(id);
+                 o.setName(userProp.getName());
+                 o.setIdCard(user.getIdCard());
+                 o.setMobile(user.getMobile());
+                 o.setCreateDate(new Date());
+                 o.setStatus("1");
+                 o.setCreateUserName(userProp.getName());
+                 o.setCreateUserId(userProp.getUserId());
+                 o.setModifyDate(new Date());
+                 int i = this.baseCompanyMemberDao.insert(o);
+                 if(i<=0){
+                     return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
+                 }
              }
-                o.setCompanyId(id);
-                o.setName(userProp.getName());
-                o.setIdCard(user.getIdCard());
-                o.setMobile(user.getMobile());
-                o.setCreateDate(new Date());
-                o.setStatus("1");
-                o.setCreateUserName(userProp.getName());
-                o.setCreateUserId(userProp.getUserId());
-                o.setModifyDate(new Date());
-               int i= this.baseCompanyMemberDao.insert(o);
-            if(i<=0){
-                return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
-            }
             registerDao.updateUserType("5",userProp.getUserId());
         }else{
             //机构

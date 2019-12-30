@@ -4,11 +4,11 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
                 <el-form-item label="机构名称:" prop="orgName">
-                    <el-input v-model="addform.orgName" placeholder="请输入机构名称" style="width: 50%"></el-input>
+                    <el-input v-model="addform.orgName" maxlength="50" show-word-limit placeholder="请输入机构名称" style="width: 50%"></el-input>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="creditCode">
-                    <el-input v-model="addform.creditCode" placeholder="请输入18位统一社会信用代码" style="width: 50%"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
+                    <!--<el-input v-model="addform.creditCode" placeholder="请输入18位统一社会信用代码" style="width: 50%"></el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item label="联系方式:" prop="contactPersonTel">
                     <el-input v-model="addform.contactPersonName" placeholder="联系人姓名" style="width: 21%"></el-input>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
@@ -18,29 +18,13 @@
                     <el-cascader
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
+                            ref="myCascader"
                             change-on-select
                             clearable
                             filterable
                             placeholder="请选择行政区划"
                             style="width: 50%"
                             v-model="addform.areaCodes"/>
-                    <!--<el-select placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择市" style="width: 10%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择区县" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择乡镇街道" style="width: 15%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-
                 </el-form-item>
                 <el-form-item prop="orgAddress">
                     <el-input
@@ -82,6 +66,7 @@
         name: "create",
         data() {
             return {
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -94,6 +79,7 @@
                     contactPersonTel: "",
                     areaCode: "",
                     orgAddress: "",
+                    completeAddress:"",
                     content: "",
                     type: "",
                     areaCodes: []
@@ -128,9 +114,11 @@
             handleadd(formName){
                 this.$refs[formName].validate(valid => {
                     if (valid) {
+                        this.allAddress = this.$refs.myCascader.getCheckedNodes(this.addform.areaCodes)[0].pathLabels.join('').replace(/,/g,"");
                         for (let e of this.addform.areaCodes) {
                             this.addform.areaCode = e;
                         }
+                        this.addform.completeAddress = this.allAddress + this.addform.orgAddress;
                         create(this.addform).then(response => {
                             if (response.status == 1) {
                                 this.$message.success("创建成功");
@@ -150,7 +138,7 @@
             },
             //获取行政区划数据
             AreaCodeQuery() {
-                getAreaTree({pid: 4307, type: 1, hasSelf: "true"})
+                getAreaTree({pid: 430702, type: 1, hasSelf: "true"})
                     .then(response => {
                         this.areaCodeOptions = response.data;
                     })

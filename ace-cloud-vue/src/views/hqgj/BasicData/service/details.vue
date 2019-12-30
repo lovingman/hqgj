@@ -6,19 +6,16 @@
                 <el-form-item label="机构名称:" prop="name">
                     <span>{{form.orgName}}</span>
                 </el-form-item>
-                <el-form-item label="统一社会信用代码:" prop="name">
-                    <span>{{form.creditCode}}</span>
-                </el-form-item>
+                <!--<el-form-item label="统一社会信用代码:" prop="name">-->
+                    <!--<span>{{form.creditCode}}</span>-->
+                <!--</el-form-item>-->
                 <el-form-item label="联系方式:" prop="name">
                     <span>{{form.contactPersonName}}</span>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>{{form.areaCode}}</span>
-                </el-form-item>
-                <el-form-item  prop="name">
-                    <span>{{form.orgAddress}}</span>
+                    <span>湖南省,常德市,{{form.completeAddress}}</span>
                 </el-form-item>
                 <el-form-item label="简介:" prop="name" style="width: 70%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
@@ -29,7 +26,7 @@
                     <span v-if="form.type==3">培训机构</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back" type="primary">确定</el-button>
+                    <el-button @click="back" type="primary">返回</el-button>
                 </el-form-item>
             </el-form>
         </div>

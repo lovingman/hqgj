@@ -6,8 +6,7 @@ const app = getApp()
 
 Page({
   data: {
-    navigates: [
-      {
+    navigates: [{
         text: '创业服务包',
         imgUrl: '/assets/image/icon1-2.png',
         path: '../RegEnterprise/index'
@@ -37,12 +36,50 @@ Page({
         imgUrl: '/assets/image/icon1-7.png',
         path: '../PolicyService/index'
       }
-    ]
+    ],
+    lawServeList: [], //政策服务page
+    trainList: [], //培训page
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+
+  },
+  //请求政策page
+  getLawServe: function() {
+    var that = this;
+    request.getJSON(cfg.lawServePageUrl).then(res => {
+      if (res.data.status == 1) {
+        that.setData({
+          lawServeList: res.data.rows
+        })
+        console.log(that.data.lawServeList)
+      }
+    })
+  },
+  //请求培训page
+  getTrain: function() {
+    var that = this;
+    request.getJSON(cfg.trainPageUrl, {
+      status: 1 //1.进行中
+    }).then(res => {
+      if (res.data.status == 1) {
+        that.setData({
+          trainList: res.data.rows
+        })
+        console.log(that.data.trainList)
+      }
+    })
+  },
+  //点击政策服务去详情
+  lawServeClcik: function(e) {
+    var index = parseInt(e.currentTarget.dataset.index);
+    var listId = this.data.lawServeList[index].id;
+    console.log(listId);
+    wx.navigateTo({
+      url: '/pages/PolicyServiceDetail/index?id=' + listId,
     })
   },
   getUser() {
@@ -53,7 +90,9 @@ Page({
       }
     })
   },
-  onLoad: function () {
+  onLoad: function() {
+    this.getLawServe(); //请求政策服务page
+    this.getTrain(); //请求培服务page
     this.getUser();
     if (app.globalData.userInfo) {
       this.setData({
@@ -82,7 +121,7 @@ Page({
       })
     }
   },
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({

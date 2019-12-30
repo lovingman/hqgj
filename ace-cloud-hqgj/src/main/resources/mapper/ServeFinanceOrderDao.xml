@@ -113,8 +113,11 @@
             <if test="condition.orderNo != null and condition.orderNo != ''">
                 and t.orderNo like concat('%',#{condition.orderNo,jdbcType=VARCHAR},'%')
             </if>
-            <if test="condition.type != null and condition.type != ''">
-                and t.type = #{condition.type,jdbcType=VARCHAR}
+            <if test="condition.types != null and condition.types != ''">
+                and t.type in
+                <foreach collection="condition.types" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.content != null and condition.content != ''">
                 and t.content = #{condition.content,jdbcType=VARCHAR}

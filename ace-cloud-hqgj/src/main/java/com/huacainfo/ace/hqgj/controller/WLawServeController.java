@@ -1,5 +1,8 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.hqgj.service.LawPolicyService;
+import com.huacainfo.ace.hqgj.vo.LawPolicyQVo;
+import com.huacainfo.ace.hqgj.vo.LawPolicyVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -35,7 +38,8 @@ public class WLawServeController extends BaseController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private LawServeService lawServeService;
-
+    @Autowired
+    private LawPolicyService lawPolicyService;
 
     /**
      *
@@ -167,4 +171,49 @@ public class WLawServeController extends BaseController {
         return this.lawServeService.deleteByIds(ids.split(","));
     }
 
+
+
+    /**
+     * @throws
+     * @Title:page
+     * @Description: TODO(分页查询)
+     * @param: @param condition
+     * @param: @param page
+     * @param: @return
+     * @param: @throws Exception
+     * @return: NewPageDTO
+     * <LawPolicyVo>
+     * @author: 豆文国
+     * @version: 2019-12-10
+     */
+    @ApiOperation(value = "/policyPage", notes = "获取政策服务数据集合，支持分页查询")
+    @GetMapping(value = "/policyPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <LawPolicyVo> page(LawPolicyQVo condition, PageParam page) throws Exception {
+
+        PageDTO<LawPolicyVo> rst = this.lawPolicyService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+    /**
+     * @throws
+     * @Title:getById
+     * @Description: TODO(获取政策服务)
+     * @param: @param id
+     * @param: @throws Exception
+     * @return: ResponseDTO<LawPolicy>
+     * @author: 豆文国
+     * @version: 2019-12-10
+     */
+    @ApiOperation(value = "/policyGetById", notes = "根据主键获取 政策服务")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @GetMapping(value = "/policyGetById", produces = "application/json;charset=UTF-8")
+    public ResponseDTO<LawPolicyVo> policyGetById(String id) throws Exception {
+        return this.lawPolicyService.getById(id);
+    }
 }

@@ -2,6 +2,8 @@ package com.huacainfo.ace.hqgj.service;
 
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.security.model.Users;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
+
 /**
  * @ClassName RegisterService
  * @Description TODO
@@ -41,6 +43,6 @@ public interface RegisterService {
      * @param userId
      * @return
      */
-    ResponseDTO<Users> selectUserInfo(String userId);
+    ResponseDTO<UsersVo> selectUserInfo(String userId);
 
 }

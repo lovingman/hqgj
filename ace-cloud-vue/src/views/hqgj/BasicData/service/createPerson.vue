@@ -154,9 +154,9 @@
                     imagePhotoarr: [
                         {required: true, message: "请上传形象照"}
                     ],
-                    wechatPhotoarr: [
-                        {required: true, message: "请上传微信二维码"}
-                    ],
+                    // wechatPhotoarr: [
+                    //     {required: true, message: "请上传微信二维码"}
+                    // ],
                 },
 
             };

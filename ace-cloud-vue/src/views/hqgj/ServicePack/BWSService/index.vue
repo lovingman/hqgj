@@ -27,7 +27,6 @@
                     </el-col>
                     <el-col :span="4">
                         <el-input
-                                @change="toggleChange"
                                 class="input-with-select"
                                 placeholder="请输入公司名称、申请人姓名"
                                 style="float: right;width: 250px"
@@ -42,8 +41,6 @@
             </div>
             <el-table
                     :data="list"
-                    @selection-change="handleSelectionChange"
-                    @sort-change="handleSort"
                     class="table"
                     max-height="475"
                     ref="multipleTable"
@@ -51,13 +48,13 @@
                 <el-table-column align="center" type="selection" width="55"></el-table-column>
                 <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
-                <el-table-column label="申请人" prop="applyPersonName" sortable='custom' width="200">
+                <el-table-column label="申请人" prop="applyPersonName" width="200">
                 </el-table-column>
                 <el-table-column label="联系电话" prop="applyPersonTel" width="250">
                 </el-table-column>
-                <el-table-column label="申请日期" prop="createDate" sortable='custom' width="300">
+                <el-table-column label="申请日期" prop="createDate" width="300">
                 </el-table-column>
-                <el-table-column label="状态" prop="status" sortable='custom' width="100">
+                <el-table-column label="状态" prop="status" width="100">
                     <template slot-scope="scope">
                         <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
                         <div class="blue" type="text" v-if="scope.row.status=='1'">办理中</div>
@@ -92,7 +89,6 @@
             </el-pagination>
         </div>
         <el-dialog
-                :before-close="handleClose"
                 :visible.sync="progressVisible"
                 title="办理进度标记"
                 width="60%">
@@ -135,6 +131,7 @@
         name: "index",
         data() {
             return {
+                loading:false,
                 checked: true,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
@@ -192,6 +189,7 @@
             },
             //获取列表数据
             getlist() {
+                this.loading=true;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
                     pageSize: this.pagesize,
@@ -200,7 +198,7 @@
                 getList(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
-                    console.log(response);
+                    this.loading=false;
                 })
             },
             //搜索
@@ -250,7 +248,7 @@
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'examine'}});
             },
             preview(index, data) {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'preview'}});
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/details", query: {id: data.id,word:'preview'}});
             },
             progress(index, data) {
                 this.getdata(data.id);

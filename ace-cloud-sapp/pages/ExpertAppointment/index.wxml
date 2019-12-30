@@ -33,7 +33,6 @@
       {{basicForm.baseOrganizationMember.content}}
     </view>
   </view>
-
   <view class="mod">
     <view class="title">
       预约时段
@@ -42,7 +41,6 @@
       具体服务时间预约前请先联系专家，因名额有限，先到先得。
     </view>
   </view>
-
   <view class="mod last">
     <view class="title">
       地点
@@ -52,7 +50,7 @@
     </view>
   </view>
   <view class="footer">
-    <view class="phone">
+    <view class="phone" catchtap="telePhoneClick" data-id="{{basicForm.baseOrganizationMember.mobile}}">
       <view>
         <van-icon name="phone" />
       </view>
@@ -61,9 +59,11 @@
       </view>
     </view>
     <view class="btn">
-      <van-button round type="info" size="large">预约专家
+      <van-button round type="info" size="large" bindtap="expertClick">预约专家
         <text class="remark">仅剩{{basicForm.surplusQuota}}个名额</text>
       </van-button>
     </view>
   </view>
+  <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
 </view>

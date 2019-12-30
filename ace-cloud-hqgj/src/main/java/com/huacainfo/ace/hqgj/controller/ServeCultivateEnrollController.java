@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.huacainfo.ace.common.vo.UserProp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -62,6 +63,25 @@ public class ServeCultivateEnrollController extends BaseController {
         return rst;
     }
 
+    /**
+     * 手机端个人中心
+     * @param condition
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/enrollPage", notes = "获取培训提升-报名管理数据集合，支持分页查询")
+    @GetMapping(value = "/enrollPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <ServeCultivateEnrollVo> enrollPage(ServeCultivateEnrollQVo condition, PageParam page) throws Exception {
+        UserProp userProp=this.getCurUserProp();
+        condition.setCreateUserId(userProp.getUserId());
+        PageDTO<ServeCultivateEnrollVo> rst = this.serveCultivateEnrollService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
     /**
      * @Title:insertServeCultivateEnroll
      * @Description: TODO(创建培训提升 - 报名管理)
@@ -192,5 +212,6 @@ public class ServeCultivateEnrollController extends BaseController {
     public ResponseDTO cancelEnroll(String id) throws Exception {
         return this.serveCultivateEnrollService.cancelEnroll(id);
     }
+
 
 }

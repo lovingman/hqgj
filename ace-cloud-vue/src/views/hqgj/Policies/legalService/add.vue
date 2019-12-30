@@ -25,7 +25,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="文件" prop="basicAnnexes">
+                        <el-form-item label="文件" prop="fileList">
                             <el-upload
                                     :before-upload="beforeAvatarUpload"
                                     :file-list="fileList"
@@ -70,12 +70,13 @@
                 //数据
                 serviceForm: {
                     title: "",
-                    basicAnnexes: []
+                    basicAnnexes: [],
+                    fileList:[]
                 },
                 //验证
                 serviceRules: {
                     title: [{required: true, message: "请输入模板名称,字数在50字以内", trigger: "blur"}],
-                    BasicAnnex: [{required: true, message: "请上传文件", trigger: "blur"}]
+                    fileList: [{required: true, message: "请上传文件", trigger: "blur"}]
                 }
             };
         },

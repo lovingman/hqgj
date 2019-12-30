@@ -89,8 +89,8 @@
 
     <select id="isUnionid" parameterType="java.lang.String" resultType="int">
             select count(1)
-        from base_volunteer
-        where unionid = #{unionid,jdbcType=VARCHAR}
+        from ace_hqgj_wxms.map_wechat_sys
+        where unionId = #{unionid,jdbcType=VARCHAR}
   </select>
 
     <update id="updateUsers" parameterType="com.huacainfo.ace.common.security.model.Users">
@@ -104,9 +104,9 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectUserInfo" resultType="com.huacainfo.ace.common.security.model.Users">
+    <select id="selectUserInfo" resultType="com.huacainfo.ace.hqgj.vo.UsersVo">
       select t.user_id userId, t.account, t.sex, t.idCard, t.userType, t.name, t.corpId,
-      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName
+      t.areaCode, t.birthday, t.status,t.mobile, t.email,  t.locked,t.lockedTime,o.orgName corpName,o.contactPersonTel orgTel
         from portal_hqgj.users t
         left join hqgj.base_organization o on t.corpId=o.id
         where t.user_id = #{userId}
@@ -129,4 +129,10 @@
       #{createDate,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}
       )
   </insert>
+
+    <select id="selectAppId" resultType="java.lang.String">
+    select appId
+    from ace_hqgj_wxms.wechat_config
+    where sysId = 'hqgj'
+    </select>
 </mapper>

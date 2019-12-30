@@ -17,32 +17,17 @@
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
                     <el-input placeholder="联系电话" v-model="form.contactPersonTel" style="width: 26%"></el-input>
                 </el-form-item>
-                <el-form-item label="地址:" prop="areaCode">
+                <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
                             placeholder="请选择行政区划"
-                            v-model="areaCode"
+                            ref="myCascader"
+                            v-model="form.areaCodes"
                             :options="areaCodeOptions"
                             :props="areaCodeProps"
                             clearable
                             change-on-select
                             filterable
                             style="width: 50%"/>
-                    <!--<el-select placeholder="请选择省份" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择市" style="width: 10%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择区县" style="width: 12%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
-                    <!--<el-select placeholder="请选择乡镇街道" style="width: 15%;margin-right: 5px">-->
-                        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                        <!--<el-option label="区域二" value="beijing"></el-option>-->
-                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item prop="companyAddress">
                     <el-input
@@ -67,7 +52,7 @@
         name: "edit",
         data() {
             return {
-                areaCode: [], //编辑行政区划
+                allAddress: '',//详细完整地址
                 areaCodeOptions: [], //行政区划
                 areaCodeProps: {
                     value: "id",
@@ -82,8 +67,10 @@
                     contactPersonTel: "",
                     areaCode: "",
                     companyAddress: "",
+                    completeAddress:"",
                     createUserId: "",
                     createUserName: "",
+                    areaCodes: [], //编辑行政区划
                     createDate: ""
                 },
                 rules: {
@@ -96,7 +83,7 @@
                     // contactPersonTel: [
                     //     { required: true, message: "联系方式", trigger: "blur" },
                     // ],
-                    areaCode: [
+                    areaCodes: [
                         { required: true, message: "请选择所属单位", trigger: "change" }
                     ],
                     companyAddress: [
@@ -110,17 +97,19 @@
             this.AreaCodeQuery();
         },
         methods: {
+            // handleChange(value) {
+            // },
             getDetails() {
                 this.id = this.$route.query.id;
                 getById(this.id)
                     .then(response => {
                         this.loading = false;
                         this.form = response.data;
-                        this.areaCode = [];
+                        this.form.areaCodes = [];
                         var str = this.form.areaCode;
                         var arr = [6, 9, 12];
                         for (var i = 0; i < 3; i++) {
-                            this.areaCode[i] = str.substring(0, arr[i]);
+                            this.form.areaCodes[i] = str.substring(0, arr[i]);
                         }
                     })
 
@@ -131,9 +120,11 @@
             editorEnd(formName){
                 this.$refs[formName].validate(valid => {
                     if (valid) {
-                        for (let e of this.areaCode) {
+                        this.allAddress = this.$refs.myCascader.getCheckedNodes(this.form.areaCodes)[0].pathLabels.join('').replace(/,/g,"");
+                        for (let e of this.form.areaCodes) {
                             this.form.areaCode = e;
                         }
+                        this.form.completeAddress = this.allAddress + this.form.companyAddress;
                         update(this.form).then(response => {
                             if (response.status == 1){
                                 this.$message.success("编辑成功");

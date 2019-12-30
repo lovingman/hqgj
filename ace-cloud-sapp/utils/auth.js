@@ -184,6 +184,7 @@ Auth.setUserInfoData = function(appPage) {
 
 
 Auth.wxUserInfo = function(e) {
+    console.log(e);
     return new Promise(function(resolve, reject) {
         var userInfo = e.detail.userInfo;
         // 判断用户是否授权

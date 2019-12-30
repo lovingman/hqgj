@@ -74,7 +74,7 @@
         <result column="avatarUrl" jdbcType="VARCHAR" property="avatarUrl"/>
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.serveCultivateId, t.companyId,  t.enrollUserId, t.enrollName, t.enrollMobile, t.sex, t.isSign, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.serveCultivateId, t.companyId,  t.enrollUserId, t.enrollName, t.sex, t.isSign, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_cultivate_enroll t
