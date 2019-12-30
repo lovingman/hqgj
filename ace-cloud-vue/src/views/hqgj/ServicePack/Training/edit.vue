@@ -212,15 +212,14 @@
                                     <!--:file-list="showList[index].fileArr"-->
                                     <div @click="getImageTypeIndex(index)">
                                         <el-upload
-                                                :before-upload="beforeAvatarUpload"
                                                 :file-list="scheduleModel.showbasicAnnexes"
-                                                :on-preview="handlePreview"
-                                                :on-remove="handleRemove"
-                                                accept="*, *"
-                                                action="https://jsonplaceholder.typicode.com/posts/"
+                                                :before-upload="beforeAvatarUpload"
+                                                :http-request="uploadServer"
+                                                :on-error="uploadError"
+                                                :on-success="uploadSuccess"
+                                                action="none"
                                                 class="upload-demo"
-                                                multiple
-                                        >
+                                                multipl>
                                             <el-button size="small" type="primary">上传课件</el-button>
                                             <div class="el-upload__tip" slot="tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M
                                             </div>
@@ -642,6 +641,7 @@
             },
             //添加日程
             addSchedule() {
+                this.basicAnnexesArr=[];
                 this.scheduleForm.scheduleModels.push({
                     title: "", //名称
                     lecturerId: "", //讲师Id
@@ -649,7 +649,7 @@
                     detailedAddress: "", //地点
                     timeArr: [], //时间
                     content: "", //简介
-                    basicAnnexes: [], //课件
+                    basicAnnexes: this.basicAnnexesArr, //课件
                     key: Date.now()
                 });
                 this.fileArr = [];
@@ -664,6 +664,112 @@
                     this.scheduleForm.scheduleModels.splice(index, 1);
                 }
             },
+            //获取上传组件的标识
+            getImageTypeIndex: function (index) {
+                this.uploadfileindex = index  //先在data里定义下，此处省略定义
+            },
+            //上传文件
+            FileUpload(obj) {
+                console.log(obj);
+                this.actionUrls = "/hqgj-portal/www/uploadFile";
+                fileUpload(obj, this.actionUrls).then(response => {
+                    if (response.status == 1) {
+                        this.filelistArr.push({name: obj.file.name, url: response.data});
+                        console.log(this.filelist);
+                        this.uploadSuccess(response, obj.file, this.filelist[this.uploadfileindex].filelistArr);
+                    } else {
+                        this.$message({
+                            message: response.message,
+                            type: "warning"
+                        });
+                        this.uploadError(response, obj.file, this.filelist[this.uploadfileindex].filelistArr);
+                    }
+                    return response.status;
+                });
+            },
+            //自定义上传
+            uploadServer(param) {
+                let obj = {};
+                obj.file = param.file;
+                this.FileUpload(obj);
+                return true;
+            },
+            //文件移除
+            fileRemove(file, fileList) {
+                for (var i = 0; i < fileList.length; i++) {
+                    this.basicAnnexesArr.push({
+                        fileName: fileList[i].name.substring(
+                            0,
+                            fileList[i].name.indexOf(".")
+                        ),
+                        fileURL: fileList[i].url
+                    });
+                }
+                for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                    this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                }
+                this.fileArr = fileList;
+            },
+            //文件上传成功
+            uploadSuccess(response, file, fileList) {
+                console.log(fileList);
+                for (var i = 0; i < fileList.length; i++) {
+                    this.basicAnnexesArr[i]={
+                        fileName: fileList[i].name.substring(
+                            0,
+                            fileList[i].name.indexOf(".")
+                        ),
+                        fileURL: fileList[i].url
+                    };
+                }
+                console.log(this.basicAnnexesArr);
+                // for (var i = 0; i < this.scheduleForm.scheduleModels.length; i++) {
+                //     this.scheduleForm.scheduleModels[i].basicAnnexes = this.basicAnnexesArr;
+                // }
+                this.fileArr = fileList;
+            },
+            //文件上传失败
+            uploadError(response, file, fileList) {
+                this.$message.error("上传失败");
+            },
+            // 上传前对文件的大小的判断
+            beforeAvatarUpload(file) {
+                const extension = file.name.split(".")[1] === "xls";
+                const extension2 = file.name.split(".")[1] === "xlsx";
+                const extension3 = file.name.split(".")[1] === "doc";
+                const extension4 = file.name.split(".")[1] === "docx";
+                const extension5 = file.name.split(".")[1] === "pptx";
+                const extension6 = file.name.split(".")[1] === "rar";
+                const extension7 = file.name.split(".")[1] === "zip";
+                const isLt2M = file.size / 1024 / 1024 < 10;
+                if (
+                    !extension &&
+                    !extension2 &&
+                    !extension3 &&
+                    !extension4 &&
+                    !extension5 &&
+                    !extension6 &&
+                    !extension7
+                ) {
+                    this.$message.warning(
+                        "上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!"
+                    );
+                }
+                if (!isLt2M) {
+                    this.$message.warning("上传模板大小不能超过 10MB!");
+                }
+                return (
+                    (extension ||
+                        extension2 ||
+                        extension3 ||
+                        extension4 ||
+                        extension5 ||
+                        extension6 ||
+                        extension7) &&
+                    isLt2M
+                );
+            },
+            //地图初始化
             intMap() {
                 var that = this;
                 var map = new qq.maps.Map(document.getElementById("container"), {

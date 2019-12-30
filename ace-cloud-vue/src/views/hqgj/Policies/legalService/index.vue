@@ -40,6 +40,7 @@
 <script>
     import {getServe, deleteServeById} from "@/api/hqgj/Policies";
     import {getAnnex} from "@/api/hqgj/BWSService";
+
     export default {
         name: "index",
         data() {
@@ -56,7 +57,7 @@
                 tableData: []
             };
         },
-        created(){
+        created() {
             this.getlist();
         },
         methods: {
@@ -86,7 +87,7 @@
                 })
             },
             //搜索
-            search(){
+            search() {
                 this.handleQuery();
             },
             //删除
@@ -108,7 +109,7 @@
                     });
             },
             //下载
-            download(index,data){
+            download(index, data) {
                 this.$confirm("此操作将下载所有附件, 是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
@@ -117,19 +118,25 @@
                     .then(() => {
                         this.query2.relationId = data.id;
                         getAnnex(this.query2).then(response => {
-                            for(var i=0;i<response.rows.length;i++ ){
-                                let link = document.createElement('a')
-                                link.href = response.rows[i].fileURL;
-                                // link.download = response.rows[i].fileName + '.'+response.rows[i].fileURL.substr(response.rows[i].fileURL.lastIndexOf(".") + 1)
-                                // link.download = '武陵区中小企业公共服务平台免费服务申请表.doc';
-                                link.click();
-                                console.log(123);
+                            for (var i = 0; i < response.rows.length; i++) {
+                                this.downloading(response.rows[i].fileURL);
                             }
                         });
                     })
                     .catch(() => {
                         // this.$message.error('error')
                     });
+            },
+            downloading(url) {
+                const iframe = document.createElement("iframe");
+                iframe.style.display = "none";  // 防止影响页面
+                iframe.style.height = 0;  // 防止影响页面
+                iframe.src = url;
+                document.body.appendChild(iframe);  // 这一行必须，iframe挂在到dom树上才会发请求
+                // 5分钟之后删除（onload方法对于下载链接不起作用）
+                setTimeout(()=>{
+                    iframe.remove();
+                },1000);
             },
             //选择tableSize事件
             handleTableSize() {
@@ -142,12 +149,12 @@
                 this.$router.push({path: "/hqgj/Policies/legalService/add"});
             },
             //编辑
-            edit(index,data){
-                this.$router.push({path: "/hqgj/Policies/legalService/edit",query:{id:data.id}});
+            edit(index, data) {
+                this.$router.push({path: "/hqgj/Policies/legalService/edit", query: {id: data.id}});
             },
             //详情
             preview(index, data) {
-                this.$router.push({path: "/hqgj/Policies/legalService/details",query:{id:data.id}});
+                this.$router.push({path: "/hqgj/Policies/legalService/details", query: {id: data.id}});
             }
         }
     };

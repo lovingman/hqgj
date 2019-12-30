@@ -2,7 +2,7 @@
     <div class="container">
         <div class="title">服务机构详情</div>
         <div class="handle-box">
-            <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="600px" ref="ruleForm">
+            <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="机构名称:" prop="name">
                     <span>{{form.orgName}}</span>
                 </el-form-item>

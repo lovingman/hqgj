@@ -6,6 +6,7 @@ var config = {
   homePage: `${server}/hqgj/personalCenter/homePage`, //用户信息
   getCaptcha: `${server}/hqgj/www/reg/captcha`, //验证码
   register: `${server}/hqgj/www/reg/register`, //注册
+  getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`, //获取行政区划
   captchaForgetPwd: `${server}/hqgj/www/reg/captchaForgetPwd`, //   验证码获取接口
   resetPassword: `${server}/hqgj/www/reg/resetPassword`, //重置密码
   getUserInfo: `${server}/hqgj/personalCenter/homePage`, //获取用户详情

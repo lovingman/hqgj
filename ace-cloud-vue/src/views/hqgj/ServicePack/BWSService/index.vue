@@ -45,7 +45,7 @@
                     max-height="475"
                     ref="multipleTable"
                     v-loading="loading">
-                <el-table-column align="center" type="selection" width="55"></el-table-column>
+                <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                 <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
                 <el-table-column label="申请人" prop="applyPersonName" width="200">
@@ -248,7 +248,7 @@
                 this.$router.push({path: "/hqgj/ServicePack/BWSService/Examine", query: {id: data.id,word:'examine'}});
             },
             preview(index, data) {
-                this.$router.push({path: "/hqgj/ServicePack/BWSService/details", query: {id: data.id,word:'preview'}});
+                this.$router.push({path: "/hqgj/ServicePack/BWSService/detail", query: {id: data.id,word:'preview'}});
             },
             progress(index, data) {
                 this.getdata(data.id);

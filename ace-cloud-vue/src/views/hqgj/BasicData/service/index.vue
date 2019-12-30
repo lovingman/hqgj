@@ -31,7 +31,7 @@
                     </el-col>
                     <el-col :span="6" class="selectSearch">
                         <el-input class="input-with-select" clearable placeholder="请输入机构名称" v-model="query.orgName">
-                            <el-button @click="search" type="primary" slot="append">搜索</el-button>
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
                         </el-input>
                     </el-col>
                 </el-row>
