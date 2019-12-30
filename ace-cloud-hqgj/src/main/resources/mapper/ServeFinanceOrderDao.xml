@@ -131,14 +131,17 @@
             <if test="condition.createUserId != null and condition.createUserId != ''">
                 and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>
-            <if test="condition.startTime != null">.--
+            <if test="condition.startTime != null">
                 and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
             </if>
             <if test="condition.endTime != null">
                 and t.createDate  <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="condition.status != null and condition.status != ''">
-                and t.status = #{condition.status,jdbcType=VARCHAR}
+            <if test="condition.statuss != null and condition.statuss != ''">
+                and t.status in
+                <foreach collection="condition.statuss" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
     </sql>
@@ -188,7 +191,7 @@
 
     <update id="updateStatus">
       update serve_finance_order
-      set status = #{status,jdbcType=VARCHAR}
+      set status = #{status,jdbcType=VARCHAR},modifyDate=now()
       where id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>
