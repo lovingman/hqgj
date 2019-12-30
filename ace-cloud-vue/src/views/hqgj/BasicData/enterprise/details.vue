@@ -20,6 +20,12 @@
                 <el-form-item label="地址:" prop="region">
                     <span>湖南省常德市{{form.completeAddress}}</span>
                 </el-form-item>
+                <el-form-item label="创建人:" prop="region">
+                    <span>{{form.createUserName}}</span>
+                </el-form-item>
+                <el-form-item label="创建时间:" prop="region">
+                    <span>{{form.createDate}}</span>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="back">返回</el-button>
                 </el-form-item>

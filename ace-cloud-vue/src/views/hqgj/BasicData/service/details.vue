@@ -28,6 +28,12 @@
                 <el-form-item label="简介:" prop="name" style="width: 70%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                 </el-form-item>
+                <el-form-item label="创建人:" prop="name" style="width: 70%">
+                    <span style="word-wrap: break-word;word-break: break-all;">{{form.createUserName}}</span>
+                </el-form-item>
+                <el-form-item label="创建时间:" prop="name" style="width: 70%">
+                    <span style="word-wrap: break-word;word-break: break-all;">{{form.createDate}}</span>
+                </el-form-item>
                 <el-form-item>
                     <el-button @click="back" type="primary">返回</el-button>
                 </el-form-item>

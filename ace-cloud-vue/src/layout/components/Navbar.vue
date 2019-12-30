@@ -3,7 +3,7 @@
     <div class="title">
       <el-row style="margin-left: 20px;">
         <el-col :span="4" style="margin-top: 5px">
-          <img src="@/assets/images/huiqiicon.png" alt="">
+          <img src="@/assets/images/hqgjlogo.png" alt="">
         </el-col>
         <el-col :span="14">
           <div class="title-nm">
@@ -26,9 +26,9 @@
           <i class="el-icon-caret-bottom" style="float:left;" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
+          <!--<router-link to="/profile/index">-->
+            <!--<el-dropdown-item>个人中心</el-dropdown-item>-->
+          <!--</router-link>-->
 
           <el-dropdown-item>
             <span style="display:block;" @click="logout">安全退出</span>

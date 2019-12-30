@@ -9,7 +9,7 @@
                             <el-input placeholder="请输入姓名" v-model="form.name"></el-input>
                         </el-form-item>
                         <el-form-item label="身份证号:" prop="idCard">
-                            <el-input placeholder="请输入身份证号" v-model="form.idCard"></el-input>
+                            <el-input placeholder="请输入身份证号" :disabled="true" v-model="form.idCard"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
                             <el-input placeholder="请输入联系方式" v-model="form.mobile"></el-input>

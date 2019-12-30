@@ -85,6 +85,7 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
         }
         o.setCreateDate(new Date());
         o.setStatus("1");
+        o.setSource("1");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());

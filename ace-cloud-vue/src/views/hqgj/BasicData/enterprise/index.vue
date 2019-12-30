@@ -243,10 +243,4 @@
         float: right;
         width: 350px;
     }
-    .selectSearch/deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
-    }
 </style>

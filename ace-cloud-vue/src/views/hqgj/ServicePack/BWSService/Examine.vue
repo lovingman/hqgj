@@ -25,13 +25,17 @@
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
+                                <el-button v-if="scope.row.id != null" @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
+                                <el-button  v-else="scope.row.id != null" type="text">
+                                    <router-link :to="{name:'application',query:{id:form.id,name:'download'}}" target="_blank">下载
+                                    </router-link>
+                                </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
-                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览
+                                    <router-link :to="{name:'application',query:{id:form.id,name:'see'}}" target="_blank">预览
                                     </router-link>
                                 </el-button>
                             </template>
@@ -380,7 +384,7 @@
         getAnnex,
         getAppend
     } from "@/api/hqgj/BWSService";
-    import {getAreaTree, getDict} from "@/api/sys";
+    import {getAreaTree} from "@/api/sys";
 
     export default {
         name: "Examine",

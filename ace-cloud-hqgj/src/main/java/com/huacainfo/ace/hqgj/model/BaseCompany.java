@@ -68,6 +68,12 @@ public class BaseCompany extends BaseModel {
     private String completeAddress;
 
     /**
+     * 字段名：base_company.source
+     * 注释：来源  1-系统录入  2-小程序注册
+     */
+    private String source;
+
+    /**
      * 字段名：base_company.createUserId
      * 注释：创建人ID
      */
@@ -237,5 +243,13 @@ public class BaseCompany extends BaseModel {
 
     public void setCompleteAddress(String completeAddress) {
         this.completeAddress = completeAddress;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }
