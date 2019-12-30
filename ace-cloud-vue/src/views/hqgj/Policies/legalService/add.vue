@@ -30,8 +30,7 @@
                                     :before-upload="beforeAvatarUpload"
                                     :file-list="fileList"
                                     :http-request="uploadServer"
-                                    :on-error="uploadError"
-                                    :on-success="uploadSuccess"
+                                    :before-remove="fileRemove"
                                     action="none"
                                     class="upload-demo"
                                     drag
@@ -118,7 +117,10 @@
                 let obj = {};
                 obj.file = param.file;
                 this.FileUpload(obj);
-                return true
+                const prom = new Promise((resolve, reject) => {});
+                prom.abort = () => {};
+                return prom;
+                // return true
             },
             uploadSuccess(response, file, fileList) {
                 this.fileList = fileList;
@@ -128,19 +130,16 @@
             },
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
-                const extension = file.name.split('.')[1] === 'xls';
-                const extension2 = file.name.split('.')[1] === 'xlsx';
-                const extension3 = file.name.split('.')[1] === 'doc';
-                const extension4 = file.name.split('.')[1] === 'docx';
+                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.rar$|\.zip$/i.test(file.name);
                 const isLt2M = file.size / 1024 / 1024 < 10;
-                if (!extension && !extension2 && !extension3 && !extension4) {
+                if (!isRightType) {
                     this.$message.warning('上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!');
                 }
                 if (!isLt2M) {
                     this.$message.warning('上传模板大小不能超过 10MB!')
                 }
                 console.log(extension, extension2, extension3, extension4, isLt2M)
-                return (extension || extension2 || extension3 || extension4) && isLt2M
+                return (isRightType && isLt2M)
             },
             back() {
                 this.$router.push({
