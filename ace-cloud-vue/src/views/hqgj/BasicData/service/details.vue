@@ -3,12 +3,20 @@
         <div class="title">服务机构详情</div>
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
+                <el-form-item label="类型:" prop="name">
+                    <span v-if="form.type==1">律师事务所</span>
+                    <span v-if="form.type==2">会计事务所</span>
+                    <span v-if="form.type==3">培训机构</span>
+                </el-form-item>
                 <el-form-item label="机构名称:" prop="name">
                     <span>{{form.orgName}}</span>
                 </el-form-item>
-                <!--<el-form-item label="统一社会信用代码:" prop="name">-->
-                    <!--<span>{{form.creditCode}}</span>-->
-                <!--</el-form-item>-->
+                <el-form-item label="机构封面:" prop="fmUrlarr">
+                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt="" class="img"></i>
+                    <el-dialog :visible.sync="dialogVisible" append-to-body>
+                        <img :src="dialogImageUrl" alt="" width="100%">
+                    </el-dialog>
+                </el-form-item>
                 <el-form-item label="联系方式:" prop="name">
                     <span>{{form.contactPersonName}}</span>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
@@ -19,11 +27,6 @@
                 </el-form-item>
                 <el-form-item label="简介:" prop="name" style="width: 70%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
-                </el-form-item>
-                <el-form-item label="类型:" prop="name">
-                    <span v-if="form.type==1">律师事务所</span>
-                    <span v-if="form.type==2">会计事务所</span>
-                    <span v-if="form.type==3">培训机构</span>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="back" type="primary">返回</el-button>
@@ -40,6 +43,8 @@
         name: "edit",
         data() {
             return {
+                dialogVisible:false,
+                dialogImageUrl:"",
                 form:{},
             };
         },
@@ -55,6 +60,11 @@
                         this.form = response.data;
                     })
 
+            },
+            // 图片预览
+            preview(data) {
+                this.dialogImageUrl = data;
+                this.dialogVisible = true;
             },
             back() {
                 this.$router.push({path: "/hqgj/BasicData/service"});
@@ -78,5 +88,12 @@
     .handle-box {
         padding-top: 40px;
         padding-bottom: 40px;
+    }
+    .img {
+        width: 100px;
+        height: 73px;
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
     }
 </style>
