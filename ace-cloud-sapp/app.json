@@ -55,12 +55,6 @@
                 "text": "首页"
             },
             {
-                "selectedIconPath": "/assets/image/icon4-4.png",
-                "iconPath": "/assets/image/icon4-3.png",
-                "pagePath": "pages/logs/logs",
-                "text": "服务"
-            },
-            {
                 "selectedIconPath": "/assets/image/icon4-6.png",
                 "iconPath": "/assets/image/icon4-5.png",
                 "pagePath": "pages/PersonalCenter/index",
