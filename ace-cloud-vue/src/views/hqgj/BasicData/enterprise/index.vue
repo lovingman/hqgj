@@ -3,7 +3,7 @@
         <div class="table">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="16">
+                    <el-col :span="12">
                         <el-button @click="create" icon="el-icon-plus" style="float: left" type="primary">创建</el-button>
                     </el-col>
                     <!--<el-col :span="14">-->
@@ -19,16 +19,16 @@
                             <!--</el-dropdown-menu>-->
                         <!--</el-dropdown>-->
                     <!--</el-col>-->
-                    <!--<el-col :span="4">-->
-                        <!--<el-select v-model="typeObj" clearable placeholder="来源"  @change="handleStatus">-->
-                            <!--<el-option-->
-                                    <!--:key="item.code"-->
-                                    <!--:label="item.name"-->
-                                    <!--:value="item.code"-->
-                                    <!--v-for="item in dict"-->
-                            <!--&gt;</el-option>-->
-                        <!--</el-select>-->
-                    <!--</el-col>-->
+                    <el-col :span="4">
+                        <el-select v-model="query.source" clearable placeholder="来源">
+                            <el-option
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                    v-for="item in options"
+                            ></el-option>
+                        </el-select>
+                    </el-col>
                     <el-col :span="8"  class="selectSearch">
                         <el-input class="input-with-select" clearable placeholder="请输入企业名称" v-model="query.companyName">
                             <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
@@ -45,13 +45,17 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                <el-table-column label="企业名称" prop="companyName" width="350">
+                <el-table-column label="企业名称" :show-overflow-tooltip="true" prop="companyName" width="300">
                 </el-table-column>
-                <!--<el-table-column label="来源" prop="companyName" sortable='custom'>-->
-                <!--</el-table-column>-->
-                <el-table-column label="法人代表" prop="legalPerson" width="250">
+                <el-table-column label="来源" prop="source" width="100">
+                    <template slot-scope="scope">
+                        <div type="text" v-if="scope.row.source=='1'">系统录入</div>
+                        <div type="text" v-if="scope.row.source=='2'">小程序注册</div>
+                    </template>
                 </el-table-column>
-                <el-table-column label="联系方式" prop="contactPersonTel" width="300">
+                <el-table-column label="法人代表" prop="legalPerson" width="100">
+                </el-table-column>
+                <el-table-column label="联系方式" prop="contactPersonTel" width="150">
                 </el-table-column>
                 <el-table-column label="地址" :show-overflow-tooltip="true" prop="completeAddress">
                 </el-table-column>
@@ -93,9 +97,18 @@
                 total: 0,
                 list: [],
                 multipleSelection: [],//选中行数据
+                //来源
+                options: [{
+                    value: '1',
+                    label: '系统录入'
+                }, {
+                    value: '2',
+                    label: '小程序注册'
+                }],
                 //搜索
                 query: {
-                    companyName: ""
+                    companyName: "",
+                    source:""
                 },
                 exportDatas:{
                     companyName: ""
