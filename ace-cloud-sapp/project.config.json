@@ -25,11 +25,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
 	"appid": "wxd99073fbc6bd1b6f",
-<<<<<<< HEAD
-	"projectname": "%E4%BC%97%E5%88%9B%E5%B9%B3%E5%AE%89",
-=======
 	"projectname": "%E6%99%BA%E4%BC%81%E7%AE%A1%E5%AE%B6",
->>>>>>> 951ef55ac8699e39d7e27ca9ce39ae14f1e462cb
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -83,11 +79,7 @@
 				},
 				{
 					"id": 3,
-<<<<<<< HEAD
 					"name": "创业服务包进度条",
-=======
-					"name": "进度",
->>>>>>> 951ef55ac8699e39d7e27ca9ce39ae14f1e462cb
 					"pathName": "pages/RegProgress/index",
 					"query": "",
 					"scene": null
@@ -149,7 +141,6 @@
 					"scene": null
 				},
 				{
-<<<<<<< HEAD
 					"id": 12,
 					"name": "登录",
 					"pathName": "pages/SignIn/index",
@@ -157,8 +148,6 @@
 					"scene": null
 				},
 				{
-=======
->>>>>>> 951ef55ac8699e39d7e27ca9ce39ae14f1e462cb
 					"id": -1,
 					"name": "注册",
 					"pathName": "pages/Register/index",
@@ -251,12 +240,23 @@
 				},
 				{
 					"id": -1,
-<<<<<<< HEAD
 					"name": "pages/SignIn/index",
-=======
 					"name": "登录",
->>>>>>> 951ef55ac8699e39d7e27ca9ce39ae14f1e462cb
 					"pathName": "pages/SignIn/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "问诊记录",
+					"pathName": "pages/RecordInquiry/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税记录",
+					"pathName": "pages/RecordsFinance/index",
 					"query": "",
 					"scene": null
 				}

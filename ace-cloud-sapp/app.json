@@ -21,6 +21,8 @@
         "pages/Register/index",
         "pages/PersonalCenter/index",
         "pages/RecordTrain/index",
+        "pages/RecordsFinance/index",
+        "pages/RecordInquiry/index",
         "pages/TrainingService/index",
         "pages/TrainingServiceInfo/index",
         "pages/TrainingScheduleDetails/index",

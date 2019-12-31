@@ -1,0 +1,8 @@
+/* pages/RecordTrain/index.wxss */
+@import "../RecordTrain/index.wxss";
+.modal .card .info {
+    width: 500rpx;
+    display: flex;
+    justify-content:start;
+    flex-direction: column;
+}

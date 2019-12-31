@@ -1,9 +1,9 @@
 // pages/RecordTrain/index.js
 var request = require('../../utils/request.js');
 var config = require('../../utils/config.js');
-import Toast from '../../vant/weapp/toast/toast';
 import Dialog from '../../vant/weapp/dialog/dialog';
-// 状态  0-待签到 1-已取消 2-已签到(已完成) 
+import Toast from '../../vant/weapp/toast/toast';
+// 状态  0 - 待完成 1 - 已取消 2 - 专家确认 3 - 已完成  4 - 待评价
 Page({
 
     /**
@@ -13,6 +13,13 @@ Page({
         active: 0,
         value: 3,
         show: false,
+        evaluate: {
+            type: '',
+            orderNo: '',
+            orgId: '',
+            evaluateGrade: 4,
+            evaluateContent: ''
+        },
         tabs: [{
                 name: '全部',
                 list: [],
@@ -20,7 +27,8 @@ Page({
                 loading: false,
                 query: {
                     pageSize: 10,
-                    pageNum: 1
+                    pageNum: 1,
+                    type: '1,2'
                 }
             },
             {
@@ -31,18 +39,20 @@ Page({
                 query: {
                     pageSize: 10,
                     pageNum: 1,
-                    status: 0
+                    status: 0,
+                    type: '1,2'
                 }
             },
             {
-                name: '已取消',
+                name: '待评价',
                 list: [],
                 isload: false,
                 loading: false,
                 query: {
                     pageSize: 10,
                     pageNum: 1,
-                    status: 1
+                    status: '31',
+                    type: '1,2'
                 }
             },
             {
@@ -53,7 +63,8 @@ Page({
                 query: {
                     pageSize: 10,
                     pageNum: 1,
-                    status: 2
+                    status: '31,32',
+                    type: '1,2'
                 }
             }
         ]
@@ -65,13 +76,28 @@ Page({
     onLoad: function(options) {
         this.getData();
     },
+    changeStarHandler(e) {
+        this.data.evaluate.evaluateGrade = e.detail;
+    },
+    changeEvaluateHandler(e) {
+        this.data.evaluate.evaluateContent = e.detail.value
+    },
+    closeEvaluate(e) {
+        if (e.detail === 'confirm') {
+            return;
+        }
+        console.log(2);
+        this.setData({
+            show: false
+        })
+    },
     // 获取列表
     getData() {
         let that = this;
         let index = that.data.active;
         let targetObj = that.data.tabs[index];
         that.showloading();
-        request.getJSON(config.myEnrollPage, targetObj.query).then(res => {
+        request.getJSON(config.orderPage, targetObj.query).then(res => {
             that.hideloading();
             let e = res.data;
             let len = e.rows ? e.rows.length : 0;
@@ -121,16 +147,18 @@ Page({
         targetObj.list = [];
         that.getData();
     },
-    cancelEnroll(e) {
+    // serveFinanceOrder/updateStatus?id=&status=
+    cancelOrder(e) {
         let that = this;
         Dialog.confirm({
             title: '注意',
-            message: '确定取消'
+            message: '确定取消报名'
         }).then(() => {
             let id = e.currentTarget.dataset.id;
             let index = e.currentTarget.dataset.index;
-            request.post(config.cancelEnroll, {
-                id: id
+            request.post(config.updateOrderStatus, {
+                id: id,
+                status: '1'
             }).then(rst => {
                 let r = rst.data;
                 if (r.status == 1) {
@@ -140,20 +168,20 @@ Page({
                     });
                     let idx = that.data.active;
                     let targetObj = that.data.tabs[idx];
+                    targetObj.list[index].status = '1';
+                    let list = "tabs[" + idx + "].list"
+                    that.setData({
+                        [list]: targetObj.list
+                    })
                     if (idx != '0') {
                         let i = targetObj.list.splice(index, 1);
                         let list = "tabs[" + idx + "].list"
                         that.setData({
                             [list]: targetObj.list
                         })
-                    } else {
-                        targetObj.list[index].status = '1';
-                        let list = "tabs[" + idx + "].list"
-                        that.setData({
-                            [list]: targetObj.list
-                        })
                     }
-                } else {
+                }
+                else{
                     Toast.fail({
                         message: "取消失败",
                         zIndex: 1000
@@ -168,14 +196,15 @@ Page({
             })
         });
     },
-    deleteEnroll(e) {
+    deleteOrder(e) {
+        let that = this;
         Dialog.confirm({
             title: '注意',
-            message: '确定删除'
+            message: '确定删除记录'
         }).then(() => {
             let id = e.currentTarget.dataset.id;
             let index = e.currentTarget.dataset.index;
-            request.post(config.deleteEnroll, {
+            request.post(config.deleteOrder, {
                 id: id
             }).then(rst => {
                 let r = rst.data;
@@ -204,6 +233,70 @@ Page({
                 icon: 'none',
                 duration: 1000
             })
+        });
+    },
+    evaluateOrder(e) {
+        let that = this;
+        console.log(e);
+        let self = that.data.evaluate;
+        self.orgId = e.currentTarget.dataset.orgid;
+        self.orderNo = e.currentTarget.dataset.orderno;
+        self.type = e.currentTarget.dataset.type;
+        self.id = e.currentTarget.dataset.id;
+        self.index = e.currentTarget.dataset.index;
+        that.setData({
+            show: true
+        })
+    },
+    sendEvaluate() {
+        let that = this;
+        request.post(config.evaluateOrder, {
+            jsons: JSON.stringify(that.data.evaluate)
+        }).then(rst => {
+            let r = rst.data;
+            if (r.status == 1) {
+                let data = {
+                    type: '',
+                    orderNo: '',
+                    orgId: '',
+                    evaluateGrade: 4,
+                    evaluateContent: '',
+                    id:'',
+                    index:''
+                };
+                that.setData({
+                    evaluate: data,
+                    show: false
+                })
+                Toast.success({
+                    message: "评价成功",
+                    zIndex: 3000
+                });
+                let idx = that.data.active;
+                let targetObj = that.data.tabs[idx];
+                let index = that.data.evaluate.index
+                if (idx != '0' || idx != '3') {
+                    let i = targetObj.list.splice(index, 1);
+                    let list = "tabs[" + idx + "].list"
+                    that.setData({
+                        [list]: targetObj.list
+                    })
+                } else {
+                    targetObj.list[index].status = '32';
+                    let list = "tabs[" + idx + "].list"
+                    that.setData({
+                        [list]: targetObj.list
+                    })
+                }
+            } else {
+                Toast.fail({
+                    message: "评价失败",
+                    zIndex: 3000
+                });
+                that.setData({
+                    show: false
+                })
+            }
         });
     },
     /**
