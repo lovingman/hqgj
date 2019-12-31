@@ -28,4 +28,6 @@ public interface BasicAnnexDao {
     int deleteByIds(String[] ids);
 
     int deleteByRelationIds(String[] relationIds);
+
+    List<String> businessFileUrlList(@Param("businessId") String businessId);
 }
