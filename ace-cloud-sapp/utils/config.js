@@ -27,9 +27,10 @@ var config = {
     enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
     myEnrollPage: `${server}/hqgj/serveCultivateEnroll/enrollPage`, //我的培训列表
     cancelEnroll: `${server}/hqgj/serveCultivateEnroll/cancelEnroll`, //取消报名
-    deleteEnroll: `${server}/hqgj/serveCultivate/deleteById`, //删除培训报名
-    
+    deleteEnroll: `${server}/hqgj/serveCultivate/deleteById`, //删除培训报名  /serveFinanceOrder/page
+    orderPage: `${server}/hqgj/serveFinanceOrder/page`, //订单。  serveFinanceOrder/updateStatus
+    updateOrderStatus: `${server}/hqgj/serveFinanceOrder/updateStatus`, //订单修改状态  
+    deleteOrder: `${server}/hqgj/serveFinanceOrder/deleteById`, //删除订单。deleteById  /serveFinanceEvaluate/create
+    evaluateOrder: `${server}/hqgj/serveFinanceEvaluate/create`, //评价订单
 };
-
-
 module.exports = config

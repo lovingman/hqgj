@@ -21,5 +21,31 @@ module.exports = {
             case '2':
                 return '已完成';
         }
+    },
+    // 状态  0 - 待完成 1 - 已取消 2 - 专家确认 3 - 已完成  4 - 待评价
+     financeStatus: function (str) {
+        switch (str) {
+            case '0':
+                return '待完成';
+            case '1':
+                return '已取消';
+            case '2':
+                return '专家确认';
+            case '31':
+                return '待评价';
+            case '32':
+                return '已完成';
+        }
+    },
+    // （1-代理记账 2-财税管理 3-专家问诊）',
+     financeType: function (str) {
+        switch (str) {
+            case '1':
+                return '代理记账';
+            case '2':
+                return '财税管理';
+            case '3':
+                return '专家问诊';
+        }
     }
 }

@@ -11,7 +11,7 @@ Page({
                 text: '注册记录',
                 imgUrl: '/assets/image/icon3-1.png',
                 path: '/'
-            },
+        }, 
             {
                 text: '培训记录',
                 imgUrl: '/assets/image/icon3-2.png',
@@ -20,12 +20,12 @@ Page({
             {
                 text: '问诊记录',
                 imgUrl: '/assets/image/icon3-3.png',
-                path: '/'
-            },
+                path: '/pages/RecordInquiry/index'
+            }, 
             {
                 text: '财税订单',
                 imgUrl: '/assets/image/icon3-4.png',
-                path: '/'
+                path: '/pages/RecordsFinance/index'
             }
         ],
         userInfo: {

@@ -36,4 +36,6 @@
         </view>
         <textarea class="textarea" fixed placeholder="placeholder颜色是红色的" placeholder-style="color:#798092;font-size:28rpx;" />
     </van-dialog>
-</view>
+    <van-toast   id="van-toast" />
+        <van-dialog id="van-dialog" />
+</view> 
