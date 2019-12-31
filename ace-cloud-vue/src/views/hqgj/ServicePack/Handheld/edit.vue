@@ -29,11 +29,8 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <div
-            class="ties"
-            v-if="serviceForm.type == 1"
-          >选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
-          <div class="ties" v-if="serviceForm.type == 3">选择该类型，用户可免费享受咨询服务</div>
+          <div class="ties" v-if="tisShow">选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
+          <div class="ties" v-if="tieShow">选择该类型，用户可免费享受咨询服务</div>
         </el-row>
         <!-- 代理财政是否显示 -->
         <div v-if="financeShow" class="show-box">
@@ -56,7 +53,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="serviceForm.type == 3">
+            <el-col :span="12" v-if="expertShow">
               <el-form-item label="专家：" prop="contactId">
                 <el-select
                   clearable
@@ -73,7 +70,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="serviceForm.type == 3">
+            <el-col :span="12" v-if="expertShow">
               <el-form-item label="名额：" prop="quota">
                 <el-input v-model="serviceForm.quota" clearable placeholder="请输入免费咨询名额"></el-input>
               </el-form-item>
@@ -83,7 +80,7 @@
                 <el-input v-model="serviceForm.contactPersonTel" clearable placeholder="请输入联系方式"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="serviceForm.type == 3">
+            <el-col :span="12" v-if="expertShow">
               <el-form-item label="地点：" prop="address">
                 <el-input v-model="serviceForm.address" clearable placeholder="请输入地点"></el-input>
               </el-form-item>
@@ -103,7 +100,7 @@
               ></el-input>
             </el-form-item>
           </el-row>
-          <el-row v-if="serviceForm.type == 2">
+          <el-row v-if="financeTaxShow">
             <div class="title">服务项目</div>
             <div class="project-top">
               <div class="ltt">
@@ -181,6 +178,11 @@ export default {
   name: "edit",
   data() {
     return {
+      financeShow: false, //代理财政是否显示
+      financeTaxShow: false, //财税管理是否显示
+      expertShow: false, //专家问诊是否显示
+      tieShow: false, //提示是否显示
+      tisShow: false, //计帐是否显示提示
       getData: {}, //编辑数据
       orgDisabled: true, //禁止选择服务机构
       submitType: "edit", //类型
@@ -226,7 +228,7 @@ export default {
             message: "请输入联系方式",
             trigger: "blur"
           },
-          { validator: this.globalMethods.checkIntegerP, trigger: "blur" }
+          { validator: this.globalMethods.checkPhone, trigger: "blur" }
         ],
         orgId: [
           {
@@ -365,6 +367,23 @@ export default {
     changeType(value) {
       this.type = value;
       this.financeShow = true;
+      if (value == 1) {
+        this.tisShow = true;
+      } else {
+        this.tisShow = false;
+      }
+      if (value == 2) {
+        this.financeTaxShow = true;
+      } else {
+        this.financeTaxShow = false;
+      }
+      if (value == 3) {
+        this.expertShow = true;
+        this.tieShow = true;
+      } else {
+        this.expertShow = false;
+        this.tieShow = false;
+      }
     },
     //服务机构选择
     changeService(value) {
@@ -394,6 +413,14 @@ export default {
           });
         }
       }
+    },
+    //封面照片
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
     //取消返回
     black() {

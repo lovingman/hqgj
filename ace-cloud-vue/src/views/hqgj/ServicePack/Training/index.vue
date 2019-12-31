@@ -54,11 +54,7 @@
               @click="registrationClick(scope.row)"
               v-if="scope.row.status =='1' || scope.row.status =='3' "
             >报名管理</el-button>
-            <el-button
-              type="text"
-              v-if="scope.row.status !='3' && scope.row.status !='2'"
-              @click="update(scope.row)"
-            >编辑</el-button>
+            <el-button type="text" v-if="scope.row.status !='3'" @click="update(scope.row)">编辑</el-button>
             <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
@@ -83,9 +79,6 @@
             <el-radio :label="4">通过</el-radio>
             <el-radio :label="2">不通过</el-radio>
           </el-radio-group>
-          <el-row style="margin-top:30px; padding:0 20px;" v-if="this.updateState.status == 2">
-            <el-input placeholder="请输入审核不通过的原因" v-model="updateState.reason"></el-input>
-          </el-row>
         </div>
       </el-form>
       <span class="dialog-footer">
@@ -115,9 +108,7 @@ export default {
       },
       //审核
       updateState: {
-        id: "", //列表ID
-        status: 4,
-        reason: "" //不通过容器
+        status: 4
       },
       stautsArr: [
         {
@@ -233,30 +224,16 @@ export default {
     examine(row) {
       this.examineId = row.id;
       this.examineVisible = true;
-      this.updateState.status = 4;
     },
     //确定审核
     saveExamine() {
-      var obj = {};
-      obj.id = this.examineId;
-      obj.status = this.updateState.status;
-      if (this.updateState.status == 2) {
-        updateStatus(obj).then(res => {
-          if (res.status == 1) {
-            this.$message.success("提交成功");
-            this.examineVisible = false;
-            this.getList();
-          }
-        });
-      } else {
-        updateStatus(obj).then(res => {
-          if (res.status == 1) {
-            this.$message.success("审核成功");
-            this.examineVisible = false;
-            this.getList();
-          }
-        });
-      }
+      updateStatus(this.examineId, this.updateState.status).then(res => {
+        if (res.status == 1) {
+          this.$message.success("审核成功");
+          this.examineVisible = false;
+          this.getList();
+        }
+      });
     },
     //确定是否发布
     release(row) {
