@@ -1,5 +1,6 @@
 // pages/PersonalCenter/index.js
 const app = getApp()
+var util = require("../../utils/util.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
 Page({
 
@@ -11,7 +12,7 @@ Page({
                 text: '注册记录',
                 imgUrl: '/assets/image/icon3-1.png',
                 path: '/'
-        }, 
+            },
             {
                 text: '培训记录',
                 imgUrl: '/assets/image/icon3-2.png',
@@ -21,7 +22,7 @@ Page({
                 text: '问诊记录',
                 imgUrl: '/assets/image/icon3-3.png',
                 path: '/pages/RecordInquiry/index'
-            }, 
+            },
             {
                 text: '财税订单',
                 imgUrl: '/assets/image/icon3-4.png',
@@ -48,7 +49,9 @@ Page({
                 title: '提示',
                 message: '登录后可以查看“我的”页面'
             }).then(() => {
-                // on close
+                wx.navigateTo({
+                    url: '../SignIn/index?url=' + encodeURIComponent(util.getCurrentPageUrlWithArgs()),
+                })
             });
         }
     },
@@ -68,6 +71,7 @@ Page({
     initUserInfo() {
         let that = this;
         let userInfo = app.globalData.userInfo;
+        console.log(userInfo);
         if (userInfo) {
             that.setData({
                 userInfo: userInfo

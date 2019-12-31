@@ -239,11 +239,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/SignIn/index",
+					"id": 26,
 					"name": "登录",
 					"pathName": "pages/SignIn/index",
-					"query": "",
+					"query": "url=pages%2FPersonalCenter%2Findex",
 					"scene": null
 				},
 				{

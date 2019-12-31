@@ -10,25 +10,15 @@ App({
     this.updateManager();
     this.getUserInfo();
   },
-  getUserInfo: function(cb) {
-    var that = this
-    console.log(1);
-    if (this.globalData.userInfo) {
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    } else {
-      //调用登录接口
-      wx.login({
-        success: function() {
-          wx.getUserInfo({
-            success: function(res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
+    getUserInfo: function (cb) {
+        var that = this
+        request.getJSON(config.getUserInfo).then(rst => {
+            let res = rst.data;
+            if (res.status == 1) {
+                that.globalData.userInfo = res.data;
             }
-          })
-        }
-      })
-    }
-  },
+        })
+    },
   /*小程序主动更新
    */
   updateManager() {
