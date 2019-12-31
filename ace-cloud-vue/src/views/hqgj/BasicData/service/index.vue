@@ -45,16 +45,16 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                <el-table-column label="机构名称" prop="orgName" width="350">
+                <el-table-column label="机构名称" :show-overflow-tooltip="true" prop="orgName" width="250">
                 </el-table-column>
-                <el-table-column label="机构类型" prop="type" width="250">
+                <el-table-column label="机构类型" prop="type" width="120">
                     <template slot-scope="scope">
                         <div type="text" v-if="scope.row.type=='1'">律师事务所</div>
                         <div type="text" v-if="scope.row.type=='2'">会计事务所</div>
                         <div type="text" v-if="scope.row.type=='3'">培训机构</div>
                     </template>
                 </el-table-column>
-                <el-table-column label="联系方式" prop="contactPersonTel" width="300">
+                <el-table-column label="联系方式" prop="contactPersonTel" width="150">
                 </el-table-column>
                 <el-table-column label="地址" :show-overflow-tooltip="true" prop="completeAddress">
                 </el-table-column>
@@ -261,11 +261,5 @@
     .input-with-select{
         float: right;
         width: 350px;
-    }
-    .selectSearch/deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
     }
 </style>

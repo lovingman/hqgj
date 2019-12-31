@@ -3,6 +3,9 @@
         <div class="title">企业详情</div>
         <div class="handle-box">
             <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="来源:" prop="source">
+                    <span>{{form.source}}</span>
+                </el-form-item>
                 <el-form-item label="企业名称:" prop="name">
                     <span>{{form.companyName}}</span>
                 </el-form-item>
