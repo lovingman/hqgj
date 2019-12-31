@@ -88,7 +88,6 @@ public class WRegisterController extends BizController {
     })
     @PostMapping(value = "/captcha", produces = "application/json;charset=UTF-8")
     public ResponseDTO captcha(String mobile, String length) {
-
         if (CommonUtils.isBlank(mobile)) {
             return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空");
         }
