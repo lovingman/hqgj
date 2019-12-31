@@ -198,7 +198,6 @@ public class BasicAnnexController extends BaseController {
                 URL url= new URL(vo.getFileURL());
                 String base64=CommonUtils.encodeImageToBase64(url);
                 list[i]=base64;
-
             }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
             }
