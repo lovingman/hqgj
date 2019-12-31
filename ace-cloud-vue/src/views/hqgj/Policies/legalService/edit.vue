@@ -25,14 +25,12 @@
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="文件" prop="basicAnnexes">
+                        <el-form-item label="文件" prop="fileList">
                             <el-upload
                                     :before-upload="beforeAvatarUpload"
-                                    :file-list="fileList"
+                                    :file-list="serviceForm.fileList"
                                     :http-request="uploadServer"
-                                    :on-error="uploadError"
                                     :on-remove="fileRemove"
-                                    :on-success="uploadSuccess"
                                     action="none"
                                     class="upload-demo"
                                     drag
@@ -73,12 +71,13 @@
                 basicAnnexesArr:[],
                 serviceForm: {
                     title: "",
-                    basicAnnexes: []
+                    basicAnnexes: [],
+                    fileList: []
                 },
                 //验证
                 serviceRules: {
                     title: [{required: true, message: "请输入模板名称,字数在50字以内", trigger: "blur"}],
-                    BasicAnnex: [{required: true, message: "请上传文件", trigger: "blur"}]
+                    fileList: [{required: true, message: "请上传文件", trigger: "blur"}]
                 }
             };
         },
@@ -104,6 +103,7 @@
                         url: data[i].fileURL
                     })
                 }
+                this.serviceForm.fileList=this.fileList;
             },
             handleEdit(formName) {
                 this.$refs[formName].validate(valid => {
@@ -124,14 +124,14 @@
                 this.actionUrls = "/hqgj-portal/www/uploadFile";
                 fileUpload(obj, this.actionUrls).then(response => {
                     if (response.status == 1) {
-                        this.fileList.push({name: obj.file.name, url: response.data})
-                        this.uploadSuccess(response, obj.file, this.fileList);
+                        this.serviceForm.fileList.push({name: obj.file.name, url: response.data})
+                        this.uploadSuccess(response, obj.file, this.serviceForm.fileList);
                     } else {
                         this.$message({
                             message: response.message,
                             type: "warning"
                         });
-                        this.uploadError(response, obj.file, this.fileList);
+                        this.uploadError(response, obj.file, this.serviceForm.fileList);
                     }
                     return response.status
                 });
@@ -142,10 +142,14 @@
                 let obj = {};
                 obj.file = param.file;
                 this.FileUpload(obj);
-                return true
+                const prom = new Promise((resolve, reject) => {});
+                prom.abort = () => {};
+                return prom;
+                // return true
             },
             //文件移除
             fileRemove(file, fileList) {
+                this.basicAnnexesArr=[];
                 for (var i = 0; i < fileList.length; i++) {
                     this.basicAnnexesArr.push({
                         fileName: fileList[i].name.substring(0, fileList[i].name.indexOf(".")),
@@ -153,10 +157,11 @@
                     })
                 }
                 this.serviceForm.basicAnnexes=this.basicAnnexesArr;
-                this.fileList = fileList;
+                this.serviceForm.fileList = fileList;
             },
             //文件上传成功
             uploadSuccess(response, file, fileList) {
+                this.basicAnnexesArr=[];
                 for (var i = 0; i < fileList.length; i++) {
                     this.basicAnnexesArr.push({
                         fileName: fileList[i].name.substring(0, fileList[i].name.indexOf(".")),
@@ -164,7 +169,7 @@
                     })
                 }
                 this.serviceForm.basicAnnexes=this.basicAnnexesArr;
-                this.fileList = fileList;
+                this.serviceForm.fileList = fileList;
             },
             //文件上传失败
             uploadError(response, file, fileList) {
@@ -172,18 +177,15 @@
             },
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
-                const extension = file.name.split('.')[1] === 'xls';
-                const extension2 = file.name.split('.')[1] === 'xlsx';
-                const extension3 = file.name.split('.')[1] === 'doc';
-                const extension4 = file.name.split('.')[1] === 'docx';
+                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.rar$|\.zip$/i.test(file.name);
                 const isLt2M = file.size / 1024 / 1024 < 10;
-                if (!extension && !extension2 && !extension3 && !extension4) {
+                if (!isRightType) {
                     this.$message.warning('上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!');
                 }
                 if (!isLt2M) {
                     this.$message.warning('上传模板大小不能超过 10MB!')
                 }
-                return (extension || extension2 || extension3 || extension4) && isLt2M
+                return (isRightType && isLt2M)
             },
             back() {
                 this.$router.push({

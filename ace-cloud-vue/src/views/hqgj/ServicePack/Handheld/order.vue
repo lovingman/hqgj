@@ -36,37 +36,43 @@
               clearable
               class="input-with-select"
             >
-              <el-button slot="append" @click="search">搜索</el-button>
+              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column type="selection" width="80"></el-table-column>
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        v-loading="loading"
+        element-loading-text="加载中"
+        element-loading-spinner="el-icon-loading"
+      >
+        <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="orderNo" sortable label="订单号"></el-table-column>
-        <el-table-column prop="type" sortable label="类型">
+        <el-table-column prop="type" sortable label="类型" width="120">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.type=='1'">代理记账</div>
             <div type="text" v-if="scope.row.type=='2'">财税管理</div>
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构" width="140"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
         <el-table-column prop="createDate" sortable label="下单时间"></el-table-column>
-        <el-table-column prop="status" sortable label="状态">
+        <el-table-column prop="status" sortable label="状态" width="100">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待完成</div>
             <div type="text" class="green" v-if="scope.row.status=='1'">已完成</div>
             <div type="text" class="gray" v-if="scope.row.status=='2'">已取消</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="180" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" v-if="scope.row.status=='0'" @click="complete(scope.row)">完成</el-button>
-            <el-button type="text">详情</el-button>
+            <el-button type="text" @click="seeClcik(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -93,6 +99,7 @@ export default {
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
       timeArr: [], //时间数组
+      loading: false, //loadign加载状态
       query: {
         orderNo: "", //订单号
         type: "", //类型
@@ -156,6 +163,7 @@ export default {
     },
     //请求page
     getList() {
+      this.loading = true;
       this.query = Object.assign(this.query, {
         pageNum: this.tablePage,
         pageSize: this.tableSize,
@@ -172,6 +180,7 @@ export default {
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;
+          this.loading = false;
         }
       });
     },
@@ -184,7 +193,7 @@ export default {
     complete(row) {
       let statusType = 1;
       let rowId = row.id;
-      this.$confirm("确定是否完成改项服务?", "提示", {
+      this.$confirm("确定是否完成该项服务?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -203,7 +212,14 @@ export default {
             message: "已取消操作"
           });
         });
-    }
+    },
+    //订单管理查看
+    seeClcik(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Handheld/orderSee",
+        query: { id: data.id }
+      });
+    },
   }
 };
 </script>
@@ -223,14 +239,11 @@ export default {
     /deep/ .el-date-editor--datetimerange.el-input__inner {
       width: 100%;
     }
+    /deep/ .el-range-editor.el-input__inner {
+      width: 100%;
+    }
     .selectSearch {
       float: right;
-      /deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
-      }
     }
   }
   .table-box {

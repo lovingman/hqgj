@@ -4,6 +4,6 @@
         <van-steps steps="{{ steps }}" direction="vertical" active="{{ active }}" />
     </view>
     <view class="btn">
-        <van-button round type="info" size="large">确定</van-button>
+        <van-button round type="info" size="large" bindtap="updata">确定</van-button>
     </view>
 </view>

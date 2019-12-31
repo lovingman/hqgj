@@ -36,13 +36,13 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                <el-table-column label="姓名" prop="name" width="300">
+                <el-table-column label="姓名" prop="name" width="100">
                 </el-table-column>
-                <el-table-column label="职务/职称" prop="jobs" width="300">
+                <el-table-column label="职务/职称" prop="jobs" width="150">
                 </el-table-column>
-                <el-table-column label="手机号码" prop="mobile">
+                <el-table-column label="手机号码" prop="mobile" width="200">
                 </el-table-column>
-                <el-table-column label="添加时间" prop="createDate" width="500">
+                <el-table-column label="添加时间" prop="createDate">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="150">
                     <template slot-scope="scope">
@@ -225,11 +225,5 @@
     .input-with-select{
         float: right;
         width: 350px;
-    }
-    .selectSearch/deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
     }
 </style>

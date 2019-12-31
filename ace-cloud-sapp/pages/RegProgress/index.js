@@ -52,7 +52,12 @@ Page({
     onLoad: function (options) {
 
     },
-
+    //前往修改
+    updata(){
+      wx.navigateTo({
+        url: '../RegProcess/index?id=' + '6f5d86ae16534050a043ea57d679ae00',
+      })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

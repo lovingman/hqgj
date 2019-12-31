@@ -106,7 +106,7 @@
               </el-row>
               <el-row>
                 <el-form-item label="课件：">
-                  <spna></spna>
+                  <spna v-for="item in scheduleModel.basicAnnexes">{{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}<br></spna>
                 </el-form-item>
               </el-row>
             </div>

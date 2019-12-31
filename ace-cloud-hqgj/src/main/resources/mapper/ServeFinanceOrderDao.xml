@@ -131,21 +131,29 @@
             <if test="condition.createUserId != null and condition.createUserId != ''">
                 and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>
-            <if test="condition.startTime != null">.--
+            <if test="condition.startTime != null">
                 and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
             </if>
             <if test="condition.endTime != null">
                 and t.createDate  <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="condition.status != null and condition.status != ''">
-                and t.status = #{condition.status,jdbcType=VARCHAR}
+            <if test="condition.statuss != null and condition.statuss != ''">
+                and t.status in
+                <foreach collection="condition.statuss" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,o.orgName,o.fmUrl,co.companyName,f.itemName,f.price,m.id contactId,m.name mName,m.imagePhoto,u.name userName,u.mobile userMobile
         <include refid="From_Statement"/>
+        left join  base_organization o on o.id=t.orgId
+        left join  base_company co on  co.id=t.companyId
+        left join  serve_finance_item f on f.id=t.itemId
+        left join  base_organization_member m on m.id=t.contactId
+        left join  portal_hqgj.users u on u.user_id=t.createUserId
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
@@ -188,7 +196,7 @@
 
     <update id="updateStatus">
       update serve_finance_order
-      set status = #{status,jdbcType=VARCHAR}
+      set status = #{status,jdbcType=VARCHAR},modifyDate=now()
       where id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

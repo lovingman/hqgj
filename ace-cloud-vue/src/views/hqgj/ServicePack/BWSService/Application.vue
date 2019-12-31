@@ -1,8 +1,9 @@
 <template>
     <div class="container">
         <div class="button">
-            <el-button @click="backLook" style="margin-bottom: 20px">推出预览</el-button>
-            <el-button @click="getPdf" style="margin-bottom: 20px">下载</el-button>
+            <el-button @click="backLook" style="margin-bottom: 20px">退出预览</el-button>
+            <!--<el-button @click="getPdf" style="margin-bottom: 20px">下载</el-button>-->
+            <el-button style="float: right;margin-bottom: 20px" v-print="'#Apply'">打印</el-button>
         </div>
         <div id="Apply">
             <div style="height: 30px"><br></div>
@@ -422,9 +423,16 @@
                     this.list = response.data;
                     console.log(this.list.businessAppendList)
                     this.changeArr(this.list.businessAppendList);
-                    console.log(this.option4);
-                    console.log(this.option3);
-                    console.log(this.option2);
+                    // console.log(this.option4);
+                    // console.log(this.option3);
+                    // console.log(this.option2);
+                    if(this.$route.query.name=='download'){
+                        clearTimeout(this.timer); //清除延迟执行
+                        this.timer = setTimeout(() => {
+                            //设置延迟执行
+                            this.getPdf();
+                        }, 2000);
+                    }
                 })
             },
             //服务字符串转换数组

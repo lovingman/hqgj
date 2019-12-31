@@ -4,7 +4,7 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyId">
-                    <el-select clearable placeholder="请选择企业" @change="changeLocationValue" v-model="addform.companyId" style="width: 30%">
+                    <el-select placeholder="请选择企业" @change="changeLocationValue" filterable clearable v-model="addform.companyId" style="width: 30%">
                         <el-option
                                 :key="item.id"
                                 :label="item.companyName"

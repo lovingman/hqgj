@@ -133,6 +133,12 @@
             <if test="condition.createUserId != null and condition.createUserId != ''">
                 and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
             </if>
+            <if test="condition.startTime != null">
+                and t.createDate  <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="condition.endTime != null">
+                and t.createDate  <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
+            </if>
         </where>
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">

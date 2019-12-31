@@ -3,6 +3,9 @@
         <div class="title">企业详情</div>
         <div class="handle-box">
             <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="来源:" prop="source">
+                    <span>{{form.source}}</span>
+                </el-form-item>
                 <el-form-item label="企业名称:" prop="name">
                     <span>{{form.companyName}}</span>
                 </el-form-item>
@@ -19,6 +22,12 @@
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
                     <span>湖南省常德市{{form.completeAddress}}</span>
+                </el-form-item>
+                <el-form-item label="创建人:" prop="region">
+                    <span>{{form.createUserName}}</span>
+                </el-form-item>
+                <el-form-item label="创建时间:" prop="region">
+                    <span>{{form.createDate}}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="back">返回</el-button>

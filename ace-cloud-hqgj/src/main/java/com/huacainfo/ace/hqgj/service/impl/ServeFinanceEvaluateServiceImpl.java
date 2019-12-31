@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.PersonCenterDao;
+import com.huacainfo.ace.hqgj.dao.ServeFinanceOrderDao;
 import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,8 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     private ServeFinanceEvaluateDao serveFinanceEvaluateDao;
     @Resource
     private PersonCenterDao personCenterDao;
+    @Resource
+    private ServeFinanceOrderDao serveFinanceOrderDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -91,6 +94,10 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     @Transactional
     @Log(operationObj = "财税服务订单评价表", operationType = "创建", detail = "创建财税服务订单评价表")
     public ResponseDTO create(ServeFinanceEvaluate o, UserProp userProp) throws Exception {
+        if (CommonUtils.isBlank(o.getId())) {
+            return new ResponseDTO(ResultCode.FAIL, "订单id不能为空！");
+        }
+        String orderId=o.getId();
         o.setId(GUIDUtil.getGUID());
         if (CommonUtils.isBlank(o.getType())) {
             return new ResponseDTO(ResultCode.FAIL, "类型不能为空！");
@@ -112,6 +119,11 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.serveFinanceEvaluateDao.insert(o);
+        //已完成已评价
+        int i=serveFinanceOrderDao.updateStatus(orderId,"32");
+        if(i==0){
+            return new ResponseDTO(ResultCode.FAIL, "内部错误！");
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

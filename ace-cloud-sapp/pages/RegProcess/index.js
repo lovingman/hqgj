@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id:'',
     dicObj: {},
     fileList: [], //图片上传文件
     active: 0, //tab切换
@@ -135,6 +136,83 @@ Page({
     },
     areaList: []
   },
+  getData(id) { //获取创业服务包详情
+    let that = this;
+    request.getJSON(cfg.serveBusinessPreviewInfoUrl, {
+      id: id
+    }).then(rst => {
+      const res = rst.data;
+      console.log(res.data)
+      if (res.status == 1) {
+        this.data.supervisor = [];
+        this.data.shareholder = [];
+        let businessDetailList = res.data.businessDetailList;
+        let businessAppendList = res.data.businessAppendList;
+        let serveBusiness = res.data.serveBusiness;
+        businessDetailList.forEach((item)=>{
+          if (item.type == 1){
+            that.data.legalPerson = item;
+          }
+          if(item.type == 2){
+            this.data.supervisor.push(item);
+          }
+          if(item.type == 3){
+            this.data.shareholder.push(item);
+          }
+          if(item.type == 4) {
+            this.data.finance = item;
+          }
+          if (item.type == 5) {
+            this.data.contract3 = item;
+          }
+          if (item.type == 6) {
+            this.data.contract1 = item;
+          }
+          if (item.type == 7) {
+            this.data.contract2 = item;
+          }
+          if (item.type == 8) {
+            this.data.contract4 = item;
+          }
+        })
+        businessAppendList.forEach((item)=>{
+          if (item.type == 1){
+            item.option = item.option.split(',');
+            that.data.result1 = item;
+          }
+          if (item.type == 2) {
+            that.data.result2 = item;
+          }
+          if (item.type == 3) {
+            that.data.result3 = item;
+          }
+          if (item.type == 4) {
+            that.data.result4 = item;
+          }
+          if (item.type == 5) {
+            that.data.special = item;
+          }
+        })
+        that.setData({
+          serveBusiness: serveBusiness,
+          legalPerson: that.data.legalPerson,
+          supervisor: that.data.supervisor,
+          shareholder: that.data.shareholder,
+          finance: that.data.finance,
+          contract1: that.data.contract1,
+          contract2: that.data.contract2,
+          contract3: that.data.contract3,
+          contract4: that.data.contract4,
+          result1: that.data.result1,
+          result2: that.data.result2,
+          result3: that.data.result3,
+          result4: that.data.result4,
+          special: that.data.special
+        })
+      }
+    })
+
+  },
   onChange1(event) {
     this.data.result1.option = event.detail
     this.setData({
@@ -180,7 +258,7 @@ Page({
       }
     })
   },
-  changes(e) {
+  changes(e) {  //控制行政区划
     console.log(e)
     if (e.detail.index == 1) {
       this.data.areaList.forEach((item) => {
@@ -368,7 +446,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(options)
     this.getAreaTree()
+    if(options.id){
+      this.setData({
+        id: options.id
+      })
+    }
     // console.log(areaList.default)
     // this.setData({
     //   areaList: areaList.default
@@ -390,23 +474,6 @@ Page({
     })
   },
   submit() {
-    // console.log(this.data.serveBusiness)
-    // console.log(this.data.serveBusinessDetail)
-    // console.log(this.data.serveBusinessAppend)
-    // console.log(this.data.serveBusiness)
-    // console.log(this.data.legalPerson)
-    // console.log(this.data.supervisor)
-    // console.log(this.data.shareholder)
-    // console.log(this.data.finance)
-    // console.log(this.data.contract1)
-    // console.log(this.data.contract2)
-    // console.log(this.data.contract3)
-    // console.log(this.data.contract4)
-    // console.log(this.data.result1)
-    // console.log(this.data.result2)
-    // console.log(this.data.result3)
-    // console.log(this.data.result4)
-    // console.log(this.data.special)
     let obj = {
       serveBusiness: {},
       serveBusinessDetail: [],
@@ -430,7 +497,26 @@ Page({
     }
     obj.serveBusinessAppend = [result1, this.data.result2, this.data.result3, this.data.result4, this.data.special];
     console.log(JSON.stringify(obj))
+    if (obj.serveBusiness.id){
+      this.upDatas(obj);
+    }else{
+      this.addData(obj);
+    }
+  },
+  addData(obj){  //新增
+    let that = this;
     request.postJSON(cfg.serveBusinessCreateUrl, obj).then(rst => {
+      console.log(rst);
+      let res = rst.data;
+      if (res.status == 1) {
+        console.log(res.data)
+
+      }
+    })
+  },
+  upDatas(obj) {  //修改
+    let that = this;
+    request.postJSON(cfg.serveBusinessUpdateUrl, obj).then(rst => {
       console.log(rst);
       let res = rst.data;
       if (res.status == 1) {
@@ -451,6 +537,7 @@ Page({
    */
   onShow: function() {
     this.getDic();
+    this.getData(this.data.id);
   },
 
   /**

@@ -5,14 +5,13 @@
                 <el-row>
                     <el-col :span="14">
                         <el-date-picker
-                                :default-time="['12:00:00', '08:00:00']"
                                 align="right"
-                                value-format="yyyy-MM-dd HH:mm:ss"
+                                value-format="yyyy-MM-dd"
                                 end-placeholder="结束时间"
                                 start-placeholder="开始时间"
                                 style="float: right"
-                                type="datetimerange"
-                                v-model="times">
+                                v-model="timeArr"
+                                type="daterange">
                         </el-date-picker>
                     </el-col>
                     <el-col :span="4">
@@ -25,17 +24,20 @@
                             </el-option>
                         </el-select>
                     </el-col>
-                    <el-col :span="4">
-                        <el-input
-                                class="input-with-select"
-                                placeholder="请输入公司名称、申请人姓名"
-                                style="float: right;width: 250px"
-                                v-model="query.applyPersonName"
-                        ></el-input>
-                    </el-col>
-                    <el-col :span="2">
-                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
-                        </el-button>
+                    <!--<el-col :span="4">-->
+                        <!--<el-input-->
+                                <!--class="input-with-select"-->
+                                <!--placeholder="请输入公司名称、申请人姓名"-->
+                                <!--style="float: right;width: 250px"-->
+                                <!--v-model="query.applyPersonName"-->
+                        <!--&gt;</el-input>-->
+                    <!--</el-col>-->
+                    <el-col :span="6">
+                        <el-input class="input-with-select" clearable placeholder="请输入公司名称、申请人姓名" v-model="query.applyPersonName">
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
+                        </el-input>
+                        <!--<el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索-->
+                        <!--</el-button>-->
                     </el-col>
                 </el-row>
             </div>
@@ -72,7 +74,7 @@
                         </el-button>
                         <el-button v-if="scope.row.status=='3'" @click="progress(scope.$index,scope.row)" height="40" type="text">进度记录</el-button>
                         <span class="strightline">|</span>
-                        <el-button @click="" type="text">删除</el-button>
+                        <el-button @click="dele(scope.$index,scope.row)" type="text">删除</el-button>
                         <span class="strightline">|</span>
                         <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
@@ -166,7 +168,7 @@
                     applyPersonName:""
                 },
                 value: '',
-                times: []
+                timeArr: []
             };
         },
         created() {
@@ -195,6 +197,14 @@
                     pageSize: this.pagesize,
                     totalRecord: this.total
                 });
+                console.log(this.timeArr);
+                if (this.timeArr) {
+                    this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
+                    this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
+                } else {
+                    this.query.startTime = "";
+                    this.query.endTime = "";
+                }
                 getList(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
@@ -204,6 +214,23 @@
             //搜索
             search(){
                 this.handleQuery();
+            },
+            dele(index, data){
+                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        this.id = data.id;
+                        deleteById(this.id).then(response => {
+                            this.$message.success("删除成功");
+                            this.getlist();
+                        });
+                    })
+                    .catch(() => {
+
+                    });
             },
             //企业注册状态搜索框数据
             handleStatus(){
@@ -288,7 +315,10 @@
         padding: 20px;
         background-color: #fff;
     }
-
+    .input-with-select{
+        float: right;
+        width: 350px;
+    }
     .red {
         color: red;
     }

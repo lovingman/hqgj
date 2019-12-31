@@ -15,6 +15,8 @@ public class ServeFinanceOrderQVo extends ServeFinanceOrder {
 
     private String[] types;
 
+    private String[] statuss;
+
     public Date getStartTime() {
         return startTime;
     }
@@ -37,5 +39,13 @@ public class ServeFinanceOrderQVo extends ServeFinanceOrder {
 
     public void setTypes(String[] types) {
         this.types = types;
+    }
+
+    public String[] getStatuss() {
+        return statuss;
+    }
+
+    public void setStatuss(String[] statuss) {
+        this.statuss = statuss;
     }
 }
