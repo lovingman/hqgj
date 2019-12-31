@@ -99,7 +99,7 @@
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt; text-align:center"><span
-                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">注册资金</span>
+                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold">注册资金</span>
                             </p>
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">

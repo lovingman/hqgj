@@ -3,7 +3,7 @@
     <div class="title">
       <el-row style="margin-left: 20px;">
         <el-col :span="4" style="margin-top: 5px">
-          <img src="@/assets/images/hqgjlogo.png" alt="">
+          <img style="width: 80%" src="@/assets/images/hqgjlogo.png" alt="">
         </el-col>
         <el-col :span="14">
           <div class="title-nm">

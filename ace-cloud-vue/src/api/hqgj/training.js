@@ -45,11 +45,14 @@ export function deleteByIds(ids) {
   })
 }
 //审核
-export function updateStatus(query) {
+export function updateStatus(id, status) {
   return request({
     url: '/hqgj/serveCultivate/updateStatus',
     method: 'post',
-    params: query
+    params: {
+      id: id,
+      status: status
+    },
   })
 }
 //报名管理
@@ -81,3 +84,4 @@ export function lecturerPage(id) {
     }
   })
 }
+

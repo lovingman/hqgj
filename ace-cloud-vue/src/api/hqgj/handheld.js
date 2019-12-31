@@ -67,11 +67,14 @@ export function deleteByIds(ids) {
   })
 }
 //审核
-export function updateStatus(query) {
+export function updateStatus(id, status) {
   return request({
     url: '/hqgj/serveFinance/updateStatus',
     method: 'post',
-    params: query
+    params: {
+      id: id,
+      status: status
+    },
   })
 }
 
