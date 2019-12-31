@@ -189,7 +189,7 @@ public class BasicAnnexController extends BaseController {
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
         BasicAnnexQVo condition=new BasicAnnexQVo();
-        condition.setRelationId(relationId);
+        condition.setRelationIds(relationId.split(","));
         PageDTO<BasicAnnexVo> rst = this.basicAnnexService.page(condition, 0,1000,null);
         String[] list=new String[rst.getTotal()];
             //多个图片下载地址
@@ -198,7 +198,6 @@ public class BasicAnnexController extends BaseController {
                 URL url= new URL(vo.getFileURL());
                 String base64=CommonUtils.encodeImageToBase64(url);
                 list[i]=base64;
-
             }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
             }
