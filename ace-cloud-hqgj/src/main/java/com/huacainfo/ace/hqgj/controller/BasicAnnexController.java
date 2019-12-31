@@ -189,7 +189,7 @@ public class BasicAnnexController extends BaseController {
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
         BasicAnnexQVo condition=new BasicAnnexQVo();
-        condition.setRelationId(relationId);
+        condition.setRelationIds(relationId.split(","));
         PageDTO<BasicAnnexVo> rst = this.basicAnnexService.page(condition, 0,1000,null);
         String[] list=new String[rst.getTotal()];
             //多个图片下载地址

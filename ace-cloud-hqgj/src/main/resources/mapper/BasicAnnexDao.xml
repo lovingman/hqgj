@@ -63,8 +63,11 @@
     <sql id="Where_Condition">
         <where>
             1 = 1
-            <if test="condition.relationId != null and condition.relationId != ''">
-                and t.relationId = #{condition.relationId,jdbcType=VARCHAR}
+            <if test="condition.relationIds != null and condition.relationIds != ''">
+                and t.relationId in
+                <foreach collection="condition.relationIds" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.fileType != null and condition.fileType != ''">
                 and t.fileType = #{condition.fileType,jdbcType=VARCHAR}
