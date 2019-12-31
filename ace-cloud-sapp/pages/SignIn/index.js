@@ -17,6 +17,7 @@ Page({
         usernameVali: 'mobilePhone',
         password: '',
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
+        url:''
     },
 
     /**
@@ -24,6 +25,7 @@ Page({
      */
     onLoad: function(options) {
         var that = this;
+        that.data.url=options.url;
         Auth.setUserInfoData(that);
         Auth.checkLogin(that);
     },
@@ -62,6 +64,24 @@ Page({
                     data: tokenStr
                 })
                 app.getUserInfo();
+                if(that.data.url){
+                    let url = '/' + decodeURIComponent(that.data.url);
+                    debugger
+                    if ('/pages/PersonalCenter/index'==url){
+                        wx.reLaunch({
+                            url: '/pages/PersonalCenter/index'
+                        });
+                    }else{
+                        wx.redirectTo({
+                            url: url
+                        });
+                    }
+                }else{
+                    wx.reLaunch({
+                        url: '/pages/index/index',
+                    });
+                }
+               
             }
         })
     },
@@ -113,8 +133,8 @@ Page({
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function() {
-
+    onUnload: function(option) {
+       
     },
 
     /**

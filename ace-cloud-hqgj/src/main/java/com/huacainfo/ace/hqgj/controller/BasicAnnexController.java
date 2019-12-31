@@ -182,7 +182,7 @@ public class BasicAnnexController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/download")
-    public ResponseDTO downloadExcel(String relationId, HttpServletResponse res) throws Exception {
+    public ResponseDTO download(String relationId, HttpServletResponse res) throws Exception {
         if(CommonUtils.isBlank(relationId)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
@@ -203,5 +203,19 @@ public class BasicAnnexController extends BaseController {
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
             }
 
+
+
+    /**
+     * 下载压缩包文件
+     * @param businessId 创业服务包id
+     * @param res
+     * @throws Exception
+     */
+    @RequestMapping(value = "/downloadZip")
+    public ResponseDTO downloadZip(String businessId, HttpServletResponse res) throws Exception {
+        res.setContentType("multipart/form-data");
+        res.setCharacterEncoding("utf-8");
+        return  basicAnnexService.businessFileUrlList(businessId);
+    }
 
 }

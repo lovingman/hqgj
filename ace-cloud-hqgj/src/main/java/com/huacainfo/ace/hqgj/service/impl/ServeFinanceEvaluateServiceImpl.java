@@ -94,11 +94,14 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
     @Transactional
     @Log(operationObj = "财税服务订单评价表", operationType = "创建", detail = "创建财税服务订单评价表")
     public ResponseDTO create(ServeFinanceEvaluate o, UserProp userProp) throws Exception {
+        if (CommonUtils.isBlank(o.getId())) {
+            return new ResponseDTO(ResultCode.FAIL, "订单id不能为空！");
+        }
+        String orderId=o.getId();
         o.setId(GUIDUtil.getGUID());
         if (CommonUtils.isBlank(o.getType())) {
             return new ResponseDTO(ResultCode.FAIL, "类型不能为空！");
         }
-        //o.getOrderNo() 做为订单id
         if (CommonUtils.isBlank(o.getOrderNo())) {
             return new ResponseDTO(ResultCode.FAIL, "订单号不能为空！");
         }
@@ -117,7 +120,7 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         o.setModifyDate(new Date());
         this.serveFinanceEvaluateDao.insert(o);
         //已完成已评价
-        int i=serveFinanceOrderDao.updateStatus(o.getOrderNo(),"32");
+        int i=serveFinanceOrderDao.updateStatus(orderId,"32");
         if(i==0){
             return new ResponseDTO(ResultCode.FAIL, "内部错误！");
         }

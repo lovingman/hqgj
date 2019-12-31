@@ -6,18 +6,21 @@
                     <el-col :span="18">
                         <el-button @click="create" icon="el-icon-plus" style="float: left" type="primary">创建</el-button>
                     </el-col>
-                    <el-col :span="4">
-                        <el-input
-                                v-model="query.companyName"
-                                clearable
-                                class="input-with-select"
-                                placeholder="请输入企业名称"
-                                style="float: right;width: 250px"
-                        ></el-input>
-                    </el-col>
-                    <el-col :span="2">
-                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
-                        </el-button>
+                    <!--<el-col :span="4">-->
+                        <!--<el-input-->
+                                <!--v-model="query.companyName"-->
+                                <!--clearable-->
+                                <!--class="input-with-select"-->
+                                <!--placeholder="请输入企业名称"-->
+                                <!--style="float: right;width: 250px"-->
+                        <!--&gt;</el-input>-->
+                    <!--</el-col>-->
+                    <el-col :span="6">
+                        <el-input class="input-with-select" clearable placeholder="请输入企业名称" v-model="query.companyName">
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
+                        </el-input>
+                        <!--<el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索-->
+                        <!--</el-button>-->
                     </el-col>
                 </el-row>
             </div>
@@ -152,5 +155,9 @@
     .container {
         padding: 20px;
         background-color: #fff;
+    }
+    .input-with-select{
+        float: right;
+        width: 350px;
     }
 </style>

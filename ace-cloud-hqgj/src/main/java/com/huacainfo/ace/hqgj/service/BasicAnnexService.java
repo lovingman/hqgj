@@ -91,4 +91,13 @@ public interface BasicAnnexService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+
+    /**
+     * 对应创业服务包下所有附件
+     * @param businessId
+     * @return
+     * @throws Exception
+     */
+    ResponseDTO<String> businessFileUrlList(String businessId)throws Exception;
+
 }
