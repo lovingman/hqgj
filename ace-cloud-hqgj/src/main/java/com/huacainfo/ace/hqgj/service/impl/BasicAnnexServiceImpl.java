@@ -191,10 +191,13 @@ public class BasicAnnexServiceImpl implements BasicAnnexService {
         String[] list=new String[urlList.size()];
         //多个图片下载地址
         for(int i=0;i<urlList.size();i++ ) {
-            URL url= new URL(urlList.get(i));
-            String base64=CommonUtils.encodeImageToBase64(url);
-            list[i]=base64;
-
+            try {
+                URL url = new URL(urlList.get(i));
+                String base64 = CommonUtils.encodeImageToBase64(url);
+                list[i] = base64;
+            }catch (Exception e){
+                return new ResponseDTO(ResultCode.FAIL, "图片转换失败！");
+            }
         }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
     }

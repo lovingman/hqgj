@@ -189,16 +189,19 @@ public class BasicAnnexController extends BaseController {
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
         BasicAnnexQVo condition=new BasicAnnexQVo();
-        condition.setRelationId(relationId);
+        condition.setRelationIds(relationId.split(","));
         PageDTO<BasicAnnexVo> rst = this.basicAnnexService.page(condition, 0,1000,null);
         String[] list=new String[rst.getTotal()];
             //多个图片下载地址
             for(int i=0;i<rst.getTotal();i++ ) {
                  BasicAnnexVo vo =rst.getRows().get(i);
-                URL url= new URL(vo.getFileURL());
-                String base64=CommonUtils.encodeImageToBase64(url);
-                list[i]=base64;
-
+                 try {
+                     URL url = new URL(vo.getFileURL());
+                     String base64 = CommonUtils.encodeImageToBase64(url);
+                     list[i] = base64;
+                 }catch (Exception e){
+                     return new ResponseDTO(ResultCode.FAIL, "图片转换失败！");
+                 }
             }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
             }

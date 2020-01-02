@@ -184,9 +184,7 @@ public class RegisterServiceImpl implements RegisterService {
         if (CommonUtils.isBlank(o.getName())) {
             return new ResponseDTO(ResultCode.FAIL, "姓名不能为空！");
         }
-        if (CommonUtils.isBlank(o.getIdCard())) {
-            return new ResponseDTO(ResultCode.FAIL, "身份证号不能为空！");
-        }
+
         if (CommonUtils.isBlank(o.getMobile())) {
             return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空！");
         }

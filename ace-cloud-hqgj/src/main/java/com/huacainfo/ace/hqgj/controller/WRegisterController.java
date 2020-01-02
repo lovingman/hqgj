@@ -36,9 +36,6 @@ public class WRegisterController extends BizController {
     @Resource
     private RegisterService registerService;
 
-    @Autowired
-    private RedisOperations<String, Object> redisTemplate;
-
     @Resource
     private FeignTaskCmccService feginTaskCmccService;
 
@@ -55,7 +52,7 @@ public class WRegisterController extends BizController {
     })
     @PostMapping(value = "/captchaForgetPwd", produces = "application/json;charset=UTF-8")
     public ResponseDTO captchaForgetPwd(String mobile, String length) {
-        String _3rd_session = this.getRequest().getHeader("WX-SESSION-ID");
+
         if (CommonUtils.isBlank(mobile)) {
             return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空");
         }
@@ -74,7 +71,6 @@ public class WRegisterController extends BizController {
         String tel = mobile + "," + mobile + ";";
         // 保存进session
         setSession("j_captcha_cmcc_" + mobile, randCode);
-        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui", randCode);
         //session获取测试
         logger.debug(mobile + "=>j_captcha_cmcc:{}", getSession("j_captcha_cmcc_" + mobile));
 
@@ -95,7 +91,7 @@ public class WRegisterController extends BizController {
     })
     @PostMapping(value = "/captcha", produces = "application/json;charset=UTF-8")
     public ResponseDTO captcha(String mobile, String length) {
-        String _3rd_session = this.getRequest().getHeader("WX-SESSION-ID");
+
         if (CommonUtils.isBlank(mobile)) {
             return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空");
         }
@@ -114,7 +110,7 @@ public class WRegisterController extends BizController {
         String tel = mobile + "," + mobile + ";";
         // 保存进session
         setSession("j_captcha_cmcc_" + mobile, randCode);
-        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui", randCode);
+
         logger.info("session1================"+getRequest().getSession().getId());
         //session获取测试
         logger.debug(mobile + "=>j_captcha_cmcc:{}", getSession("j_captcha_cmcc_" + mobile));
@@ -132,12 +128,8 @@ public class WRegisterController extends BizController {
     @ApiOperation(value = "/register", notes = "注册接口")
     @PostMapping(value = "/register", produces = "application/json;charset=UTF-8")
     public ResponseDTO register(UsersVo data) throws Exception {
-        String _3rd_session = this.getRequest().getHeader("WX-SESSION-ID");
         String mobile=data.getMobile()==null?data.getAccount():data.getMobile();
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
-        if(CommonUtils.isBlank(code)){
-            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
-        }
         logger.info("session2================"+getRequest().getSession().getId());
         String userCode = data.getCaptcha();
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
@@ -169,7 +161,7 @@ public class WRegisterController extends BizController {
     })
     @PostMapping(value = "/resetPassword", produces = "application/json;charset=UTF-8")
     public ResponseDTO resetPassword(String mobile, String captcha, String newPassword) throws Exception {
-        String _3rd_session = this.getRequest().getHeader("WX-SESSION-ID");
+
         if (CommonUtils.isBlank(mobile)) {
             return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空！");
         }
@@ -181,9 +173,6 @@ public class WRegisterController extends BizController {
         }
         //验证码有效验证
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
-        if(CommonUtils.isBlank(code)){
-            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
-        }
         String userCode = captcha;
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
             return new ResponseDTO(ResultCode.FAIL, "验证码验证失败！");
