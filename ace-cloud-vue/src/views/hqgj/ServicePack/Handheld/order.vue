@@ -158,7 +158,7 @@ export default {
     },
     //选择tablePage事件
     handleTableCurrent(current) {
-      this.tablePage = size;
+      this.tablePage = current;
       this.getList();
     },
     //请求page
@@ -219,7 +219,7 @@ export default {
         path: "/hqgj/ServicePack/Handheld/orderSee",
         query: { id: data.id }
       });
-    },
+    }
   }
 };
 </script>
