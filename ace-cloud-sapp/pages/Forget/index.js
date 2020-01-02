@@ -103,9 +103,6 @@ Page({
             Toast.fail('密码位数不对');
             return;
         }
-        wx.navigateTo({
-          url: "../RegisterVerifies/index"
-        })
         request.post(config.resetPassword,data).then(
             res=>{
                 let r=res.data;
