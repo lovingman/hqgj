@@ -135,7 +135,7 @@ public class WRegisterController extends BizController {
         String _3rd_session = this.getRequest().getHeader("WX-SESSION-ID");
         String mobile=data.getMobile()==null?data.getAccount():data.getMobile();
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
-        if(CommonUtils.isBlank(code)){
+        if(code=="null"){
             code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
         }
         logger.info("session2================"+getRequest().getSession().getId());
@@ -145,7 +145,7 @@ public class WRegisterController extends BizController {
         }
         try {
             return registerService.insertRegister(data);
-        } catch (CustomException e) {
+       } catch (CustomException e) {
             return new ResponseDTO(ResultCode.FAIL, e.getMessage());
         } catch (Exception e) {
             return new ResponseDTO(ResultCode.FAIL, "哦豁,系统异常了！");
@@ -181,7 +181,7 @@ public class WRegisterController extends BizController {
         }
         //验证码有效验证
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
-        if(CommonUtils.isBlank(code)){
+        if(code=="null"){
             code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
         }
         String userCode = captcha;
