@@ -35,7 +35,7 @@
         element-loading-spinner="el-icon-loading"
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
-        <el-table-column prop="orgPersonName" sortable label="姓名" width="120"></el-table-column>
+        <el-table-column prop="createUserName" sortable label="姓名" width="160"></el-table-column>
         <el-table-column prop="evaluateContent" sortable label="评价内容" ></el-table-column>
         <el-table-column prop="evaluateGrade" sortable label="服务评分" width="200">
           <template slot-scope="scope">
@@ -47,9 +47,9 @@
             ></el-rate>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构" width="160"></el-table-column>
-        <el-table-column prop="createDate" sortable label="评价时间"></el-table-column>
-        <el-table-column label="操作" fixed="right" width="180" align="right" header-align="center">
+        <el-table-column prop="orgName" sortable label="服务机构" ></el-table-column>
+        <el-table-column prop="createDate" sortable label="评价时间" width="200"></el-table-column>
+        <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="deleteId(scope.row)">删除</el-button>
             <el-button type="text">详情</el-button>

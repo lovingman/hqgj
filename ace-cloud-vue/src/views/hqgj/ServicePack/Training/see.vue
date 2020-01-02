@@ -1,6 +1,9 @@
 <template>
   <div class="main-box">
     <el-tabs v-model="tabsName" :class="{noClick:noClickTabs}">
+      <div class="fixe-top">
+        <el-button @click="black" type="primary">取消</el-button>
+      </div>
       <el-tab-pane label="基本信息" name="first">
         <div class="content-box">
           <div class="title">基本信息</div>
@@ -106,7 +109,10 @@
               </el-row>
               <el-row>
                 <el-form-item label="课件：">
-                  <spna v-for="item in scheduleModel.basicAnnexes">{{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}<br></spna>
+                  <spna v-for="item in scheduleModel.basicAnnexes">
+                    {{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}
+                    <br />
+                  </spna>
                 </el-form-item>
               </el-row>
             </div>
@@ -114,14 +120,6 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <!-- 底部按钮 -->
-    <div class="footer">
-      <div class="footer-flex">
-        <div v-if="isShow">
-          <el-button @click="black" type="primary">取消</el-button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -262,24 +260,13 @@ export default {
       cursor: pointer;
     }
   }
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-top: 1px solid #eee;
-    height: 60px;
-    background-color: #fff;
-    .footer-flex {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      /deep/ .el-button--medium {
-        border-radius: 4px;
-        margin-left: 20px;
-      }
-    }
+  .noClick {
+    position: relative;
+  }
+  .fixe-top {
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
 }
 </style>

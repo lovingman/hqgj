@@ -29,11 +29,14 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <div class="ties" v-if="tisShow">选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
-          <div class="ties" v-if="tieShow">选择该类型，用户可免费享受咨询服务</div>
+          <div
+            class="ties"
+            v-if="serviceForm.type == 1"
+          >选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
+          <div class="ties" v-if="serviceForm.type == 3">选择该类型，用户可免费享受咨询服务</div>
         </el-row>
         <!-- 代理财政是否显示 -->
-        <div v-if="financeShow" class="show-box">
+        <div v-if="this.serviceForm.type != ''" class="show-box">
           <el-row>
             <el-col :span="12">
               <el-form-item label="服务机构：" prop="orgId">
@@ -53,7 +56,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="expertShow">
+            <el-col :span="12" v-if="serviceForm.type == 3">
               <el-form-item label="专家：" prop="contactId">
                 <el-select
                   clearable
@@ -70,17 +73,21 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="expertShow">
+            <el-col :span="12" v-if="serviceForm.type == 3">
               <el-form-item label="名额：" prop="quota">
                 <el-input v-model="serviceForm.quota" clearable placeholder="请输入免费咨询名额"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="联系方式：" prop="contactPersonTel">
-                <el-input v-model="serviceForm.contactPersonTel" clearable placeholder="请输入联系方式"></el-input>
+                <el-input
+                  v-model="serviceForm.contactPersonTel"
+                  clearable
+                  placeholder="请输入联系方式,例如：13500228899或者0736-1234567"
+                ></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-if="expertShow">
+            <el-col :span="12" v-if="serviceForm.type == 3">
               <el-form-item label="地点：" prop="address">
                 <el-input v-model="serviceForm.address" clearable placeholder="请输入地点"></el-input>
               </el-form-item>
@@ -100,7 +107,7 @@
               ></el-input>
             </el-form-item>
           </el-row>
-          <el-row v-if="financeTaxShow">
+          <el-row v-if="serviceForm.type == 2">
             <div class="title">服务项目</div>
             <div class="project-top">
               <div class="ltt">
@@ -178,11 +185,6 @@ export default {
   name: "add",
   data() {
     return {
-      financeShow: false, //代理财政是否显示
-      financeTaxShow: false, //财税管理是否显示
-      expertShow: false, //专家问诊是否显示
-      tieShow: false, //提示是否显示
-      tisShow: false, //计帐是否显示提示
       orgDisabled: true, //是否禁止服务机构选择
       //服务包类型
       typeArr: [],
@@ -223,10 +225,10 @@ export default {
         contactPersonTel: [
           {
             required: true,
-            message: "请输入联系方式",
+            message: "请输入联系方式,例如：13500228899或者0736-1234567",
             trigger: "blur"
           },
-          { validator: this.globalMethods.checkPhone, trigger: "blur" }
+          { validator: this.globalMethods.checkIntegerP, trigger: "blur" }
         ],
         orgId: [
           {
@@ -292,12 +294,14 @@ export default {
       getUser().then(res => {
         this.userType = res.data.userType; //1律师服务 2会计师服务 3培训机构 4工信局
         this.dataRows = res.data;
+        this.serviceForm.contactPersonTel = res.data.mobile;
         if (this.userType == 4) {
           //如果是工信局请求服务机构数据, 2是会计师服务type值
           let obj = 2;
           this.orgDisabled = false;
           lecturerMechanism(obj).then(res => {
             if (res.status == 1) {
+              console.log(res);
               this.disabled = false;
               this.orgRows = res.rows;
               for (let i = 0; i < this.orgRows.length; i++) {
@@ -351,26 +355,8 @@ export default {
     //类型选择
     changeType(value) {
       this.type = value;
-      this.financeShow = true;
       if (this.userType == 4) {
         this.serviceForm.orgId = "";
-      }
-      if (value == 1) {
-        this.tisShow = true;
-      } else {
-        this.tisShow = false;
-      }
-      if (value == 2) {
-        this.financeTaxShow = true;
-      } else {
-        this.financeTaxShow = false;
-      }
-      if (value == 3) {
-        this.expertShow = true;
-        this.tieShow = true;
-      } else {
-        this.expertShow = false;
-        this.tieShow = false;
       }
     },
     //服务机构选择
@@ -404,14 +390,6 @@ export default {
       }
     },
 
-    //封面照片
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
     //取消返回
     black() {
       this.$router.push({ path: "/hqgj/ServicePack/Handheld/index" });

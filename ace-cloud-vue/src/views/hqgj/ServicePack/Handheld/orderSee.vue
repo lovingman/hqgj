@@ -75,71 +75,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-row>
-          <el-col :span="12">
-            <el-form-item label="服务机构：">
-              <span>{{basicForm.orgName}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="expertShow">
-            <el-form-item label="专家：">
-              <span>{{basicForm.baseOrganizationMember.name}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="expertShow">
-            <el-form-item label="名额：">
-              <span>{{basicForm.quota}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="联系方式：">
-              <span>{{basicForm.contactPersonTel}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="expertShow">
-            <el-form-item label="地点：">
-              <span>{{basicForm.address}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
-        <!-- 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="封面：">
-              <span class="img-border">
-                <img :src="basicForm.fmUrl" />
-              </span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-form-item label="服务介绍：">
-            <span>{{basicForm.content}}</span>
-          </el-form-item>
-        </el-row>-->
       </el-form>
-      <!-- <div class="show-box" v-if="showService">
-        <div class="title">服务项目</div>
-        <el-form label-width="120px" class="project-item">
-          <div class="project-item-box">
-            <div class="memberModel" v-for="(domain,index) in serviceList" :key="domain.key">
-              <div class="member-top">
-                <div class="ltt">服务项目{{index+1}}</div>
-              </div>
-              <el-col :span="12">
-                <el-form-item label="名称：">
-                  <span>{{domain.itemName}}</span>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="价格：">
-                  <span>{{domain.price}}</span>
-                </el-form-item>
-              </el-col>
-            </div>
-          </div>
-        </el-form>
-      </div>-->
     </div>
     <!-- 底部按钮 -->
     <div class="footer">
