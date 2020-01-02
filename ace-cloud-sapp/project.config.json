@@ -4,23 +4,15 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"autoAudits": false,
 		"coverView": true,
-		"nodeModules": true,
-		"autoAudits": true,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"enhance": true
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
@@ -41,20 +33,15 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
 		"miniprogram": {
 			"current": -1,
+<<<<<<< HEAD
+			"list": []
+=======
 			"list": [
 				{
 					"id": 0,
@@ -260,6 +247,7 @@
 					"scene": null
 				}
 			]
+>>>>>>> 8bce138040bd68b1e4a5220258679d2d39714b01
 		}
 	}
 }

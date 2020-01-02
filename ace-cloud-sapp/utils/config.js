@@ -1,8 +1,9 @@
-var server = "http://test.huacainfo.com";
-// var server = "http://192.168.2.114";
+// var server = "https://test.huacainfo.com";
+var server = "http://192.168.2.114";
+// var server = "http://192.168.2.105";
 var config = {
     login: `${server}/hqgj-portal/security/login`,
-    authority: `${server}/wxms/www/mini/authority`, //微信授权
+    authority: `${server}/wxmss/www/mini/authority`, //微信授权
     getCaptcha: `${server}/hqgj/www/reg/captcha`, //验证码
     register: `${server}/hqgj/www/reg/register`, //注册
     captchaForgetPwd: `${server}/hqgj/www/reg/captchaForgetPwd`, //   验证码获取接口
