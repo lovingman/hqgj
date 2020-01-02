@@ -17,6 +17,8 @@ import java.util.Map;
 public interface RegisterDao {
     int userIsExist(Users o);
 
+    int idCardIsExist(Users o);
+
     int isExist(Users o);
 
     int insertUser(Users o);

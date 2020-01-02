@@ -11,6 +11,7 @@ import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -104,7 +105,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      */
     @Override
     public ResponseDTO homePage(UserProp userProp) {
-        Users user= personCenterDao.selectUserInfo(userProp.getUserId());
+        UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
        /* ResponseDTO dto=new ResponseDTO();
           if(user.getUserType().equals("5")){
               BaseCompanyMember m= baseCompanyMemberDao.selectVoByPrimaryKey(userProp.getUserId());

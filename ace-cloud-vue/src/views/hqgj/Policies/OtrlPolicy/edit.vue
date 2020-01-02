@@ -14,7 +14,7 @@
                     <el-col :span="12">
                         <el-form-item label="标题" prop="title">
                             <el-input
-                                    maxlength="50"
+                                    maxlength="200"
                                     v-model="serviceForm.title"
                                     clearable
                                     show-word-limit

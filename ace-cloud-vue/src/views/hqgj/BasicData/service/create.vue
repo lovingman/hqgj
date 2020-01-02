@@ -13,7 +13,7 @@
                 <el-form-item label="机构名称:" prop="orgName">
                     <el-input v-model="addform.orgName" maxlength="50" show-word-limit placeholder="请输入机构名称" style="width: 30%"></el-input>
                 </el-form-item>
-                <el-form-item label="机构封面:" prop="fmUrlarr">
+                <el-form-item label="logo:" prop="fmUrlarr">
                     <el-upload
                             :before-upload="beforeAvatarUpload"
                             :class="{hide:hideUpload}"
@@ -110,9 +110,9 @@
                     orgName: [
                         {required: true, message: "请输入机构名称", trigger: "blur"},
                     ],
-                    fmUrlarr: [
-                        {required: true, message: "请上传机构封面", trigger: "blur"}
-                    ],
+                    // fmUrlarr: [
+                    //     {required: true, message: "请上传机构封面", trigger: "blur"}
+                    // ],
                     contactPersonTel: [
                         {required: true, message: "请输入联系方式", trigger: "blur"},
                     ],

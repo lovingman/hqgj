@@ -57,33 +57,43 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     @Transactional
     public ResponseDTO insertRegister(Users dto) throws Exception {
-
+        if (CommonUtils.isBlank(dto.getAccount())) {
+            return new ResponseDTO(ResultCode.FAIL, "账号不能为空！");
+        }
+        if (CommonUtils.isBlank(dto.getPassword())) {
+            return new ResponseDTO(ResultCode.FAIL, "密码不能为空！");
+        }
+        if (dto.getPassword().length() < 6) {
+            return new ResponseDTO(ResultCode.FAIL, "密码字符长度必须为6位以上！");
+        }
+        if (CommonUtils.isBlank(dto.getName())) {
+            return new ResponseDTO(ResultCode.FAIL, "姓名不能为空！");
+        }
         if (CommonUtils.isBlank(dto.getIdCard())) {
             return new ResponseDTO(ResultCode.FAIL, "身份证不能为空！");
         }
         if (CommonUtils.isBlank(dto.getUnionId())) {
-            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+            return new ResponseDTO(ResultCode.FAIL, "微信不能为空！");
         }
         int temp = registerDao.isUnionid(dto.getUnionId());
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "微信已存在！");
         }
-        dto.setUserId(GUIDUtil.getGUID());
-        dto.setAccount(dto.getAccount());
-        dto.setName(dto.getName());
-        dto.setSex(getSex(dto.getIdCard()));
-        dto.setMobile(dto.getAccount());
 
-        //常量设置
-        dto.setCreateTime(new Date());
-        dto.setStatus(CommonConstant.User_State_VALID);
-        dto.setCurSyid(CommonConstant.SYS_ID);
-        dto.setCorpId(CommonConstant.CORP_ID);
-        ResponseDTO r = insertUser(dto);
-        if (r.getStatus() == ResultCode.FAIL) {
-            throw new CustomException(ResultCode.FAIL, r.getMessage());
+        int temps = this.registerDao.userIsExist(dto);
+        if (temps > 0) {
+            return new ResponseDTO(ResultCode.FAIL, "账号已经存在！");
         }
-         r =insertMapWechatSys(dto);
+        int idCard=registerDao.idCardIsExist(dto);
+        if (idCard > 0) {
+            return new ResponseDTO(ResultCode.FAIL, "身份证已经存在！");
+        }
+        Users users = insertUser(dto);
+        int i=registerDao.insertUser(users);
+        if (i<0) {
+            throw new CustomException(ResultCode.FAIL, "注册失败");
+        }
+        ResponseDTO  r =insertMapWechatSys(dto);
         if (r.getStatus() == ResultCode.FAIL) {
             throw new CustomException(ResultCode.FAIL, r.getMessage());
         }
@@ -148,55 +158,20 @@ public class RegisterServiceImpl implements RegisterService {
         return Integer.parseInt(idCard.substring(16).substring(0, 1)) % 2 == 0 ? "2" : "1";
     }
 
-    private Users getUsers(Users dto) {
-        Users user = new Users();
-        user.setAccount(dto.getAccount());
-        user.setPassword(dto.getPassword());
-        user.setName(dto.getName());
-        user.setIdCard(dto.getIdCard());
-        user.setSex(dto.getSex());
-        user.setMobile(dto.getMobile());
-        user.setAreaCode(dto.getAreaCode());
-        //常量设置
-        user.setUserId(dto.getUserId());
-        user.setCreateTime(new Date());
-
-        user.setStatus(CommonConstant.User_State_VALID);
-        user.setCurSyid(CommonConstant.SYS_ID);
-        user.setCorpId(CommonConstant.CORP_ID);
-        user.setBirthday(dto.getBirthday());
-        return user;
-    }
-
 
     @Log(operationObj = "创建系统登录账户", operationType = "创建", detail = "创建系统登录账户")
-    private ResponseDTO insertUser(Users o) throws Exception {
-
-        if (CommonUtils.isBlank(o.getAccount())) {
-            return new ResponseDTO(ResultCode.FAIL, "账号不能为空！");
-        }
-        if (CommonUtils.isBlank(o.getPassword())) {
-            return new ResponseDTO(ResultCode.FAIL, "密码不能为空！");
-        }
-        if (o.getPassword().length() < 6) {
-            return new ResponseDTO(ResultCode.FAIL, "密码字符长度必须为6位以上！");
-        }
-        if (CommonUtils.isBlank(o.getName())) {
-            return new ResponseDTO(ResultCode.FAIL, "姓名不能为空！");
-        }
-
-        if (CommonUtils.isBlank(o.getMobile())) {
-            return new ResponseDTO(ResultCode.FAIL, "手机号码不能为空！");
-        }
-
-        int temp = this.registerDao.userIsExist(o);
-        if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "账号已经存在！");
-        }
-
+    private Users insertUser(Users o) throws Exception {
+        o.setUserId(GUIDUtil.getGUID());
+        o.setSex(getSex(o.getIdCard()));
+        o.setMobile(o.getAccount());
+        //常量设置
+        o.setCreateTime(new Date());
+        o.setStatus(CommonConstant.User_State_VALID);
+        o.setCurSyid(CommonConstant.SYS_ID);
+        o.setCorpId(CommonConstant.CORP_ID);
+        o.setIsSync("n");
         o.setPassword(pwdEncoder(o.getPassword()));
-        this.registerDao.insertUser(o);
-        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+        return o;
     }
 
     @Log(operationObj = "微信和用户绑定", operationType = "创建", detail = "创建系统登录账户")

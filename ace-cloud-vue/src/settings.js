@@ -1,5 +1,5 @@
 module.exports = {
-  title: '常德市慧企管家服务平台',
+  title: '常德市武陵区慧企管家服务平台',
 
   /**
    * @type {boolean} true | false
