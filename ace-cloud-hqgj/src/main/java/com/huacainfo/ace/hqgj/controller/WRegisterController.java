@@ -74,7 +74,7 @@ public class WRegisterController extends BizController {
         String tel = mobile + "," + mobile + ";";
         // 保存进session
         setSession("j_captcha_cmcc_" + mobile, randCode);
-        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui", randCode);
+        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui"+ mobile, randCode);
         //session获取测试
         logger.debug(mobile + "=>j_captcha_cmcc:{}", getSession("j_captcha_cmcc_" + mobile));
 
@@ -114,8 +114,7 @@ public class WRegisterController extends BizController {
         String tel = mobile + "," + mobile + ";";
         // 保存进session
         setSession("j_captcha_cmcc_" + mobile, randCode);
-        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui", randCode);
-        logger.info("session1================"+getRequest().getSession().getId());
+        redisTemplate.opsForValue().set(_3rd_session+ "j_captcha_weui"+ mobile, randCode);
         //session获取测试
         logger.debug(mobile + "=>j_captcha_cmcc:{}", getSession("j_captcha_cmcc_" + mobile));
 
@@ -136,9 +135,8 @@ public class WRegisterController extends BizController {
         String mobile=data.getMobile()==null?data.getAccount():data.getMobile();
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
         if(code=="null"){
-            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
+            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui"+ mobile);
         }
-        logger.info("session2================"+getRequest().getSession().getId());
         String userCode = data.getCaptcha();
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
             return new ResponseDTO(ResultCode.FAIL, "验证码验证失败！");
@@ -182,7 +180,7 @@ public class WRegisterController extends BizController {
         //验证码有效验证
         String code = String.valueOf(getSession("j_captcha_cmcc_" + mobile));
         if(code=="null"){
-            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui");
+            code = (String) this.redisTemplate.opsForValue().get(_3rd_session + "j_captcha_weui"+mobile);
         }
         String userCode = captcha;
         if (CommonUtils.isBlank(userCode) || !userCode.equals(code)) {
