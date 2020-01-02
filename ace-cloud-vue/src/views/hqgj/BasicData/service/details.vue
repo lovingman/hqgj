@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="title">服务机构详情</div>
+        <div class="title">
+            <span>服务机构详情</span>
+            <el-button @click="back" style="float: right" type="primary">返回</el-button>
+        </div>
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="类型:" prop="name">
@@ -34,9 +37,9 @@
                 <el-form-item label="创建时间:" prop="name" style="width: 70%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.createDate}}</span>
                 </el-form-item>
-                <el-form-item>
-                    <el-button @click="back" type="primary">返回</el-button>
-                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-button @click="back" type="primary">返回</el-button>-->
+                <!--</el-form-item>-->
             </el-form>
         </div>
     </div>
@@ -85,6 +88,7 @@
     }
 
     .title {
+        line-height: 30px;
         font-size: 16px;
         font-weight: bold;
         padding: 20px 30px;
