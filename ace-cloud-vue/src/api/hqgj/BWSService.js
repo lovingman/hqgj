@@ -113,3 +113,11 @@ export function downloadimg(relationId) {
         params:{relationId:relationId}
     })
 }
+
+export function downloadZip(businessId) {
+    return request({
+        url: '/hqgj/basicAnnex/downloadZip',
+        method: 'get',
+        params:{businessId:businessId}
+    })
+}

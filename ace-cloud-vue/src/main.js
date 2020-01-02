@@ -28,6 +28,12 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import Print from 'vue-print-nb'
+Vue.use(Print); //打印
+
+import JSZip from "jszip";
+Vue.use(JSZip); //下载压缩包
+
 import LightTimeline from 'vue-light-timeline';
 
 Vue.use(LightTimeline);

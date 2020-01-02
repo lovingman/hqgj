@@ -21,6 +21,8 @@
         "pages/Register/index",
         "pages/PersonalCenter/index",
         "pages/RecordTrain/index",
+        "pages/RecordsFinance/index",
+        "pages/RecordInquiry/index",
         "pages/TrainingService/index",
         "pages/TrainingServiceInfo/index",
         "pages/TrainingScheduleDetails/index",
@@ -51,12 +53,6 @@
                 "iconPath": "/assets/image/icon4-1.png",
                 "pagePath": "pages/index/index",
                 "text": "首页"
-            },
-            {
-                "selectedIconPath": "/assets/image/icon4-4.png",
-                "iconPath": "/assets/image/icon4-3.png",
-                "pagePath": "pages/logs/logs",
-                "text": "服务"
             },
             {
                 "selectedIconPath": "/assets/image/icon4-6.png",

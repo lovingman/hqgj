@@ -5,14 +5,13 @@
                 <el-row>
                     <el-col :span="14">
                         <el-date-picker
-                                :default-time="['12:00:00', '08:00:00']"
                                 align="right"
-                                value-format="yyyy-MM-dd HH:mm:ss"
+                                value-format="yyyy-MM-dd"
                                 end-placeholder="结束时间"
                                 start-placeholder="开始时间"
                                 style="float: right"
-                                type="datetimerange"
-                                v-model="times">
+                                v-model="timeArr"
+                                type="daterange">
                         </el-date-picker>
                     </el-col>
                     <el-col :span="4">
@@ -25,17 +24,20 @@
                             </el-option>
                         </el-select>
                     </el-col>
-                    <el-col :span="4">
-                        <el-input
-                                class="input-with-select"
-                                placeholder="请输入公司名称、申请人姓名"
-                                style="float: right;width: 250px"
-                                v-model="query.applyPersonName"
-                        ></el-input>
-                    </el-col>
-                    <el-col :span="2">
-                        <el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索
-                        </el-button>
+                    <!--<el-col :span="4">-->
+                        <!--<el-input-->
+                                <!--class="input-with-select"-->
+                                <!--placeholder="请输入公司名称、申请人姓名"-->
+                                <!--style="float: right;width: 250px"-->
+                                <!--v-model="query.applyPersonName"-->
+                        <!--&gt;</el-input>-->
+                    <!--</el-col>-->
+                    <el-col :span="6">
+                        <el-input class="input-with-select" clearable placeholder="请输入公司名称、申请人姓名" v-model="query.applyPersonName">
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
+                        </el-input>
+                        <!--<el-button @click="search" icon="el-icon-search" style="float: right" type="primary">搜索-->
+                        <!--</el-button>-->
                     </el-col>
                 </el-row>
             </div>
@@ -166,7 +168,7 @@
                     applyPersonName:""
                 },
                 value: '',
-                times: []
+                timeArr: []
             };
         },
         created() {
@@ -195,6 +197,14 @@
                     pageSize: this.pagesize,
                     totalRecord: this.total
                 });
+                console.log(this.timeArr);
+                if (this.timeArr) {
+                    this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
+                    this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
+                } else {
+                    this.query.startTime = "";
+                    this.query.endTime = "";
+                }
                 getList(this.query).then(response => {
                     this.total = response.total;
                     this.list = response.rows;
@@ -305,7 +315,10 @@
         padding: 20px;
         background-color: #fff;
     }
-
+    .input-with-select{
+        float: right;
+        width: 350px;
+    }
     .red {
         color: red;
     }

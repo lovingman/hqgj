@@ -1,8 +1,9 @@
 <template>
     <div class="container">
         <div class="button">
-            <el-button @click="backLook" style="margin-bottom: 20px">推出预览</el-button>
-            <el-button @click="getPdf" style="margin-bottom: 20px">下载</el-button>
+            <el-button @click="backLook" style="margin-bottom: 20px">退出预览</el-button>
+            <!--<el-button @click="getPdf" style="margin-bottom: 20px">下载</el-button>-->
+            <el-button style="float: right;margin-bottom: 20px" v-print="'#Apply'">打印</el-button>
         </div>
         <div id="Apply">
             <div style="height: 30px"><br></div>
@@ -98,7 +99,7 @@
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt; text-align:center"><span
-                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">注册资金</span>
+                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold">注册资金</span>
                             </p>
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
@@ -422,9 +423,16 @@
                     this.list = response.data;
                     console.log(this.list.businessAppendList)
                     this.changeArr(this.list.businessAppendList);
-                    console.log(this.option4);
-                    console.log(this.option3);
-                    console.log(this.option2);
+                    // console.log(this.option4);
+                    // console.log(this.option3);
+                    // console.log(this.option2);
+                    if(this.$route.query.name=='download'){
+                        clearTimeout(this.timer); //清除延迟执行
+                        this.timer = setTimeout(() => {
+                            //设置延迟执行
+                            this.getPdf();
+                        }, 2000);
+                    }
                 })
             },
             //服务字符串转换数组

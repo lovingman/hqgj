@@ -3,6 +3,7 @@ package com.huacainfo.ace.hqgj.service.impl;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -172,6 +173,33 @@ public class BasicAnnexServiceImpl implements BasicAnnexService {
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.basicAnnexDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+
+    /**
+     * 对应创业包下的所有附件
+     * @param businessId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO<String> businessFileUrlList(String businessId) throws Exception {
+        if(CommonUtils.isBlank(businessId)){
+            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
+        }
+        List<String> urlList=basicAnnexDao.businessFileUrlList(businessId);
+        String[] list=new String[urlList.size()];
+        //多个图片下载地址
+        for(int i=0;i<urlList.size();i++ ) {
+            try {
+                URL url = new URL(urlList.get(i));
+                String base64 = CommonUtils.encodeImageToBase64(url);
+                list[i] = base64;
+            }catch (Exception e){
+                return new ResponseDTO(ResultCode.FAIL, "图片转换失败！");
+            }
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！",list);
     }
 
 

@@ -16,14 +16,14 @@
                     </el-col>
                     <el-col :span="16">
                         <el-input class="input-with-select" clearable placeholder="请输入名称" v-model="query.title">
-                            <el-button @click="search" slot="append">搜索</el-button>
+                            <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
                         </el-input>
                     </el-col>
                 </el-col>
             </el-row>
         </div>
         <div class="table-box">
-            <el-table :data="tableData" style="width: 100%">
+            <el-table :data="tableData" v-loading="loading" style="width: 100%">
                 <el-table-column align="center" label="序号" type="index" width="80"></el-table-column>
                 <el-table-column label="政策名称" prop="title" sortable></el-table-column>
                 <el-table-column label="创建时间" prop="createDate" sortable></el-table-column>
@@ -65,6 +65,7 @@
         name: "index",
         data() {
             return {
+                loading:false,
                 currentPage: 1, //初始页
                 pagesize: 10, //  每页的数据
                 total: 0,
@@ -111,6 +112,7 @@
                 this.getlist();
             },
             getlist() {
+                this.loading=true;
                 this.query = Object.assign(this.query, {
                     pageNum: this.currentPage,
                     pageSize: this.pagesize,
@@ -118,7 +120,8 @@
                 });
                 getPolicy(this.query).then(response => {
                     this.total = response.total;
-                    this.tableData = response.rows
+                    this.tableData = response.rows;
+                    this.loading=false;
                 })
             },
             //搜索
@@ -210,12 +213,12 @@
             .selectSearch {
                 float: right;
 
-                /deep/ .el-button--medium {
-                    color: #fff;
-                    background-color: #007cff;
-                    border-color: #007cff;
-                    border-radius: 0;
-                }
+                /*/deep/ .el-button--medium {*/
+                    /*color: #fff;*/
+                    /*background-color: #007cff;*/
+                    /*border-color: #007cff;*/
+                    /*border-radius: 0;*/
+                /*}*/
             }
         }
 

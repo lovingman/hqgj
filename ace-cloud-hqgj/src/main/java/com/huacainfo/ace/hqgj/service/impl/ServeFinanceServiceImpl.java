@@ -237,11 +237,11 @@ public class ServeFinanceServiceImpl implements ServeFinanceService {
      */
     @Override
     public ResponseDTO updateStatus(String id, String status,String reason) {
-       /* if(status.equals("2")){
+        if(status.equals("2")){
             if(CommonUtils.isBlank(reason)){
                 return new ResponseDTO(ResultCode.FAIL, "请输入审核不通过原因");
             }
-        }*/
+        }
         int i=  serveFinanceDao.updateStatus(id,status,reason);
         if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "更新失败");

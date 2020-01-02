@@ -15,7 +15,8 @@
                             max-height="475"
                             ref="multipleTable"
                             v-loading="loading">
-                        <el-table-column align="center" type="selection" width="55"></el-table-column>
+                        <el-table-column :selectable='selectInit' align="center" type="selection"
+                                         width="55"></el-table-column>
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="名称" prop="fileName" sortable='custom'>
                         </el-table-column>
@@ -25,25 +26,32 @@
                         </el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
+                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.id != null">下载
+                                </el-button>
+                                <el-button type="text" v-else="scope.row.id != null">
+                                    <router-link :to="{name:'application',query:{id:form.id,name:'download'}}"
+                                                 target="_blank">下载
+                                    </router-link>
+                                </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
-                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览
+                                    <router-link :to="{name:'application',query:{id:form.id,name:'see'}}"
+                                                 target="_blank">预览
                                     </router-link>
                                 </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <el-dropdown style="margin-top: 20px" trigger="click">
-                        <el-button>
-                            压缩包下载<i class="el-icon-arrow-down el-icon--right"></i>
+                    <el-dropdown @command="handleCommand" style="margin-top: 20px" trigger="click">
+                        <el-button>压缩包下载<i class="el-icon-arrow-down el-icon--right"></i>
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>rar下载</el-dropdown-item>
-                            <el-dropdown-item>zip下载</el-dropdown-item>
+                            <el-dropdown-item command="rarDownload">rar下载</el-dropdown-item>
+                            <el-dropdown-item command="zipDownload">zip下载</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </el-tab-pane>
@@ -378,14 +386,17 @@
         updateState,
         getannexList,
         getAnnex,
-        getAppend
+        getAppend, downloadZip
     } from "@/api/hqgj/BWSService";
-    import {getAreaTree, getDict} from "@/api/sys";
+    import {getAreaTree} from "@/api/sys";
+    import JSZip from "jszip";
+    import FileSaver from "file-saver";
 
     export default {
         name: "Examine",
         data() {
             return {
+                zipfile: [],
                 lookingVisible: false,
                 reviewVisible: false,
                 reviewDetailVisible: false,
@@ -408,7 +419,7 @@
                 others: [],
                 query: {
                     type: "",
-                    businessId:""
+                    businessId: ""
                 },
                 query2: {
                     type: "",
@@ -528,26 +539,79 @@
             },
             //下载
             FileDownload(index, data) {
-                if(data.fileName!=''){
+                if (data.fileName != '') {
                     console.log(data);
                     this.relationId = data.id;
                     console.log(this.relationId);
                     downloadimg(this.relationId).then(response => {
-                        if(response.data!=[]){
+                        if (response.data != []) {
                             for (var i = 0; i < response.data.length; i++) {
                                 let link = document.createElement('a')
                                 link.href = 'data:image/png;base64,' + response.data[i]
+                                console.log(link.href);
                                 link.download = data.fileName + '.png'
                                 link.click()
                             }
-                        }else{
+                        } else {
                             this.$message.warning(`附件数据丢失`);
                         }
                     })
-                }else {
+                } else {
                     this.$message.warning(`数据缺失`);
                 }
 
+            },
+            //压缩包下载
+            handleCommand(command) {
+                //rar下载
+                if (command == 'rarDownload') {
+                    console.log(456)
+                }
+                //zip下载
+                if (command == 'zipDownload') {
+                    console.log(this.multipleSelection.length)
+                    if (this.multipleSelection.length != 0) {
+                        this.relationId = this.zipfile.join(',');
+                        console.log(this.relationId);
+                        downloadimg(this.relationId).then(response => {
+                            if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("images");
+                                for (var i = 0; i < response.data.length; i++) {
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i]
+                                    img.file("附件" + i + ".png", imgData, {base64: true});
+                                }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.zip");
+                                    });
+                            } else {
+                                this.$message.warning(`附件数据丢失`);
+                            }
+                        })
+                    } else {
+                        this.businessId = this.$route.query.id;
+                        downloadZip(this.businessId).then(response => {
+                            if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("images");
+                                for (var i = 0; i < response.data.length; i++) {
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i]
+                                    img.file("附件" + i + ".png", imgData, {base64: true});
+                                }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.zip");
+                                    });
+                            } else {
+                                this.$message.warning(`附件数据丢失`);
+                            }
+                        })
+                    }
+
+                }
             },
             //标签页查看
             handleClick(tab, event) {
@@ -635,6 +699,18 @@
             //获取选中行数据
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+                for (var i = 0; i < this.multipleSelection.length; i++) {
+                    this.zipfile[i] = this.multipleSelection[i].id;
+                }
+                console.log(this.zipfile);
+            },
+            selectInit(row, index) {
+                // console.log(row)
+                if (index == 0) {
+                    return false  //不可勾选
+                } else {
+                    return true  //可勾选
+                }
             },
             preview() {
                 this.$router.push('/application');

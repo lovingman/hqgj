@@ -14,8 +14,8 @@
             <van-button bindtap="submitForm" round type="info" size="large">登录</van-button>
         </view>
         <view class="other">
-            <button>注册</button>
-            <button>忘记密码</button>
+            <navigator class="button" url="/pages/Register/index">注册</navigator>
+            <navigator class="button" url="/pages/Forget/index">忘记密码</navigator>
         </view>
     </view>
 

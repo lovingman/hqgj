@@ -15,9 +15,9 @@
 		"scopeDataCheck": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.4",
-	"appid": "wx7f7deaf0fbd0a943",
-	"projectname": "miniprogram-1",
+	"libVersion": "2.7.7",
+	"appid": "wxd99073fbc6bd1b6f",
+	"projectname": "%E6%99%BA%E4%BC%81%E7%AE%A1%E5%AE%B6",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -39,7 +39,215 @@
 		},
 		"miniprogram": {
 			"current": -1,
+<<<<<<< HEAD
 			"list": []
+=======
+			"list": [
+				{
+					"id": 0,
+					"name": "pages/EnterpriseReg/index",
+					"pathName": "pages/RegEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/RegAgreement/index",
+					"pathName": "pages/RegAgreement/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "创业服务包新增修改",
+					"pathName": "pages/RegProcess/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "创业服务包进度条",
+					"pathName": "pages/RegProgress/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税",
+					"pathName": "pages/FinanceTax/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税单位信息",
+					"pathName": "pages/FinanceEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "专家问诊index",
+					"pathName": "pages/ExpertConsultation/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "专家预约",
+					"pathName": "pages/ExpertAppointment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "服务企业",
+					"pathName": "pages/ServiceEnterprise/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训机构",
+					"pathName": "pages/TrainingInstitutions/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训机构",
+					"pathName": "pages/TrainingInstitutions/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训报名管理",
+					"pathName": "pages/TrainingEnrollmentManagement/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "登录",
+					"pathName": "pages/SignIn/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/Register/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "注册验证",
+					"pathName": "pages/RegisterVerifies/index",
+					"query": "account=18277177517&captcha=52003&password=123123",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/PersonalCenter/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训记录",
+					"pathName": "pages/RecordTrain/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训服务",
+					"pathName": "pages/TrainingService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训服务详情",
+					"pathName": "pages/TrainingServiceInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "培训日程安排详情",
+					"pathName": "pages/TrainingScheduleDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "律师服务",
+					"pathName": "pages/LawyerService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "律师事务所",
+					"pathName": "pages/LawFirm/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "政策服务",
+					"pathName": "pages/PolicyService/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "政策服务详情",
+					"pathName": "pages/PolicyServiceDetail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "忘记密码",
+					"pathName": "pages/Forget/index",
+					"query": "account=18277177517&captcha=52003&password=123123",
+					"scene": null
+				},
+				{
+					"id": 26,
+					"name": "登录",
+					"pathName": "pages/SignIn/index",
+					"query": "url=pages%2FPersonalCenter%2Findex",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "问诊记录",
+					"pathName": "pages/RecordInquiry/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "财税记录",
+					"pathName": "pages/RecordsFinance/index",
+					"query": "",
+					"scene": null
+				}
+			]
+>>>>>>> 8bce138040bd68b1e4a5220258679d2d39714b01
 		}
 	}
 }

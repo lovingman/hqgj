@@ -23,6 +23,12 @@
                         <el-form-item label="简介:" prop="name">
                             <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                         </el-form-item>
+                        <el-form-item label="创建人:" prop="createUserName" style="width: 70%">
+                            <span style="word-wrap: break-word;word-break: break-all;">{{form.createUserName}}</span>
+                        </el-form-item>
+                        <el-form-item label="创建时间:" prop="createDate" style="width: 70%">
+                            <span style="word-wrap: break-word;word-break: break-all;">{{form.createDate}}</span>
+                        </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="形象照:" prop="name">
