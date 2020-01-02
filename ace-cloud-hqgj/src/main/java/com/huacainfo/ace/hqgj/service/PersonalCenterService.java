@@ -8,4 +8,11 @@ public interface PersonalCenterService {
     ResponseDTO bindUser(String id, String type, UserProp userProp);
 
     ResponseDTO homePage(UserProp userProp);
+
+    /**
+     * 解除绑定
+     * @param userProp
+     * @return
+     */
+    ResponseDTO relieveBind(UserProp userProp);
 }
