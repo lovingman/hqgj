@@ -42,11 +42,13 @@ Page({
       request.postJSON(cfg.serveCultivateEnrollUrl, {
         serveCultivateId: that.data.id
       }).then(res => {
-        Toast.fail(res.data.message);
-        this.getById(); //更新当前请求数据
+        if (res.data.status == 1) {
+          Toast.fail(res.data.message);
+          this.getById(); //更新当前请求数据
+        }
       })
     } else {
-      Toast.fail(res.data.message);
+      Toast.fail("未登录，请先登录");
       wx.navigateTo({
         url: '../SignIn/index?url=' + encodeURIComponent(that.data.getCurrentPageUrlWithArgs),
       })

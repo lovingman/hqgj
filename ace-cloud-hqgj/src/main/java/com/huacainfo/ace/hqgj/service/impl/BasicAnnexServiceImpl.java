@@ -54,6 +54,9 @@ public class BasicAnnexServiceImpl implements BasicAnnexService {
     public PageDTO
             <BasicAnnexVo> page(BasicAnnexQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<BasicAnnexVo> rst = new PageDTO<>();
+        if(!CommonUtils.isBlank(condition.getRelationId())){
+            condition.setRelationIds(condition.getRelationId().split(","));
+        }
         List<BasicAnnexVo> list = this.basicAnnexDao.findList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {

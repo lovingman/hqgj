@@ -63,7 +63,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.companyId, t.companyName, t.getIntegral, t.surplusIntegral, t.register, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.companyId, t.companyName, IFNULL(t.getIntegral,0)as getIntegral, IFNULL(t.surplusIntegral,0)as surplusIntegral, t.register, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_business_integral t

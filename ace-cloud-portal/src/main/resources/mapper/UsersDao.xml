@@ -85,8 +85,8 @@
 
     <sql id="whereCondition">
         from users t
-        inner join hqgj.base_organization a on t.corpId=a.id
-        inner join province b on a.areaCode=b.code
+        left join hqgj.base_organization a on t.corpId=a.id
+        left join province b on a.areaCode=b.code
         left join dept c on t.deptId=c.id
         where 0=0
         <if test='condition.areaCode!=null and condition.areaCode!=""'>

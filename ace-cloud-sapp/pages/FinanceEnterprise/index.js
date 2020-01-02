@@ -1,8 +1,10 @@
 // pages/FinanceEnterprise/index.js
 var cfg = require("../../utils/config.js");
+var util = require("../../utils/util.js");
 var request = require("../../utils/request.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
 import Toast from '../../vant/weapp/toast/toast';
+const app = getApp()
 Page({
 
   /**
@@ -47,19 +49,60 @@ Page({
   //点击下单
   orderClick: function() {
     var that = this;
-    if (that.data.type == 1) {
-      var detailsObj = that.data.detailsForm;
-      if (detailsObj.integral == 500) {
+    if (app.globalData.islogin) {
+      if (that.data.type == 1) {
+        var detailsObj = that.data.detailsForm;
+        if (detailsObj.integral == 500) {
+          Dialog.confirm({
+            title: '确认订单',
+            message: '是否抵扣积分'
+          }).then(() => {
+            request.postJSON(cfg.financeOrder, {
+              financeId: that.data.id,
+              type: 1,
+            }).then(res => {
+              if (res.data.status == 1) {
+                Toast.fail("订单" + res.data.message);
+                this.getById();
+              }
+            })
+          }).catch(() => {
+            Toast.fail("已取消当前操作");
+          });
+        } else {
+          Toast.fail("对不起，您的积分不够500");
+        }
+      } else {
+        that.setData({
+          show: true,
+        });
+      }
+    } else {
+      Toast.fail("未登录，请先登录");
+      wx.navigateTo({
+        url: '../SignIn/index?url=' + encodeURIComponent(that.data.getCurrentPageUrlWithArgs),
+      })
+    }
+  },
+  //财税订单确定
+  orderDetermine: function() {
+    var that = this;
+    if (app.globalData.islogin) {
+      if (that.data.itemId != "") {
         Dialog.confirm({
           title: '确认订单',
-          message: '是否抵扣积分'
+          message: '是否确定下单'
         }).then(() => {
           request.postJSON(cfg.financeOrder, {
             financeId: that.data.id,
-            type: 1,
+            type: 2,
+            itemId: that.data.itemId
           }).then(res => {
             if (res.data.status == 1) {
-              Toast.fail("订单" + res.data.message);
+              Toast.fail("下单" + res.data.message);
+              that.setData({
+                show: false,
+              });
               this.getById();
             }
           })
@@ -67,40 +110,13 @@ Page({
           Toast.fail("已取消当前操作");
         });
       } else {
-        Toast.fail("对不起，您的积分不够500");
+        Toast.fail("请选择一个服务项目");
       }
     } else {
-      that.setData({
-        show: true,
-      });
-    }
-  },
-  //财税订单确定
-  orderDetermine: function() {
-    var that = this;
-    if (that.data.itemId != "") {
-      Dialog.confirm({
-        title: '确认订单',
-        message: '是否确定下单'
-      }).then(() => {
-        request.postJSON(cfg.financeOrder, {
-          financeId: that.data.id,
-          type: 2,
-          itemId: that.data.itemId
-        }).then(res => {
-          if (res.data.status == 1) {
-            Toast.fail("下单" + res.data.message);
-            that.setData({
-              show: false,
-            });
-            this.getById();
-          }
-        })
-      }).catch(() => {
-        Toast.fail("已取消当前操作");
-      });
-    } else {
-      Toast.fail("请选择一个服务项目");
+      Toast.fail("未登录，请先登录");
+      wx.navigateTo({
+        url: '../SignIn/index?url=' + encodeURIComponent(that.data.getCurrentPageUrlWithArgs),
+      })
     }
   },
   //获取数据
@@ -141,7 +157,8 @@ Page({
     var that = this;
     that.setData({
       id: options.id,
-      type: options.type
+      type: options.type,
+      getCurrentPageUrlWithArgs: util.getCurrentPageUrlWithArgs()
     });
     this.getById();
   },

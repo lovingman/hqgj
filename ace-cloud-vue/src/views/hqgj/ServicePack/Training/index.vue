@@ -5,7 +5,7 @@
         <el-button type="primary" style="float:left;" @click="create">创建</el-button>
         <el-col class="selectSearch" :span="10">
           <el-col :span="7">
-            <el-select v-model="query.status" clearable placeholder="请选择">
+            <el-select v-model="query.status" @change="toggleSelect" clearable placeholder="请选择">
               <el-option
                 v-for="item in stautsArr"
                 :key="item.id"
@@ -54,7 +54,11 @@
               @click="registrationClick(scope.row)"
               v-if="scope.row.status =='1' || scope.row.status =='3' "
             >报名管理</el-button>
-            <el-button type="text" v-if="scope.row.status !='3'" @click="update(scope.row)">编辑</el-button>
+            <el-button
+              type="text"
+              v-if="scope.row.status !='3' && scope.row.status !='2'"
+              @click="update(scope.row)"
+            >编辑</el-button>
             <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
@@ -79,6 +83,9 @@
             <el-radio :label="4">通过</el-radio>
             <el-radio :label="2">不通过</el-radio>
           </el-radio-group>
+          <el-row v-if="updateState.status == 2" style="padding:0 20px; margin-top:30px;">
+            <el-input placeholder="请输入不通过的原因" v-model="updateState.reason"></el-input>
+          </el-row>
         </div>
       </el-form>
       <span class="dialog-footer">
@@ -108,7 +115,9 @@ export default {
       },
       //审核
       updateState: {
-        status: 4
+        status: 4,
+        reason: "", //审核原因
+        id: "" //当前ID
       },
       stautsArr: [
         {
@@ -121,11 +130,11 @@ export default {
         },
         {
           id: "1",
-          name: "未通过"
+          name: "进行中"
         },
         {
           id: "2",
-          name: "进行中"
+          name: "未通过"
         },
         {
           id: "3",
@@ -155,6 +164,12 @@ export default {
           this.loading = false;
         }
       });
+    },
+    //选择状态请求
+    toggleSelect(value) {
+      this.tablePage = 1;
+      this.query["status"] = value;
+      this.getList();
     },
     //搜索请求
     search: function() {
@@ -224,28 +239,44 @@ export default {
     examine(row) {
       this.examineId = row.id;
       this.examineVisible = true;
+      this.updateState.status = 4; //默认状态
     },
     //确定审核
     saveExamine() {
-      updateStatus(this.examineId, this.updateState.status).then(res => {
-        if (res.status == 1) {
-          this.$message.success("审核成功");
-          this.examineVisible = false;
-          this.getList();
-        }
-      });
+      var obj = {};
+      obj.id = this.examineId;
+      obj.status = this.updateState.status;
+      obj.reason = this.updateState.reason;
+      if (this.updateState.status == 2) {
+        updateStatus(obj).then(res => {
+          if (res.status == 1) {
+            this.$message.success("提交成功");
+            this.examineVisible = false;
+            this.getList();
+          }
+        });
+      } else {
+        updateStatus(obj).then(res => {
+          if (res.status == 1) {
+            this.$message.success("审核成功");
+            this.examineVisible = false;
+            this.getList();
+          }
+        });
+      }
     },
     //确定是否发布
     release(row) {
-      this.releaseId = row.id;
-      this.statusType = 1; //传递1代表发布成功
+      var obj = {};
+      obj.id = row.id;
+      obj.status = 1; //传递1代表发布成功
       this.$confirm("确定是否要发布该服务?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          updateStatus(this.releaseId, this.statusType).then(res => {
+          updateStatus(obj).then(res => {
             if (res.status == 1) {
               this.$message.success("发布成功");
               this.getList();

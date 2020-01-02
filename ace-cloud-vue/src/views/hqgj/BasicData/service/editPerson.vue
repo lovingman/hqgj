@@ -9,7 +9,7 @@
                             <el-input placeholder="请输入姓名" v-model="form.name"></el-input>
                         </el-form-item>
                         <el-form-item label="身份证号:" prop="idCard">
-                            <el-input placeholder="请输入身份证号" :disabled="true" v-model="form.idCard"></el-input>
+                            <el-input :disabled="true" placeholder="请输入身份证号" v-model="form.idCard"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
                             <el-input placeholder="请输入联系方式" v-model="form.mobile"></el-input>
@@ -75,23 +75,23 @@
                             </el-dialog>
                         </el-form-item>
                         <!--<el-form-item label="微信二维码:" prop="wechatPhotoarr">-->
-                            <!--<el-upload-->
-                                    <!--:before-upload="beforeAvatarUpload2"-->
-                                    <!--:class="{hide2:hideUpload2}"-->
-                                    <!--:file-list="form.wechatPhotoarr"-->
-                                    <!--:http-request="uploadServerEdit2"-->
-                                    <!--:limit="limitImgCount"-->
-                                    <!--:on-preview="unitPictureCardPreview2"-->
-                                    <!--:on-remove="unitPictrueRemove2"-->
-                                    <!--:on-success="unitPictrueUploadSuccess2"-->
-                                    <!--action="fakeaction"-->
-                                    <!--list-type="picture-card">-->
-                                <!--<i class="el-icon-plus"></i>-->
-                            <!--</el-upload>-->
-                            <!--<div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>-->
-                            <!--<el-dialog :visible.sync="dialogVisible2" append-to-body>-->
-                                <!--<img :src="dialogImageUrl2" alt="" width="100%">-->
-                            <!--</el-dialog>-->
+                        <!--<el-upload-->
+                        <!--:before-upload="beforeAvatarUpload2"-->
+                        <!--:class="{hide2:hideUpload2}"-->
+                        <!--:file-list="form.wechatPhotoarr"-->
+                        <!--:http-request="uploadServerEdit2"-->
+                        <!--:limit="limitImgCount"-->
+                        <!--:on-preview="unitPictureCardPreview2"-->
+                        <!--:on-remove="unitPictrueRemove2"-->
+                        <!--:on-success="unitPictrueUploadSuccess2"-->
+                        <!--action="fakeaction"-->
+                        <!--list-type="picture-card">-->
+                        <!--<i class="el-icon-plus"></i>-->
+                        <!--</el-upload>-->
+                        <!--<div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>-->
+                        <!--<el-dialog :visible.sync="dialogVisible2" append-to-body>-->
+                        <!--<img :src="dialogImageUrl2" alt="" width="100%">-->
+                        <!--</el-dialog>-->
                         <!--</el-form-item>-->
                     </el-col>
                 </el-row>
@@ -106,6 +106,7 @@
 
 <script>
     import {getByIdPerson, updatePerson} from "@/api/hqgj/service";
+    import {fileUpImg} from "@/api/sys";
 
     export default {
         name: "createPerson",
@@ -124,7 +125,7 @@
                 form: {
                     orgId: "",
                     name: "",
-                    idCard:"",
+                    idCard: "",
                     mobile: "",
                     jobs: "",
                     speciality: "",
@@ -177,24 +178,28 @@
                     })
 
             },
-            convert(data){
-                var tempImgArr = data.split(",");
+            convert(data) {
                 var imgArr = [];
-                if (tempImgArr.length > 0) {
-                    tempImgArr.forEach((item, i) => {
-                        imgArr.push({ url: item });
-                    });
+                if (data) {
+                    var tempImgArr = data.split(",");
+                    if (tempImgArr.length > 0) {
+                        tempImgArr.forEach((item, i) => {
+                            imgArr.push({url: item});
+                        });
+                    }
+                    this.hideUpload = true; // 隐藏上传按钮
                 }
+
                 this.form.imagePhotoarr = imgArr;
-                this.hideUpload = true; // 隐藏上传按钮
+
 
             },
-            convert2(data){
+            convert2(data) {
                 var tempImgArr = data.split(",");
                 var imgArr = [];
                 if (tempImgArr.length > 0) {
                     tempImgArr.forEach((item, i) => {
-                        imgArr.push({ url: item });
+                        imgArr.push({url: item});
                     });
                 }
                 this.form.wechatPhotoarr = imgArr;
@@ -326,8 +331,8 @@
                         //     // obj.projectId = that.byIdData.id;
                         //     obj.coverUrl = newUrl;
                         // } else {
-                            that.actionUrls = "/hqgj-portal/www/uploadFileBase";
-                            obj.file = newUrl;
+                        that.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                        obj.file = newUrl;
                         // }
                         that.imageUpload(obj);
                     };
@@ -394,6 +399,7 @@
                         this.hideUpload = false; //显示上传按钮
                     }
                 }
+                this.hideUpload = false; //显示上传按钮
             },
             // 形象照预览
             unitPictureCardPreview(file) {
@@ -553,6 +559,7 @@
                         this.hideUpload2 = false; //显示上传按钮
                     }
                 }
+                this.hideUpload2 = false; //显示上传按钮
             },
             // 微信二维码预览
             unitPictureCardPreview2(file) {

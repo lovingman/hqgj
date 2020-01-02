@@ -10,8 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class PersonalCenterController  extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
     })
-    @GetMapping(value = "/bingUser", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/bingUser", produces = "application/json;charset=UTF-8")
     public ResponseDTO bingUser(String id,String type) throws Exception {
         if(CommonUtils.isBlank(id) || CommonUtils.isBlank(type)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
@@ -67,4 +67,22 @@ public class PersonalCenterController  extends BaseController {
         }
         return this.personalCenterService.homePage(user);
     }
+
+
+    /**
+     * 解除绑定
+     */
+    @ApiOperation(value = "/relieveBind", notes = "解除绑定企业或者服务机构")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @PostMapping(value = "/relieveBind", produces = "application/json;charset=UTF-8")
+    public ResponseDTO relieveBind() throws Exception {
+        UserProp user = this.getCurUserProp();
+        if(user==null){
+            return new ResponseDTO(ResultCode.FAIL, "请先登录！");
+        }
+        return this.personalCenterService.relieveBind(user);
+    }
+
 }

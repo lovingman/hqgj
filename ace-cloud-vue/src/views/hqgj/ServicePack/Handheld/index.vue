@@ -51,14 +51,14 @@
         <el-table-column prop="type" sortable label="类型" width="120">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.type=='1'">代理记账</div>
-            <div type="text" v-if="scope.row.type=='2'">财税管理</div>
+            <div type="text" v-if="scope.row.type=='2'">财税管家</div>
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构" width="120"></el-table-column>
-        <el-table-column prop="contactPersonTel" sortable label="联系方式" width="180"></el-table-column>
-        <el-table-column prop="createDate" sortable label="创建时间" width="220"></el-table-column>
-        <el-table-column prop="status" sortable label="状态">
+        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="contactPersonTel" sortable label="联系方式" width="140"></el-table-column>
+        <el-table-column prop="createDate" sortable label="创建时间" width="200"></el-table-column>
+        <el-table-column prop="status" sortable label="状态" width="120">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待审核</div>
             <div type="text" class="blue" v-if="scope.row.status=='1'">审核通过</div>
@@ -72,7 +72,7 @@
             <el-button type="text" v-if="scope.row.status =='0'" @click="examine(scope.row)">审核</el-button>
             <el-button type="text" v-if="scope.row.status =='1'" @click="online(scope.row)">上线</el-button>
             <el-button type="text" v-if="scope.row.status =='3'" @click="offline(scope.row)">下线</el-button>
-            <el-button type="text" v-if="scope.row.status !='4'" @click="edit(scope.row)">编辑</el-button>
+            <el-button type="text" v-if="scope.row.status !='4' && scope.row.status !='2'" @click="edit(scope.row)">编辑</el-button>
             <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
@@ -97,6 +97,9 @@
             <el-radio :label="1">通过</el-radio>
             <el-radio :label="2">不通过</el-radio>
           </el-radio-group>
+          <el-row v-if="updateState.status == 2" style="padding:0 20px; margin-top:30px;">
+            <el-input placeholder="请输入不通过的原因" v-model="updateState.reason"></el-input>
+          </el-row>
         </div>
       </el-form>
       <span class="dialog-footer">
@@ -133,7 +136,9 @@ export default {
       mechanismArr: [],
       //审核容器
       updateState: {
-        status: 1
+        status: 1,
+        reason: "", //审核原因
+        id: "" //当前ID
       },
       //状态容器
       stautsArr: [
@@ -261,15 +266,16 @@ export default {
     },
     //下线操作
     offline(row) {
-      this.offlineId = row.id;
-      let statusType = 4; //传递4代表下线状态
+      var obj = {};
+      obj.id = row.id;
+      obj.status = 4; //传递4代表下线状态
       this.$confirm("确定是否要上线该服务?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          updateStatus(this.offlineId, statusType).then(res => {
+          updateStatus(obj).then(res => {
             if (res.status == 1) {
               this.$message.success("成功下架改商品");
               this.getList();
@@ -287,28 +293,44 @@ export default {
     examine(row) {
       this.examineId = row.id;
       this.examineVisible = true;
+      this.updateState.status == 1; //默认点击审核状态为成功
     },
     //确定审核
     saveExamine() {
-      updateStatus(this.examineId, this.updateState.status).then(res => {
-        if (res.status == 1) {
-          this.$message.success("审核成功");
-          this.examineVisible = false;
-          this.getList();
-        }
-      });
+      var obj = {};
+      obj.id = this.examineId;
+      obj.status = this.updateState.status;
+      obj.reason = this.updateState.reason;
+      if (this.updateState.status == 2) {
+        updateStatus(obj).then(res => {
+          if (res.status == 1) {
+            this.$message.success("提交成功");
+            this.examineVisible = false;
+            this.getList();
+          }
+        });
+      } else {
+        updateStatus(obj).then(res => {
+          if (res.status == 1) {
+            this.$message.success("审核成功");
+            this.examineVisible = false;
+            this.getList();
+          }
+        });
+      }
     },
     //上线操作
     online(row) {
-      this.onlineId = row.id;
-      let statusType = 3; //传递3代表已上线状态
+      var obj = {};
+      obj.id = row.id;
+      obj.status = 3; //传递3代表已上线状态
       this.$confirm("确定是否要上线该服务?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          updateStatus(this.onlineId, statusType).then(res => {
+          updateStatus(obj).then(res => {
             if (res.status == 1) {
               this.$message.success("上线成功");
               this.getList();

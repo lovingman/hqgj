@@ -8,7 +8,7 @@
       </view>
     </view>
   </van-sticky>
-  <van-checkbox-group value="{{ result }}" bind:change="singleClcik">
+  <van-checkbox-group value="{{ result }}" bind:change="singleClcik" class="check-box">
     <view class="modal van-hairline--bottom" wx:for="{{enrollForm}}" wx:key="{{index}}" wx:for-item="item" data-index='{{index}}' data-id='{{item.id}}'>
       <view class="select" wx:if="{{isCheck&&item.status!=2}}">
         <van-checkbox name="{{item.id}}"></van-checkbox>

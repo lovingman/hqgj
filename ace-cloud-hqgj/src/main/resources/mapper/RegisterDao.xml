@@ -12,6 +12,11 @@
         from portal_hqgj.users
         where account = #{account} and isSync='n'
      </select>
+    <select id="idCardIsExist" resultType="int">
+        select count(*)
+        from portal_hqgj.users
+        where idCard = #{idCard}
+     </select>
     <select id="isExist" resultType="int">
         select count(*)
         from portal_hqgj.users

@@ -14,8 +14,8 @@
                 <el-form-item label="机构名称:" prop="name">
                     <span>{{form.orgName}}</span>
                 </el-form-item>
-                <el-form-item label="机构封面:" prop="fmUrlarr">
-                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt="" class="img"></i>
+                <el-form-item label="logo:" prop="fmUrlarr">
+                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt=""class="img"></i>
                     <el-dialog :visible.sync="dialogVisible" append-to-body>
                         <img :src="dialogImageUrl" alt="" width="100%">
                     </el-dialog>
@@ -26,9 +26,9 @@
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>湖南省,常德市,{{form.completeAddress}}</span>
+                    <span>{{form.completeAddress}}</span>
                 </el-form-item>
-                <el-form-item label="简介:" prop="name" style="width: 70%">
+                <el-form-item label="简介:" prop="name" style="width: 95%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                 </el-form-item>
                 <el-form-item label="创建人:" prop="name" style="width: 70%">
@@ -100,10 +100,15 @@
         padding-bottom: 40px;
     }
     .img {
-        width: 100px;
-        height: 73px;
-        border-radius: 2px;
         overflow: hidden;
-        position: relative;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 148px;
+        height: 148px;
+        margin: 0 8px 8px 0;
+        display: inline-block;
     }
 </style>

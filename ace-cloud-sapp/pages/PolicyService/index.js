@@ -13,7 +13,8 @@ Page({
   //请求page
   getList: function() {
     var that = this;
-    request.getJSON(cfg.lawServePageUrl).then(res => {
+    //2代表请求已发布的状态
+    request.getJSON(cfg.lawServePageUrl,{status:2}).then(res => {
       if (res.data.status == 1) {
         var listLength = res.data.rows.length;
         that.setData({
