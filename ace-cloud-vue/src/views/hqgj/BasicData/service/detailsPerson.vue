@@ -119,10 +119,15 @@
         padding-bottom: 40px;
     }
     .img {
-        width: 100px;
-        height: 73px;
-        border-radius: 2px;
         overflow: hidden;
-        position: relative;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 148px;
+        height: 148px;
+        margin: 0 8px 8px 0;
+        display: inline-block;
     }
 </style>
