@@ -4,12 +4,12 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyId">
-                    <el-select placeholder="请选择企业" @change="changeLocationValue" filterable clearable v-model="addform.companyId" style="width: 30%">
+                    <el-select placeholder="请输入企业名称" @change="changeLocationValue" :filter-method="userFilter" filterable clearable v-model="addform.companyId" style="width: 30%">
                         <el-option
                                 :key="item.id"
                                 :label="item.companyName"
                                 :value="item.id"
-                                v-for="item in dict"
+                                v-for="item in userList"
                         ></el-option>
                     </el-select>
                     <!--<el-input placeholder="请输入企业名称" style="width: 50%" v-model="addform.companyName"></el-input>-->
@@ -42,6 +42,7 @@
                     surplusIntegral:"500",
                     register: "2"
                 },
+                userList:[],
                 dict: [],
                 addrules: {
                     companyId: [
@@ -57,11 +58,24 @@
             this.getlist();
         },
         methods: {
+            userFilter(query = '') {
+                let arr = this.dict.filter((item) => {
+                    return item.companyName.includes(query) || item.id.includes(query)
+                })
+                if (arr.length > 50) {
+                    this.userList = arr.slice(0, 50)
+                } else {
+                    this.userList = arr
+                }
+            },
             //获取企业数据
             getlist() {
-                getList().then(response => {
+                this.query = Object.assign({
+                    pageSize: 50000,
+                });
+                getList(this.query).then(response => {
                     this.dict = response.rows;
-                    console.log(this.dict)
+                    this.userFilter();
                 })
             },
             changeLocationValue(val){

@@ -55,8 +55,8 @@
                 </el-table-column>
                 <el-table-column label="法人代表" prop="legalPerson" width="100">
                 </el-table-column>
-                <el-table-column label="联系方式" prop="contactPersonTel" width="150">
-                </el-table-column>
+                <!--<el-table-column label="联系方式" prop="contactPersonTel" width="150">-->
+                <!--</el-table-column>-->
                 <el-table-column label="地址" :show-overflow-tooltip="true" prop="completeAddress">
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">

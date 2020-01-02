@@ -109,7 +109,9 @@
                         var str = this.form.areaCode;
                         var arr = [6, 9, 12];
                         for (var i = 0; i < 3; i++) {
-                            this.form.areaCodes[i] = str.substring(0, arr[i]);
+                            if(arr[i]<=str.length){
+                                this.form.areaCodes[i] = str.substring(0, arr[i]);
+                            }
                         }
                     })
 
