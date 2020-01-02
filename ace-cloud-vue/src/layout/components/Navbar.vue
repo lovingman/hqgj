@@ -20,7 +20,7 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <div class="head-img">
-            <img src="@/assets/images/huiqiicon.png" alt />
+            <!--<img src="@/assets/images/huiqiicon.png" alt />-->
           </div>
          <div class="user-name text-center">{{ name }}</div>
           <i class="el-icon-caret-bottom" style="float:left;" />

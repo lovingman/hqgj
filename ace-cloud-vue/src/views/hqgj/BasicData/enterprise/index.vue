@@ -19,8 +19,8 @@
                             <!--</el-dropdown-menu>-->
                         <!--</el-dropdown>-->
                     <!--</el-col>-->
-                    <el-col :span="4">
-                        <el-select v-model="query.source" clearable placeholder="来源">
+                    <el-col :span="6">
+                        <el-select style="float: right" v-model="query.source" clearable placeholder="来源">
                             <el-option
                                     :key="item.value"
                                     :label="item.label"
@@ -29,7 +29,7 @@
                             ></el-option>
                         </el-select>
                     </el-col>
-                    <el-col :span="8"  class="selectSearch">
+                    <el-col :span="6"  class="selectSearch">
                         <el-input class="input-with-select" clearable placeholder="请输入企业名称" v-model="query.companyName">
                             <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
                         </el-input>

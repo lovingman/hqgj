@@ -32,11 +32,11 @@
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="title" sortable label="培训标题"></el-table-column>
-        <el-table-column prop="cultivatePersonNumber" sortable label="培训人数"></el-table-column>
-        <el-table-column prop="enrollPersopnNumber" sortable label="报名人数"></el-table-column>
-        <el-table-column prop="startDate" sortable label="开始时间"></el-table-column>
-        <el-table-column prop="endDate" sortable label="截止时间"></el-table-column>
-        <el-table-column prop="status" sortable label="状态">
+        <el-table-column prop="cultivatePersonNumber" sortable width="120" label="培训人数"></el-table-column>
+        <el-table-column prop="enrollPersopnNumber" sortable width="120" label="报名人数"></el-table-column>
+        <el-table-column prop="startDate" sortable width="180" label="开始时间"></el-table-column>
+        <el-table-column prop="endDate" sortable width="180" label="截止时间"></el-table-column>
+        <el-table-column prop="status" sortable width="100" label="状态">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待审核</div>
             <div type="text" class="green" v-if="scope.row.status=='1'">进行中</div>
@@ -45,7 +45,7 @@
             <div type="text" class="blue" v-if="scope.row.status=='4'">待发布</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="280" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="release(scope.row)" v-if="scope.row.status =='4'">发布</el-button>
             <el-button type="text" @click="examine(scope.row)" v-if="scope.row.status =='0'">审核</el-button>

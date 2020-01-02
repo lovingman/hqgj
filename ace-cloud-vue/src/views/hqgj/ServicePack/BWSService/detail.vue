@@ -1,8 +1,11 @@
 <template>
     <div class="container">
         <div style="width: 100%;height: 20px">
-            <el-button @click="Auditing" size="small" style="float: right" type="primary"
-                       v-if="this.$route.query.word=='examine'">完成审核
+            <!--<el-button @click="Auditing" size="small" style="float: right" type="primary"-->
+                       <!--v-if="this.$route.query.word=='examine'">完成审核-->
+            <!--</el-button>-->
+            <el-button @click="back" size="small" style="float: right" type="primary"
+                       v-if="this.$route.query.word=='preview'">返回
             </el-button>
         </div>
         <div class="tab-pane" style="width: 100%">
@@ -442,7 +445,6 @@
             getannexList() {
                 this.id = this.$route.query.id;
                 getannexList(this.id).then(response => {
-                    // response.data;
                     this.lists = this.istop(response.data)
 
                 })
@@ -489,9 +491,7 @@
                             updateBasicStatus(this.id, 1, 2).then(response => {
                                 if (response.status == 1) {
                                     this.$message.success(`审核通过`);
-                                    this.$router.push({
-                                        path: "/hqgj/ServicePack/BWSService/index"
-                                    });
+                                    this.back();
                                 } else {
                                     this.$message({
                                         message: response.message,
@@ -636,6 +636,11 @@
             //获取选中行数据
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+            },
+            back(){
+                this.$router.push({
+                    path: "/hqgj/ServicePack/BWSService/index"
+                });
             },
             preview() {
                 this.$router.push('/application');

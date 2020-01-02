@@ -42,6 +42,7 @@
                                     placeholder="请输入内容"
                                     v-model="serviceForm.content"
                                     rows="20"
+                                    maxlength="10000"
                                     show-word-limit
                             ></el-input>
                             <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->

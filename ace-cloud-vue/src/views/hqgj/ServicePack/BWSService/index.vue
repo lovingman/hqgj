@@ -50,11 +50,11 @@
                 <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                 <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
-                <el-table-column label="申请人" prop="applyPersonName" width="200">
+                <el-table-column label="申请人" prop="applyPersonName" width="150">
                 </el-table-column>
-                <el-table-column label="联系电话" prop="applyPersonTel" width="250">
+                <el-table-column label="联系电话" prop="applyPersonTel" width="180">
                 </el-table-column>
-                <el-table-column label="申请日期" prop="createDate" width="300">
+                <el-table-column label="申请日期" prop="createDate" width="180">
                 </el-table-column>
                 <el-table-column label="状态" prop="status" width="100">
                     <template slot-scope="scope">

@@ -1,8 +1,11 @@
 <template>
     <div class="container">
-        <div class="title">企业详情</div>
+        <div class="title">
+            <span>企业详情</span>
+            <el-button @click="back" style="float: right" type="primary">返回</el-button>
+        </div>
         <div class="handle-box">
-            <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="来源:" prop="source">
                     <span>{{form.source}}</span>
                 </el-form-item>
@@ -10,7 +13,7 @@
                     <span>{{form.companyName}}</span>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="name">-->
-                    <!--<span>{{form.creditCode}}</span>-->
+                <!--<span>{{form.creditCode}}</span>-->
                 <!--</el-form-item>-->
                 <el-form-item label="法人代表:" prop="name">
                     <span>{{form.legalPerson}}</span>
@@ -29,9 +32,9 @@
                 <el-form-item label="创建时间:" prop="region">
                     <span>{{form.createDate}}</span>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="back">返回</el-button>
-                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-button @click="back" type="primary">返回</el-button>-->
+                <!--</el-form-item>-->
             </el-form>
         </div>
     </div>
@@ -39,6 +42,7 @@
 
 <script>
     import {getById} from "@/api/hqgj/enterprise";
+
     export default {
         name: "edit",
         data() {
@@ -46,20 +50,20 @@
                 form: {}
             };
         },
-        created(){
+        created() {
             this.getDetails();
         },
-        methods:{
-            getDetails(){
+        methods: {
+            getDetails() {
                 this.id = this.$route.query.id;
                 getById(this.id)
                     .then(response => {
                         this.loading = false;
-                        this.form=response.data;
+                        this.form = response.data;
                     })
             },
-            back(){
-                this.$router.push({ path: "/hqgj/BasicData/enterprise" });
+            back() {
+                this.$router.push({path: "/hqgj/BasicData/enterprise"});
             },
             clickitem(e) {
                 e === this.add.type ? this.add.type = '' : this.add.type = e
@@ -73,13 +77,16 @@
     .container {
         background-color: #fff;
     }
+
     .title {
+        line-height: 30px;
         font-size: 16px;
         font-weight: bold;
         padding: 20px 30px;
         border-bottom: 1px solid #eee;
     }
-    .handle-box{
+
+    .handle-box {
         padding-top: 40px;
         padding-bottom: 40px;
     }

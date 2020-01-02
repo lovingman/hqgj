@@ -26,14 +26,14 @@
             <el-table :data="tableData" v-loading="loading" style="width: 100%">
                 <el-table-column align="center" label="序号" type="index" width="80"></el-table-column>
                 <el-table-column label="政策名称" prop="title" sortable></el-table-column>
-                <el-table-column label="创建时间" prop="createDate" sortable></el-table-column>
-                <el-table-column label="状态" prop="status" sortable>
+                <el-table-column label="创建时间" prop="createDate" width="180"  sortable></el-table-column>
+                <el-table-column label="状态" prop="status" width="100"  sortable>
                     <template slot-scope="scope">
                         <div class="orange" type="text" v-if="scope.row.status=='1'">待发布</div>
                         <div class="green" type="text" v-if="scope.row.status=='2'">已发布</div>
                     </template>
                 </el-table-column>
-                <el-table-column align="right" fixed="right" header-align="center" label="操作" width="240">
+                <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button @click="release(scope.$index,scope.row)" type="text" v-if="scope.row.status=='1'">
                             发布

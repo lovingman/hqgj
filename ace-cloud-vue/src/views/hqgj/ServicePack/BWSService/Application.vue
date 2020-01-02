@@ -57,9 +57,15 @@
                             <div style="margin:0pt; text-align:justify"
                             >
                                 <el-checkbox-group v-model="option">
-                                    <el-checkbox label="1">工商注册代办服务（含公章一套）</el-checkbox>
-                                    <el-checkbox label="2">银行基本户开户</el-checkbox>
-                                    <el-checkbox label="3">银行开户费、小额账户管理费</el-checkbox>
+                                    <el-checkbox
+                                            v-for="item in dict"
+                                            :label="item.code"
+                                            :key="item.name">
+                                        {{item.name}}
+                                    </el-checkbox>
+                                    <!--<el-checkbox label="1">工商注册代办服务（含公章一套）</el-checkbox>-->
+                                    <!--<el-checkbox label="2">银行基本户开户</el-checkbox>-->
+                                    <!--<el-checkbox label="3">银行开户费、小额账户管理费</el-checkbox>-->
                                 </el-checkbox-group>
                             </div>
                         </td>
@@ -231,8 +237,14 @@
                             <div style="margin:0pt; orphans:0; text-align:justify; widows:0"
                             >
                                 <el-checkbox-group v-model="option2">
-                                    <el-checkbox label="1">是否愿意参加创业培训</el-checkbox>
-                                    <el-checkbox label="2">是否愿意加入创业孵化基地</el-checkbox>
+                                    <el-checkbox
+                                            v-for="item in dict2"
+                                            :label="item.code"
+                                            :key="item.name">
+                                        {{item.name}}
+                                    </el-checkbox>
+                                    <!--<el-checkbox label="1">是否愿意参加创业培训</el-checkbox>-->
+                                    <!--<el-checkbox label="2">是否愿意加入创业孵化基地</el-checkbox>-->
                                 </el-checkbox-group>
                             </div>
                             <p style="margin:0pt; orphans:0; text-align:justify; text-indent:315pt; widows:0">
@@ -261,10 +273,16 @@
                                     style="font-family:宋体; font-size:10.5pt">服务，暂限以下合作银行：</span></p>
                             <p style="margin:0pt; orphans:0; text-align:justify; widows:0">
                                 <el-checkbox-group v-model="option3">
-                                    <el-checkbox label="1">兴业银行各分行</el-checkbox>
-                                    <el-checkbox label="2">交通银行德景园分行</el-checkbox>
-                                    <el-checkbox label="3">建设银行紫陵路分行</el-checkbox>
-                                    <el-checkbox label="4">长沙银行柳叶大道总行</el-checkbox>
+                                    <el-checkbox
+                                            v-for="item in dict3"
+                                            :label="item.code"
+                                            :key="item.name">
+                                        {{item.name}}
+                                    </el-checkbox>
+                                    <!--<el-checkbox label="1">兴业银行各分行</el-checkbox>-->
+                                    <!--<el-checkbox label="2">交通银行德景园分行</el-checkbox>-->
+                                    <!--<el-checkbox label="3">建设银行紫陵路分行</el-checkbox>-->
+                                    <!--<el-checkbox label="4">长沙银行柳叶大道总行</el-checkbox>-->
                                 </el-checkbox-group>
                                 <!--<span-->
                                 <!--style="font-family:宋体; font-size:10.5pt">□兴业银行各分行  □交通银行德景园分行  □建设银行紫陵路分行 □ 长沙银行柳叶大道总行 </span>-->
@@ -299,8 +317,14 @@
                             style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:bottom">
                             <p style="margin:0pt">
                                 <el-checkbox-group v-model="option4">
-                                    <el-checkbox label="1">选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</el-checkbox>
-                                    <el-checkbox label="2">有关会计及报税工作自行负责，如产生税务申报逾期等相关责任自行承担。</el-checkbox>
+                                    <el-checkbox
+                                            v-for="item in dict4"
+                                            :label="item.code"
+                                            :key="item.name">
+                                        {{item.name}}
+                                    </el-checkbox>
+                                    <!--<el-checkbox label="1">选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</el-checkbox>-->
+                                    <!--<el-checkbox label="2">有关会计及报税工作自行负责，如产生税务申报逾期等相关责任自行承担。</el-checkbox>-->
                                 </el-checkbox-group>
                             </p>
                             <p style="margin:0pt; text-indent:241.5pt"><span
@@ -400,21 +424,27 @@
     import html2canvas from 'html2canvas';
     import JsPDF from 'jspdf';
     import {previewInfo} from "@/api/hqgj/BWSService";
+    import {getDict} from "@/api/sys";
 
     export default {
         name: "Application",
         data() {
             return {
+                dict:[],
+                dict2:[],
+                dict3:[],
+                dict4:[],
                 list: {},
-                option: [1, 2, 3],
-                option2: [1],
-                option3: [1],
+                option: [],
+                option2: [],
+                option3: [],
                 option4: [],
                 title: "申请表"
             };
         },
         created() {
             this.getdata();
+            this.dictQuery();
         },
         methods: {
             getdata() {
@@ -434,6 +464,27 @@
                         }, 2000);
                     }
                 })
+            },
+            //获取企业注册步骤数据
+            dictQuery() {
+                getDict("57")
+                    .then(response => {
+                        this.dict = response.data['57'];
+                        console.log(this.dict);
+                    })
+                getDict("58")
+                    .then(response => {
+                        this.dict2 = response.data['58'];
+                        console.log(this.dict1);
+                    })
+                getDict("59")
+                    .then(response => {
+                        this.dict3 = response.data['59'];
+                    })
+                getDict("60")
+                    .then(response => {
+                        this.dict4 = response.data['60'];
+                    })
             },
             //服务字符串转换数组
             changeArr(data) {

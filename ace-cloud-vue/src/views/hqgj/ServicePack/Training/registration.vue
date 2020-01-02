@@ -36,19 +36,19 @@
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
-        <el-table-column prop="enrollName" sortable label="姓名"></el-table-column>
-        <el-table-column prop="enrollMobile" sortable label="手机号码"></el-table-column>
-        <el-table-column prop="isSign" sortable label="是否签到">
+        <el-table-column prop="enrollName" sortable width="120" label="姓名"></el-table-column>
+        <el-table-column prop="enrollMobile" sortable width="180" label="手机号码"></el-table-column>
+        <el-table-column prop="isSign" sortable width="120" label="是否签到">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.isSign=='n'">否</div>
             <div type="text" v-if="scope.row.isSign=='y'">是</div>
           </template>
         </el-table-column>
-        <el-table-column prop="createDate" sortable label="报名时间"></el-table-column>
+        <el-table-column prop="createDate" sortable width="180" label="报名时间"></el-table-column>
         <el-table-column
           label="操作"
           fixed="right"
-          width="240"
+          width="200"
           align="right"
           header-align="center"
           class="right-txt"

@@ -75,23 +75,23 @@
                             </el-dialog>
                         </el-form-item>
                         <!--<el-form-item label="微信二维码:" prop="wechatPhotoarr">-->
-                            <!--<el-upload-->
-                                    <!--:before-upload="beforeAvatarUpload2"-->
-                                    <!--:class="{hide2:hideUpload2}"-->
-                                    <!--:file-list="addform.wechatPhotoarr"-->
-                                    <!--:http-request="uploadServerEdit2"-->
-                                    <!--:limit="limitImgCount"-->
-                                    <!--:on-preview="unitPictureCardPreview2"-->
-                                    <!--:on-remove="unitPictrueRemove2"-->
-                                    <!--:on-success="unitPictrueUploadSuccess2"-->
-                                    <!--action="fakeaction"-->
-                                    <!--list-type="picture-card">-->
-                                <!--<i class="el-icon-plus"></i>-->
-                            <!--</el-upload>-->
-                            <!--<div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>-->
-                            <!--<el-dialog :visible.sync="dialogVisible2" append-to-body>-->
-                                <!--<img :src="dialogImageUrl2" alt="" width="100%">-->
-                            <!--</el-dialog>-->
+                        <!--<el-upload-->
+                        <!--:before-upload="beforeAvatarUpload2"-->
+                        <!--:class="{hide2:hideUpload2}"-->
+                        <!--:file-list="addform.wechatPhotoarr"-->
+                        <!--:http-request="uploadServerEdit2"-->
+                        <!--:limit="limitImgCount"-->
+                        <!--:on-preview="unitPictureCardPreview2"-->
+                        <!--:on-remove="unitPictrueRemove2"-->
+                        <!--:on-success="unitPictrueUploadSuccess2"-->
+                        <!--action="fakeaction"-->
+                        <!--list-type="picture-card">-->
+                        <!--<i class="el-icon-plus"></i>-->
+                        <!--</el-upload>-->
+                        <!--<div class="tips" style="font-size:12px;">支持jpg.png，大小不超过10M</div>-->
+                        <!--<el-dialog :visible.sync="dialogVisible2" append-to-body>-->
+                        <!--<img :src="dialogImageUrl2" alt="" width="100%">-->
+                        <!--</el-dialog>-->
                         <!--</el-form-item>-->
                     </el-col>
                 </el-row>
@@ -125,7 +125,7 @@
                 addform: {
                     orgId: "",
                     name: "",
-                    idCard:"",
+                    idCard: "",
                     mobile: "",
                     jobs: "",
                     speciality: "",
@@ -144,6 +144,7 @@
                     ],
                     idCard: [
                         {required: true, message: "请输入身份证号", trigger: "blur"},
+                        {min: 18, max: 18, message: '请填写18位身份证号码', trigger: 'blur'},
                     ],
                     jobs: [
                         {required: true, message: "请输入职务/职称", trigger: "blur"}
@@ -170,7 +171,7 @@
                     if (valid) {
                         console.log(this.$route.query.id)
                         this.addform.orgId = this.$route.query.id;
-                        this.addform.speciality= this.specialityarr.join();
+                        this.addform.speciality = this.specialityarr.join();
                         createPerson(this.addform).then(response => {
                             if (response.status == 1) {
                                 this.$message.success("创建成功");
@@ -184,7 +185,7 @@
             },
 
             back() {
-                this.$router.push({path: "/hqgj/BasicData/service/Member",query: { id: this.$route.query.id }});
+                this.$router.push({path: "/hqgj/BasicData/service/Member", query: {id: this.$route.query.id}});
             },
             handleClose(tag) {
                 this.specialityarr.splice(this.specialityarr.indexOf(tag), 1);
@@ -450,8 +451,8 @@
                         //     // obj.projectId = that.byIdData.id;
                         //     obj.coverUrl = newUrl;
                         // } else {
-                            that.actionUrls = "/hqgj-portal/www/uploadFileBase";
-                            obj.file = newUrl;
+                        that.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                        obj.file = newUrl;
                         // }
                         that.imageUpload2(obj);
                     };
