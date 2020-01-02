@@ -143,6 +143,7 @@
                     ],
                     idCard: [
                         {required: true, message: "请输入身份证号", trigger: "blur"},
+                        {min: 18, max: 18, message: '请填写18位身份证号码', trigger: 'blur'},
                     ],
                     jobs: [
                         {required: true, message: "请输入职务/职称", trigger: "blur"}
