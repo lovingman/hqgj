@@ -294,7 +294,6 @@ export default {
       getUser().then(res => {
         this.userType = res.data.userType; //1律师服务 2会计师服务 3培训机构 4工信局
         this.dataRows = res.data;
-        this.serviceForm.contactPersonTel = res.data.mobile;
         if (this.userType == 4) {
           //如果是工信局请求服务机构数据, 2是会计师服务type值
           let obj = 2;
@@ -308,6 +307,7 @@ export default {
                 var obj = {};
                 obj.id = this.orgRows[i].id;
                 obj.name = this.orgRows[i].orgName;
+                obj.phone = this.orgRows[i].contactPersonTel;
                 this.corpArr.push(obj);
               }
             }
@@ -315,6 +315,7 @@ export default {
         } else {
           this.orgDisabled = true;
           this.serviceForm.orgId = this.dataRows.corpId;
+          this.serviceForm.contactPersonTel = res.data.mobile;
           var arrs = {};
           arrs.id = this.dataRows.corpId;
           arrs.name = this.dataRows.corpName;
@@ -377,6 +378,7 @@ export default {
         });
         this.serviceForm.orgId = value;
         this.serviceForm.orgName = obj.name;
+        this.serviceForm.contactPersonTel = obj.phone;
         if (this.userType == 4) {
           //如果是工信局用户先选择机构再调取人员信息
           //选择服务机构调取服务机构下面的人员信息

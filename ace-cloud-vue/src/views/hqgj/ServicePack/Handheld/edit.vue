@@ -29,11 +29,14 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <div class="ties" v-if="serviceForm.type == 1">选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
+          <div
+            class="ties"
+            v-if="serviceForm.type == 1"
+          >选择该类型，用户支付费用通过应付费用=500积分+支付费用的方式，抵扣的积分将返现给服务机构,500积分=500元</div>
           <div class="ties" v-if="serviceForm.type == 3">选择该类型，用户可免费享受咨询服务</div>
         </el-row>
         <!-- 代理财政是否显示 -->
-        <div v-if="this.serviceForm.type != ''"  class="show-box">
+        <div v-if="this.serviceForm.type != ''" class="show-box">
           <el-row>
             <el-col :span="12">
               <el-form-item label="服务机构：" prop="orgId">
@@ -77,7 +80,11 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="联系方式：" prop="contactPersonTel">
-                <el-input v-model="serviceForm.contactPersonTel" clearable placeholder="请输入联系方式,例如：13500228899或者0736-1234567"></el-input>
+                <el-input
+                  v-model="serviceForm.contactPersonTel"
+                  clearable
+                  placeholder="请输入联系方式,例如：13500228899或者0736-1234567"
+                ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12" v-if="serviceForm.type == 3">
@@ -301,6 +308,7 @@ export default {
                 var obj = {};
                 obj.id = this.orgRows[i].id;
                 obj.name = this.orgRows[i].orgName;
+                obj.phone = this.orgRows[i].contactPersonTel;
                 this.corpArr.push(obj);
               }
             }
@@ -372,6 +380,7 @@ export default {
         });
         this.serviceForm.orgId = value;
         this.serviceForm.orgName = obj.name;
+        this.serviceForm.contactPersonTel = obj.phone;
         if (this.userType == 4) {
           //如果是工信局用户先选择机构再调取人员信息
           //选择服务机构调取服务机构下面的人员信息
