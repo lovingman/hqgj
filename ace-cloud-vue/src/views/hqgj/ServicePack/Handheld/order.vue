@@ -62,11 +62,13 @@
         <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
         <el-table-column prop="createDate" sortable label="下单时间" width="200"></el-table-column>
-        <el-table-column prop="status" sortable label="状态" width="100">
+        <el-table-column prop="status" sortable label="状态" width="140">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待完成</div>
-            <div type="text" class="green" v-if="scope.row.status=='1'">已完成</div>
-            <div type="text" class="gray" v-if="scope.row.status=='2'">已取消</div>
+            <div type="text" class="gray" v-if="scope.row.status=='1'">已取消</div>
+            <div type="text" class="green" v-if="scope.row.status=='2'">专家确认</div>
+            <div type="text" class="red" v-if="scope.row.status=='31'">已完成待评价</div>
+            <div type="text" class="blue" v-if="scope.row.status=='32'">已完成已评价</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
@@ -136,11 +138,19 @@ export default {
         },
         {
           id: "1",
-          name: "已完成"
+          name: "已取消"
         },
         {
           id: "2",
-          name: "已取消"
+          name: "专家确认"
+        },
+        {
+          id: "31",
+          name: "已完成待评价"
+        },
+        {
+          id: "32",
+          name: "已完成已评价"
         }
       ],
       //订单数据
@@ -261,6 +271,13 @@ export default {
   }
   .gray {
     color: #5a5a5a;
+  }
+  .blue {
+    color: #1890ff;
+  }
+
+  .red {
+    color: #ff5a5a;
   }
 }
 </style>
