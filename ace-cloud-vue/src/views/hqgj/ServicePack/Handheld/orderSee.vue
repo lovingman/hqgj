@@ -1,7 +1,12 @@
 <template>
   <div class="main-box">
     <div class="content-box">
-      <div class="title">基本信息</div>
+      <div class="title-top">
+        <div class="title">基本信息</div>
+        <div class="rtt">
+          <el-button @click="black" type="primary">取消</el-button>
+        </div>
+      </div>
       <el-form label-width="140px" class="formBox">
         <el-row>
           <el-col :span="12">
@@ -77,14 +82,6 @@
         </el-row>
       </el-form>
     </div>
-    <!-- 底部按钮 -->
-    <div class="footer">
-      <div class="footer-flex">
-        <div v-if="isShow">
-          <el-button @click="black" type="primary">取消</el-button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -111,7 +108,6 @@ export default {
       //请求数据接口
       ordergetById(this.id).then(res => {
         if (res.status == 1) {
-          console.log(res);
           this.basicForm = res.data; //基本信息
           this.serviceList = res.data.financeItemList; //服务项目
           if (this.basicForm.type == 1) {
@@ -157,6 +153,7 @@ export default {
       font-size: 16px;
       padding-left: 20px;
       margin-bottom: 20px;
+      flex: 1;
     }
   }
   .title::after {
@@ -175,9 +172,6 @@ export default {
     /deep/ .el-form-item {
       width: 100%;
     }
-    // /deep/ .el-form-item__content {
-    //   width: calc(~"100% - 120px");
-    // }
   }
   .img-border {
     width: 395px;
@@ -220,23 +214,15 @@ export default {
       cursor: pointer;
     }
   }
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-top: 1px solid #eee;
-    height: 60px;
-    background-color: #fff;
-    .footer-flex {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      /deep/ .el-button--medium {
-        border-radius: 4px;
-        margin-left: 20px;
-      }
+  .title-top {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    .rtt {
+      float: right;
+      margin-left: 40px;
+      margin-right: 30px;
     }
   }
 }
