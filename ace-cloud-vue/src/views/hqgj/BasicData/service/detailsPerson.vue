@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="title">机构成员详情</div>
+        <div class="title">
+            <span>机构成员详情</span>
+            <el-button type="primary" style="float: right" @click="back">返回</el-button>
+        </div>
         <div class="handle-box">
             <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -42,9 +45,9 @@
                         <!--</el-form-item>-->
                     </el-col>
                 </el-row>
-                <el-form-item  style="bottom: 10px;margin-left: 300px">
-                    <el-button type="primary" @click="back">返回</el-button>
-                </el-form-item>
+                <!--<el-form-item  style="bottom: 10px;margin-left: 300px">-->
+                    <!--<el-button type="primary" @click="back">返回</el-button>-->
+                <!--</el-form-item>-->
             </el-form>
         </div>
     </div>
@@ -105,6 +108,7 @@
         display: none;
     }
     .title {
+        line-height: 30px;
         font-size: 16px;
         font-weight: bold;
         padding: 20px 30px;

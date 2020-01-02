@@ -14,7 +14,7 @@
                     <el-col :span="12">
                         <el-form-item label="标题" prop="title">
                             <el-input
-                                    maxlength="50"
+                                    maxlength="200"
                                     v-model="serviceForm.title"
                                     clearable
                                     show-word-limit
@@ -42,6 +42,7 @@
                                     placeholder="请输入内容"
                                     v-model="serviceForm.content"
                                     rows="20"
+                                    maxlength="10000"
                                     show-word-limit
                             ></el-input>
                             <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->

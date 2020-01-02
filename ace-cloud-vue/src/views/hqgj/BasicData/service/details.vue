@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="title">服务机构详情</div>
+        <div class="title">
+            <span>服务机构详情</span>
+            <el-button @click="back" style="float: right" type="primary">返回</el-button>
+        </div>
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="类型:" prop="name">
@@ -11,8 +14,8 @@
                 <el-form-item label="机构名称:" prop="name">
                     <span>{{form.orgName}}</span>
                 </el-form-item>
-                <el-form-item label="机构封面:" prop="fmUrlarr">
-                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt="" class="img"></i>
+                <el-form-item label="logo:" prop="fmUrlarr">
+                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt=""class="img"></i>
                     <el-dialog :visible.sync="dialogVisible" append-to-body>
                         <img :src="dialogImageUrl" alt="" width="100%">
                     </el-dialog>
@@ -25,7 +28,7 @@
                 <el-form-item label="地址:" prop="region">
                     <span>湖南省,常德市,{{form.completeAddress}}</span>
                 </el-form-item>
-                <el-form-item label="简介:" prop="name" style="width: 70%">
+                <el-form-item label="简介:" prop="name" style="width: 95%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.content}}</span>
                 </el-form-item>
                 <el-form-item label="创建人:" prop="name" style="width: 70%">
@@ -34,9 +37,9 @@
                 <el-form-item label="创建时间:" prop="name" style="width: 70%">
                     <span style="word-wrap: break-word;word-break: break-all;">{{form.createDate}}</span>
                 </el-form-item>
-                <el-form-item>
-                    <el-button @click="back" type="primary">返回</el-button>
-                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-button @click="back" type="primary">返回</el-button>-->
+                <!--</el-form-item>-->
             </el-form>
         </div>
     </div>
@@ -85,6 +88,7 @@
     }
 
     .title {
+        line-height: 30px;
         font-size: 16px;
         font-weight: bold;
         padding: 20px 30px;
@@ -96,10 +100,15 @@
         padding-bottom: 40px;
     }
     .img {
-        width: 100px;
-        height: 73px;
-        border-radius: 2px;
         overflow: hidden;
-        position: relative;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 148px;
+        height: 148px;
+        margin: 0 8px 8px 0;
+        display: inline-block;
     }
 </style>

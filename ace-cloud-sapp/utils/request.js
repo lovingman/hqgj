@@ -40,6 +40,7 @@ function getJSON(url, data) {
         data: data,
         header: {
             'Authorization': wx.getStorageSync('Authorization'),
+            'WX-SESSION-ID': wx.getStorageSync('WX-SESSION-ID'),
         },
     })
 }
@@ -59,6 +60,7 @@ function post(url, data) {
         header: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             'Authorization': wx.getStorageSync('Authorization'),
+            'WX-SESSION-ID': wx.getStorageSync('WX-SESSION-ID'),
         },
     })
 }
@@ -73,6 +75,7 @@ function postJSON(url, data) {
         header: {
             "Content-Type": "application/json",
             'Authorization': wx.getStorageSync('Authorization'),
+            'WX-SESSION-ID': wx.getStorageSync('WX-SESSION-ID'),
         },
     })
 }

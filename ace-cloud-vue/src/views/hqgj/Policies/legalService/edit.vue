@@ -177,10 +177,10 @@
             },
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
-                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.rar$|\.zip$/i.test(file.name);
+                let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.ppt$|\.pdf$/i.test(file.name);
                 const isLt2M = file.size / 1024 / 1024 < 10;
                 if (!isRightType) {
-                    this.$message.warning('上传文件只能是 xls、xlsx、doc、docx 、pdf、jpg、zip、rar格式!');
+                    this.$message.warning('上传文件只能是 xls、xlsx、doc、docx 、pdf、pptx、ppt格式!');
                 }
                 if (!isLt2M) {
                     this.$message.warning('上传模板大小不能超过 10MB!')

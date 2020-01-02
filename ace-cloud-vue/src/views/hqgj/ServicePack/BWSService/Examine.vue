@@ -565,7 +565,49 @@
             handleCommand(command) {
                 //rar下载
                 if (command == 'rarDownload') {
-                    console.log(456)
+                    console.log(this.multipleSelection.length)
+                    if (this.multipleSelection.length != 0) {
+                        this.relationId = this.zipfile.join(',');
+                        console.log(this.relationId);
+                        downloadimg(this.relationId).then(response => {
+                            if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("附件");
+                                for (var i = 0; i < response.data.length; i++) {
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i];
+                                    var j=i+1
+                                    img.file("附件" + j + ".png", imgData, {base64: true});
+                                }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.rar");
+                                    });
+                            } else {
+                                this.$message.warning(`附件数据丢失`);
+                            }
+                        })
+                    } else {
+                        this.businessId = this.$route.query.id;
+                        downloadZip(this.businessId).then(response => {
+                            if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("附件");
+                                for (var i = 0; i < response.data.length; i++) {
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i];
+                                    var j=i+1
+                                    img.file("附件" + j + ".png", imgData, {base64: true});
+                                }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.rar");
+                                    });
+                            } else {
+                                this.$message.warning(`附件数据丢失`);
+                            }
+                        })
+                    }
                 }
                 //zip下载
                 if (command == 'zipDownload') {
@@ -576,11 +618,12 @@
                         downloadimg(this.relationId).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
-                                var img = zip.folder("images");
+                                var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i]
-                                    img.file("附件" + i + ".png", imgData, {base64: true});
+                                    var j=i+1
+                                    img.file("附件" +j+ ".png", imgData, {base64: true});
                                 }
                                 zip.generateAsync({type: "blob"})
                                     .then(function (content) {
@@ -595,11 +638,12 @@
                         downloadZip(this.businessId).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
-                                var img = zip.folder("images");
+                                var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i]
-                                    img.file("附件" + i + ".png", imgData, {base64: true});
+                                    var j=i+1
+                                    img.file("附件" + j + ".png", imgData, {base64: true});
                                 }
                                 zip.generateAsync({type: "blob"})
                                     .then(function (content) {

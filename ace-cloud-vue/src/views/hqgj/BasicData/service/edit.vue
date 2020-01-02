@@ -11,7 +11,7 @@
                 <el-form-item label="机构名称:" prop="orgName">
                     <el-input v-model="form.orgName" maxlength="50" show-word-limit style="width: 30%" placeholder="请输入机构名称"></el-input>
                 </el-form-item>
-                <el-form-item label="机构封面:" prop="fmUrlarr">
+                <el-form-item label="logo:" prop="fmUrlarr">
                     <el-upload
                             :before-upload="beforeAvatarUpload"
                             :class="{hide:hideUpload}"
@@ -114,9 +114,9 @@
                     orgName: [
                         {required: true, message: "请输入机构名称", trigger: "blur"},
                     ],
-                    fmUrlarr: [
-                        {required: true, message: "请上传机构封面", trigger: "blur"}
-                    ],
+                    // fmUrlarr: [
+                    //     {required: true, message: "请上传机构封面", trigger: "blur"}
+                    // ],
                     contactPersonTel: [
                         {required: true, message: "请输入联系方式", trigger: "blur"},
                     ],
@@ -145,27 +145,31 @@
                 getById(this.id)
                     .then(response => {
                         this.form = response.data;
-                        //字符串图片地址转换数组
-                        this.convert(this.form.fmUrl);
                         this.form.areaCodes = [];
                         var str = this.form.areaCode;
                         var arr = [6, 9, 12];
                         for (var i = 0; i < 3; i++) {
                             this.form.areaCodes[i] = str.substring(0, arr[i]);
                         }
+                        //字符串图片地址转换数组
+                        this.convert(this.form.fmUrl);
                     })
 
             },
             convert(data){
-                var tempImgArr = data.split(",");
                 var imgArr = [];
-                if (tempImgArr.length > 0) {
-                    tempImgArr.forEach((item, i) => {
-                        imgArr.push({ url: item });
-                    });
+                if(data){
+                    var tempImgArr = data.split(",");
+                    if (tempImgArr.length > 0) {
+                        tempImgArr.forEach((item, i) => {
+                            imgArr.push({ url: item });
+                        });
+                    }
+                    this.hideUpload = true; // 隐藏上传按钮
                 }
                 this.form.fmUrlarr = imgArr;
-                this.hideUpload = true; // 隐藏上传按钮
+                // this.hideUpload = true; // 隐藏上传按钮
+
 
             },
             handleEdit(formName){
@@ -205,6 +209,8 @@
                 if (response.status == 1) {
                     var imgArr = this.form.fmUrlarr;
                     var tempArr = [];
+                    console.log(response.data);
+
                     imgArr.push({
                         url: response.data
                     }); // push response.data进去 里面含3个字段
@@ -281,14 +287,14 @@
                         const formData = new FormData();
                         // 文件对象
                         let obj = {};
-                        if (that.submitType == "edit") {
-                            that.actionUrls = "";
-                            // obj.projectId = that.byIdData.id;
-                            obj.coverUrl = newUrl;
-                        } else {
+                        // if (that.submitType == "edit") {
+                        //     that.actionUrls = "";
+                        //     // obj.projectId = that.byIdData.id;
+                        //     obj.coverUrl = newUrl;
+                        // } else {
                             that.actionUrls = "/hqgj-portal/www/uploadFileBase";
                             obj.file = newUrl;
-                        }
+                        // }
                         that.imageUpload(obj);
                     };
                 };
@@ -299,6 +305,7 @@
                     if (response.status == 1) {
                         var imgArr = this.form.fmUrlarr;
                         var tempArr = [];
+                        console.log(response.data);
                         imgArr.push({url: response.data}); // push response.data进去 里面含3个字段
                         if (imgArr.length > 0) {
                             imgArr.forEach(item => {
@@ -334,6 +341,7 @@
             unitPictrueRemove(file, fileList) {
                 console.log(file);
                 console.log(fileList);
+                console.log(123);
                 var imgArrTemp = this.form.fmUrlarr;
                 if (file.status == "success") {
                     imgArrTemp.forEach((item, i) => {
@@ -354,6 +362,8 @@
                         this.hideUpload = false; //显示上传按钮
                     }
                 }
+                this.hideUpload = false; //显示上传按钮
+                console.log(123);
             },
             // 形象照预览
             unitPictureCardPreview(file) {

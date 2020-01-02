@@ -2,7 +2,7 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-button type="primary" style="float:left;">数据导出</el-button>
+        <!-- <el-button type="primary" style="float:left;">数据导出</el-button> -->
         <el-col class="selectSearch" :span="18">
           <el-col :span="10">
             <el-date-picker
@@ -59,9 +59,9 @@
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构" width="140"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
-        <el-table-column prop="createDate" sortable label="下单时间"></el-table-column>
+        <el-table-column prop="createDate" sortable label="下单时间" width="200"></el-table-column>
         <el-table-column prop="status" sortable label="状态" width="100">
           <template slot-scope="scope">
             <div type="text" class="brown" v-if="scope.row.status=='0'">待完成</div>
@@ -69,7 +69,7 @@
             <div type="text" class="gray" v-if="scope.row.status=='2'">已取消</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="180" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" v-if="scope.row.status=='0'" @click="complete(scope.row)">完成</el-button>
             <el-button type="text" @click="seeClcik(scope.row)">详情</el-button>
