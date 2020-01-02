@@ -5,7 +5,7 @@
         <el-button type="primary" style="float:left;" @click="create">创建</el-button>
         <el-col class="selectSearch" :span="10">
           <el-col :span="7">
-            <el-select v-model="query.status" clearable placeholder="请选择">
+            <el-select v-model="query.status" @change="toggleSelect" clearable placeholder="请选择">
               <el-option
                 v-for="item in stautsArr"
                 :key="item.id"
@@ -130,11 +130,11 @@ export default {
         },
         {
           id: "1",
-          name: "未通过"
+          name: "进行中"
         },
         {
           id: "2",
-          name: "进行中"
+          name: "未通过"
         },
         {
           id: "3",
@@ -164,6 +164,12 @@ export default {
           this.loading = false;
         }
       });
+    },
+    //选择状态请求
+    toggleSelect(value) {
+      this.tablePage = 1;
+      this.query["status"] = value;
+      this.getList();
     },
     //搜索请求
     search: function() {
