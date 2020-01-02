@@ -1,6 +1,5 @@
-// var server = "https://test.huacainfo.com";
+// var server = "http://test.huacainfo.com";
 var server = "http://192.168.2.114";
-// var server = "http://192.168.2.105";
 var config = {
     login: `${server}/hqgj-portal/security/login`,
     authority: `${server}/wxmss/www/mini/authority`, //微信授权
@@ -37,12 +36,12 @@ var config = {
     getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`, //获取行政区划
     serveBusinessPageUrl: `${server}/hqgj/serveBusiness/page`, //创业服务page
     serveBusinessPreviewInfoUrl: `${server}/hqgj/serveBusiness/previewInfo`, //创业服务详情
-    enterpriseList: `${server}/hqgj/baseCompany/page`, //企业列表  /
-    organizationList: `${server}/hqgj/baseOrganization/page`, //组织列表
+    enterpriseList: `${server}/hqgj/baseCompany/page`, //企业列表  / 
+    organizationList: `${server}/hqgj/baseOrganization/page`, //组织列表 
     joinOrg: `${server}/hqgj/personalCenter/bingUser`, //加入组织企业
     relieveBind: `${server}/hqgj/personalCenter/relieveBind`, //解除组织企业
-    modifyPwd: `${server}/hqgj-portal/users/updatePwd`,//修改密码
+    modifyPwd: `${server}/hqgj-portal/users/updatePwd`, //修改密码
+    enrollUpdate: `${server}/hqgj/serveCultivateEnroll/updateStatus`, //签到管理
 };
-
 
 module.exports = config
