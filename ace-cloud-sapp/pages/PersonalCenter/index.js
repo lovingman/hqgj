@@ -1,7 +1,10 @@
 // pages/PersonalCenter/index.js
 const app = getApp()
 var util = require("../../utils/util.js");
+var request = require("../../utils/request.js");
+var cfg = require("../../utils/config.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
+import Toast from '../../vant/weapp/toast/toast';
 Page({
 
     /**
@@ -27,33 +30,53 @@ Page({
                 text: '财税订单',
                 imgUrl: '/assets/image/icon3-4.png',
                 path: '/pages/RecordsFinance/index'
+            },
+            {
+                text: '服务',
+                imgUrl: '/assets/image/icon3-4.png',
+                path: '/pages/RecordsFinance/index'
             }
         ],
         userInfo: {
-            name: "用户"
+            name: "用户",
+            integral: 0
         },
         show: false,
         optIndex: 1,
     },
-
+    selectOrg() {
+        wx.navigateTo({
+            url: '../JoinEnterprises/index?type=' + this.data.optIndex
+        })
+    },
+    // pages/ServiceEnterprise/index  企业服务
+    // pages/TrainingInstitutions/index  培训
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
         this.initUserInfo();
     },
+
     // 判断是否登录
     isloginHandler() {
-        if (!app.globalData.islogin) {
-            Dialog.alert({
-                title: '提示',
-                message: '登录后可以查看“我的”页面'
-            }).then(() => {
-                wx.navigateTo({
-                    url: '../SignIn/index?url=' + encodeURIComponent(util.getCurrentPageUrlWithArgs()),
-                })
-            });
-        }
+        request.getJSON(cfg.getUserInfo).then(rst => {
+            let res = rst.data;
+            if (res.status == 1) {
+                app.globalData.islogin = true;
+                app.globalData.userInfo = res.data;
+                this.initUserInfo();
+            } else {
+                Dialog.alert({
+                    title: '提示',
+                    message: '登录后可以查看“我的”页面'
+                }).then(() => {
+                    wx.navigateTo({
+                        url: '../SignIn/index?url=' + encodeURIComponent(util.getCurrentPageUrlWithArgs()),
+                    })
+                });
+            }
+        })
     },
     // 选择单位隐藏
     onClickHide() {
@@ -71,12 +94,30 @@ Page({
     initUserInfo() {
         let that = this;
         let userInfo = app.globalData.userInfo;
-        console.log(userInfo);
         if (userInfo) {
             that.setData({
-                userInfo: userInfo
+                userInfo: userInfo,
             })
         }
+    },
+    relieveBind() {
+        request.post(cfg.relieveBind).then(rst => {
+            let r = rst.data;
+            if (r.status == 1) {
+                app.globalData.islogin = false;
+                this.isloginHandler();
+            }
+        })
+    },
+    signOutHandler(){
+        wx.setStorageSync('Authorization', '');
+        Toast.success({
+            message: "退出成功",
+            onClose: () => {
+                this.isloginHandler();
+            }
+        });
+        
     },
     // 选择企业
     selectOne() {

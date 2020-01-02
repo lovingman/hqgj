@@ -42,7 +42,7 @@ Page({
         request.post(config.register, Object.assign(data,that.data.nextData)).then(
             res=>{
                 let r=res.data;
-                if(res.status==1){
+                if (r.status==1){
                     Toast.success({
                         message:'注册成功',
                         onClose:()=>{

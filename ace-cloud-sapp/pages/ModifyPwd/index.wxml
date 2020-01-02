@@ -1,0 +1,18 @@
+<!--pages/Register/index.wxml-->
+<view>
+    <view class="title">
+        修改密码
+    </view>
+    <view class="content">
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ oldPwd }}" error="{{oldPwdState}}" bind:blur="validate" bind:focus="initValidate" clearable placeholder="请输入旧密码" border="{{ false }}" data-field="oldPwd" bind:change="onChange" />
+        </view>
+        <view class="input van-hairline--bottom">
+            <van-field value="{{ newPwd }}" type="password" error="{{newPwdState}}" bind:blur="validate" bind:focus="initValidate" clearable placeholder="输入6位以上新密码" border="{{ false }}" data-field="newPwd" bind:change="onChange" />
+        </view>
+        <view class="btn">
+            <van-button bindtap="next" round type="info" size="large">确定</van-button>
+        </view>
+    </view>
+    <van-toast id="van-toast" />
+</view>

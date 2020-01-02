@@ -2,13 +2,10 @@
     "enablePullDownRefresh": true,
     "navigationBarBackgroundColor": "#2E88F2",
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "个人中心",
+    "navigationBarTitleText": "绑定",
     "usingComponents": {
-        "van-icon": "/vant/weapp/icon/index",
         "van-image": "/vant/weapp/image/index",
-        "van-button": "/vant/weapp/button/index",
-        "van-cell": "/vant/weapp/cell/index",
-        "van-overlay": "/vant/weapp/overlay/index",
+        "van-search": "/vant/weapp/search/index",
         "van-dialog": "/vant/weapp/dialog/index",
         "van-toast": "/vant/weapp/toast/index"
     }

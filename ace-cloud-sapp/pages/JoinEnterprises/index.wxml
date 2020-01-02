@@ -1,0 +1,17 @@
+<view class="search">
+    <view class="title">绑定企业/组织</view>
+    <van-search background="#2e88f2" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="请输入企业/组织名称" bind:change="onChangeHandler" bind:search="onSearch">
+    </van-search>
+</view>
+<view class="files">
+    <view class="file" wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" catchtap='join' data-id='{{item.id}}'>
+        <view class="name">
+            {{item.companyName}}{{item.orgName}}
+        </view>
+        <view class="other">
+            <view class="download">点击加入</view>
+        </view>
+    </view>
+</view>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />

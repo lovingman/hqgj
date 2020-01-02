@@ -33,6 +33,9 @@ Page({
         let that = this;
         Auth.wxUserInfo(e).then(rst=>{
             console.log(rst);
+            that.data.username ='WX-LOGIN|'+rst.unionId,
+            that.data.password ='123weiuryweiryiwqe!@#';
+            that.submitForm();
         });
     },
     onChange(e) {
@@ -66,7 +69,6 @@ Page({
                 app.getUserInfo();
                 if(that.data.url){
                     let url = '/' + decodeURIComponent(that.data.url);
-                    debugger
                     if ('/pages/PersonalCenter/index'==url){
                         wx.reLaunch({
                             url: '/pages/PersonalCenter/index'
@@ -81,7 +83,9 @@ Page({
                         url: '/pages/index/index',
                     });
                 }
-               
+            }
+            else{
+                Toast.fail(res.message);
             }
         })
     },

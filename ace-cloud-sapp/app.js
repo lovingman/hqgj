@@ -18,6 +18,7 @@ App({
             let res = rst.data;
             if (res.status == 1) {
                 that.globalData.islogin = true;
+                console.log(111);
                 that.globalData.userInfo = res.data;
             }
         })

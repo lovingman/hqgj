@@ -17,7 +17,7 @@
             </view>
         </view>
         <view class="right">
-            <view class="coin">500</view>
+            <view class="coin">{{0+userInfo.integral}}</view>
             <view class="center">我的积分
                 <van-icon name="arrow" />
             </view>
@@ -37,23 +37,30 @@
         </block>
     </view>
     <view class="column">
-        绑定企业
+        绑定
     </view>
-    <view class="binding">
+    <view wx:if="{{userInfo.companyName||userInfo.orgName}}" class="binding">
+        <view wx:if="{{userInfo.companyName}}" class="name">{{userInfo.companyName}}</view>
+        <view wx:else class="name">{{userInfo.orgName}}</view>
+        <view class="btn offBtn">
+            <van-button plain bind:click="relieveBind" round type="info" size="large">解除绑定</van-button>
+        </view>
+    </view>
+    <view wx:else class="binding">
         <view>暂未绑定企业/机构</view>
         <view class="btn">
             <van-button bind:click="onClickShow" round type="info" size="large">绑定</van-button>
         </view>
     </view>
     <view class="other">
-        <van-cell icon="lock" is-link border="{{false}}" title="修改密码" link-type="navigateTo" url="/pages/dashboard/index" />
+        <van-cell icon="lock" is-link border="{{false}}" title="修改密码" link-type="navigateTo" url="/pages/ModifyPwd/index" />
         <van-cell icon="chat" is-link border="{{false}}" title="解绑微信" link-type="navigateTo" url="/pages/dashboard/index" />
     </view>
     <view class="signOut">
-        <van-button round plain hairline size="large">退出登录</van-button>
+        <van-button catch:tap="signOutHandler" round plain hairline size="large">退出登录</van-button>
     </view>
     <van-dialog id="van-dialog" />
-    <van-overlay show="{{ show }}"  bind:click="onClickHide">
+    <van-overlay show="{{ show }}" bind:click="onClickHide">
         <view class="wrapper_org">
             <view class="block">
                 <view class="item" catch:tap="selectOne">
@@ -71,10 +78,11 @@
                         <view class="title">服务机构</view>
                         <view class="subtitle">绑定平台已认证的机构</view>
                     </view>
-                    <van-icon wx:if="{{optIndex==2}}" name="checked" />
+                    <van-icon wx:if="{{optIndex==2}}" name="checked"/>
                 </view>
                 <van-button catch:tap="selectOrg" round type="info" size="large">选好了</van-button>
             </view>
         </view>
     </van-overlay>
 </view>
+<van-toast id="van-toast" />
