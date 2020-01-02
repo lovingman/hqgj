@@ -96,10 +96,22 @@
   height: 100%;
 }
 
+.check-box {
+  padding-bottom: 100rpx;
+  display: block;
+}
+
 .form-btn {
   margin-top: 40rpx;
   display: flex;
+  padding: 20rpx 0;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1rpx solid #eee;
 }
 
 .form-btn .btn-list {

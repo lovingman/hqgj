@@ -36,6 +36,13 @@ Page({
         value: 'c'
       }
     ],
+    query: {
+      pageSize: 10,
+      pageNum: 1,
+      status: '1,3',
+    },
+    isload: false,
+    loading: false,
     value1: 0,
     value2: 'a',
     quotaShow: true, //是否显示名额
@@ -43,9 +50,7 @@ Page({
   //请求page数据渲染列表
   getList: function() {
     var that = this;
-    request.getJSON(cfg.trainPageUrl, {
-      status: "1,3"
-    }).then(res => {
+    request.getJSON(cfg.trainPageUrl, that.data.query).then(res => {
       if (res.data.status == 1) {
         console.log(res);
         that.setData({
@@ -66,7 +71,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getList();
+    console.log("111111111")
+    let that = this;
+    that.getList();
   },
 
   /**
@@ -80,7 +87,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getList();
+    // this.getList();
   },
 
   /**
@@ -101,14 +108,19 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    let that = this;
+    that.getList();
+    console.log("222222222")
+    wx.stopPullDownRefresh();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    let that = this;
+    that.data.query.pageNum++;
+    that.getList();
   },
 
   /**
