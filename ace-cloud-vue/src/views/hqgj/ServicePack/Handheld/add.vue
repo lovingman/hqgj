@@ -358,6 +358,13 @@ export default {
       if (this.userType == 4) {
         this.serviceForm.orgId = "";
       }
+      if (value == 2) {
+        if (this.serviceForm.financeItemList.length == 0) {
+          this.addMember();
+        } else {
+          this.removeDomain();
+        }
+      }
     },
     //服务机构选择
     changeService(value) {
