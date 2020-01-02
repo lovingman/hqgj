@@ -87,7 +87,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
               if(CommonUtils.isBlank(memberId)){
                   return new ResponseDTO(ResultCode.FAIL, "绑定失败，请联系管理员先添加至该机构！");
               }
-                int i=organizationMemberDao.updateUserId(userProp.getUserId(),id);
+                int i=organizationMemberDao.updateUserId(userProp.getUserId(),memberId);
                  if(i<=0){
                      return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
                  }
@@ -132,10 +132,11 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
         UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
         if(!CommonUtils.isBlank(user.getUserType())) {
             if (user.getUserType().equals("5")) {
-                baseCompanyMemberDao.deleteByIds(user.getUserId().split(""));
+                baseCompanyMemberDao.deleteByIds(user.getUserId().split(","));
             } else if (user.getUserType().equals("1") || user.getUserType().equals("2") || user.getUserType().equals("3")) {
                 try {
-                    int i = organizationMemberDao.updateUserId(null, user.getOrgId());
+                    String memberId=organizationMemberDao.existMember(user.getOrgId(),user.getIdCard());
+                    int i = organizationMemberDao.updateUserId(null, memberId);
                 } catch (Exception e) {
                     return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
                 }
