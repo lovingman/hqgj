@@ -204,9 +204,6 @@ export default {
     /deep/ .el-form-item {
       width: 100%;
     }
-    // /deep/ .el-form-item__content {
-    //   width: calc(~"100% - 120px");
-    // }
   }
   .img-border {
     width: 395px;
