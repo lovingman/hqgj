@@ -389,6 +389,8 @@
         getAppend, downloadZip
     } from "@/api/hqgj/BWSService";
     import {getAreaTree} from "@/api/sys";
+    import JSZip from "jszip";
+    import FileSaver from "file-saver";
 
     export default {
         name: "Examine",
@@ -546,6 +548,7 @@
                             for (var i = 0; i < response.data.length; i++) {
                                 let link = document.createElement('a')
                                 link.href = 'data:image/png;base64,' + response.data[i]
+                                console.log(link.href);
                                 link.download = data.fileName + '.png'
                                 link.click()
                             }
@@ -567,34 +570,44 @@
                 //zip下载
                 if (command == 'zipDownload') {
                     console.log(this.multipleSelection.length)
-                    if (this.multipleSelection.length!=0) {
+                    if (this.multipleSelection.length != 0) {
                         this.relationId = this.zipfile.join(',');
                         console.log(this.relationId);
                         downloadimg(this.relationId).then(response => {
                             if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("images");
                                 for (var i = 0; i < response.data.length; i++) {
-                                    let link = document.createElement('a')
-                                    link.href = 'data:image/png;base64,' + response.data[i]
-                                    link.download = '附件' + '.png'
-                                    link.click()
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i]
+                                    img.file("附件" + i + ".png", imgData, {base64: true});
                                 }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.zip");
+                                    });
                             } else {
                                 this.$message.warning(`附件数据丢失`);
                             }
                         })
                     } else {
-                        this.businessId=this.$route.query.id;
+                        this.businessId = this.$route.query.id;
                         downloadZip(this.businessId).then(response => {
-                            // if (response.data != []) {
-                            //     for (var i = 0; i < response.data.length; i++) {
-                            //         let link = document.createElement('a')
-                            //         link.href = 'data:image/png;base64,' + response.data[i]
-                            //         link.download = '附件' + '.png'
-                            //         link.click()
-                            //     }
-                            // } else {
-                            //     this.$message.warning(`附件数据丢失`);
-                            // }
+                            if (response.data != []) {
+                                var zip = new JSZip();
+                                var img = zip.folder("images");
+                                for (var i = 0; i < response.data.length; i++) {
+                                    console.log(response.data[i]);
+                                    var imgData = response.data[i]
+                                    img.file("附件" + i + ".png", imgData, {base64: true});
+                                }
+                                zip.generateAsync({type: "blob"})
+                                    .then(function (content) {
+                                        FileSaver.saveAs(content, "附件.zip");
+                                    });
+                            } else {
+                                this.$message.warning(`附件数据丢失`);
+                            }
                         })
                     }
 
