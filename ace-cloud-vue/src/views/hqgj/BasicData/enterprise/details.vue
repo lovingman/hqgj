@@ -24,7 +24,7 @@
                     <span>{{form.contactPersonTel}}</span>
                 </el-form-item>
                 <el-form-item label="地址:" prop="region">
-                    <span>湖南省常德市{{form.completeAddress}}</span>
+                    <span>{{form.completeAddress}}</span>
                 </el-form-item>
                 <el-form-item label="创建人:" prop="region">
                     <span>{{form.createUserName}}</span>
