@@ -15,6 +15,7 @@ import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -45,6 +46,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      * @return
      */
     @Override
+    @Transactional
     public ResponseDTO bindUser(String id, String type, UserProp userProp) {
        Users user= registerDao.selectUserInfo(userProp.getUserId());
          //企业
@@ -118,6 +120,31 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
           }*/
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",user);
     }
+
+
+    /**
+     * 解除绑定
+     * @param userProp
+     * @return
+     */
+    @Override
+    public ResponseDTO relieveBind(UserProp userProp) {
+        UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
+        if(!CommonUtils.isBlank(user.getUserType())) {
+            if (user.getUserType().equals("5")) {
+                baseCompanyMemberDao.deleteByIds(user.getUserId().split(""));
+            } else if (user.getUserType().equals("1") || user.getUserType().equals("2") || user.getUserType().equals("3")) {
+                try {
+                    int i = organizationMemberDao.updateUserId(null, user.getOrgId());
+                } catch (Exception e) {
+                    return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
+                }
+            }
+            registerDao.updateUserType(null, userProp.getUserId());
+        }
+        return new ResponseDTO(ResultCode.SUCCESS, "解除成功！");
+    }
+
 
 
 }

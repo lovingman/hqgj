@@ -217,7 +217,7 @@
   </update>
 
     <update id="cancalEnrollNum" parameterType="java.lang.String">
-		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber-1 where  id = #{id,jdbcType=VARCHAR}
+		update serve_cultivate set enrollPersopnNumber=enrollPersopnNumber-1 where  id = #{id,jdbcType=VARCHAR}  and enrollPersopnNumber>0
   </update>
 
 
