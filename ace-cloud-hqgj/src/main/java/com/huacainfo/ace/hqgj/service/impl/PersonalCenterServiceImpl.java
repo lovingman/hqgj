@@ -6,10 +6,12 @@ import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.CommonUtils;
 
+import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
+import com.huacainfo.ace.hqgj.model.MapWechatSys;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
@@ -147,5 +149,41 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     }
 
 
+    /**
+     * 解绑微信
+     * @param userProp
+     * @return
+     */
+    @Override
+    public ResponseDTO relieveByUnionId(UserProp userProp) {
+        UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
+        if(CommonUtils.isBlank(user.getUnionId())) {
+            return new ResponseDTO(ResultCode.SUCCESS, "数据获取失败！");
+        }
+        personCenterDao.deleteByUnionId(user.getUnionId());
+        return new ResponseDTO(ResultCode.SUCCESS, "解除成功！");
+    }
 
+
+    /**
+     * 绑定微信
+     * @param userProp
+     * @return
+     */
+    @Override
+    public ResponseDTO bindUnionId(UserProp userProp,String unionId){
+        String appId=registerDao.selectAppId();
+        if (CommonUtils.isBlank(appId)) {
+            return new ResponseDTO(ResultCode.FAIL, "未找到数据！");
+        }
+        MapWechatSys sys=new MapWechatSys();
+        sys.setId(GUIDUtil.getGUID());
+        sys.setUserId(userProp.getUserId());
+        sys.setUnionId(unionId);
+        sys.setCreateDate(new Date());
+        sys.setAppId(appId);
+        sys.setSysId("hqgj");
+        registerDao.insertMapWechatSys(sys);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
 }
