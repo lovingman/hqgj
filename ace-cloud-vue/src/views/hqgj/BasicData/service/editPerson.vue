@@ -593,7 +593,11 @@
     .hide2 /deep/ .el-upload--picture-card {
         display: none;
     }
-
+    .hide /deep/.el-upload-list--picture-card .el-upload-list__item-thumbnail{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
     .title {
         font-size: 16px;
         font-weight: bold;
