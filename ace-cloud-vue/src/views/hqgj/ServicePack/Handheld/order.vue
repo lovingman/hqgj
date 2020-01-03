@@ -64,11 +64,9 @@
         <el-table-column prop="createDate" sortable label="下单时间" width="200"></el-table-column>
         <el-table-column prop="status" sortable label="状态" width="140">
           <template slot-scope="scope">
-            <div type="text" class="brown" v-if="scope.row.status=='0'">待完成</div>
+            <div type="text" class="brown" v-if="scope.row.status=='0' || scope.row.status=='2' ">待完成</div>
             <div type="text" class="gray" v-if="scope.row.status=='1'">已取消</div>
-            <div type="text" class="green" v-if="scope.row.status=='2'">专家确认</div>
-            <div type="text" class="red" v-if="scope.row.status=='31'">已完成待评价</div>
-            <div type="text" class="blue" v-if="scope.row.status=='32'">已完成已评价</div>
+            <div type="text" class="green" v-if="scope.row.status>'30'">已完成</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
@@ -141,16 +139,8 @@ export default {
           name: "已取消"
         },
         {
-          id: "2",
-          name: "专家确认"
-        },
-        {
-          id: "31",
-          name: "已完成待评价"
-        },
-        {
-          id: "32",
-          name: "已完成已评价"
+          id: "31,32",
+          name: "已完成"
         }
       ],
       //订单数据
