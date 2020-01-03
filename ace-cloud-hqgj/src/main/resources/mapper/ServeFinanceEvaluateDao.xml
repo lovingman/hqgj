@@ -125,8 +125,11 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,o.orgName,c.companyName
         <include refid="From_Statement"/>
+        left join  base_organization o on o.id=t.orgId
+        left join  base_company_member m on m.id=t.createUserId
+        left join  base_company c on c.id=m.companyId
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
