@@ -33,15 +33,20 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": -1,
-<<<<<<< HEAD
-			"list": []
-=======
 			"list": [
 				{
 					"id": 0,
@@ -245,9 +250,22 @@
 					"pathName": "pages/RecordsFinance/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 29,
+					"name": "加入企业",
+					"pathName": "pages/JoinEnterprises/index",
+					"query": "type=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改密码",
+					"pathName": "pages/ModifyPwd/index",
+					"query": "type=1",
+					"scene": null
 				}
 			]
->>>>>>> 8bce138040bd68b1e4a5220258679d2d39714b01
 		}
 	}
 }

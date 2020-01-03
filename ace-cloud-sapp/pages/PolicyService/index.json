@@ -1,6 +1,9 @@
 {
-  "navigationBarTitleText": "政策服务",
-  "usingComponents": {
-    "van-search": "/vant/weapp/search/index"
-  }
+    "enablePullDownRefresh": true,
+    "navigationBarBackgroundColor": "#2E88F2",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "政策服务",
+    "usingComponents": {
+        "van-search": "/vant/weapp/search/index"
+    }
 }

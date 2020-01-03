@@ -9,17 +9,12 @@ Page({
      * 页面的初始数据
      */
     data: {
-        captchaTxt:'发送验证码',
-        disabled:false,
-        countdown:60,
-        mobile: '',
-        mobileState: false,
-        mobileVali: 'mobilePhone',
-        newPassword: '',
-        captcha:'',
-        captchaVali: 'len4Num',
-        newPasswordState: false,
-        newPasswordVali: 'thanlen6Str',
+        oldPwd: '',
+        oldPwdState: false,
+        oldPwdVali: 'thanlen6Str',
+        newPwd: '',
+        newPwdState: false,
+        newPwdVali: 'thanlen6Str',
     },
 
     /**
@@ -28,43 +23,7 @@ Page({
     onLoad: function (options) {
 
     },
-    getcode(){
-        let that = this;
-        that.settime();
-        if (that.validateHandler('mobile')){
-            request.post(config.captchaForgetPwd, { mobile:that.data.mobile}).then(rst => {
-                let r=rst.data;
-                if(r.status==1){
-                    Toast.success("发送成功");
-                }
-                else{
-                    Toast.fail(r.message);
-                }
-            });
-        }else{
-            Toast.fail(手机号码错误);
-            return;
-        }
-    },
-    settime(){
-        let that = this;
-        if (that.data.countdown == 0) {
-            that.setData({
-                captchaTxt: '发送验证码',
-                disabled: false
-            });
-            that.data.countdown = 60;
-        } else {
-            that.setData({
-                captchaTxt: "重新发送(" + that.data.countdown + ")",
-                disabled: true
-            });
-            that.data.countdown--;
-            setTimeout(function () {
-                that.settime()
-            }, 1000)
-        }
-    },
+
     validate(e) {
         let that = this;
         let field = e.target.dataset.field;
@@ -91,19 +50,15 @@ Page({
     },
     next(){
         let that=this;
-        if (!that.validateHandler('mobile')){
-            Toast.fail('手机号码错误');
+        if (!that.validateHandler('oldPwd')){
+            Toast.fail('旧密码不符合要求');
             return;
         }
-        if (!that.validateHandler('captcha')) {
-            Toast.fail('验证码不对');
+        if (!that.validateHandler('newPwd')) {
+            Toast.fail('新密码不符合要求');
             return;
         }
-        if (!that.validateHandler('newPassword')) {
-            Toast.fail('密码位数不对');
-            return;
-        }
-        request.post(config.resetPassword,that.data).then(
+        request.post(config.modifyPwd,that.data).then(
             res=>{
                 let r=res.data;
                 if (r.status==1){
@@ -111,9 +66,9 @@ Page({
                         message:'修改成功',
                         duration:1000,
                         onClose:()=>{
-                            wx.redirectTo({
-                                url: "../SignIn/index"
-                            })
+                            wx.reLaunch({
+                                url: '/pages/PersonalCenter/index'
+                            });
                         }
                     });
                 }else{

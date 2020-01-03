@@ -123,10 +123,28 @@
     font-family: PingFangSC-regular;
 }
 
+.binding .name {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(28, 40, 67, 1);
+    text-align: center;
+}
+
 .binding .btn {
     width: 414rpx;
     height: 76rpx;
     margin: 20rpx auto 0;
+}
+
+.binding  .offBtn {
+    width: 200rpx;
+    height: 40rpx;
+    margin: 10rpx auto 0;
+}
+
+.binding  .offBtn .van-button--large {
+    height: 50rpx !important;
 }
 
 .van-button--large {

@@ -30,7 +30,9 @@
         "pages/Forget/index",
         "pages/LawFirm/index",
         "pages/PolicyService/index",
-        "pages/PolicyServiceDetail/index"
+        "pages/PolicyServiceDetail/index",
+        "pages/JoinEnterprises/index",
+        "pages/ModifyPwd/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

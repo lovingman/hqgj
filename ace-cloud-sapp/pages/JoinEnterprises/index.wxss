@@ -1,0 +1,64 @@
+.search {
+    height: 200rpx;
+    background: #2e88f2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search .title {
+    color: rgba(255, 255, 255, 1);
+    font-size: 36rpx;
+    font-family: PingFangSC-regular;
+    margin-bottom: 16rpx;
+}
+
+.search .van-search {
+    width: 600rpx;
+    padding: 0px;
+}
+
+.files {
+    background: #f7f9fc;
+    padding-bottom: 80rpx;
+}
+
+.files .title {
+    padding: 0 30px;
+    height: 100rpx;
+    line-height: 100rpx;
+    color: rgba(51, 51, 51, 1);
+    font-size: 30rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+}
+
+.files .file {
+    width: 690rpx;
+    background: #fff;
+    padding: 24rpx 24rpx;
+    margin: 0 auto 24rpx;
+}
+
+.files .file .name {
+    color: rgba(0, 0, 0, 1);
+    font-size: 24rpx;
+    font-family: PingFangSC-regular;
+}
+
+.files .file .other {
+    color: rgba(121, 128, 146, 1);
+    font-size: 20rpx;
+    font-family: PingFangSC-regular;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12rpx;
+}
+
+.files .file .other .download {
+    color: rgba(75, 144, 255, 1);
+    font-size: 22rpx;
+    padding: 10rpx 30rpx 10rpx 0rpx;
+}

@@ -6,7 +6,7 @@
   </view>
   <view class="files">
     <view class="title">
-      全部模板（{{listNumll}}）
+      全部政策（{{listNumll}}）
     </view>
     <view class="file" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
       <view class="name">
