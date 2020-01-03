@@ -115,7 +115,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
             }
             o.setCreateDate(new Date());
-            o.setStatus("1");
+            o.setStatus("0");
             o.setCreateUserName(userProp.getName());
             o.setCreateUserId(userProp.getUserId());
             o.setModifyDate(new Date());
