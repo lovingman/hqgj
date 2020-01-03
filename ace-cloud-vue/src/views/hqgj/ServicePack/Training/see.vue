@@ -2,7 +2,7 @@
   <div class="main-box">
     <el-tabs v-model="tabsName" :class="{noClick:noClickTabs}">
       <div class="fixe-top">
-        <el-button @click="black" type="primary">取消</el-button>
+        <el-button @click="black" type="primary">返回</el-button>
       </div>
       <el-tab-pane label="基本信息" name="first">
         <div class="content-box">

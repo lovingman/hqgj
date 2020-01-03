@@ -10,13 +10,8 @@
       <el-form label-width="140px" class="formBox">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="订单号：">
-              <span>{{basicForm.orderNo}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="类型：">
-              <span>{{basicForm.typeName}}</span>
+            <el-form-item label="姓名：">
+              <span>{{basicForm.createUserName}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -25,58 +20,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="姓名：">
-              <span>{{basicForm.userName}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="联系方式：">
-              <span>{{basicForm.userMobile}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item label="服务机构：">
               <span>{{basicForm.orgName}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="创建时间：">
-              <span>{{basicForm.createDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="basicForm.type == 1">
-            <el-form-item label="抵扣积分：">
-              <span>500积分</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="basicForm.type == 3">
-            <el-form-item label="专家：">
-              <span>{{basicForm.mName}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="basicForm.type == 2">
-            <el-form-item label="服务项目：">
-              <span>{{basicForm.itemName}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="basicForm.type == 2">
-            <el-form-item label="服务金额：">
-              <span>{{basicForm.price}}</span>
+            <el-form-item label="服务评分：">
+              <span>{{basicForm.evaluateGrade}}分</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态：">
-              <span>{{basicForm.statusName}}</span>
+            <el-form-item label="服务评价：">
+              <span>{{basicForm.evaluateContent}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.status == 3">
-            <el-form-item label="完成时间：">
-              <span>{{basicForm.modifyDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-if="basicForm.status == 1">
-            <el-form-item label="取消时间：">
-              <span>{{basicForm.modifyDate}}</span>
+          <el-col :span="12">
+            <el-form-item label="服务时间：">
+              <span>{{basicForm.createDate}}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -86,7 +46,7 @@
 </template>
 
 <script>
-import { ordergetById } from "@/api/hqgj/handheld";
+import { evaluateById } from "@/api/hqgj/handheld";
 export default {
   name: "see",
   data() {
@@ -106,25 +66,10 @@ export default {
     load() {
       this.id = this.$route.query.id;
       //请求数据接口
-      ordergetById(this.id).then(res => {
+      evaluateById(this.id).then(res => {
+        console.log(res);
         if (res.status == 1) {
           this.basicForm = res.data; //基本信息
-          this.serviceList = res.data.financeItemList; //服务项目
-          if (this.basicForm.type == 1) {
-            this.basicForm.typeName = "代理计账";
-          }
-          if (this.basicForm.type == 2) {
-            this.basicForm.typeName = "财税管家";
-          }
-          if (this.basicForm.type == 3) {
-            this.basicForm.typeName = "专家问诊";
-          }
-          if (this.basicForm.status == 1) {
-            this.basicForm.statusName = "已取消";
-          }
-          if (this.basicForm.type == 3) {
-            this.basicForm.statusName = "已完成";
-          }
         }
       });
     },
@@ -132,7 +77,7 @@ export default {
     //返回
     black() {
       this.$router.push({
-        path: "/hqgj/ServicePack/Handheld/order"
+        path: "/hqgj/ServicePack/Handheld/evaluate"
       });
     }
   }
