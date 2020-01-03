@@ -28,7 +28,7 @@
     <van-tab title="律师成员">
       <view class="item" wx:for="{{orgArr}}" wx:key="{{index}}" wx:for-item="item" data-index='{{index}}'>
         <view class="img">
-          <van-image round width="100%" height="100%" fit="cover" src="{{item.wechatPhoto}}" />
+          <van-image round width="100%" height="100%" fit="cover" src="{{item.imagePhoto}}" />
         </view>
         <view class="info">
           <view class="info1">

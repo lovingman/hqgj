@@ -52,7 +52,7 @@ Page({
     var that = this;
     request.getJSON(cfg.trainPageUrl, that.data.query).then(res => {
       if (res.data.status == 1) {
-        console.log(res);
+        let listOjb = res.data.row;
         that.setData({
           listArr: res.data.rows
         })

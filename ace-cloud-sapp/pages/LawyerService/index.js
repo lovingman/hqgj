@@ -43,7 +43,7 @@ Page({
           console.log(basicAnnexLength)
           that.setData({
             basicAnnexArr: res.data.rows,
-            basicLength: basicAnnexLength
+            basicLength: res.data.total
           })
         }
       })
@@ -91,6 +91,23 @@ Page({
           success: function(res) {
             console.log('打开文档成功')
           }
+        })
+      }
+    })
+  },
+  //搜索事件
+  onChange: function(e) {
+    console.log(e);
+    var that = this;
+    var obj = {};
+    obj.fileName = e.detail;
+    obj.type = 2;
+    request.getJSON(cfg.basicAnnexUrl, obj).then(res => {
+      if (res.data.status == 1) {
+        console.log(res)
+        that.setData({
+          basicAnnexArr: res.data.rows,
+          basicLength: res.data.total
         })
       }
     })

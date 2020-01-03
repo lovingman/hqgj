@@ -14,12 +14,14 @@ Page({
   getList: function() {
     var that = this;
     //2代表请求已发布的状态
-    request.getJSON(cfg.lawServePageUrl,{status:2}).then(res => {
+    request.getJSON(cfg.lawServePageUrl, {
+      status: 2
+    }).then(res => {
       if (res.data.status == 1) {
         var listLength = res.data.rows.length;
         that.setData({
           listArr: res.data.rows,
-          listNumll: listLength
+          listNumll: res.data.total
         })
       }
     })
