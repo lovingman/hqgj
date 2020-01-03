@@ -70,7 +70,7 @@ public class PersonalCenterController  extends BaseController {
 
 
     /**
-     * 解除绑定
+     * 解除绑定机构或企业
      */
     @ApiOperation(value = "/relieveBind", notes = "解除绑定企业或者服务机构")
     @ApiImplicitParams({
@@ -83,6 +83,40 @@ public class PersonalCenterController  extends BaseController {
             return new ResponseDTO(ResultCode.FAIL, "请先登录！");
         }
         return this.personalCenterService.relieveBind(user);
+    }
+
+
+    /**
+     * 微信解除绑定
+     */
+    @ApiOperation(value = "/relieveByUnionId", notes = "微信解除绑定")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userProp", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @PostMapping(value = "/relieveByUnionId", produces = "application/json;charset=UTF-8")
+    public ResponseDTO relieveByUnionId(){
+        UserProp user = this.getCurUserProp();
+        if(user==null){
+            return new ResponseDTO(ResultCode.FAIL, "请先登录！");
+        }
+        return this.personalCenterService.relieveByUnionId(user);
+    }
+
+
+    /**
+     * 微信绑定
+     */
+    @ApiOperation(value = "/bindUnionId", notes = "微信绑定")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userProp", value = "唯一主键", required = true, dataType = "String", paramType = "form"),
+    })
+    @PostMapping(value = "/bindUnionId", produces = "application/json;charset=UTF-8")
+    public ResponseDTO bindUnionId(String unionId){
+        UserProp user = this.getCurUserProp();
+        if(user==null){
+            return new ResponseDTO(ResultCode.FAIL, "请先登录！");
+        }
+        return this.personalCenterService.bindUnionId(user,unionId);
     }
 
 }

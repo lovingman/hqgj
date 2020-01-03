@@ -95,7 +95,7 @@
 
     </resultMap>
     <sql id="Vo_Column_List">
-    t.id, t.orderNo, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId, t.companyName, t.companyPersonName, t.companyPersonTel, t.evaluateContent, t.evaluateGrade, t.address, t.quota, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
+    t.id, t.orderNo, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId, t.companyPersonName, t.companyPersonTel, t.evaluateContent, t.evaluateGrade, t.address, t.quota, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
   </sql>
     <sql id="From_Statement">
     FROM serve_finance_evaluate t
