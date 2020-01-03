@@ -67,8 +67,8 @@ Page({
                         duration:1000,
                         onClose:()=>{
                             wx.reLaunch({
-                                url: '',
-                            })
+                                url: '/pages/PersonalCenter/index'
+                            });
                         }
                     });
                 }else{
