@@ -110,16 +110,6 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     @Override
     public ResponseDTO homePage(UserProp userProp) {
         UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
-       /* ResponseDTO dto=new ResponseDTO();
-          if(user.getUserType().equals("5")){
-              BaseCompanyMember m= baseCompanyMemberDao.selectVoByPrimaryKey(userProp.getUserId());
-              dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
-          } else if(user.getUserType().equals("1")||user.getUserType().equals("2")||user.getUserType().equals("3")){
-            BaseOrganizationMember m= organizationMemberDao.selectByUserId(userProp.getUserId());
-               dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",m);
-          }else{
-              dto= new ResponseDTO(ResultCode.SUCCESS, "成功！",userProp);
-          }*/
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",user);
     }
 

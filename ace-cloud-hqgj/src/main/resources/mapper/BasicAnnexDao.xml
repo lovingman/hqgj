@@ -73,7 +73,7 @@
                 and t.fileType = #{condition.fileType,jdbcType=VARCHAR}
             </if>
             <if test="condition.fileName != null and condition.fileName != ''">
-                and t.fileName = #{condition.fileName,jdbcType=VARCHAR}
+                and t.fileName like  concat('%',#{condition.fileName,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.type != null and condition.type != ''">
                 and t.type = #{condition.type,jdbcType=VARCHAR}
