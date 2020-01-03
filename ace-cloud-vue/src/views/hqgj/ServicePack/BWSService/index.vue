@@ -48,6 +48,8 @@
                     ref="multipleTable"
                     v-loading="loading">
                 <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+                <el-table-column label="流水编号" prop="lsNo" width="180">
+                </el-table-column>
                 <el-table-column label="注册企业名称" prop="companyName">
                 </el-table-column>
                 <el-table-column label="申请人" prop="applyPersonName" width="150">
