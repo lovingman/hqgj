@@ -20,7 +20,7 @@
               clearable
               class="input-with-select"
             >
-              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
+               <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
@@ -186,12 +186,7 @@ export default {
     }
     .selectSearch {
       float: right;
-      /deep/ .el-button--medium {
-        color: #fff;
-        background-color: #007cff;
-        border-color: #007cff;
-        border-radius: 0;
-      }
+     
     }
   }
   .table-box {
