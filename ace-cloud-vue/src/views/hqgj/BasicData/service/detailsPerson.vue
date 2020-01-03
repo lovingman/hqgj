@@ -35,7 +35,7 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="形象照:" prop="name">
-                            <i @click="Preview(form.imagePhoto)"><img :src="form.imagePhoto" alt="" class="img"></i>
+                            <i class="image" @click="Preview(form.imagePhoto)"><img :src="form.imagePhoto" alt="" class="img"></i>
                             <el-dialog :visible.sync="dialogVisible" append-to-body>
                                 <img :src="dialogImageUrl" alt="" width="100%">
                             </el-dialog>
@@ -118,7 +118,7 @@
         padding-top: 40px;
         padding-bottom: 40px;
     }
-    .img {
+    .image {
         overflow: hidden;
         background-color: #fff;
         border: 1px solid #c0ccda;
@@ -129,5 +129,10 @@
         height: 148px;
         margin: 0 8px 8px 0;
         display: inline-block;
+    }
+    .img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 </style>

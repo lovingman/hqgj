@@ -7,7 +7,8 @@
         <div class="handle-box">
             <el-form :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="来源:" prop="source">
-                    <span>{{form.source}}</span>
+                    <span v-if="form.source==1">系统录入</span>
+                    <span v-if="form.source==2">小程序注册</span>
                 </el-form-item>
                 <el-form-item label="企业名称:" prop="name">
                     <span>{{form.companyName}}</span>

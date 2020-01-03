@@ -36,7 +36,7 @@
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="createUserName" sortable label="姓名" width="160"></el-table-column>
-        <el-table-column prop="evaluateContent" sortable label="评价内容" ></el-table-column>
+        <el-table-column prop="evaluateContent" sortable label="评价内容"></el-table-column>
         <el-table-column prop="evaluateGrade" sortable label="服务评分" width="200">
           <template slot-scope="scope">
             <el-rate
@@ -47,12 +47,12 @@
             ></el-rate>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构" ></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
         <el-table-column prop="createDate" sortable label="评价时间" width="200"></el-table-column>
         <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="deleteId(scope.row)">删除</el-button>
-            <el-button type="text">详情</el-button>
+            <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -173,6 +173,13 @@ export default {
     handleTableCurrent(current) {
       this.tablePage = current;
       this.getList();
+    },
+    //详情跳转
+    seeClick(data) {
+      this.$router.push({
+        path: "/hqgj/ServicePack/Handheld/evaluateSee",
+        query: { id: data.id }
+      });
     }
   }
 };

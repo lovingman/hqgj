@@ -4,7 +4,7 @@
       <div class="title-top">
         <div class="title">基本信息</div>
         <div class="rtt">
-          <el-button @click="black" type="primary">取消</el-button>
+          <el-button @click="black" type="primary">返回</el-button>
         </div>
       </div>
       <el-form label-width="140px" class="formBox">
