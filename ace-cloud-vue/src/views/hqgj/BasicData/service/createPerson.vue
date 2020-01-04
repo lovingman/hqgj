@@ -6,16 +6,16 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="姓名:" prop="name">
-                            <el-input placeholder="请输入姓名" v-model="addform.name"></el-input>
+                            <el-input placeholder="请输入姓名" v-model.trim="addform.name"></el-input>
                         </el-form-item>
                         <el-form-item label="身份证号:" prop="idCard">
-                            <el-input placeholder="请输入身份证号" v-model="addform.idCard"></el-input>
+                            <el-input placeholder="请输入身份证号" v-model.trim="addform.idCard"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
-                            <el-input placeholder="请输入联系方式" v-model="addform.mobile"></el-input>
+                            <el-input placeholder="请输入联系方式" v-model.trim="addform.mobile"></el-input>
                         </el-form-item>
                         <el-form-item label="职务/职称:" prop="jobs">
-                            <el-input placeholder="请输入职务/职称" v-model="addform.jobs"></el-input>
+                            <el-input placeholder="请输入职务/职称" v-model.trim="addform.jobs"></el-input>
                         </el-form-item>
                         <el-form-item label="擅长领域:" prop="speciality">
                             <el-tag
@@ -31,6 +31,8 @@
                                     @keyup.enter.native="handleInputConfirm"
                                     class="input-new-tag"
                                     ref="saveTagInput"
+                                    maxlength="7"
+                                    show-word-limit
                                     size="small"
                                     v-if="inputVisible"
                                     v-model="inputValue"
@@ -49,7 +51,7 @@
                                     rows="6"
                                     show-word-limit
                                     type="textarea"
-                                    v-model="addform.content"
+                                    v-model.trim="addform.content"
                             >
                             </el-input>
                         </el-form-item>
@@ -192,10 +194,19 @@
             },
 
             showInput() {
-                this.inputVisible = true;
-                this.$nextTick(_ => {
-                    this.$refs.saveTagInput.$refs.input.focus();
-                });
+                if(this.specialityarr.length<5){
+                    this.inputVisible = true;
+                    this.$nextTick(_ => {
+                        this.$refs.saveTagInput.$refs.input.focus();
+                    });
+                }else{
+                    this.$message({
+                        showClose: true,
+                        message: '擅长领域不能超过5个',
+                        type: 'warning'
+                    });
+                }
+
             },
 
             handleInputConfirm() {

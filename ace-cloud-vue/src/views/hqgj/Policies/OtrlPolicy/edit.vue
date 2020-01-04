@@ -15,7 +15,7 @@
                         <el-form-item label="标题" prop="title">
                             <el-input
                                     maxlength="200"
-                                    v-model="serviceForm.title"
+                                    v-model.trim="serviceForm.title"
                                     clearable
                                     show-word-limit
                                     placeholder="请输入标题"
@@ -26,7 +26,7 @@
                         <el-form-item label="来源">
                             <el-input
                                     maxlength="50"
-                                    v-model="serviceForm.source"
+                                    v-model.trim="serviceForm.source"
                                     clearable
                                     show-word-limit
                                     placeholder="请输入来源"
@@ -40,7 +40,7 @@
                             <el-input
                                     type="textarea"
                                     placeholder="请输入内容"
-                                    v-model="serviceForm.content"
+                                    v-model.trim="serviceForm.content"
                                     rows="20"
                                     maxlength="10000"
                                     show-word-limit

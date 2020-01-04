@@ -6,16 +6,16 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="姓名:" prop="name">
-                            <el-input placeholder="请输入姓名" v-model="form.name"></el-input>
+                            <el-input placeholder="请输入姓名" v-model.trim="form.name"></el-input>
                         </el-form-item>
                         <el-form-item label="身份证号:" prop="idCard">
-                            <el-input :disabled="true" placeholder="请输入身份证号" v-model="form.idCard"></el-input>
+                            <el-input :disabled="true" placeholder="请输入身份证号" v-model.trim="form.idCard"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式:" prop="mobile">
-                            <el-input placeholder="请输入联系方式" v-model="form.mobile"></el-input>
+                            <el-input placeholder="请输入联系方式" v-model.trim="form.mobile"></el-input>
                         </el-form-item>
                         <el-form-item label="职务/职称:" prop="jobs">
-                            <el-input placeholder="请输入职务/职称" v-model="form.jobs"></el-input>
+                            <el-input placeholder="请输入职务/职称" v-model.trim="form.jobs"></el-input>
                         </el-form-item>
                         <el-form-item label="擅长领域:" prop="speciality">
                             <el-tag
@@ -49,7 +49,7 @@
                                     rows="6"
                                     show-word-limit
                                     type="textarea"
-                                    v-model="form.content"
+                                    v-model.trim="form.content"
                             >
                             </el-input>
                         </el-form-item>

@@ -4,18 +4,18 @@
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">
-                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit style="width: 30%" v-model="addform.companyName"></el-input>
+                    <el-input placeholder="请输入企业名称" maxlength="50" show-word-limit style="width: 30%" v-model.trim="addform.companyName"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="统一社会信用代码:" prop="creditCode">-->
                 <!--<el-input placeholder="请输入18位统一社会信用代码"  style="width: 50%" v-model="addform.creditCode"></el-input>-->
                 <!--</el-form-item>-->
                 <el-form-item label="法人代表:" prop="legalPerson">
-                    <el-input placeholder="请输入法人代表姓名" style="width: 30%" v-model="addform.legalPerson"></el-input>
+                    <el-input placeholder="请输入法人代表姓名" style="width: 30%" v-model.trim="addform.legalPerson"></el-input>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="contactPersonTel">
-                    <el-input placeholder="联系人姓名" style="width: 12%" v-model="addform.contactPersonName"></el-input>
+                    <el-input placeholder="联系人姓名" style="width: 12%" v-model.trim="addform.contactPersonName"></el-input>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
-                    <el-input placeholder="联系电话" style="width: 16%" v-model="addform.contactPersonTel"></el-input>
+                    <el-input placeholder="联系电话" style="width: 16%" v-model.trim="addform.contactPersonTel"></el-input>
                 </el-form-item>
                 <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
@@ -23,7 +23,6 @@
                             :props="areaCodeProps"
                             change-on-select
                             clearable
-                            filterable
                             placeholder="请选择行政区划"
                             ref="myCascader"
                             style="width: 30%"
@@ -34,7 +33,7 @@
                             placeholder="请输入企业详细地址，xx社区xx路xx号(xx小区xx栋xx楼xx号）"
                             style="width: 30%"
                             type="textarea"
-                            v-model="addform.companyAddress"></el-input>
+                            v-model.trim="addform.companyAddress"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="back">取消</el-button>
