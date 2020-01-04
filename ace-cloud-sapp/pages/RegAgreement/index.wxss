@@ -61,6 +61,7 @@
     flex-basis: 0;
     flex-shrink: 0;
     overflow: auto;
+    padding: 0 30rpx;
 }
 
 .content .text {

@@ -51,10 +51,11 @@
 }
 
 .modal .card .info {
-  width: 440rpx;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex-grow: 1;
+  margin-left: 20rpx;
 }
 
 .modal .card .name {
@@ -86,6 +87,10 @@
   display: flex;
   position: relative;
   align-items: center;
+}
+
+.modal .phone.nophone{
+    color: #ccc;
 }
 
 .modal .phone .phone-number {

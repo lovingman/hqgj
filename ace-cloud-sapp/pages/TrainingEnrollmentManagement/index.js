@@ -21,12 +21,9 @@ Page({
     console.log(e)
     var that = this;
     var phone = e.currentTarget.dataset.id;
-    that.setData({
-      phone: phone
-    })
     if (phone) {
       wx.makePhoneCall({
-        phoneNumber: that.data.phone
+        phoneNumber: phone
       })
     } else {
       return false
@@ -45,7 +42,7 @@ Page({
     if (that.data.checked == false) { //判断当前全县按钮是否为已选或者没选
       var obj = [];
       obj = that.data.enrollForm.map(item => { //循环page数组，依次拿到ID存入OBJ
-        return item.id.toString()
+        return item.id.toString();
       })
     } else {
       var obj = []; //清空
@@ -66,7 +63,7 @@ Page({
   getList: function() {
     var that = this;
     request.getJSON(cfg.enrollPage, {
-      id: that.data.id,
+        serveCultivateId: that.data.id,
       orderBy: 'status',
       sord:'asc'
 
