@@ -27,6 +27,8 @@ public interface BaseOrganizationMemberDao {
 
     int deleteByIds(String[] ids);
 
+    int deleteByOrgId(@Param("orgId") String orgId);
+
     String existMember(@Param("orgId")String orgId,@Param("idCard")String idCard);
 
     int updateUserId(@Param("userId")String userId,@Param("id")String id);

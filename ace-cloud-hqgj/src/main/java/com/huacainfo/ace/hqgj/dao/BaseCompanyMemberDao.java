@@ -23,6 +23,8 @@ public interface BaseCompanyMemberDao {
 
     int findCount(@Param("condition") BaseCompanyMemberQVo condition);
 
+    int deleteByCompanyId(@Param("companyId") String companyId);
+
     int isExist(BaseCompanyMember o);
 
     int deleteByIds(String[] ids);

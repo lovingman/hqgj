@@ -124,6 +124,12 @@
         from base_company_member
         where id = #{id,jdbcType=VARCHAR}
   </select>
+
+    <delete id="deleteByCompanyId" parameterType="java.lang.String">
+        delete from base_company_member
+        where companyId =#{companyId}
+    </delete>
+
     <delete id="deleteByIds">
         delete from base_company_member
         where id in

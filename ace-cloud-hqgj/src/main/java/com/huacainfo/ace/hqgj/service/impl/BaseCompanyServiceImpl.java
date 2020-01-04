@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.huacainfo.ace.common.tools.CommonBeanUtils;
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BaseCompanyMemberDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -35,6 +36,8 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private BaseCompanyDao baseCompanyDao;
+    @Resource
+    private BaseCompanyMemberDao baseCompanyMemberDao;
 
     /**
      * @throws
@@ -148,8 +151,10 @@ public class BaseCompanyServiceImpl implements BaseCompanyService {
      */
     @Override
     @Log(operationObj = "企业管理", operationType = "删除", detail = "删除企业管理")
+    @Transactional
     public ResponseDTO deleteById(String id) throws Exception {
         this.baseCompanyDao.deleteByPrimaryKey(id);
+        baseCompanyMemberDao.deleteByCompanyId(id);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
