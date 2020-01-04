@@ -1,17 +1,5 @@
 <template>
   <div class="navbar">
-    <div class="title">
-      <el-row style="margin-left: 20px;">
-        <el-col :span="4" style="margin-top: 5px">
-          <img style="width: 80%" src="@/assets/images/hqgjlogo.png" alt="">
-        </el-col>
-        <el-col :span="14">
-          <div class="title-nm">
-            <span>慧企管家服务平台</span>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
@@ -80,18 +68,7 @@ export default {
   width: 100%;
   /*box-shadow: 0 1px 4px rgba(0,21,41,.08);*/
 
-  .title{
-    background-color:rgb(0, 65, 136);
-    width: 250px;
-    float: left;
-    height: 45px;
-    padding: 0;
-    text-align: center
-  }
-  .title-nm{
-    color: white;
-    line-height: 45px;
-  }
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;

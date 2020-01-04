@@ -269,7 +269,7 @@ export default {
       var obj = {};
       obj.id = row.id;
       obj.status = 4; //传递4代表下线状态
-      this.$confirm("确定是否要上线该服务?", "提示", {
+      this.$confirm("确定是否要下线该服务?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
