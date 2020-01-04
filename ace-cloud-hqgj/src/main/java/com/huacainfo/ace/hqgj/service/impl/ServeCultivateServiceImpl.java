@@ -104,6 +104,12 @@ public class ServeCultivateServiceImpl implements ServeCultivateService {
                 JSONArray.parseArray(jsonObj.getString("serveCultivateSchedule"), ServeCultivateScheduleVo.class));
         String  cultivateId= GUIDUtil.getGUID();
         s.setId(cultivateId);
+        if(CommonUtils.isBlank(s.getTitle().trim())){
+            return new ResponseDTO(ResultCode.FAIL, "标题不能为空！");
+        }
+        if(CommonUtils.isBlank(s.getContent().trim())){
+            return new ResponseDTO(ResultCode.FAIL, "内容不能为空！");
+        }
         int temp = this.serveCultivateDao.isExist(s);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表名称重复！");

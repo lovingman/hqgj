@@ -97,45 +97,6 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
     @Log(operationObj = "创业服务资料清单人员表", operationType = "创建", detail = "创建创业服务资料清单人员表")
     public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
         JSONObject jsonObj= JSON.parseObject(jsons);
-        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessMember")) {
-            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
-        }
-        List<ServeBusinessDetail> serveBusinessMembers=new ArrayList<ServeBusinessDetail>(
-                JSONArray.parseArray(jsonObj.getString("serveBusinessMember"), ServeBusinessDetail.class));
-        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
-                JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
-
-        //人员信息
-        for(ServeBusinessDetail o:serveBusinessMembers) {
-            String memberId = GUIDUtil.getGUID();
-            o.setId(memberId);
-            o.setBusinessId(o.getBusinessId());
-            int temp = this.serveBusinessDetailDao.isExist(o);
-            if (temp > 0) {
-                return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-            }
-            o.setCreateDate(new Date());
-            o.setStatus("0");
-            o.setCreateUserName(userProp.getName());
-            o.setCreateUserId(userProp.getUserId());
-            o.setModifyDate(new Date());
-            this.serveBusinessDetailDao.insert(o);
-            //人员资料附件
-            if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
-                List<BasicAnnex> fileURL = o.getBasicAnnexes();
-                for (BasicAnnex a : fileURL) {
-                    a.setId(GUIDUtil.getGUID());
-                    a.setRelationId(memberId);
-                    a.setFileURL(a.getFileURL());
-                    //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
-                    a.setType("3");
-                    a.setRemark("创业服务资料清单附件");
-                    a.setCreateDate(new Date());
-                    a.setStatus("1");
-                    basicAnnexDao.insert(a);
-                }
-            }
-        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

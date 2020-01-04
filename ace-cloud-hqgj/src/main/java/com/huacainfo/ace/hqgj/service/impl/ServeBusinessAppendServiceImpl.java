@@ -77,17 +77,14 @@ public class ServeBusinessAppendServiceImpl implements ServeBusinessAppendServic
     @Log(operationObj = "创业服务资料其它附加信息", operationType = "创建", detail = "创建创业服务资料其它附加信息")
     public ResponseDTO create(ServeBusinessAppend o, UserProp userProp) throws Exception {
         o.setId(GUIDUtil.getGUID());
-        if (CommonUtils.isBlank(o.getBusinessId())) {
+        if (CommonUtils.isBlank(o.getBusinessId().trim())) {
             return new ResponseDTO(ResultCode.FAIL, "创业服务表ID（关联serve_business表ID）不能为空！");
         }
-        if (CommonUtils.isBlank(o.getType())) {
+        if (CommonUtils.isBlank(o.getType().trim())) {
             return new ResponseDTO(ResultCode.FAIL, "类别 1-申请免费服务项目 2-确认培训意向 3-开户银行 4-是否选择代理记账服务 5-特殊说明不能为空！");
         }
-        if (CommonUtils.isBlank(o.getOption())) {
+        if (CommonUtils.isBlank(o.getOption().trim())) {
             return new ResponseDTO(ResultCode.FAIL, "选项值（各类别对应的选项值，如type=1 申请免费服务项目，则 1-工商注册代办服务 2-银行基本开户代办服务 3-银行开户费小额账户管理费等，具体根据字典来）不能为空！");
-        }
-        if (CommonUtils.isBlank(o.getStatus())) {
-            return new ResponseDTO(ResultCode.FAIL, "状态  1-生效 0-失效不能为空！");
         }
 
         int temp = this.serveBusinessAppendDao.isExist(o);
@@ -117,7 +114,7 @@ public class ServeBusinessAppendServiceImpl implements ServeBusinessAppendServic
     @Transactional
     @Log(operationObj = "创业服务资料其它附加信息", operationType = "变更", detail = "变更创业服务资料其它附加信息")
     public ResponseDTO update(ServeBusinessAppend o, UserProp userProp) throws Exception {
-        if (CommonUtils.isBlank(o.getId())) {
+        if (CommonUtils.isBlank(o.getId().trim())) {
             return new ResponseDTO(ResultCode.FAIL, "主键ID不能为空！");
         }
         if (CommonUtils.isBlank(o.getBusinessId())) {
