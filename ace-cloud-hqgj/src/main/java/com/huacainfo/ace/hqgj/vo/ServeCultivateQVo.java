@@ -9,6 +9,7 @@ private static final long serialVersionUID = 1L;
 private String[] statuss;
 //讲师id
 private String lecturerId;
+
     public String[] getStatuss() {
         return statuss;
     }
