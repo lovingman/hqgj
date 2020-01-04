@@ -44,7 +44,6 @@
                             ref="myCascader"
                             change-on-select
                             clearable
-                            filterable
                             placeholder="请选择行政区划"
                             style="width: 30%"
                             v-model.trim="addform.areaCodes"/>

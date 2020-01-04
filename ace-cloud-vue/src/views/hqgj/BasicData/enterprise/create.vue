@@ -23,7 +23,6 @@
                             :props="areaCodeProps"
                             change-on-select
                             clearable
-                            filterable
                             placeholder="请选择行政区划"
                             ref="myCascader"
                             style="width: 30%"

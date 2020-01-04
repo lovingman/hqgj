@@ -26,7 +26,6 @@
                             :props="areaCodeProps"
                             clearable
                             change-on-select
-                            filterable
                             style="width: 30%"/>
                 </el-form-item>
                 <el-form-item prop="companyAddress">
