@@ -255,16 +255,21 @@
     </div>
     <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
       <div>
-        <div style="margin-bottom: 10px">
-          <input id="keyword" type="textbox" value />
-          <el-button @click="searchKeyword" type="text" value="search">搜索</el-button>
+        <div style="margin-bottom: 10px;">
+          <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
+            <el-button :loading="loading" @click="searchKeyword" icon="el-icon-search" slot="append"></el-button>
+          </el-input>
+          <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
+          <el-button style="float: right;margin-right: 10px" @click="enterAddress" type="primary">确 定</el-button>
+          <!--<input id="keyword" type="textbox" value />-->
+          <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
         </div>
         <div id="container"></div>
       </div>
-      <span class="dialog-footer" slot="footer">
-        <el-button @click="addressVisible = false">取 消</el-button>
-        <el-button @click="enterAddress" type="primary">确 定</el-button>
-      </span>
+      <!--<span class="dialog-footer" slot="footer">-->
+        <!--<el-button @click="addressVisible = false">取 消</el-button>-->
+        <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
+      <!--</span>-->
     </el-dialog>
   </div>
 </template>
@@ -284,6 +289,7 @@ export default {
   name: "add",
   data() {
     return {
+      addressname:"",//地图搜索值
       uploadfileindex: "", //上传标识
       address: "", //详细地址
       latitude: [], //经纬度
@@ -512,7 +518,7 @@ export default {
     },
     //地图搜索
     searchKeyword() {
-      var keyword = document.getElementById("keyword").value;
+      var keyword = this.addressname;
       console.log(keyword);
       this.clearOverlays(this.markers);
       //根据输入的城市设置搜索范围
@@ -847,7 +853,7 @@ export default {
 <style lang="less" scoped>
 #container {
   min-width: 600px;
-  min-height: 767px;
+  min-height: 400px;
 }
 
 .main-box {
