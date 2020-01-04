@@ -16,11 +16,11 @@
           <el-col :span="16" :offset="1">
             <el-input
               placeholder="请输入企业名称或姓名"
-              v-model="query.companyName"
+               v-model.trim="query.companyName"
               clearable
               class="input-with-select"
             >
-               <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
+              <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
         </el-col>
@@ -120,6 +120,7 @@ export default {
     },
     //page列表
     getList() {
+      this.loading = true;
       this.query = Object.assign(this.query, {
         pageNum: this.tablePage,
         pageSize: this.tableSize,
@@ -129,6 +130,7 @@ export default {
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;
+          this.loading = false;
         }
       });
     },
@@ -186,7 +188,6 @@ export default {
     }
     .selectSearch {
       float: right;
-     
     }
   }
   .table-box {

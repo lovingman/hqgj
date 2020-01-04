@@ -15,7 +15,7 @@
             </el-select>
           </el-col>
           <el-col :span="16" :offset="1">
-            <el-input placeholder="请输入名称" v-model="query.title" clearable class="input-with-select">
+            <el-input placeholder="请输入标题"  v-model.trim="query.title" clearable class="input-with-select">
               <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>

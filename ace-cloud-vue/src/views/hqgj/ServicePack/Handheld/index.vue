@@ -29,7 +29,7 @@
           <el-col :span="12" :offset="1">
             <el-input
               placeholder="请输入服务机构名称"
-              v-model="query.orgName"
+              v-model.trim="query.orgName"
               clearable
               class="input-with-select"
             >
