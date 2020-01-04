@@ -4,19 +4,32 @@
       <el-row>
         <el-col class="selectSearch" :span="12">
           <el-col :span="12">
-            <el-date-picker
-              v-model="timeArr"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              value-format="yyyy-MM-dd"
-            ></el-date-picker>
+            <el-col :span="10">
+              <el-date-picker
+                v-model="query.startTime"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择开始时间"
+              ></el-date-picker>
+            </el-col>
+            <el-col :span="4" style=" text-align: center; line-height: 36px;">
+              <span class="text">至</span>
+            </el-col>
+            <el-col :span="10">
+              <el-date-picker
+                v-model="query.endTime"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择结束时间"
+              ></el-date-picker>
+            </el-col>
           </el-col>
           <el-col :span="11" :offset="1">
             <el-input
               placeholder="请输入内容"
-              v-model="query.evaluateContent"
+              v-model.trim="query.evaluateContent"
               clearable
               class="input-with-select"
             >
@@ -81,7 +94,9 @@ export default {
       timeArr: [], //时间数组
       loading: false, //加载状态
       query: {
-        evaluateContent: "" //搜索
+        evaluateContent: "", //搜索
+        startTime: "", //开始日期
+        endTime: "" //结束日期
       },
       stautsArr: [
         {
@@ -121,13 +136,13 @@ export default {
         pageSize: this.tableSize,
         totalRecord: this.total
       });
-      if (this.timeArr) {
-        this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
-        this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
-      } else {
-        this.query.startTime = "";
-        this.query.endTime = "";
-      }
+      // if (this.timeArr) {
+      //   this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
+      //   this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
+      // } else {
+      //   this.query.startTime = "";
+      //   this.query.endTime = "";
+      // }
       evaluatePage(this.query).then(res => {
         if (res.status == 1) {
           this.tableData = res.rows;
@@ -202,6 +217,9 @@ export default {
     }
     .selectSearch {
       float: right;
+      /deep/ .el-date-editor.el-input {
+        width: 100%;
+      }
     }
   }
   .table-box {

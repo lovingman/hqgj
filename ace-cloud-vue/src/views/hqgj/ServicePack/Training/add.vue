@@ -40,7 +40,7 @@
                     maxlength="50"
                     placeholder="请输入标题"
                     show-word-limit
-                    v-model="basicForm.title"
+                    v-model.trim="basicForm.title"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -49,7 +49,7 @@
                   <el-input
                     clearable
                     placeholder="请输入最多可报名人数"
-                    v-model="basicForm.cultivatePersonNumber"
+                    v-model.trim="basicForm.cultivatePersonNumber"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -91,7 +91,7 @@
                   :rows="8"
                   placeholder="请输入详细内容"
                   type="textarea"
-                  v-model="basicForm.content"
+                  v-model.trim="basicForm.content"
                 ></el-input>
                 <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
               </el-form-item>
@@ -132,7 +132,7 @@
                       placeholder="请输入培训名称"
                       show-word-limit
                       type="text"
-                      v-model="scheduleModel.title"
+                       v-model.trim="scheduleModel.title"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -172,7 +172,7 @@
                       placeholder="请输入详细地址"
                       show-word-limit
                       type="text"
-                      v-model="scheduleModel.detailedAddress"
+                       v-model.trim="scheduleModel.detailedAddress"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -206,7 +206,7 @@
                     placeholder="简要概述培训内容，不超过200字"
                     show-word-limit
                     type="textarea"
-                    v-model="scheduleModel.content"
+                     v-model.trim="scheduleModel.content"
                   ></el-input>
                 </el-form-item>
               </el-row>
@@ -253,7 +253,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="addressVisible" title="提示" width="60%">
+    <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
       <div>
         <div style="margin-bottom: 10px">
           <input id="keyword" type="textbox" value />
