@@ -14,7 +14,7 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, relationId, fileType, fileName, fileSize, fileURL, remark, type, createDate, 
+    id, relationId, fileType, fileName, fileSize, fileURL, remark, type, createDate,
     status
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -28,13 +28,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.BasicAnnex">
-    insert into basic_annex (id, relationId, fileType, 
-      fileName, fileSize, fileURL, 
-      remark, type, createDate, 
+    insert into basic_annex (id, relationId, fileType,
+      fileName, fileSize, fileURL,
+      remark, type, createDate,
       status)
-    values (#{id,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
-      #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=DECIMAL}, #{fileURL,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR},
+      #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=DECIMAL}, #{fileURL,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR})
   </insert>
 
@@ -102,7 +102,7 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
-
+        limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
     </select>
     <select id="findCount" resultType="int">
         SELECT COUNT(*)
