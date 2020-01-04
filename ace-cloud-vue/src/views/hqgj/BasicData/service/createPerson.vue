@@ -31,6 +31,8 @@
                                     @keyup.enter.native="handleInputConfirm"
                                     class="input-new-tag"
                                     ref="saveTagInput"
+                                    maxlength="7"
+                                    show-word-limit
                                     size="small"
                                     v-if="inputVisible"
                                     v-model="inputValue"
@@ -192,10 +194,19 @@
             },
 
             showInput() {
-                this.inputVisible = true;
-                this.$nextTick(_ => {
-                    this.$refs.saveTagInput.$refs.input.focus();
-                });
+                if(this.specialityarr.length<5){
+                    this.inputVisible = true;
+                    this.$nextTick(_ => {
+                        this.$refs.saveTagInput.$refs.input.focus();
+                    });
+                }else{
+                    this.$message({
+                        showClose: true,
+                        message: '擅长领域不能超过5个',
+                        type: 'warning'
+                    });
+                }
+
             },
 
             handleInputConfirm() {
