@@ -15,4 +15,18 @@ public interface PersonalCenterService {
      * @return
      */
     ResponseDTO relieveBind(UserProp userProp);
+
+    /**
+     * 解绑微信
+     * @param userProp
+     * @return
+     */
+    ResponseDTO relieveByUnionId(UserProp userProp);
+
+    /**
+     * 绑定微信
+     * @param userProp
+     * @return
+     */
+    ResponseDTO bindUnionId(UserProp userProp,String unionId);
 }

@@ -9,8 +9,8 @@
       t.birthday, t.status, t.userType,
       t.lastLoginTime, t.mobile, t.email, t.createTime, t.curSyid, t.locked, t.lockedTime,a.orgName corpName,b.name areaName,t.deptId,c.name deptName
     from users t
-           inner join hqgj.base_organization a on t.corpId=a.id
-           inner join province b on t.areaCode=b.code
+           left join hqgj.base_organization a on t.corpId=a.id
+           left join province b on t.areaCode=b.code
 
            left join dept c on t.deptId=c.id
 
@@ -24,15 +24,14 @@
             parameterType="com.huacainfo.ace.portal.model.Users">
     insert into users (user_id, account, password,
                        sex, idCard, name,userType,
-                       corpId, areaCode, birthday,
+                       corpId, areaCode,
                        status, lastLoginTime, mobile,
                        email, createTime, curSyid,
                        locked, lockedTime,deptId)
     values (#{userId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR},
             #{password,jdbcType=VARCHAR},
             #{sex,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-            #{corpId,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
-            #{birthday,jdbcType=DATE}, #{userType,jdbcType=DATE},
+            #{userType,jdbcType=DATE},#{corpId,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
             #{status,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR},
             #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
             #{curSyid,jdbcType=VARCHAR},

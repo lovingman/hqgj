@@ -11,7 +11,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="机构名称:" prop="orgName">
-                    <el-input v-model="addform.orgName" maxlength="50" show-word-limit placeholder="请输入机构名称" style="width: 30%"></el-input>
+                    <el-input v-model.trim="addform.orgName" maxlength="50" show-word-limit placeholder="请输入机构名称" style="width: 30%"></el-input>
                 </el-form-item>
                 <el-form-item label="logo:" prop="fmUrlarr">
                     <el-upload
@@ -33,9 +33,9 @@
                     </el-dialog>
                 </el-form-item>
                 <el-form-item label="联系方式:" prop="contactPersonTel">
-                    <el-input v-model="addform.contactPersonName" placeholder="联系人姓名" style="width: 12%"></el-input>
+                    <el-input v-model.trim="addform.contactPersonName" placeholder="联系人姓名" style="width: 12%"></el-input>
                     <span style="padding-left: 10px;padding-right: 10px">--</span>
-                    <el-input v-model="addform.contactPersonTel" placeholder="联系电话" style="width: 16%"></el-input>
+                    <el-input v-model.trim="addform.contactPersonTel" placeholder="联系电话" style="width: 16%"></el-input>
                 </el-form-item>
                 <el-form-item label="地址:" prop="areaCodes">
                     <el-cascader
@@ -44,21 +44,20 @@
                             ref="myCascader"
                             change-on-select
                             clearable
-                            filterable
                             placeholder="请选择行政区划"
                             style="width: 30%"
-                            v-model="addform.areaCodes"/>
+                            v-model.trim="addform.areaCodes"/>
                 </el-form-item>
                 <el-form-item prop="orgAddress">
                     <el-input
-                            v-model="addform.orgAddress"
+                            v-model.trim="addform.orgAddress"
                             placeholder="请输入机构详细地址，xx社区xx路xx号(xx小区xx栋xx楼xx号）"
                             style="width: 30%"
                             type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="简介:" prop="content">
                     <el-input
-                            v-model="addform.content"
+                            v-model.trim="addform.content"
                             maxlength="500"
                             placeholder="请输入机构简介"
                             rows="4"
@@ -339,6 +338,11 @@
     }
     .hide /deep/ .el-upload--picture-card {
         display: none;
+    }
+    .hide /deep/.el-upload-list--picture-card .el-upload-list__item-thumbnail{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     .title {
         font-size: 16px;

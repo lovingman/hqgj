@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,6 +35,8 @@ public class BaseOrganizationServiceImpl implements BaseOrganizationService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private BaseOrganizationDao baseOrganizationDao;
+    @Resource
+    private BaseOrganizationMemberDao baseOrganizationMemberDao;
 
     /**
      * @throws
@@ -147,9 +150,11 @@ public class BaseOrganizationServiceImpl implements BaseOrganizationService {
      * @version: 2019-12-09
      */
     @Override
+    @Transactional
     @Log(operationObj = "企业管理", operationType = "删除", detail = "删除企业管理")
     public ResponseDTO deleteById(String id) throws Exception {
         this.baseOrganizationDao.deleteByPrimaryKey(id);
+        int i=baseOrganizationMemberDao.deleteByOrgId(id);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 

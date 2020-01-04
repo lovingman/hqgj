@@ -9,20 +9,71 @@ Page({
   data: {
     active: 0, //当前tab索引
     listArr: [], //page数组
-    type: 1, //类型 1 律师事务所 2，会计 3 培训
+    index: "", //当前tab索引
     basicAnnexArr: [], //法律模板数组
     basicLength: "", //文件数量
+    query: {
+      pageSize: 10,
+      pageNum: 1,
+      type: 1, //类型 1 律师事务所 2，会计 3 培训
+    },
+    isload: false,
+    loading: false,
   },
   //请求page
   getList: function() {
     var that = this;
-    request.getJSON(cfg.baseOrganizationUrl, {
-      type: that.data.type
-    }).then(res => {
-      if (res.data.status == 1) {
-        console.log(res)
+    that.showloading();
+    request.getJSON(cfg.baseOrganizationUrl, that.data.query).then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
         that.setData({
-          listArr: res.data.rows,
+          isload: true
+        })
+      }
+      if (e.status == 1) {
+        let rows = that.data.listArr.concat(res.data.rows);
+        that.setData({
+          listArr: rows,
+        })
+      }
+    })
+  },
+  //显示加载
+  showloading() {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+  },
+  //隐藏加载
+  hideloading() {
+    let that = this;
+    that.setData({
+      loading: false
+    })
+  },
+  //法律模板请求
+  getBasicAnnex() {
+    let that = this;
+    that.showloading();
+    request.getJSON(cfg.basicAnnexUrl, that.data.query).
+    then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
+        that.setData({
+          isload: true
+        })
+      }
+      if (e.status == 1) {
+        let rows = that.data.basicAnnexArr.concat(res.data.rows);
+        that.setData({
+          basicAnnexArr: rows,
+          basicLength: res.data.total
         })
       }
     })
@@ -30,23 +81,13 @@ Page({
   //tab切换
   tabClick: function(event) {
     var that = this;
-    var types = 2;
+    that.data.query.type = 2;
     var index = parseInt(event.detail.index); //获取当前点击的tabs的索引值
+    that.setData({
+      index: index
+    })
     if (index == 1) { //0 律师事务所  1法律模板
-      request.getJSON(cfg.basicAnnexUrl, {
-        type: types
-      }).
-      then(res => {
-        console.log(res);
-        if (res.data.status == 1) {
-          var basicAnnexLength = res.data.rows.length;
-          console.log(basicAnnexLength)
-          that.setData({
-            basicAnnexArr: res.data.rows,
-            basicLength: basicAnnexLength
-          })
-        }
-      })
+      that.getBasicAnnex();
     }
   },
   //点击跳转详情
@@ -95,6 +136,23 @@ Page({
       }
     })
   },
+  //搜索事件
+  onChange: function(e) {
+    console.log(e);
+    var that = this;
+    var obj = {};
+    obj.fileName = e.detail;
+    obj.type = 2;
+    request.getJSON(cfg.basicAnnexUrl, obj).then(res => {
+      if (res.data.status == 1) {
+        console.log(res)
+        that.setData({
+          basicAnnexArr: res.data.rows,
+          basicLength: res.data.total
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -134,6 +192,20 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    let that = this;
+    if (that.data.index != 1) {
+      that.data.query.pageNum = 1;
+      that.data.listArr = [];
+      console.log(that.data.listArr);
+      that.getList();
+      wx.stopPullDownRefresh();
+    } else {
+      that.data.query.type = 2;
+      that.data.query.pageNum = 1;
+      that.data.basicAnnexArr = [];
+      that.getBasicAnnex();
+      wx.stopPullDownRefresh();
+    }
 
   },
 
@@ -141,7 +213,14 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    let that = this;
+    if (that.data.index != 1) {
+      that.data.query.pageNum++;
+      that.getList();
+    } else {
+      that.data.query.pageNum++;
+      that.getBasicAnnex();
+    }
   },
 
   /**

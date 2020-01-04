@@ -177,6 +177,7 @@ public class LawServeServiceImpl implements LawServeService {
      * @version: 2019-12-10
      */
     @Override
+    @Transactional
     @Log(operationObj = "法律服务", operationType = "删除", detail = "删除法律服务")
     public ResponseDTO deleteById(String id) throws Exception {
         this.lawServeDao.deleteByPrimaryKey(id);

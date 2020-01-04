@@ -85,7 +85,7 @@
 </template>
 
 <script>
-    import {getList, deleteById, deleteByIds, exportXls} from "@/api/hqgj/enterprise";
+    import {getList, deleteById, deleteByIds, exportXls,personPage} from "@/api/hqgj/enterprise";
 
     export default {
         name: "index",
@@ -109,6 +109,9 @@
                 query: {
                     companyName: "",
                     source:""
+                },
+                query2:{
+                    companyId:""
                 },
                 exportDatas:{
                     companyName: ""
@@ -224,21 +227,43 @@
             },
             //删除
             handleDelete(index, data) {
-                this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning"
-                })
-                    .then(() => {
-                        this.id = data.id;
-                        deleteById(this.id).then(response => {
-                            this.$message.success("删除成功");
-                            this.getlist();
-                        });
-                    })
-                    .catch(() => {
+                this.query2.companyId=data.id;
+                personPage(this.query2).then(response => {
+                    if(response.total!=0){
+                        this.$confirm("该企业下有成员信息，是否一并删除?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                this.id = data.id;
+                                deleteById(this.id).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
 
-                    });
+                            });
+                    }else {
+                        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+                            confirmButtonText: "确定",
+                            cancelButtonText: "取消",
+                            type: "warning"
+                        })
+                            .then(() => {
+                                this.id = data.id;
+                                deleteById(this.id).then(response => {
+                                    this.$message.success("删除成功");
+                                    this.getlist();
+                                });
+                            })
+                            .catch(() => {
+
+                            });
+                    }
+                })
+
             },
             handleSelectionChange() {
 

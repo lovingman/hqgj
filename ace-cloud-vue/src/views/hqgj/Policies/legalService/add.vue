@@ -18,7 +18,7 @@
                                     maxlength="50"
                                     placeholder="请输入模板名称"
                                     show-word-limit
-                                    v-model="serviceForm.title"
+                                    v-model.trim="serviceForm.title"
                             ></el-input>
                         </el-form-item>
                     </el-col>

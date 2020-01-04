@@ -170,6 +170,11 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByOrgId" parameterType="java.lang.String">
+        delete from base_organization_member
+        where orgId =#{orgId}
+    </delete>
+
     <select id="existMember" parameterType="java.lang.String" resultType="java.lang.String">
         select id from base_organization_member
         where orgId = #{orgId,jdbcType=VARCHAR} and idCard = #{idCard,jdbcType=VARCHAR}

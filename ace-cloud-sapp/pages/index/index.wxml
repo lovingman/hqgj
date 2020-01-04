@@ -29,7 +29,7 @@
       <van-icon name="fire" />
     </view>
     <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}">
-      <swiper-item wx:for="{{trainList}}" wx:key="{{index}}" wx:for-item="item" catchtap="lawServeClcik" data-index='{{index}}'>
+      <swiper-item wx:for="{{trainList}}" wx:key="{{index}}" wx:for-item="item" catchtap="trainClick" data-index='{{index}}'>
         <view class="swiper-content">
           <view class="title van-multi-ellipsis--l2">
             {{item.title}}

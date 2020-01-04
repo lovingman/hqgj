@@ -60,3 +60,12 @@
 .modal .card .state.red {
   color: red;
 }
+
+
+.loadState{
+    color: rgba(121, 128, 146, 1);
+    height: 50rpx;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    text-align: center;
+}

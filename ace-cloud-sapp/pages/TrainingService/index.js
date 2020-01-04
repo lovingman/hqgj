@@ -37,7 +37,7 @@ Page({
       }
     ],
     query: {
-      pageSize: 10,
+      pageSize: 8,
       pageNum: 1,
       status: '1,3',
     },
@@ -50,11 +50,20 @@ Page({
   //请求page数据渲染列表
   getList: function() {
     var that = this;
+    that.showloading();
     request.getJSON(cfg.trainPageUrl, that.data.query).then(res => {
-      if (res.data.status == 1) {
-        console.log(res);
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
         that.setData({
-          listArr: res.data.rows
+          isload: true
+        })
+      }
+      if (e.status == 1) {
+        let rows = that.data.listArr.concat(res.data.rows);
+        that.setData({
+          listArr: rows
         })
       }
     })
@@ -67,11 +76,24 @@ Page({
       url: '/pages/TrainingServiceInfo/index?id=' + listId,
     })
   },
+  //显示加载
+  showloading() {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+  },
+  //隐藏加载
+  hideloading() {
+    let that = this;
+    that.setData({
+      loading: false
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("111111111")
     let that = this;
     that.getList();
   },
@@ -109,8 +131,10 @@ Page({
    */
   onPullDownRefresh: function() {
     let that = this;
+    that.data.query.pageNum = 1;
+    that.data.listArr = [];
+    console.log(that.data.listArr);
     that.getList();
-    console.log("222222222")
     wx.stopPullDownRefresh();
   },
 

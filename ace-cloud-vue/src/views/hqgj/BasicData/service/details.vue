@@ -15,7 +15,7 @@
                     <span>{{form.orgName}}</span>
                 </el-form-item>
                 <el-form-item label="logo:" prop="fmUrlarr">
-                    <i @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt=""class="img"></i>
+                    <i class="image" @click="preview(form.fmUrl)"><img :src="form.fmUrl" alt=""class="img"></i>
                     <el-dialog :visible.sync="dialogVisible" append-to-body>
                         <img :src="dialogImageUrl" alt="" width="100%">
                     </el-dialog>
@@ -99,7 +99,7 @@
         padding-top: 40px;
         padding-bottom: 40px;
     }
-    .img {
+    .image {
         overflow: hidden;
         background-color: #fff;
         border: 1px solid #c0ccda;
@@ -110,5 +110,10 @@
         height: 148px;
         margin: 0 8px 8px 0;
         display: inline-block;
+    }
+    .img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 </style>

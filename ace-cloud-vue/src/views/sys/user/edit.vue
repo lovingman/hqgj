@@ -28,6 +28,7 @@
                         <el-form-item label="用户类型" prop="userType">
                             <el-select placeholder="请选择用户类型"
                                        style="width:100%"
+                                       @change="getcorp"
                                        v-model="form.userType">
                                 <el-option
                                         :key="item.code"
@@ -38,9 +39,10 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="单位" prop="corpId">
-                            <el-select :loading="loading" :remote-method="corpQuery" filterable
+                            <el-select :disabled="corplable" :loading="loading" :remote-method="corpQuery" filterable
                                        placeholder="请选择所在单位"
                                        remote
+                                       @focus="change"
                                        reserve-keyword
                                        style="width:100%"
                                        v-model="form.corpId">
@@ -86,9 +88,13 @@
     export default {
         data() {
             return {
+                corplable:false,
                 dict: {},
                 dicttype:[],
                 corps: [],
+                query: {
+                    type: "",
+                },
                 loading: false,
                 form: {
                     userId: "",
@@ -111,9 +117,9 @@
                         {required: true, message: "请输入姓名", trigger: "blur"},
                         {min: 2, max: 50, message: "长度在 2 到 20 个字符", trigger: "blur"}
                     ],
-                    corpId: [
-                        {required: true, message: "请选择所属单位", trigger: "change"}
-                    ],
+                    // corpId: [
+                    //     {required: true, message: "请选择所属单位", trigger: "change"}
+                    // ],
                     userType: [
                         {required: true, message: "请选择所属用户类型", trigger: "change"}
                     ],
@@ -155,7 +161,11 @@
                     .then(response => {
                         this.loading = false;
                         this.form = response.data;
+                        this.corpQuery(response.data.userType);
                         this.corps.push({value: response.data.corpId, label: response.data.corpName});
+                        if(response.data.userType==4){
+                            this.corplable = true;
+                        }
                         //window.console.log(this.form);
                     })
             },
@@ -171,8 +181,24 @@
                         this.dicttype = response.data[61];
                     })
             },
-            corpQuery(query) {
-                getList(query)
+            getcorp(data) {
+                if (data == 4) {
+                    this.corplable = true;
+                } else {
+                    this.corpQuery(data);
+                    this.corplable = false;
+                }
+            },
+            change(data) {
+                if (data.isTrusted) {
+                    if (this.corps.length ==0) {
+                        this.$message('请先选择用户类型！');
+                    }
+                }
+            },
+            corpQuery(data) {
+                this.query.type =data
+                getList(this.query)
                     .then(response => {
                         this.corps = response.rows;
                     })

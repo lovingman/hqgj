@@ -365,7 +365,7 @@ Page({
         let that = this;
         let index = that.data.active;
         let targetObj = that.data.tabs[index];
-        targetObj.isload = false;
+        // targetObj.isload = false;
         targetObj.query.pageNum = 1;
         targetObj.list = [];
         that.getData();

@@ -25,7 +25,8 @@
                             <el-input v-model="form.idCard"></el-input>
                         </el-form-item>
                         <el-form-item label="用户类型" prop="userType">
-                            <el-select placeholder="请选择用户类型"
+                            <el-select @change="getcorp"
+                                       placeholder="请选择用户类型"
                                        style="width:100%"
                                        v-model="form.userType">
                                 <el-option
@@ -37,7 +38,9 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="单位" prop="corpId">
-                            <el-select :loading="loading" :remote-method="corpQuery" filterable
+                            <el-select :disabled=corplable :loading="loading" :remote-method="corpQuery"
+                                       @focus="change"
+                                       filterable
                                        placeholder="请选择所在单位"
                                        remote
                                        reserve-keyword
@@ -94,8 +97,12 @@
     export default {
         data() {
             return {
+                corplable: false,
                 dict: {},
-                dicttype:[],
+                dicttype: [],
+                query: {
+                    type: "",
+                },
                 corps: [],
                 loading: false,
                 form: {
@@ -105,12 +112,12 @@
                     deptId: "",
                     account: "",
                     password: "",
-                    userType:"",
+                    userType: "",
                     mobile: "",
                     email: "",
                     sex: "",
                     idCard: "",
-                    birthday: "",
+                    // birthday: "",
                     status: '1'
                 },
                 rules: {
@@ -121,9 +128,9 @@
                     userType: [
                         {required: true, message: "请选择用户类型", trigger: "change"}
                     ],
-                    corpId: [
-                        {required: true, message: "请选择所属单位", trigger: "change"}
-                    ],
+                    // corpId: [
+                    //     {required: true, message: "请选择所属单位", trigger: "change"}
+                    // ],
                     account: [
                         {required: true, message: "请输入账号", trigger: "blur"},
                         {min: 3, max: 30, message: "长度在 3 到 30 个字符", trigger: "blur"}
@@ -150,7 +157,7 @@
         },
         created() {
             this.dictQuery();
-            this.corpQuery();
+            // this.corpQuery();
             this.dicttypeQuery();
         },
         methods: {
@@ -160,13 +167,33 @@
                         this.dict = response.data;
                     })
             },
-            dicttypeQuery(){
+            dicttypeQuery() {
                 getDict("61")
                     .then(response => {
                         this.dicttype = response.data[61];
                     })
             },
-            corpQuery(query) {
+            getcorp(data) {
+                if (data == 4) {
+                    this.corplable = true;
+                } else {
+                    this.query.type = data;
+                    getList(this.query)
+                        .then(response => {
+                            this.corps = response.rows;
+                        })
+                    this.corplable = false;
+                }
+
+            },
+            change(data) {
+                if (data.isTrusted) {
+                    if (this.corps.length ==0) {
+                        this.$message('请先选择用户类型！');
+                    }
+                }
+            },
+            corpQuery() {
                 getList(query)
                     .then(response => {
                         this.corps = response.rows;
@@ -209,6 +236,9 @@
     };
 </script>
 <style>
+    .hide {
+        display: none;
+    }
 </style>
 
 

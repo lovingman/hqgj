@@ -77,9 +77,18 @@ Page({
   lawServeClcik: function(e) {
     var index = parseInt(e.currentTarget.dataset.index);
     var listId = this.data.lawServeList[index].id;
-    console.log(listId);
+
     wx.navigateTo({
       url: '/pages/PolicyServiceDetail/index?id=' + listId,
+    })
+  },
+  //点击培训跳转培训详情
+  trainClick: function(e) {
+    var index = parseInt(e.currentTarget.dataset.index);
+    var listId = this.data.lawServeList[index].id;
+
+    wx.navigateTo({
+      url: '/pages/TrainingServiceInfo/index?id=' + listId,
     })
   },
   getUser() {

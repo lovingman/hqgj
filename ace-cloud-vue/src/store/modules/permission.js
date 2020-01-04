@@ -23,7 +23,7 @@ const actions = {
       }).catch(error => {
         console.info(error)
       })
-     
+
     })
   }
 }
@@ -40,7 +40,7 @@ export const formatRoutes = (menus,isRoot) => {
         trees.push({
           path: e.href,
           name:e.text,
-          redirect:e.href,
+          // redirect:e.href,
           component: () => import('@/layout'),
           meta: {title: e.text, icon: e.icon},
           children: formatRoutes(e.children,false)
@@ -49,7 +49,7 @@ export const formatRoutes = (menus,isRoot) => {
         trees.push({
           path: e.href,
           name:e.text,
-          redirect:e.href,
+          // redirect:e.href,
           component: () => import('@/components/SecondLayout'),
           meta: {title: e.text, icon: e.icon},
           children: formatRoutes(e.children,false)

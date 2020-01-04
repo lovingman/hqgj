@@ -190,6 +190,9 @@
                         <el-table-column label="股东姓名" prop="name" sortable='custom' width="120">
                         </el-table-column>
                         <el-table-column label="股份比例" prop="sharesProportion" width="150">
+                            <template slot-scope="scope">
+                                <div type="text" >{{scope.row.sharesProportion}}%</div>
+                            </template>
                         </el-table-column>
                         <el-table-column label="身份证附件" prop="basicAnnexes">
                             <template slot-scope="scope">

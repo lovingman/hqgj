@@ -125,3 +125,13 @@ export function evaluateDelete(ids) {
     },
   })
 }
+//评价详情
+export function evaluateById(id) {
+  return request({
+    url: '/hqgj/serveFinanceEvaluate/getById',
+    method: 'get',
+    params: {
+      id: id
+    },
+  })
+}

@@ -15,4 +15,8 @@
         left join ace_hqgj_wxms.wechat_mini_user mu on mu.unionId=ms.unionId
         where t.user_id = #{userId}
    </select>
+
+    <delete id="deleteByUnionId" parameterType="java.lang.String">
+     delete from ace_hqgj_wxms.map_wechat_sys where unionId = #{unionId}
+    </delete>
 </mapper>
