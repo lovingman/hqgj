@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.hqgj.dao.BaseOrganizationMemberDao;
 import com.huacainfo.ace.hqgj.model.BaseOrganizationMember;
@@ -173,6 +172,20 @@ public class BaseOrganizationMemberServiceImpl implements BaseOrganizationMember
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         this.baseOrganizationMemberDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+    /**
+     * 获取信息
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseOrganizationMemberVo selectByUserId(String userId) throws Exception {
+
+        BaseOrganizationMemberVo vo=this.baseOrganizationMemberDao.selectByUserId(userId);
+        return vo;
+
     }
 
 

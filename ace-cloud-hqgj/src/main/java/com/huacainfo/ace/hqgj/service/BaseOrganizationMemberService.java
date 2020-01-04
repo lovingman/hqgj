@@ -91,5 +91,5 @@ public interface BaseOrganizationMemberService {
      */
     ResponseDTO deleteByIds(String[] ids) throws Exception;
 
-
+    BaseOrganizationMemberVo selectByUserId(String userId)throws Exception;
 }

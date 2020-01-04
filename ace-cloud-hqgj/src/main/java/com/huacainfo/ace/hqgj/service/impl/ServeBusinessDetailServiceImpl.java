@@ -256,6 +256,7 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
      * @throws Exception
      */
     @Override
+    @Transactional
     public ResponseDTO updateState(ServeBusinessDetail serveBusinessDetail) throws Exception {
         if (CommonUtils.isBlank(serveBusinessDetail.getId())) {
             return new ResponseDTO(ResultCode.FAIL, "主键不能为空！");

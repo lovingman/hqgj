@@ -3,6 +3,8 @@ package com.huacainfo.ace.hqgj.controller;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.common.vo.UserProp;
+import com.huacainfo.ace.hqgj.service.BaseOrganizationMemberService;
+import com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -38,7 +40,8 @@ public class ServeFinanceOrderController extends BaseController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ServeFinanceOrderService serveFinanceOrderService;
-
+    @Autowired
+    private BaseOrganizationMemberService baseOrganizationMemberService;
 
     /**
      * @throws
@@ -78,6 +81,30 @@ public class ServeFinanceOrderController extends BaseController {
             <ServeFinanceOrderVo> orderPage(ServeFinanceOrderQVo condition, PageParam page) throws Exception {
         UserProp userProp=this.getCurUserProp();
         condition.setCreateUserId(userProp.getUserId());
+        PageDTO<ServeFinanceOrderVo> rst = this.serveFinanceOrderService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+    /**
+     * 手机端个人中心专家问诊列表
+     * @param condition
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/orderContactIdPage", notes = "获取财税服务订单个人中心专家问诊列表数据集合，支持分页查询")
+    @GetMapping(value = "/orderContactIdPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <ServeFinanceOrderVo> orderContactIdPage(ServeFinanceOrderQVo condition, PageParam page) throws Exception {
+        UserProp userProp=this.getCurUserProp();
+        BaseOrganizationMemberVo vo=baseOrganizationMemberService.selectByUserId(userProp.getUserId());
+        if(vo==null){
+            return new PageDTO(ResultCode.FAIL, "数据错误！");
+        }
+        condition.setContactId(vo.getId());
         PageDTO<ServeFinanceOrderVo> rst = this.serveFinanceOrderService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
         if (page.getStart() > 1) {
             rst.setTotal(page.getTotalRecord());
