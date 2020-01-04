@@ -17,7 +17,7 @@ Page({
         path: '../FinanceTax/index'
       },
       {
-        text: '财税专家问诊',
+        text: '专家问诊',
         imgUrl: '/assets/image/icon1-4.png',
         path: '../ExpertConsultation/index'
       },

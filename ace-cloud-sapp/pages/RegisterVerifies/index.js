@@ -16,9 +16,9 @@ Page({
         idCard: '',
         idCardState: false,
         idCardVali: 'IdCard',
-        nextData:{},
-        nickName:'',
-        unionId:'',
+        nextData: {},
+        nickName: '',
+        unionId: '',
     },
     submit() {
         let that = this;
@@ -34,24 +34,24 @@ Page({
             Toast.fail('没有绑定微信');
             return;
         }
-        let data={
-            name:that.data.name,
-            idCard:that.data.idCard,
-            unionId: that.data.unionId  
+        let data = {
+            name: that.data.name,
+            idCard: that.data.idCard,
+            unionId: that.data.unionId
         }
-        request.post(config.register, Object.assign(data,that.data.nextData)).then(
-            res=>{
-                let r=res.data;
-                if (r.status==1){
+        request.post(config.register, Object.assign(data, that.data.nextData)).then(
+            res => {
+                let r = res.data;
+                if (r.status == 1) {
                     Toast.success({
-                        message:'注册成功',
-                        onClose:()=>{
+                        message: '注册成功',
+                        onClose: () => {
                             wx.navigateTo({
                                 url: "../SignIn/index"
                             })
                         }
                     });
-                }else{
+                } else {
                     Toast.fail(r.message);
                 }
             }
@@ -83,9 +83,9 @@ Page({
         return false
     },
     // 微信授权
-    getUserInfo(e){
+    getUserInfo(e) {
         let that = this;
-        if(that.data.unionId){
+        if (that.data.unionId) {
             wx.showToast({
                 title: "已经授权成功",
                 icon: 'none',
@@ -95,9 +95,12 @@ Page({
         }
         Auth.wxUserInfo(e).then(rst => {
             that.setData({
-                nickName:rst.nickName,
+                nickName: rst.nickName,
                 unionId: rst.unionId
             })
+            Toast.success('授权成功');
+        }).catch(() => {
+            Toast.fail('授权失败，请重试');
         });
     },
     onChange(e) {
@@ -108,58 +111,58 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         console.log(options);
-        let that =this;
-        that.data.nextData=options;
+        let that = this;
+        that.data.nextData = options;
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

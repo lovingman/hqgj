@@ -32,7 +32,8 @@
         "pages/PolicyService/index",
         "pages/PolicyServiceDetail/index",
         "pages/JoinEnterprises/index",
-        "pages/ModifyPwd/index"
+        "pages/ModifyPwd/index",
+        "pages/PointManage/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

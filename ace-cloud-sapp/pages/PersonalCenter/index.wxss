@@ -233,3 +233,17 @@
     font-family: PingFang SC;
     font-weight: 500;
 }
+
+button.style {
+    position: static;
+    display: block;
+    padding-left: 0px;
+    padding-right: 0px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-decoration: none;
+    line-height: 2.55555556;
+    border-radius: 0px;
+    text-align: left;
+    border-width: 0rpx;
+}

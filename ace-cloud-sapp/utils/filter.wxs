@@ -37,6 +37,20 @@ module.exports = {
                 return '已完成';
         }
     },
+    finance2Status: function (str) {
+        switch (str) {
+            case '0':
+                return '待完成';
+            case '1':
+                return '已取消';
+            case '2':
+                return '预约人确认';
+            case '31':
+                return '待评价';
+            case '32':
+                return '已完成';
+        }
+    },
     // （1-代理记账 2-财税管理 3-专家问诊）',
      financeType: function (str) {
         switch (str) {

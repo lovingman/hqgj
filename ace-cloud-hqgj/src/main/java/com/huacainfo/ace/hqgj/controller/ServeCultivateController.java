@@ -4,6 +4,9 @@ import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.tools.CommonUtils;
+import com.huacainfo.ace.common.vo.UserProp;
+import com.huacainfo.ace.hqgj.service.BaseOrganizationMemberService;
+import com.huacainfo.ace.hqgj.vo.BaseOrganizationMemberVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -48,6 +51,8 @@ public class ServeCultivateController extends BaseController {
     public String webServerUrl;
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
+    @Autowired
+    private BaseOrganizationMemberService baseOrganizationMemberService;
 
     private String getResAccessUrl(StorePath storePath) {
         String fileUrl = webServerUrl + "/" + storePath.getFullPath();
@@ -73,6 +78,37 @@ public class ServeCultivateController extends BaseController {
     public PageDTO
             <ServeCultivateVo> page(ServeCultivateQVo condition, PageParam page) throws Exception {
 
+        PageDTO<ServeCultivateVo> rst = this.serveCultivateService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
+
+
+    /**
+     * @throws
+     * @Title:page
+     * @Description: 讲师个人中心培训提升TODO(分页查询)
+     * @param: @param condition
+     * @param: @param page
+     * @param: @return
+     * @param: @throws Exception
+     * @return: NewPageDTO
+     * <ServeCultivateVo>
+     * @author: 何双
+     * @version: 2019-12-09
+     */
+    @ApiOperation(value = "/lecturerPage", notes = "获取培训提升基础表数据集合，支持分页查询")
+    @GetMapping(value = "/lecturerPage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <ServeCultivateVo> lecturerPage(ServeCultivateQVo condition, PageParam page) throws Exception {
+        UserProp userProp=this.getCurUserProp();
+        BaseOrganizationMemberVo vo=baseOrganizationMemberService.selectByUserId(userProp.getUserId());
+        if(vo==null){
+            return new PageDTO(ResultCode.FAIL, "数据错误！");
+        }
+        condition.setLecturerId(vo.getId());
         PageDTO<ServeCultivateVo> rst = this.serveCultivateService.page(condition, page.getStart(), page.getLimit(), page.getOrderBy());
         if (page.getStart() > 1) {
             rst.setTotal(page.getTotalRecord());

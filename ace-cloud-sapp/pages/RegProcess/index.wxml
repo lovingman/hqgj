@@ -39,15 +39,15 @@
           </view>
           <view class="imgs">
             <view class="img">
-              <image wx:if="{{legalPerson.basicAnnexes[0].fileType==1}}" src="{{legalPerson.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{legalPerson.basicAnnexes[1].fileType==1}}" src="{{legalPerson.basicAnnexes[1].fileURL}}"></image>
+              <image class="idcard1" wx:if="{{legalPerson.basicAnnexes[0].fileType==1}}" src="{{legalPerson.basicAnnexes[0].fileURL}}"></image>
+              <image class="idcard1" wx:if="{{legalPerson.basicAnnexes[1].fileType==1}}" src="{{legalPerson.basicAnnexes[1].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="legalPerson" data-file="1" bind:after-read="afterRead">
               </van-uploader>
               <text>拍摄/上传正面</text>
             </view>
             <view class="img">
-              <image wx:if="{{legalPerson.basicAnnexes[0].fileType==2}}" src="{{legalPerson.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{legalPerson.basicAnnexes[1].fileType==2}}" src="{{legalPerson.basicAnnexes[1].fileURL}}"></image>
+              <image class="idcard2" wx:if="{{legalPerson.basicAnnexes[0].fileType==2}}" src="{{legalPerson.basicAnnexes[0].fileURL}}"></image>
+              <image class="idcard2" wx:if="{{legalPerson.basicAnnexes[1].fileType==2}}" src="{{legalPerson.basicAnnexes[1].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="legalPerson" data-file="2" bind:after-read="afterRead">
               </van-uploader>
               <text>拍摄/上传国徽面</text>
@@ -71,15 +71,15 @@
             </view>
             <view class="imgs">
               <view class="img">
-                <image wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                <image wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                 <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="supervisor" data-file="1" bind:after-read="afterRead">
                 </van-uploader>
                 <text>拍摄/上传正面</text>
               </view>
               <view class="img">
-                <image wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                <image wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                 <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="supervisor" data-file="2" bind:after-read="afterRead">
                 </van-uploader>
                 <text>拍摄/上传国徽面</text>
@@ -121,15 +121,15 @@
             </view>
             <view class="imgs">
               <view class="img">
-                <image wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                <image wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                 <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="shareholder" data-file="1" bind:after-read="afterRead">
                 </van-uploader>
                 <text>拍摄/上传正面</text>
               </view>
               <view class="img">
-                <image wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                <image wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                 <van-uploader class="van-uploaders" data-index="{{index}}" data-obj="shareholder" data-file="2" bind:after-read="afterRead">
                 </van-uploader>
                 <text>拍摄/上传国徽面</text>
@@ -168,15 +168,15 @@
           </view>
           <view class="imgs">
             <view class="img">
-              <image wx:if="{{finance.basicAnnexes[0].fileType==1}}" src="{{finance.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{finance.basicAnnexes[1].fileType==1}}" src="{{finance.basicAnnexes[1].fileURL}}"></image>
+              <image class="idcard1" wx:if="{{finance.basicAnnexes[0].fileType==1}}" src="{{finance.basicAnnexes[0].fileURL}}"></image>
+              <image class="idcard1" wx:if="{{finance.basicAnnexes[1].fileType==1}}" src="{{finance.basicAnnexes[1].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="finance" data-file="1" bind:after-read="afterRead">
               </van-uploader>
               <text>拍摄/上传正面</text>
             </view>
             <view class="img">
-              <image wx:if="{{finance.basicAnnexes[0].fileType==2}}" src="{{finance.basicAnnexes[0].fileURL}}"></image>
-              <image wx:if="{{finance.basicAnnexes[1].fileType==2}}" src="{{finance.basicAnnexes[1].fileURL}}"></image>
+              <image class="idcard2" wx:if="{{finance.basicAnnexes[0].fileType==2}}" src="{{finance.basicAnnexes[0].fileURL}}"></image>
+              <image class="idcard2" wx:if="{{finance.basicAnnexes[1].fileType==2}}" src="{{finance.basicAnnexes[1].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="finance" data-file="2" bind:after-read="afterRead">
               </van-uploader>
               <text>拍摄/上传国徽面</text>
@@ -206,7 +206,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image src="{{contract1.basicAnnexes[0].fileURL}}"></image>
+              <image class="photo" src="{{contract1.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract1" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -223,7 +223,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image src="{{contract2.basicAnnexes[0].fileURL}}"></image>
+              <image class="photo" src="{{contract2.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract2" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -241,7 +241,7 @@
         <view class="upload">
           <view class="imgs">
             <view class="img">
-              <image src="{{contract3.basicAnnexes[0].fileURL}}"></image>
+              <image class="photo" src="{{contract3.basicAnnexes[0].fileURL}}"></image>
               <van-uploader class="van-uploaders" data-obj="contract3" bind:after-read="afterRead">
               </van-uploader>
             </view>
@@ -260,7 +260,7 @@
           <view class="imgs">
             <view class="img">
               <view class="img">
-                <image src="{{contract4.basicAnnexes[0].fileURL}}"></image>
+                <image class="photo" src="{{contract4.basicAnnexes[0].fileURL}}"></image>
                 <van-uploader class="van-uploaders" data-obj="contract4" bind:after-read="afterRead">
                 </van-uploader>
               </view>

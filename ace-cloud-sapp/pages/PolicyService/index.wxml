@@ -1,7 +1,7 @@
 <view>
   <view class="search">
     <view class="title">为企业提供有价值的政策信息</view>
-    <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索政策" bind:change="onChange" bind:search="onSearch">
+    <van-search background="#2E88F2" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索政策" bind:change="onChange" bind:search="onSearch">
     </van-search>
   </view>
   <view class="files">

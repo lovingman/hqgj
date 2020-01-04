@@ -16,12 +16,13 @@
                 </view>
             </view>
         </view>
-        <view class="right">
+        <!-- url="/pages/PointManage/index" -->
+        <navigator class="right">
             <view class="coin">{{0+userInfo.integral}}</view>
             <view class="center">我的积分
-                <van-icon name="arrow" />
+                <!-- <van-icon name="arrow" /> -->
             </view>
-        </view>
+        </navigator>
     </view>
     <view class="column">
         我的服务
@@ -35,6 +36,12 @@
                 </view>
             </navigator>
         </block>
+        <navigator wx:if="{{service.path}}" class="item" url="{{service.path}}">
+            <van-image width="60rpx" height="60rpx" fit="cover" src="{{service.imgUrl}}" />
+            <view class="title">
+                {{service.text}}
+            </view>
+        </navigator>
     </view>
     <view class="column">
         绑定
@@ -54,7 +61,10 @@
     </view>
     <view class="other">
         <van-cell icon="lock" is-link border="{{false}}" title="修改密码" link-type="navigateTo" url="/pages/ModifyPwd/index" />
-        <van-cell icon="chat" is-link border="{{false}}" title="解绑微信" link-type="navigateTo" url="/pages/dashboard/index" />
+        <van-cell wx:if="{{userInfo.unionId}}" icon="chat" is-link border="{{false}}" title="解绑微信" catch:tap="relieveByUnionId" />
+        <button class="style" wx:else open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">
+            <van-cell icon="chat" is-link border="{{false}}" title="绑定微信" />
+        </button>
     </view>
     <view class="signOut">
         <van-button catch:tap="signOutHandler" round plain hairline size="large">退出登录</van-button>
@@ -78,7 +88,7 @@
                         <view class="title">服务机构</view>
                         <view class="subtitle">绑定平台已认证的机构</view>
                     </view>
-                    <van-icon wx:if="{{optIndex==2}}" name="checked"/>
+                    <van-icon wx:if="{{optIndex==2}}" name="checked" />
                 </view>
                 <van-button catch:tap="selectOrg" round type="info" size="large">选好了</van-button>
             </view>

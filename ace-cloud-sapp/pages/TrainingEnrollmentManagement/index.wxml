@@ -18,11 +18,11 @@
           <van-image round width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
         </view>
         <view class="info">
-          <view class="name">{{item.name}}</view>
+          <view class="name">{{item.enrollName}}</view>
           <view class="org">{{item.companyName}}</view>
         </view>
       </view>
-      <view class="phone" catchtap="telePhoneClick" data-id="{{item.mobile}}">
+      <view class="phone {{item.mobile?'':'nophone'}}" catchtap="telePhoneClick" data-id="{{item.mobile}}">
         <van-icon name="phone-circle-o" />
       </view>
     </view>

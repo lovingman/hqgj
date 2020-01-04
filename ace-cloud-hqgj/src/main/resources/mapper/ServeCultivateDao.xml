@@ -103,6 +103,7 @@
   </sql>
     <sql id="From_Statement">
     FROM serve_cultivate t
+    left join serve_cultivate_schedule s on s.serveCultivateId=t.id
   </sql>
     <sql id="Where_Condition">
         <where>
@@ -111,7 +112,7 @@
                 and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
             </if>
             <if test="condition.title != null and condition.title != ''">
-                and t.title like concat('%',#{condition.areaCode,jdbcType=VARCHAR},'%')
+                and t.title like concat('%',#{condition.title,jdbcType=VARCHAR},'%')
             </if>
             <if test="condition.maxPersonNumber != null and condition.maxPersonNumber != ''">
                 and t.maxPersonNumber = #{condition.maxPersonNumber,jdbcType=INTEGER}
@@ -149,6 +150,9 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="condition.lecturerId != null and condition.lecturerId != ''">
+                and s.lecturerId = #{condition.lecturerId,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
     <sql id="Vo_CultivateColumn_List">
@@ -163,7 +167,6 @@
         <include refid="Vo_CultivateColumn_List"/>,o.orgName
         <include refid="From_Statement"/>
         left join base_organization o on o.id=t.orgId
-        left join serve_cultivate_schedule s on s.serveCultivateId=t.id
         left join basic_annex ba on ba.relationId = s.id and ba.type='1'
         where t.id = #{id,jdbcType=VARCHAR}
     </select>

@@ -5,6 +5,7 @@ var request = require("../../utils/request.js");
 var cfg = require("../../utils/config.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
 import Toast from '../../vant/weapp/toast/toast';
+var Auth = require('../../utils/auth.js');
 Page({
 
     /**
@@ -30,13 +31,13 @@ Page({
                 text: '财税订单',
                 imgUrl: '/assets/image/icon3-4.png',
                 path: '/pages/RecordsFinance/index'
-            },
-            {
-                text: '服务',
-                imgUrl: '/assets/image/icon3-4.png',
-                path: '/pages/RecordsFinance/index'
             }
         ],
+        service: {
+            text: '服务',
+            imgUrl: '/assets/image/icon3-4.png',
+            path: ''
+        },
         userInfo: {
             name: "用户",
             integral: 0
@@ -66,6 +67,17 @@ Page({
                 app.globalData.islogin = true;
                 app.globalData.userInfo = res.data;
                 this.initUserInfo();
+                let u = ''
+                // 1 - 律师事务所 2 - 会计事务所 3 - 培训机构  4 - 工信局 5 - 企业 ',
+                if (res.data.userType == 3) {
+                    u = '/pages/TrainingInstitutions/index'
+                } else if (res.data.userType == 2) {
+                    u = '/pages/ServiceAccounting/index'
+                }
+                let f = 'service.path';
+                this.setData({
+                    [f]: u
+                })
             } else {
                 Dialog.alert({
                     title: '提示',
@@ -91,6 +103,39 @@ Page({
         });
     },
     // 获取用户信息
+    // /personalCenter/relieveByUnionId   解绑微信
+    // /personalCenter/bindUnionId?unionId=123456  绑定微信
+    relieveByUnionId() {
+        request.post(cfg.relieveByUnionId).then(rst => {
+            let r = rst.data;
+            if (r.status == 1) {
+                Toast.success(r.message)
+                app.globalData.islogin = false;
+                this.isloginHandler();
+            } else {
+                Toast.fail(r.message)
+            }
+        })
+    },
+    onGotUserInfo(e) {
+        Auth.wxUserInfo(e).then(rst => {
+            request.post(cfg.bindUnionId, {
+                unionId: rst.unionId
+            }).then(rs => {
+                let r = rs.data;
+                if (r.status == "1") {
+                    Toast.success(r.message);
+                    app.globalData.islogin = false;
+                    this.isloginHandler();
+                } else {
+                    Toast.fail(r.message);
+                }
+            })
+
+        }).catch(() => {
+            Toast.fail('授权失败，请重试');
+        });
+    },
     initUserInfo() {
         let that = this;
         let userInfo = app.globalData.userInfo;
@@ -109,7 +154,7 @@ Page({
             }
         })
     },
-    signOutHandler(){
+    signOutHandler() {
         wx.setStorageSync('Authorization', '');
         Toast.success({
             message: "退出成功",
@@ -117,7 +162,7 @@ Page({
                 this.isloginHandler();
             }
         });
-        
+
     },
     // 选择企业
     selectOne() {
