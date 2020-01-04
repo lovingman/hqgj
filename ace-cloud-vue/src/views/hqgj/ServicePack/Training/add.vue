@@ -253,7 +253,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="addressVisible" title="提示" width="60%">
+    <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
       <div>
         <div style="margin-bottom: 10px">
           <input id="keyword" type="textbox" value />

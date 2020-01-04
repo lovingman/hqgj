@@ -30,9 +30,9 @@
                                     @blur="handleInputConfirm"
                                     @keyup.enter.native="handleInputConfirm"
                                     class="input-new-tag"
-                                    ref="saveTagInput"
                                     maxlength="7"
                                     show-word-limit
+                                    ref="saveTagInput"
                                     size="small"
                                     v-if="inputVisible"
                                     v-model="inputValue"
@@ -41,7 +41,7 @@
                             <el-button @click="showInput" class="button-new-tag" icon="el-icon-plus" size="small"
                                        v-else>添加
                             </el-button>
-                            <div class="tips" style="font-size:12px;margin-left: 10px">不超过5个</div>
+                            <!--<div class="tips" style="font-size:12px;margin-left: 10px">不超过5个</div>-->
                         </el-form-item>
                         <el-form-item label="简介:" prop="content">
                             <el-input
@@ -194,18 +194,10 @@
             },
 
             showInput() {
-                if(this.specialityarr.length<5){
-                    this.inputVisible = true;
-                    this.$nextTick(_ => {
-                        this.$refs.saveTagInput.$refs.input.focus();
-                    });
-                }else{
-                    this.$message({
-                        showClose: true,
-                        message: '擅长领域不能超过5个',
-                        type: 'warning'
-                    });
-                }
+                this.inputVisible = true;
+                this.$nextTick(_ => {
+                    this.$refs.saveTagInput.$refs.input.focus();
+                });
 
             },
 
@@ -562,7 +554,8 @@
     .hide2 /deep/ .el-upload--picture-card {
         display: none;
     }
-    .hide /deep/.el-upload-list--picture-card .el-upload-list__item-thumbnail{
+
+    .hide /deep/ .el-upload-list--picture-card .el-upload-list__item-thumbnail {
         width: 100%;
         height: 100%;
         object-fit: cover;
