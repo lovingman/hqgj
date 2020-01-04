@@ -1,0 +1,78 @@
+.bg {
+    width: 750rpx;
+    height: 370rpx;
+    background: rgba(46, 136, 242, 1);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.total .num {
+    font-size: 100rpx;
+    font-family: Bahnschrift;
+    font-weight: 400;
+}
+
+.total {
+    width: 100%;
+    height: 250rpx;
+    font-size: 26rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailed {
+    width: 710rpx;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 20rpx 20rpx 0px 0px;
+    margin: auto;
+}
+
+.detailed  .title {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(28, 40, 67, 1);
+    text-align: center;
+    line-height: 120rpx;
+}
+
+.entry {
+    display: flex;
+    width: 650rpx;
+    margin: auto;
+    padding: 30rpx 10rpx;
+    line-height: 1.5em;
+}
+
+.entry .titles {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(28, 40, 67, 1);
+}
+
+.entry .time {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: rgba(160, 167, 182, 1);
+}
+
+.entry .money {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(46, 136, 242, 1);
+    width: 200rpx;
+    text-align: right;
+}
+.entry .left{
+    flex-grow: 1;
+}

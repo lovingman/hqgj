@@ -1,0 +1,17 @@
+<view class="bg"></view>
+<view class="total">
+    <view class="num">0</view>
+    <view>当前积分</view>
+</view>
+<view class="detailed">
+    <view class="title">- 积分明细 -</view>
+    <view class="entry van-hairline--bottom">
+        <view class="left">
+            <view class="titles">企业注册成功</view>
+            <view class="time">2019-11-10 10:00:10</view>
+        </view>
+        <view class="money">
+        +500
+        </view>
+    </view>
+</view>

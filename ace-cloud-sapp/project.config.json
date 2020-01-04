@@ -4,13 +4,23 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false
 	},
@@ -263,6 +273,20 @@
 					"name": "修改密码",
 					"pathName": "pages/ModifyPwd/index",
 					"query": "type=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "积分管理",
+					"pathName": "pages/PointManage/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 32,
+					"name": "这是什么",
+					"pathName": "pages/ServiceAccounting/index",
+					"query": "",
 					"scene": null
 				}
 			]

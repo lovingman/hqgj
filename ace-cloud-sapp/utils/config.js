@@ -1,4 +1,4 @@
-// var server = "http://test.huacainfo.com";
+// var server = "https://test.huacainfo.com";
 var server = "http://192.168.2.114";
 var config = {
     login: `${server}/hqgj-portal/security/login`,
@@ -40,8 +40,13 @@ var config = {
     organizationList: `${server}/hqgj/baseOrganization/page`, //组织列表 
     joinOrg: `${server}/hqgj/personalCenter/bingUser`, //加入组织企业
     relieveBind: `${server}/hqgj/personalCenter/relieveBind`, //解除组织企业
-    modifyPwd: `${server}/hqgj-portal/users/updatePwd`, //修改密码
+    modifyPwd: `${server}/hqgj-portal/users/updatePwd`, //修改密码 
     enrollUpdate: `${server}/hqgj/serveCultivateEnroll/updateStatus`, //签到管理
+    relieveByUnionId: `${server}/hqgj/personalCenter/relieveByUnionId`, //解绑微信
+    bindUnionId: `${server}/hqgj/personalCenter/bindUnionId`, //绑定微信 
+    integralDetailed: `${server}/hqgj/serveBusinessIntegral/IntegralDetailed`, //积分明细
+    orderContactIdPage: `${server}/hqgj/serveFinanceOrder/orderContactIdPage`, //服务列表
+    lecturerPage: `${server}/hqgj/serveCultivate/lecturerPage`, //服务列表
 };
 
 module.exports = config

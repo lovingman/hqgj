@@ -98,8 +98,8 @@ Auth.checkAgreeGetUser = function(e, app, appPage, authFlag) {
     }
 }
 
-Auth.wxLogin=function(){
-    return new Promise(function (resolve, reject) {})
+Auth.wxLogin = function() {
+    return new Promise(function(resolve, reject) {})
 }
 
 // 同意获取用户信息
@@ -204,10 +204,14 @@ Auth.wxUserInfo = function(e) {
                     request.post(config.authority, args).then(response => {
                         let res = response.data;
                         if (res.status == '1') {
-                            resolve( res.data);
+                            resolve(res.data);
                         }
-                    }).catch(function(error) {
-                        console.log('error: ' + error);
+                    }).catch(error => {
+                        wx.showToast({
+                            title: "授权失败，请重试",
+                            icon: 'none',
+                            duration: 2000
+                        });
                         reject(error);
                     })
                 },
