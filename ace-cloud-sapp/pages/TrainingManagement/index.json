@@ -1,0 +1,12 @@
+{
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "企业报名管理",
+  "usingComponents": {
+    "van-sticky": "/vant/weapp/sticky/index",
+    "van-button": "/vant/weapp/button/index",
+    "van-checkbox": "/vant/weapp/checkbox/index",
+    "van-icon": "/vant/weapp/icon/index",
+    "van-image": "/vant/weapp/image/index",
+    "van-checkbox-group": "/vant/weapp/checkbox-group/index"
+  }
+}
