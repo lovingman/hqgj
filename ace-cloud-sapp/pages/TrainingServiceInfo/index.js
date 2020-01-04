@@ -57,7 +57,7 @@ Page({
   //点击报名企业跳转
   registrationEnterpriseClick: function() {
     wx.navigateTo({
-      url: '/pages/TrainingEnrollmentManagement/index?id=' + this.data.id,
+      url: '/pages/TrainingManagement/index?id=' + this.data.id,
     })
   },
   //点击日程去详情
@@ -83,7 +83,7 @@ Page({
       }
     })
     request.getJSON(cfg.enrollPage, {
-      id: that.data.id
+      serveCultivateId: that.data.id
     }).then(res => {
       console.log(res);
       if (res.data.status == 1) {
