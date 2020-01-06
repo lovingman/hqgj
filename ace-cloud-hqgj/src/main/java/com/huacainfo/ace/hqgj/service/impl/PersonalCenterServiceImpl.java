@@ -123,6 +123,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     public ResponseDTO relieveBind(UserProp userProp) {
         UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
         if(!CommonUtils.isBlank(user.getUserType())) {
+            return new ResponseDTO(ResultCode.FAIL, "未找到绑定数据！");
+        }
             if (user.getUserType().equals("5")) {
                 baseCompanyMemberDao.deleteByIds(user.getUserId().split(","));
             } else if (user.getUserType().equals("1") || user.getUserType().equals("2") || user.getUserType().equals("3")) {
@@ -134,7 +136,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                 }
             }
             registerDao.updateUserType(null, userProp.getUserId());
-        }
+
         return new ResponseDTO(ResultCode.SUCCESS, "解除成功！");
     }
 

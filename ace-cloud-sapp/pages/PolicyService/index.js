@@ -130,6 +130,9 @@ Page({
    */
   onReachBottom: function() {
     let that = this;
+    if (that.data.isload) {
+      return;
+    }
     that.data.query.pageNum++;
     that.getList();
   },

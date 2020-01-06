@@ -138,6 +138,7 @@ Page({
    */
   onLoad: function(options) {
     var that = this;
+    console.log(options.id);
     that.setData({
       id: options.id,
       getCurrentPageUrlWithArgs: util.getCurrentPageUrlWithArgs()

@@ -1,4 +1,5 @@
 {
+    "enablePullDownRefresh": true,
     "navigationBarTitleText": "专家问诊",
     "usingComponents": {
         "van-image": "/vant/weapp/image/index",
