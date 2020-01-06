@@ -1,13 +1,15 @@
 {
-    "navigationBarTitleText": "财税服务包详情",
-    "usingComponents": {
-        "van-image": "/vant/weapp/image/index",
-        "van-button": "/vant/weapp/button/index",
-        "van-sticky": "/vant/weapp/sticky/index",
-        "van-popup": "/vant/weapp/popup/index",
-        "van-radio": "/vant/weapp/radio/index",
-        "van-radio-group": "/vant/weapp/radio-group/index",
-        "van-icon": "/vant/weapp/icon/index",
-        "van-dialog": "/vant/weapp/dialog/index"
-    }
+  "navigationBarTitleText": "详情",
+  "navigationBarBackgroundColor": "#2E88F2",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-image": "/vant/weapp/image/index",
+    "van-button": "/vant/weapp/button/index",
+    "van-sticky": "/vant/weapp/sticky/index",
+    "van-popup": "/vant/weapp/popup/index",
+    "van-radio": "/vant/weapp/radio/index",
+    "van-radio-group": "/vant/weapp/radio-group/index",
+    "van-icon": "/vant/weapp/icon/index",
+    "van-dialog": "/vant/weapp/dialog/index"
+  }
 }

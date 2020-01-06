@@ -59,9 +59,14 @@
       </view>
     </view>
     <view class="btn">
-      <van-button round type="info" size="large" bindtap="expertClick">预约专家
-        <text class="remark">仅剩{{basicForm.surplusQuota}}个名额</text>
-      </van-button>
+      <view wx:if="{{basicForm.isOrder <= 0}}">
+        <van-button round type="info" size="large" bindtap="expertClick">预约专家
+          <text class="remark">仅剩{{basicForm.surplusQuota}}个名额</text>
+        </van-button>
+      </view>
+      <view wx:if="{{basicForm.isOrder != 0}}">
+        <van-button round type="info" size="large" disabled>您已预约此专家</van-button>
+      </view>
     </view>
   </view>
   <van-toast id="van-toast" />

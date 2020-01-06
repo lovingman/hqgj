@@ -1,4 +1,7 @@
 {
+  "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor": "#2E88F2",
+  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "财税服务包",
   "usingComponents": {
     "van-tab": "/vant/weapp/tab/index",

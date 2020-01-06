@@ -1,5 +1,4 @@
 // pages/JoinEnterprises/index.js
-// pages/LawFirm/index.js
 var cfg = require("../../utils/config.js");
 var request = require("../../utils/request.js");
 import Dialog from '../../vant/weapp/dialog/dialog';

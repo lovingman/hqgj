@@ -10,32 +10,55 @@ Page({
     active: 0,
     listArr: [], //列表容器
     index: 0, //tab索引值
-    type: 1, //1代理记账，2财税管家
+    query: {
+      pageSize: 10,
+      pageNum: 1,
+      type: 1, //1代理记账，2财税管家
+      status: 3, //状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
+    },
+    isload: false,
+    loading: false,
   },
   //请求page数据渲染列表
   getList: function() {
     var that = this;
-    console.log(that.data.index);
+
     if (that.data.index == 0) {
-      that.setData({
-        type: 1
-      })
+      that.data.query.type = 1;
     }
     if (that.data.index == 1) {
-      that.setData({
-        type: 2
-      })
+      that.data.query.type = 2;
     }
-    request.getJSON(cfg.financePageUrL, {
-      type: that.data.type,
-      status: 3, //状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
-    }).then(res => {
-      if (res.data.status == 1) {
-        console.log(res);
+    that.showloading();
+    request.getJSON(cfg.financePageUrL, that.data.query).then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
         that.setData({
-          listArr: res.data.rows
+          isload: true
         })
       }
+      if (e.status == 1) {
+        let rows = that.data.listArr.concat(res.data.rows);
+        that.setData({
+          listArr: rows
+        })
+      }
+    })
+  },
+  //显示加载
+  showloading() {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+  },
+  //隐藏加载
+  hideloading() {
+    let that = this;
+    that.setData({
+      loading: false
     })
   },
   //tab点击切换
@@ -45,22 +68,25 @@ Page({
     that.setData({
       index: index
     })
+    that.data.listArr = [];
+    that.data.query.pageNum = 1;
     this.getList();
   },
   //点击列表跳转详情
   listClcik: function(e) {
-    if (this.data.type == 1) {
+    let that = this;
+    if (that.data.query.type == 1) {
       var agentIndex = parseInt(e.currentTarget.dataset.index); //获取当前点击的tabs的索引值
       var agentId = this.data.listArr[agentIndex].id;
       wx.navigateTo({
-        url: '/pages/FinanceEnterprise/index?id=' + agentId + '&type=' + this.data.type,
+        url: '/pages/FinanceEnterprise/index?id=' + agentId + '&type=' + that.data.query.type,
       })
     }
-    if (this.data.type == 2) {
+    if (that.data.query.type  == 2) {
       var financeIndex = parseInt(e.currentTarget.dataset.index); //获取当前点击的tabs的索引值
       var financeId = this.data.listArr[financeIndex].id;
       wx.navigateTo({
-        url: '/pages/FinanceEnterprise/index?id=' + financeId + '&type=' + this.data.type,
+        url: '/pages/FinanceEnterprise/index?id=' + financeId + '&type=' + that.data.query.type,
       })
     }
   },
@@ -103,14 +129,32 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    let that = this;
+    if (that.data.index != 1) {
+      that.data.query.pageNum = 1;
+      that.data.listArr = [];
+      that.data.query.type = 2;
+      that.getList();
+      wx.stopPullDownRefresh();
+    } else {
+      that.data.query.type = 1;
+      that.data.query.pageNum = 1;
+      that.data.listArr = [];
+      that.getList();
+      wx.stopPullDownRefresh();
+    }
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    let that = this;
+    if (that.data.isload) {
+      return;
+    }
+    that.data.query.pageNum++;
+    that.getList();
   },
 
   /**
