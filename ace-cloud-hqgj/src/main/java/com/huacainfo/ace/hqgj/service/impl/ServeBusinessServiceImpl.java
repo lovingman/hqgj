@@ -380,20 +380,35 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         }
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
         if(type.equals("basicStatus") && status.equals("2") ){
-            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
-            serveBusinessDao.updateBasicStatus(id,"2","status");
+            int o=serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+            int s= serveBusinessDao.updateBasicStatus(id,"2","status");
+            if(s<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
         }
         if(type.equals("status") && status.equals("1") ){
-            serveBusinessDao.updateBasicStatus(id,"0","tab");
-            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
+           int o= serveBusinessDao.updateBasicStatus(id,"0","tab");
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+           int s= serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
+            if(s<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
         }
         if(type.equals("tab") && status.equals("7")){
-            serveBusinessDao.updateBasicStatus(id,"3","status");
+           int o= serveBusinessDao.updateBasicStatus(id,"3","status");
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
             //新增企业和积分
             insertCompany(id,userProp);
         }
         if (i <= 0) {
-            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+            return new ResponseDTO(ResultCode.FAIL, "内部错误");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }

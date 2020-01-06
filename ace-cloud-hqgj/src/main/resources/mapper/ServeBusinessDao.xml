@@ -253,7 +253,7 @@
       set shUserId = #{shUserId,jdbcType=VARCHAR},
       shUserName = #{shUserName,jdbcType=VARCHAR},
       shDate = now(),
-      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+      modifyDate =  now()
       where id = #{id,jdbcType=VARCHAR}
     </update>
 
