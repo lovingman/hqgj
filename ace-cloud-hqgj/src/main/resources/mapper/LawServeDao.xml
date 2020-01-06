@@ -91,7 +91,6 @@
         select
         <include refid="Vo_Column_List"/>,ba.id baId,ba.fileURL,ba.fileType,ba.fileName,ba.type batype
         <include refid="From_Statement"/>
-        left join basic_annex ba on ba.relationId = t.id and ba.type='2'
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
