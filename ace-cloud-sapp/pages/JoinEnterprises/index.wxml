@@ -1,6 +1,6 @@
 <view class="search">
-    <view class="title">绑定企业/组织</view>
-    <van-search background="#2e88f2" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="请输入企业/组织名称" bind:change="onChangeHandler" bind:search="onSearch">
+    <view class="title">绑定企业/机构</view>
+    <van-search background="#2e88f2" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="请输入企业/机构名称" bind:change="onChangeHandler" bind:search="onSearch">
     </van-search>
 </view>
 <view class="files">

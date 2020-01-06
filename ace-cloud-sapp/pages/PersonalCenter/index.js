@@ -131,7 +131,6 @@ Page({
                     Toast.fail(r.message);
                 }
             })
-
         }).catch(() => {
             Toast.fail('授权失败，请重试');
         });
@@ -162,7 +161,6 @@ Page({
                 this.isloginHandler();
             }
         });
-
     },
     // 选择企业
     selectOne() {
