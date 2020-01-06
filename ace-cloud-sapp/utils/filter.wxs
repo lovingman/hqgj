@@ -1,7 +1,7 @@
 module.exports = {
     timeMDHM: function(str) {
-        if(str){
-            return str.substring(5, 16)+" ";
+        if (str) {
+            return str.substring(5, 16) + " ";
         }
         return '00-00 00:00 '
     },
@@ -10,7 +10,14 @@ module.exports = {
             return str.substring(10, 16);
         }
         return ' 00:00'
-        
+
+    },
+    timeYMDHM: function (str) {
+        if (str) {
+            return str.substring(0, 16);
+        }
+        return ' 00:00'
+
     },
     trainingStatus: function(str) {
         switch (str) {
@@ -23,7 +30,7 @@ module.exports = {
         }
     },
     // 状态  0 - 待完成 1 - 已取消 2 - 专家确认 3 - 已完成  4 - 待评价
-     financeStatus: function (str) {
+    financeStatus: function(str) {
         switch (str) {
             case '0':
                 return '待完成';
@@ -37,7 +44,7 @@ module.exports = {
                 return '已完成';
         }
     },
-    finance2Status: function (str) {
+    finance2Status: function(str) {
         switch (str) {
             case '0':
                 return '待完成';
@@ -52,7 +59,7 @@ module.exports = {
         }
     },
     // （1-代理记账 2-财税管理 3-专家问诊）',
-     financeType: function (str) {
+    financeType: function(str) {
         switch (str) {
             case '1':
                 return '代理记账';
@@ -61,5 +68,14 @@ module.exports = {
             case '3':
                 return '专家问诊';
         }
+    },
+    addressIntercept: function(str) {
+        if (str) {
+            var index = str.indexOf("武陵区");
+            if (index != -1) {
+                return str.slice(index);
+            }
+        }
+        return str;
     }
 }
