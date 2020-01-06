@@ -36,5 +36,5 @@ public interface ServeBusinessDao {
 
     List<String> selectBusinessId(String businessId);
 
-    int updateShUserId(@Param("shUserId") String shUserId,@Param("shUserName") String shUserName);
+    int updateShUserId(@Param("id")String id,@Param("shUserId") String shUserId,@Param("shUserName") String shUserName);
 }

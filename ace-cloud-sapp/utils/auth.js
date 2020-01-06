@@ -205,6 +205,8 @@ Auth.wxUserInfo = function(e) {
                         let res = response.data;
                         if (res.status == '1') {
                             resolve(res.data);
+                        }else{
+                            reject(error);
                         }
                     }).catch(error => {
                         wx.showToast({

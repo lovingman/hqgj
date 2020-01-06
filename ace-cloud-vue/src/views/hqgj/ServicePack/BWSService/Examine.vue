@@ -90,10 +90,13 @@
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
                         <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
                                    type="text"
-                                   v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
+                                   v-if="form.basicStatus=='0' && this.$route.query.word=='examine'">审核
                         </el-button>
-                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px" type="text"
+                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
                              v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
+                        </div>
+                        <div class="red" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
+                             v-if="form.basicStatus=='2' && this.$route.query.word=='examine'">驳回修改
                         </div>
 
                     </div>

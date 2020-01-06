@@ -177,7 +177,7 @@
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
-                ORDER BY t.${orderBy}
+                ORDER BY ${orderBy}
             </when>
             <otherwise>
                 ORDER BY t.createDate desc
@@ -236,7 +236,7 @@
            <result column="contactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
            <result column="areaCode" jdbcType="VARCHAR" property="areaCode"/>
            <result column="orgAddress" jdbcType="VARCHAR" property="orgAddress"/>
-           <result column="content" jdbcType="VARCHAR" property="content"/>
+           <result column="orgcontent" jdbcType="VARCHAR" property="content"/>
        </association>
         <collection property="cultivateEnrollList" column="id" ofType="com.huacainfo.ace.hqgj.model.ServeCultivateEnroll">
             <result column="enrollName" jdbcType="VARCHAR" property="enrollName"/>
@@ -252,7 +252,7 @@
 
     <select id="selectByIdDetails" parameterType="java.lang.String" resultMap="DetailsResultMap">
     SELECT  <include refid="Vo_Column_List"/>,
-       e.`enrollName` enrollName,o.id orgId,o.orgName,o.fmUrl orgfmUrl,o.areaCode,o.content,o.orgAddress,
+       e.`enrollName` enrollName,o.id orgId,o.orgName,o.fmUrl orgfmUrl,o.areaCode,o.content orgcontent,o.orgAddress,
        a.id baId,a.fileName,a.fileURL,(t.cultivatePersonNumber-t.enrollPersopnNumber) as surplusQuota,
       (SELECT count(1) FROM `serve_cultivate_enroll` e where e.serveCultivateId=#{id,jdbcType=VARCHAR} and e.createUserId=#{userId,jdbcType=VARCHAR})as isEnroll
     from serve_cultivate t
