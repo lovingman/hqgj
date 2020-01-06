@@ -23,6 +23,7 @@
 
 .float .text {
   width: 510rpx;
+  word-wrap: break-word;
 }
 
 .float .title {
@@ -208,9 +209,9 @@
   font-size: 24rpx;
   border-radius: 10rpx;
   margin-right: 20rpx;
-  border:1px solid #f7f9fc;
+  border: 1px solid #f7f9fc;
 }
 
-.service-list.active{
-  border:1px solid #ff7d18;
+.service-list.active {
+  border: 1px solid #ff7d18;
 }

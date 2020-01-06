@@ -59,8 +59,9 @@ Page({
   getBasicAnnex() {
     let that = this;
     that.showloading();
-    request.getJSON(cfg.basicAnnexUrl, that.data.query).
+    request.getJSON(cfg.lawServeTemplate, that.data.query).
     then(res => {
+      console.log(res);
       that.hideloading();
       let e = res.data;
       let len = e.rows ? e.rows.length : 0;
@@ -75,6 +76,8 @@ Page({
           basicAnnexArr: rows,
           basicLength: res.data.total
         })
+        console.log(that.data.basicAnnexArr);
+        console.log(that.data.basicAnnexArr.basicAnnexes);
       }
     })
   },
@@ -214,6 +217,9 @@ Page({
    */
   onReachBottom: function() {
     let that = this;
+    if (that.data.isload) {
+      return;
+    }
     if (that.data.index != 1) {
       that.data.query.pageNum++;
       that.getList();

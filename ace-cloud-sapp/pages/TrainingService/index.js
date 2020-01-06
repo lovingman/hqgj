@@ -10,29 +10,27 @@ Page({
   data: {
 
     listArr: [],
-    option1: [{
-        text: '全部商品',
-        value: 0
-      },
+    option1: [
       {
-        text: '新款商品',
+        text: '全部状态',
         value: 1
       },
       {
-        text: '活动商品',
+        text: '进行中',
         value: 2
-      }
-    ],
-    option2: [{
-        text: '默认排序',
-        value: 'a'
       },
       {
-        text: '好评排序',
+        text: '已结束',
+        value: 3
+      }
+    ],
+    option2: [
+      {
+        text: '按最新',
         value: 'b'
       },
       {
-        text: '销量排序',
+        text: '有名额',
         value: 'c'
       }
     ],
@@ -43,8 +41,8 @@ Page({
     },
     isload: false,
     loading: false,
-    value1: 0,
-    value2: 'a',
+    value1: 1,
+    value2: 'b',
     quotaShow: true, //是否显示名额
   },
   //请求page数据渲染列表
@@ -60,6 +58,7 @@ Page({
           isload: true
         })
       }
+      console.log(e.rows);
       if (e.status == 1) {
         let rows = that.data.listArr.concat(res.data.rows);
         that.setData({
