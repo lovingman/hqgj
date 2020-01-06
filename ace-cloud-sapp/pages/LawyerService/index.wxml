@@ -25,6 +25,7 @@
         <view class="title">搜索一下 立即下载</view>
         <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索企业合同范本" bind:change="onChange" bind:search="onSearch">
         </van-search>
+        
       </view>
       <view class="files">
         <view class="title">
