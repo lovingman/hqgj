@@ -67,12 +67,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="地点：" prop="address">
-                  <el-input
-                    clearable
-                    v-if="basicForm.detailedAddress!=''"
-                    v-model="basicForm.detailedAddress"
-                  ></el-input>
+                <el-form-item label="地点：" prop="detailedAddress">
+                  <el-input clearable v-model="basicForm.detailedAddress"></el-input>
                   <el-button @click="getAddress" class="get-address">
                     <i class="el-icon-plus"></i>
                     <span>获取地点</span>
@@ -132,7 +128,7 @@
                       placeholder="请输入培训名称"
                       show-word-limit
                       type="text"
-                       v-model.trim="scheduleModel.title"
+                      v-model.trim="scheduleModel.title"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -172,7 +168,7 @@
                       placeholder="请输入详细地址"
                       show-word-limit
                       type="text"
-                       v-model.trim="scheduleModel.detailedAddress"
+                      v-model.trim="scheduleModel.detailedAddress"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -206,7 +202,7 @@
                     placeholder="简要概述培训内容，不超过200字"
                     show-word-limit
                     type="textarea"
-                     v-model.trim="scheduleModel.content"
+                    v-model.trim="scheduleModel.content"
                   ></el-input>
                 </el-form-item>
               </el-row>
@@ -253,23 +249,18 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
+    <el-dialog :visible.sync="addressVisible" title="提示" width="60%">
       <div>
-        <div style="margin-bottom: 10px;">
-          <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
-            <el-button :loading="loading" @click="searchKeyword" icon="el-icon-search" slot="append"></el-button>
-          </el-input>
-          <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
-          <el-button style="float: right;margin-right: 10px" @click="enterAddress" type="primary">确 定</el-button>
-          <!--<input id="keyword" type="textbox" value />-->
-          <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
+        <div style="margin-bottom: 10px">
+          <input id="keyword" type="textbox" value />
+          <el-button @click="searchKeyword" type="text" value="search">搜索</el-button>
         </div>
         <div id="container"></div>
       </div>
-      <!--<span class="dialog-footer" slot="footer">-->
-        <!--<el-button @click="addressVisible = false">取 消</el-button>-->
-        <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
-      <!--</span>-->
+      <span class="dialog-footer" slot="footer">
+        <el-button @click="addressVisible = false">取 消</el-button>
+        <el-button @click="enterAddress" type="primary">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -289,7 +280,6 @@ export default {
   name: "add",
   data() {
     return {
-      addressname:"",//地图搜索值
       uploadfileindex: "", //上传标识
       address: "", //详细地址
       latitude: [], //经纬度
@@ -342,6 +332,13 @@ export default {
             required: true,
             message: "请选择时间",
             trigger: "change"
+          }
+        ],
+        detailedAddress: [
+          {
+            required: true,
+            message: "请选择地点",
+            trigger: "blur"
           }
         ],
         cultivatePersonNumber: [
@@ -518,7 +515,7 @@ export default {
     },
     //地图搜索
     searchKeyword() {
-      var keyword = this.addressname;
+      var keyword = document.getElementById("keyword").value;
       console.log(keyword);
       this.clearOverlays(this.markers);
       //根据输入的城市设置搜索范围
@@ -853,7 +850,7 @@ export default {
 <style lang="less" scoped>
 #container {
   min-width: 600px;
-  min-height: 400px;
+  min-height: 767px;
 }
 
 .main-box {
