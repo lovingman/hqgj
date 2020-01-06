@@ -252,33 +252,44 @@
             </div>
         </div>
         <!--地图弹窗-->
-        <el-dialog :visible.sync="addressVisible" title="提示" width="60%">
+        <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
             <div>
-                <div style="margin-bottom: 10px">
-                    <input id="keyword" type="textbox" value=""/>
-                    <el-button @click="searchKeyword" type="text" value="search">搜索</el-button>
+                <div style="margin-bottom: 10px;">
+                    <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
+                        <el-button :loading="loading" @click="searchKeyword" icon="el-icon-search" slot="append"></el-button>
+                    </el-input>
+                    <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
+                    <el-button style="float: right;margin-right: 10px" @click="enterAddress" type="primary">确 定</el-button>
+                    <!--<input id="keyword" type="textbox" value />-->
+                    <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
                 </div>
-                <div id="container"></div>
+                <div id="container2"></div>
             </div>
-            <span class="dialog-footer" slot="footer">
-        <el-button @click="addressVisible = false">取 消</el-button>
-        <el-button @click="enterAddress" type="primary">确 定</el-button>
-      </span>
+            <!--<span class="dialog-footer" slot="footer">-->
+        <!--<el-button @click="addressVisible = false">取 消</el-button>-->
+        <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
+      <!--</span>-->
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import {update, getById} from "@/api/hqgj/training";
-    import {getUser, lecturerMechanism, lecturerPage,fileUpload} from "@/api/sys";
-    import EditorBar from "../../publicTemplate/wangEnduit";
-    import photo from "../../publicTemplate/photo";
+import { update, getById } from "@/api/hqgj/training";
+import {
+  getUser,
+  lecturerMechanism,
+  lecturerPage,
+  fileUpload
+} from "@/api/sys";
+import EditorBar from "../../publicTemplate/wangEnduit";
+import photo from "../../publicTemplate/photo";
 
     export default {
         components: {EditorBar, photo},
         name: "edit",
         data() {
             return {
+                addressname:"",
                 basicAnnexesArr:[],
                 //附件列表
                 filelist: [],
@@ -760,7 +771,7 @@
             //地图初始化
             intMap() {
                 var that = this;
-                var map = new qq.maps.Map(document.getElementById("container"), {
+                var map = new qq.maps.Map(document.getElementById("container2"), {
                     center: new qq.maps.LatLng(29.055100, 111.683130),
                     zoom: 13
                 });
@@ -854,7 +865,7 @@
             },
             //地图搜索
             searchKeyword() {
-                var keyword = document.getElementById("keyword").value;
+                var keyword = this.addressname;
                 console.log(keyword);
                 this.clearOverlays(this.markers);
                 //根据输入的城市设置搜索范围
@@ -885,6 +896,10 @@
 </script>
 
 <style lang="less" scoped>
+    #container2 {
+        min-width: 600px;
+        min-height: 400px;
+    }
     .main-box {
         background-color: #fff;
 

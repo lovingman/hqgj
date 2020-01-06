@@ -20,6 +20,8 @@ public class ServeFinanceVo extends ServeFinance {
     private String maxPrice;
     //最小
     private String minPrice;
+    //是否预约下单
+    private String isOrder;
     //项目价格
     private List<ServeFinanceItem> financeItemList;
 
@@ -80,5 +82,13 @@ public class ServeFinanceVo extends ServeFinance {
 
     public void setIntegral(Integer integral) {
         this.integral = integral;
+    }
+
+    public String getIsOrder() {
+        return isOrder;
+    }
+
+    public void setIsOrder(String isOrder) {
+        this.isOrder = isOrder;
     }
 }

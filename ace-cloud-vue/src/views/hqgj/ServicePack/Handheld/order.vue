@@ -5,14 +5,27 @@
         <!-- <el-button type="primary" style="float:left;">数据导出</el-button> -->
         <el-col class="selectSearch" :span="18">
           <el-col :span="10">
-            <el-date-picker
-              v-model="timeArr"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              value-format="yyyy-MM-dd"
-            ></el-date-picker>
+            <el-col :span="10">
+              <el-date-picker
+                v-model="query.startTime"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择开始时间"
+              ></el-date-picker>
+            </el-col>
+            <el-col :span="4" style=" text-align: center; line-height: 36px;">
+              <span class="text">至</span>
+            </el-col>
+            <el-col :span="10">
+              <el-date-picker
+                v-model="query.endTime"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择结束时间"
+              ></el-date-picker>
+            </el-col>
           </el-col>
           <el-col :span="3" :offset="1">
             <el-select v-model="query.type" clearable placeholder="请选择类型">
@@ -32,7 +45,7 @@
           <el-col :span="5" :offset="1">
             <el-input
               placeholder="请输入订单号"
-              v-model="query.orderNo"
+              v-model.trim="query.orderNo"
               clearable
               class="input-with-select"
             >
@@ -64,7 +77,11 @@
         <el-table-column prop="createDate" sortable label="下单时间" width="200"></el-table-column>
         <el-table-column prop="status" sortable label="状态" width="140">
           <template slot-scope="scope">
-            <div type="text" class="brown" v-if="scope.row.status=='0' || scope.row.status=='2' ">待完成</div>
+            <div
+              type="text"
+              class="brown"
+              v-if="scope.row.status=='0' || scope.row.status=='2' "
+            >待完成</div>
             <div type="text" class="gray" v-if="scope.row.status=='1'">已取消</div>
             <div type="text" class="green" v-if="scope.row.status>'30'">已完成</div>
           </template>
@@ -98,12 +115,14 @@ export default {
       total: 0, //tablepage总数
       tablePage: 1, //第几页参数
       tableSize: 10, //每页参数
-      timeArr: [], //时间数组
+      // timeArr: [], //时间数组
       loading: false, //loadign加载状态
       query: {
         orderNo: "", //订单号
         type: "", //类型
-        status: "" //状态
+        status: "", //状态
+        startTime: "", //开始日期
+        endTime: "" //结束日期
       },
       //类型容器
       typeArr: [
@@ -169,13 +188,13 @@ export default {
         pageSize: this.tableSize,
         totalRecord: this.total
       });
-      if (this.timeArr) {
-        this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
-        this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
-      } else {
-        this.query.startTime = "";
-        this.query.endTime = "";
-      }
+      // if (this.timeArr) {
+      //   this.query.startTime = this.timeArr.length > 0 ? this.timeArr[0] : ""; //开始时间
+      //   this.query.endTime = this.timeArr.length > 0 ? this.timeArr[1] : ""; //结束时间
+      // } else {
+      //   this.query.startTime = "";
+      //   this.query.endTime = "";
+      // }
       orderPage(this.query).then(res => {
         if (res.status == 1) {
           this.tableData = res.rows;
@@ -244,6 +263,9 @@ export default {
     }
     .selectSearch {
       float: right;
+      /deep/ .el-date-editor.el-input {
+        width: 100%;
+      }
     }
   }
   .table-box {

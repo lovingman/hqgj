@@ -30,6 +30,8 @@
                                     @blur="handleInputConfirm"
                                     @keyup.enter.native="handleInputConfirm"
                                     class="input-new-tag"
+                                    maxlength="7"
+                                    show-word-limit
                                     ref="saveTagInput"
                                     size="small"
                                     v-if="inputVisible"
@@ -39,7 +41,7 @@
                             <el-button @click="showInput" class="button-new-tag" icon="el-icon-plus" size="small"
                                        v-else>添加
                             </el-button>
-                            <div class="tips" style="font-size:12px;margin-left: 10px">不超过5个</div>
+                            <!--<div class="tips" style="font-size:12px;margin-left: 10px">不超过5个</div>-->
                         </el-form-item>
                         <el-form-item label="简介:" prop="content">
                             <el-input

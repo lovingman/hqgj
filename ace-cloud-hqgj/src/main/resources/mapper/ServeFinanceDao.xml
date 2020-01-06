@@ -72,6 +72,8 @@
         <result column="minPrice" jdbcType="VARCHAR" property="minPrice"/>
         <result column="maxPrice" jdbcType="VARCHAR" property="maxPrice"/>
         <result column="integral" jdbcType="VARCHAR" property="integral"/>
+        <result column="isOrder" jdbcType="VARCHAR" property="isOrder"/>
+
         <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.vo.BaseOrganizationVo">
             <id column="orgId" jdbcType="VARCHAR" property="id"/>
             <result column="orgName" jdbcType="VARCHAR" property="orgName"/>
@@ -140,6 +142,7 @@
         (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
         (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
         (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) as integral,
+        (SELECT count(1) FROM `serve_finance_order` o where o.financeId=t.id and type='3' and o.createUserId=#{userId,jdbcType=VARCHAR})as isOrder,
         case p.type
         when '4' then   '常德市'
         when '3' then   concat_ws(">",'常德市',p.name)
