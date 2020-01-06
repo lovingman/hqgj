@@ -18,7 +18,7 @@
         </view>
         <!-- url="/pages/PointManage/index" -->
         <navigator class="right">
-            <view class="coin">{{0+userInfo.integral}}</view>
+            <view class="coin">{{userInfo.integral?userInfo.integral:0}}</view>
             <view class="center">我的积分
                 <!-- <van-icon name="arrow" /> -->
             </view>

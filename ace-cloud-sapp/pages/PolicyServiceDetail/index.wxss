@@ -23,8 +23,8 @@
 .text {
     width: 690rpx;
     margin: auto;
-    color: rgba(121, 128, 146, 1);
-    font-size: 24rpx;
+    color: rgba(38, 33, 70, 1);
+    font-size: 28rpx;
     font-family: Microsoft Yahei;
     line-height: 1.5em;
 }
