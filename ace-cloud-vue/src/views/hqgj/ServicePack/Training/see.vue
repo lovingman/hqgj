@@ -42,7 +42,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="培训地点：">
-                  <span></span>
+                  <span>{{basicForm.detailedAddress}}</span>
                 </el-form-item>
               </el-col>
             </el-row>
