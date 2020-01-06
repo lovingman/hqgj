@@ -2,7 +2,7 @@
     <div class="container">
         <div style="width: 100%;height: 20px">
             <!--<el-button @click="Auditing" size="small" style="float: right" type="primary"-->
-                       <!--v-if="this.$route.query.word=='examine'">完成审核-->
+            <!--v-if="this.$route.query.word=='examine'">完成审核-->
             <!--</el-button>-->
             <el-button @click="back" size="small" style="float: right" type="primary"
                        v-if="this.$route.query.word=='preview'">返回
@@ -301,19 +301,29 @@
                     <el-divider></el-divider>
                     <el-form label-width="250px" ref="form">
                         <el-form-item label="申请免费服务项目:">
-                            <span>工商注册代办服务（含公章一套）、银行基本户开户代办服务 、银行开户费、小额账户管理费</span>
+                            <div v-for="item in Other" >
+                                <span v-if="item.type==1">{{item.optionName}}</span>
+                            </div>
                         </el-form-item>
                         <el-form-item label="确定培训意向:">
-                            <span>是否愿意参加创业培训、是否愿意加入创业孵化基地</span>
+                            <div v-for="item in Other" >
+                                <span v-if="item.type==2">{{item.optionName}}</span>
+                            </div>
                         </el-form-item>
                         <el-form-item label="开户银行:">
-                            <span>兴业银行各分行</span>
+                            <div v-for="item in Other" >
+                                <span v-if="item.type==3">{{item.optionName}}</span>
+                            </div>
                         </el-form-item>
                         <el-form-item label="是否选择代理记账服务:">
-                            <span>选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</span>
+                            <div v-for="item in Other" >
+                                <span v-if="item.type==4">{{item.optionName}}</span>
+                            </div>
                         </el-form-item>
                         <el-form-item label="特殊说明:">
-                            <span>无</span>
+                            <div v-for="item in Other">
+                                <span v-if="item.type==5">{{item.content}}</span>
+                            </div>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
@@ -390,6 +400,10 @@
         name: "details",
         data() {
             return {
+                dict: [],
+                dict2: [],
+                dict3: [],
+                dict4: [],
                 lookingVisible: false,
                 reviewVisible: false,
                 reviewDetailVisible: false,
@@ -406,13 +420,14 @@
                     businessId: "",
                     status: ""
                 },
+                Other: [],
                 list: [],
                 fileList: [],
                 type: [],
                 others: [],
                 query: {
                     type: "",
-                    businessId:""
+                    businessId: ""
                 },
                 query2: {
                     type: "",
@@ -427,6 +442,8 @@
         created() {
             this.getDetails();
             this.getannexList();
+            this.dictQuery();
+            this.otherhandle();
         },
         methods: {
             getDetails() {
@@ -529,23 +546,23 @@
             },
             //下载
             FileDownload(index, data) {
-                if(data.fileName!=''){
+                if (data.fileName != '') {
                     console.log(data);
                     this.relationId = data.id;
                     console.log(this.relationId);
                     downloadimg(this.relationId).then(response => {
-                        if(response.data!=[]){
+                        if (response.data != []) {
                             for (var i = 0; i < response.data.length; i++) {
                                 let link = document.createElement('a')
                                 link.href = 'data:image/png;base64,' + response.data[i]
                                 link.download = data.fileName + '.png'
                                 link.click()
                             }
-                        }else{
+                        } else {
                             this.$message.warning(`附件数据丢失`);
                         }
                     })
-                }else {
+                } else {
                     this.$message.warning(`数据缺失`);
                 }
 
@@ -573,9 +590,99 @@
                     this.getMemberlist();
                 }
                 if (tab.name == 8) {
-                    this.query3.businessId = this.$route.query.id
-                    getAppend(this.query3).then(response => {
+                    this.otherhandle();
+                }
+            },
+            otherhandle(){
+                this.query3.businessId = this.$route.query.id;
+                getAppend(this.query3).then(response => {
+                    for (var i = 0; i < response.rows.length; i++) {
+                        this.Other[i] = this.getName(response.rows[i]);
+                    }
+                    console.log(this.Other);
+                })
+            },
+            //服务申请字典
+            dictQuery() {
+                getDict("57")
+                    .then(response => {
+                        this.dict = response.data['57'];
+                        console.log(this.dict);
                     })
+                getDict("58")
+                    .then(response => {
+                        this.dict2 = response.data['58'];
+                        console.log(this.dict1);
+                    })
+                getDict("59")
+                    .then(response => {
+                        this.dict3 = response.data['59'];
+                    })
+                getDict("60")
+                    .then(response => {
+                        this.dict4 = response.data['60'];
+                    })
+            },
+            //字符转换
+            getName(data) {
+                if (data.type == 1) {
+                    var nameArr = data.option.split(",");
+                    var arr = [];
+                    for (var i = 0; i < nameArr.length; i++) {
+                        for (var j = 0; j < this.dict.length; j++) {
+                            if (nameArr[i] == this.dict[j].code) {
+                                arr[i] = this.dict[j].name;
+                            }
+                        }
+                    }
+                    data.optionName = arr.join('、');
+                    return data;
+                }
+                if (data.type == 2) {
+                    var nameArr = data.option.split(",");
+                    var arr = [];
+                    for (var i = 0; i < nameArr.length; i++) {
+                        for (var j = 0; j < this.dict2.length; j++) {
+                            if (nameArr[i] == this.dict2[j].code) {
+                                arr[i] = this.dict2[j].name;
+                            }
+                        }
+
+                    }
+                    data.optionName=arr.join('、');
+                    return data;
+                }
+                if (data.type == 3) {
+                    var nameArr = data.option.split(",");
+                    var arr = [];
+                    for (var i = 0; i < nameArr.length; i++) {
+                        for (var j = 0; j < this.dict3.length; j++) {
+                            if (nameArr[i] == this.dict3[j].code) {
+                                arr[i] = this.dict3[j].name;
+
+                            }
+                        }
+
+                    }
+                    data.optionName=arr.join('、');
+                    return data;
+                }
+                if (data.type == 4){
+                    var nameArr = data.option.split(",");
+                    var arr = [];
+                    for (var i = 0; i < nameArr.length; i++) {
+                        for (var j = 0; j < this.dict4.length; j++) {
+                            if (nameArr[i] == this.dict4[j].code) {
+                                arr[i] = this.dict4[j].name;
+                            }
+                        }
+
+                    }
+                    data.optionName=arr.join('、');
+                    return data;
+                }
+                if (data.type == 5){
+                    return data;
                 }
             },
             //基础信息审核弹窗
@@ -637,7 +744,7 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            back(){
+            back() {
                 this.$router.push({
                     path: "/hqgj/ServicePack/BWSService/index"
                 });
