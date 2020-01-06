@@ -74,6 +74,7 @@
   width: 700rpx;
   margin: auto;
   margin-bottom: 60rpx;
+  word-wrap: break-word;
 }
 
 .mod .title {
@@ -90,6 +91,7 @@
   font-size: 28rpx;
   font-family: PingFangSC-regular;
   line-height: 1.5em;
+  word-wrap: break-word;
 }
 
 .footer {
@@ -214,4 +216,10 @@
 
 .service-list.active {
   border: 1px solid #ff7d18;
+}
+
+.sign .iconfont {
+    margin-right: 6rpx;
+    font-size: 26rpx;
+    display: inline-flex;
 }

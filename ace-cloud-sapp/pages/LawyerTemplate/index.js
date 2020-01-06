@@ -60,14 +60,17 @@ Page({
     wx.downloadFile({
       url: e.currentTarget.dataset.url,
       success: function(res) {
+        console.log(res);
         const tempFilePath = res.tempFilePath;
         // 保存文件
         wx.saveFile({
           tempFilePath,
           success: function(res) {
+            console.log(res);
             const savedFilePath = res.savedFilePath;
           },
           fail: function(err) {
+            console.log(err);
             console.log('保存失败：', err)
           }
         });

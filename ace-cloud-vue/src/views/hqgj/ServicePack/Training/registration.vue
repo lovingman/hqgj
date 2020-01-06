@@ -16,7 +16,7 @@
           <el-col :span="16" :offset="1">
             <el-input
               placeholder="请输入企业名称或姓名"
-               v-model.trim="query.companyName"
+              v-model.trim="query.companyName"
               clearable
               class="input-with-select"
             >
@@ -37,7 +37,7 @@
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
         <el-table-column prop="enrollName" sortable width="120" label="姓名"></el-table-column>
-        <el-table-column prop="enrollMobile" sortable width="180" label="手机号码"></el-table-column>
+        <el-table-column prop="mobile" sortable width="180" label="手机号码"></el-table-column>
         <el-table-column prop="isSign" sortable width="120" label="是否签到">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.isSign=='n'">否</div>
