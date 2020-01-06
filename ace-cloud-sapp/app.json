@@ -33,7 +33,9 @@
         "pages/PolicyServiceDetail/index",
         "pages/JoinEnterprises/index",
         "pages/ModifyPwd/index",
-        "pages/PointManage/index"
+        "pages/PointManage/index",
+        "pages/TrainingManagement/index",
+        "pages/LawyerTemplate/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
