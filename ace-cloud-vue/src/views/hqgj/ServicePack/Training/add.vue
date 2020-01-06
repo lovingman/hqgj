@@ -835,7 +835,7 @@ export default {
       let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.ppt$|\.pdf$|\.jpg$|\.rar$|\.zip$/i.test(
         file.name
       );
-      const isLt2M = file.size / 1024 / 1024 < 10;
+      const isLt2M = file.size / 1024 / 1024 < 50;
       if (!isRightType) {
         this.$message.warning(
           "上传文件只能是 xls、xlsx、doc、docx 、pptx、ppt、pdf、jpg、zip、rar格式!"
