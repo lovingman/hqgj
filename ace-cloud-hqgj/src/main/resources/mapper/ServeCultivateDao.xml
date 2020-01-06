@@ -177,7 +177,7 @@
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
-                ORDER BY t.${orderBy}
+                ORDER BY ${orderBy}
             </when>
             <otherwise>
                 ORDER BY t.createDate desc

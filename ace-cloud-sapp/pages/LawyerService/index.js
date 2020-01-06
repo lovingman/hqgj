@@ -16,6 +16,7 @@ Page({
       pageSize: 10,
       pageNum: 1,
       type: 1, //类型 1 律师事务所 2，会计 3 培训
+      title: "", //搜索值
     },
     isload: false,
     loading: false,
@@ -24,6 +25,7 @@ Page({
   getList: function() {
     var that = this;
     that.showloading();
+    that.data.query.type = 1;
     request.getJSON(cfg.baseOrganizationUrl, that.data.query).then(res => {
       that.hideloading();
       let e = res.data;
@@ -58,6 +60,7 @@ Page({
   //法律模板请求
   getBasicAnnex() {
     let that = this;
+    that.data.query.type = 2;
     that.showloading();
     request.getJSON(cfg.lawServeTemplate, that.data.query).
     then(res => {
@@ -76,21 +79,25 @@ Page({
           basicAnnexArr: rows,
           basicLength: res.data.total
         })
-        console.log(that.data.basicAnnexArr);
-        console.log(that.data.basicAnnexArr.basicAnnexes);
       }
     })
   },
   //tab切换
   tabClick: function(event) {
     var that = this;
-    that.data.query.type = 2;
     var index = parseInt(event.detail.index); //获取当前点击的tabs的索引值
+
     that.setData({
       index: index
     })
     if (index == 1) { //0 律师事务所  1法律模板
+      that.data.basicAnnexArr = [];
+      that.data.query.pageNum = 1;
       that.getBasicAnnex();
+    } else {
+      that.data.listArr = [];
+      that.data.query.pageNum = 1;
+      that.getList();
     }
   },
   //点击跳转详情
@@ -101,52 +108,23 @@ Page({
       url: '/pages/LawFirm/index?id=' + listId,
     })
   },
-  //点击下载文件
-  downloadFile: function(e) {
-    console.log(e);
-    wx.downloadFile({
-      url: e.currentTarget.dataset.url,
-      success: function(res) {
-        const tempFilePath = res.tempFilePath;
-        // 保存文件
-        wx.saveFile({
-          tempFilePath,
-          success: function(res) {
-            const savedFilePath = res.savedFilePath;
-          },
-          fail: function(err) {
-            console.log('保存失败：', err)
-          }
-        });
-      },
-      fail: function(err) {
-        console.log('下载失败：', err);
-      },
-    });
-  },
-  openFile(e) {
-    console.log(e)
-    wx.downloadFile({
-      url: e.currentTarget.dataset.src,
-      success: function(res) {
-        const filePath = res.tempFilePath
-        wx.openDocument({
-          filePath: filePath,
-          success: function(res) {
-            console.log('打开文档成功')
-          }
-        })
-      }
+  //点击模板跳转下载
+  templateClick: function(e) {
+    let that = this;
+    let index = parseInt(e.currentTarget.dataset.index);
+    let listId = that.data.basicAnnexArr[index].id;
+    let titles = that.data.basicAnnexArr[index].title;
+    let times = that.data.basicAnnexArr[index].createDate
+    wx.navigateTo({
+      url: '/pages/LawyerTemplate/index?id=' + listId + '&title=' + titles + '&time=' + times,
     })
   },
   //搜索事件
   onChange: function(e) {
     console.log(e);
     var that = this;
-    var obj = {};
-    obj.fileName = e.detail;
-    obj.type = 2;
-    request.getJSON(cfg.basicAnnexUrl, obj).then(res => {
+    that.data.query.title = e.detail;
+    request.getJSON(cfg.lawServeTemplate, that.data.query).then(res => {
       if (res.data.status == 1) {
         console.log(res)
         that.setData({

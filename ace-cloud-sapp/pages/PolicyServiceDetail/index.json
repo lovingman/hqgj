@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "政策服务详情",
+  "navigationBarBackgroundColor": "#2E88F2",
+  "navigationBarTextStyle": "white",
   "usingComponents": {}
 }

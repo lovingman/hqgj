@@ -10,39 +10,37 @@ Page({
   data: {
 
     listArr: [],
-    option1: [
-      {
+    option1: [{
         text: '全部状态',
-        value: 1
+        value: '1,3'
       },
       {
         text: '进行中',
-        value: 2
+        value: 1,
       },
       {
         text: '已结束',
         value: 3
       }
     ],
-    option2: [
-      {
+    option2: [{
         text: '按最新',
-        value: 'b'
+        value: 'createDate'
       },
       {
         text: '有名额',
-        value: 'c'
+        value: 'surplusQuota'
       }
     ],
     query: {
-      pageSize: 8,
+      pageSize: 10,
       pageNum: 1,
       status: '1,3',
     },
     isload: false,
     loading: false,
-    value1: 1,
-    value2: 'b',
+    status: '1,3',
+    orderBy: 'createDate',
     quotaShow: true, //是否显示名额
   },
   //请求page数据渲染列表
@@ -87,6 +85,52 @@ Page({
     let that = this;
     that.setData({
       loading: false
+    })
+  },
+  //状态选择事件
+  changStatus: function(e) {
+    console.log(e);
+    let that = this;
+    that.showloading();
+    that.data.query.sord = 'desc';
+    that.data.query.status = e.detail;
+    request.getJSON(cfg.trainPageUrl, that.data.query).then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
+        that.setData({
+          isload: true
+        })
+      }
+      if (e.status == 1) {
+        that.setData({
+          listArr: e.rows
+        })
+      }
+    })
+  },
+  //最新或者名额选择
+  changOrderBy: function(e) {
+    console.log(e);
+    let that = this;
+    that.showloading();
+    that.data.query.orderBy = e.detail;
+    that.data.query.sord = 'desc';
+    request.getJSON(cfg.trainPageUrl, that.data.query).then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      if (len < that.data.query.pageSize) {
+        that.setData({
+          isload: true
+        })
+      }
+      if (e.status == 1) {
+        that.setData({
+          listArr: e.rows
+        })
+      }
     })
   },
   /**
@@ -142,6 +186,9 @@ Page({
    */
   onReachBottom: function() {
     let that = this;
+    if (thta.data.isload) {
+      return;
+    }
     that.data.query.pageNum++;
     that.getList();
   },

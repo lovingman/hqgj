@@ -1,29 +1,29 @@
-<wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
 <view>
-    <van-dropdown-menu>
-        <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-        <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
-    </van-dropdown-menu>
-    <view class="modal">
-        <view class="card" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
-            <view class="img">
-                <van-image width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
-            </view>
-            <view class="info">
-                <view class="name van-multi-ellipsis">{{item.title}}</view>
-                <view class="org">
-                    <van-icon name="location" />{{astFilter.addressIntercept(item.detailedAddress)}}
-                </view>
-                <view class="org">
-                    <van-icon name="clock-o" />
-                    {{astFilter.timeYMDHM(item.startDate)}}
-                    <view class="state greay" wx:if="{{item.status == 3}}">已结束</view>
-                    <view class="state" wx:if="{{item.status == 1 && item.surplusQuota > 0}}">仅剩名额{{item.surplusQuota}}个</view>
-                    <view class="state red" wx:if="{{item.surplusQuota == 0}}">已满员</view>
-                </view>
-            </view>
+  <wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
+  <van-dropdown-menu>
+    <van-dropdown-item bind:change="changStatus" value="{{ status }}" options="{{ option1 }}" />
+    <van-dropdown-item bind:change="changOrderBy" value="{{ orderBy }}" options="{{ option2 }}" />
+  </van-dropdown-menu>
+
+  <view class="modal">
+    <view class="card" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
+      <view class="img">
+        <van-image width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
+      </view>
+      <view class="info">
+        <view class="name van-multi-ellipsis">{{item.title}}</view>
+        <view class="org">
+          <van-icon name="location" />{{astFilter.addressIntercept(item.detailedAddress)}}
         </view>
+        <view class="org">
+          <van-icon name="clock-o" /> {{astFilter.timeYMDHM(item.startDate)}}
+          <view class="state greay" wx:if="{{item.status == 3}}">已结束</view>
+          <view class="state" wx:if="{{item.status == 1 && item.surplusQuota > 0}}">仅剩名额{{item.surplusQuota}}个</view>
+          <view class="state red" wx:if="{{item.surplusQuota == 0}}">已满员</view>
+        </view>
+      </view>
     </view>
-    <view wx:if="{{isload}}" class="loadState">已经没有了</view>
-    <view wx:if="{{loading}}" class="loadState">正在加载中</view>
+  </view>
+  <view wx:if="{{isload}}" class="loadState">已经没有了</view>
+  <view wx:if="{{loading}}" class="loadState">正在加载中</view>
 </view>

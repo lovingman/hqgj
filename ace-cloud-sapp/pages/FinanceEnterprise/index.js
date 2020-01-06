@@ -22,6 +22,7 @@ Page({
     id: "", //id 值
     type: 1, //类型 1,代理记账 2财税管家
     itemId: "", //财税管家服务项目ID
+    getCurrentPageUrlWithArgs: "", //当前页面URL+参数
   },
   //服务项目点击切换当前状态
   activeClick: function(e) {
@@ -136,7 +137,6 @@ Page({
   },
   //拨打电话
   telePhoneClick: function(e) {
-    console.log(e)
     var that = this;
     var phone = e.currentTarget.dataset.id;
     that.setData({
@@ -154,13 +154,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this;
+    let that = this;
+    console.log(options);
     that.setData({
       id: options.id,
       type: options.type,
       getCurrentPageUrlWithArgs: util.getCurrentPageUrlWithArgs()
     });
-    this.getById();
+    that.getById();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

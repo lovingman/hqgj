@@ -1,0 +1,15 @@
+<!--pages/LawyerTemplate/index.wxml-->
+<view class="index">
+  <view class="header">
+    <view class="title">{{headers.title}}</view>
+    <view class="date">{{headers.time}}</view>
+  </view>
+  <view class="list-box">
+    <view class="list" wx:for="{{basicAnnexesArr}}" wx:for-item="item" catchtap='openFile' data-src='{{item.fileURL}}'>
+      <view class="fileName">{{item.fileName}}</view>
+      <view data-url='{{item.fileURL}}' catchtap="downloadFile" class="download">下载</view>
+    </view>
+  </view>
+  <view wx:if="{{isload}}" class="loadState">已经没有了</view>
+  <view wx:if="{{loading}}" class="loadState">正在加载中</view>
+</view>

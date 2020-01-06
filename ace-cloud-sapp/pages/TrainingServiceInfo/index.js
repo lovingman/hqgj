@@ -133,6 +133,14 @@ Page({
       }
     })
   },
+  //点击机构跳转详情
+  orgClick: function(e) {
+    console.log(e);
+    let listId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/InstitutionalDetails/index?id=' + listId,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

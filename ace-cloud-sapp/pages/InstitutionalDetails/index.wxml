@@ -1,0 +1,27 @@
+<view>
+  <view class="wrap">
+    <view class="img">
+      <van-image width="100%" height="100%" lazy-load fit="cover" src="{{orgArr.fmUrl}}" />
+    </view>
+    <view class="text">
+      <view class="title van-ellipsis">
+        {{orgArr.orgName}}
+      </view>
+      <view class="subTitle van-ellipsis">
+        <van-icon name="location" />{{orgArr.completeAddress}}
+      </view>
+      <view class="bottom">
+        <view class="sign">
+          <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+      </view>
+    </view>
+  </view>
+  <view class="content">
+    <view class="title">
+      <icon class="iconfont icon-jieshao"></icon>机构简介
+    </view>
+    <view class="text">
+      {{orgArr.content}}
+    </view>
+  </view>
+</view>

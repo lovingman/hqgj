@@ -1,0 +1,140 @@
+/* pages/InstitutionalDetails/index.wxss */
+
+.van-tabs__line {
+  bottom: 10rpx !important;
+}
+
+.wrap {
+  width: 710rpx;
+  margin: 40rpx auto 40rpx;
+  border-radius: 12rpx;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  padding: 28rpx 20rpx 28rpx 32rpx;
+  justify-content: space-between;
+  box-shadow: 0px 2px 6px 0px rgba(228, 232, 238, 0.29);
+}
+
+.wrap .img {
+  width: 124rpx;
+  height: 124rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.wrap .text {
+  width: 510rpx;
+}
+
+.wrap .title {
+  color: rgba(28, 40, 67, 1);
+  font-size: 28rpx;
+  font-weight: bold;
+  font-family: PingFangSC-bold;
+  line-height: 1.5em;
+}
+
+.wrap .subTitle {
+  overflow: hidden;
+  color: rgba(160, 167, 182, 1);
+  font-size: 22rpx;
+  font-family: PingFangSC-regular;
+  line-height: 1.5em;
+}
+
+.wrap .bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 50rpx;
+  margin-top: 14rpx;
+}
+
+.wrap .bottom .sign {
+  color: rgba(255, 125, 24, 1);
+  font-size: 24rpx;
+  font-family: Arial;
+}
+
+.wrap .bottom .sign .iconfont {
+  margin-right: 6rpx;
+  font-size: 24rpx;
+}
+
+.content .title {
+  color: rgba(28, 40, 67, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-bold;
+  font-weight: bold;
+  line-height: 100rpx;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.content .title .iconfont {
+  color: #2e88f2;
+  font-size: 32rpx;
+  margin-right: 6rpx;
+}
+
+.content .text {
+  color: rgba(121, 128, 146, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-regular;
+  padding: 0 30rpx;
+  line-height: 1.5em;
+  word-wrap: break-word;
+}
+
+.item {
+  padding: 24rpx;
+  width: 710rpx;
+  margin: 30rpx auto 8rpx;
+  border-radius: 12rpx;
+  background-color: rgba(247, 249, 252, 0.37);
+  display: flex;
+  justify-content: space-between;
+}
+
+.item .img {
+  width: 124rpx;
+  height: 124rpx;
+}
+
+.item .info {
+  width: 520rpx;
+}
+
+.item .info .info1 .name {
+  color: rgba(28, 40, 67, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-bold;
+  font-weight: bold;
+  line-height: 35rpx;
+  display: inline-block;
+}
+
+.item .info .info1 .sign {
+  color: rgba(255, 125, 24, 1);
+  font-size: 20rpx;
+  font-family: Arial;
+  margin-left: 20rpx;
+  display: inline-block;
+}
+
+.item .info .info1 .sign .iconfont {
+  font-size: 20rpx;
+}
+
+.item .info .info2 {
+  color: rgba(46, 136, 242, 1);
+  font-size: 22rpx;
+  font-family: PingFangSC-regular;
+}
+
+.item .info .info3 {
+  color: rgba(160, 167, 182, 1);
+  font-size: 22rpx;
+  font-family: PingFangSC-regular;
+  line-height: 1.5em;
+}

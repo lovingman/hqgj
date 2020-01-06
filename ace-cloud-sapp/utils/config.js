@@ -48,6 +48,7 @@ var config = {
   orderContactIdPage: `${server}/hqgj/serveFinanceOrder/orderContactIdPage`, //服务列表
   lecturerPage: `${server}/hqgj/serveCultivate/lecturerPage`, //服务列表
   lawServeTemplate: `${server}/hqgj/www/lawServe/page`, //法律模板
+  financeOrder: `${server}/hqgj/serveFinanceOrder/create`, //财税下单
 };
 
 module.exports = config
