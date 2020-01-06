@@ -217,3 +217,9 @@
 .service-list.active {
   border: 1px solid #ff7d18;
 }
+
+.sign .iconfont {
+    margin-right: 6rpx;
+    font-size: 26rpx;
+    display: inline-flex;
+}

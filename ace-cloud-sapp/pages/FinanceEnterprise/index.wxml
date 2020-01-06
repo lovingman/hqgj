@@ -14,7 +14,8 @@
             <van-icon name="location" /> {{detailsForm.baseOrganization.orgAddress}}
           </view>
           <view class="bottom">
-            <text class="sign">已认证</text>
+          <view class="sign">
+              <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
           </view>
         </view>
       </view>

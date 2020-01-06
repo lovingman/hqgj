@@ -9,7 +9,7 @@ Page({
   data: {
     id: "", //id值
     basicForm: {}, //基本信息
-    orgArr:[],//成员数组
+    orgArr: [], //成员数组
   },
   //tab切换
   tabClick: function(event) {
@@ -27,6 +27,21 @@ Page({
           })
         }
       })
+    }
+  },
+  //拨打电话
+  phoneClick: function(e) {
+    var that = this;
+    var phone = e.currentTarget.dataset.id;
+    that.setData({
+      phone: phone
+    })
+    if (phone) {
+      wx.makePhoneCall({
+        phoneNumber: that.data.phone
+      })
+    } else {
+      return false
     }
   },
   /**
