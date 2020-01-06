@@ -69,3 +69,6 @@
     line-height: 50rpx;
     text-align: center;
 }
+.van-icon{
+    margin-right: 6rpx;
+}

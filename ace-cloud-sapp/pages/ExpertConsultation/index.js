@@ -7,23 +7,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type: 3, //类型 3专家问诊
     listArr: [], //列表容器
+    query: {
+      pageSize: 10,
+      pageNum: 1,
+      status: 3, //状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
+      type: 3, //类型 3专家问诊
+    },
   },
   //获取page列表
   getList: function() {
     var that = this;
-    request.getJSON(cfg.financePageUrL, {
-      type: that.data.type,
-      status: 3, //状态  0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线
-    }).then(res => {
-      console.log(res);
-      if (res.data.status == 1) {
+    that.showloading();
+    request.getJSON(cfg.financePageUrL, that.data.query).then(res => {
+      that.hideloading();
+      let e = res.data;
+      let len = e.rows ? e.rows.length : 0;
+      console.log(len)
+      if (len < that.data.query.pageSize) {
         that.setData({
-          listArr: res.data.rows
+          isload: true
         })
-        console.log(that.data.listArr);
       }
+      if (e.status == 1) {
+        let rows = that.data.listArr.concat(res.data.rows);
+        that.setData({
+          listArr: rows
+        })
+     
+      }
+    })
+  },
+  //显示加载
+  showloading() {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+  },
+  //隐藏加载
+  hideloading() {
+    let that = this;
+    that.setData({
+      loading: false
     })
   },
   //点击列表跳转详情
@@ -73,14 +99,20 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    let that = this;
+    that.data.query.pageNum = 1;
+    that.data.listArr = [];
+    that.getList();
+    wx.stopPullDownRefresh();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    let that = this;
+    that.data.query.pageNum++;
+    that.getList();
   },
 
   /**

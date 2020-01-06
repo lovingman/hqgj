@@ -76,6 +76,7 @@
 
 .organization .text .tip .iconfont {
   margin-right: 4rpx;
+  display: inline-flex;
 }
 
 .entry {
