@@ -16,7 +16,7 @@ module.exports = {
         if (str) {
             return str.substring(0, 16);
         }
-        return ' 00:00'
+        return '0000-00-00 00:00'
 
     },
     trainingStatus: function(str) {
