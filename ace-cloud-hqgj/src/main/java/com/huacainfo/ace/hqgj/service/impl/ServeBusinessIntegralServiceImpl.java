@@ -87,7 +87,6 @@ public class ServeBusinessIntegralServiceImpl implements ServeBusinessIntegralSe
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "积分管理名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
