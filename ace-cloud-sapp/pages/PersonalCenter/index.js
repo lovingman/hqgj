@@ -34,8 +34,8 @@ Page({
             }
         ],
         service: {
-            text: '服务',
-            imgUrl: '/assets/image/icon3-4.png',
+            text: '服务管理',
+            imgUrl: '/assets/image/icon3-5.png',
             path: ''
         },
         userInfo: {
@@ -131,7 +131,6 @@ Page({
                     Toast.fail(r.message);
                 }
             })
-
         }).catch(() => {
             Toast.fail('授权失败，请重试');
         });
@@ -162,7 +161,6 @@ Page({
                 this.isloginHandler();
             }
         });
-
     },
     // 选择企业
     selectOne() {

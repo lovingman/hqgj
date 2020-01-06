@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "财税专家问诊",
+    "navigationBarTitleText": "专家问诊",
     "usingComponents": {
         "van-image": "/vant/weapp/image/index",
         "van-sticky": "/vant/weapp/sticky/index"

@@ -1,7 +1,7 @@
 /* pages/PolicyService/index.wxss */
 .search {
     height: 200rpx;
-    background: #4b90ff;
+    background: #2E88F2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,7 +43,7 @@
 
 .files .file .name {
     color: rgba(0, 0, 0, 1);
-    font-size: 24rpx;
+    font-size: 28rpx;
     font-family: PingFangSC-regular;
 }
 

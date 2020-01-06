@@ -138,3 +138,11 @@
   background-color: #4b90ff;
   color: #fff;
 }
+
+.loadState{
+    color: rgba(121, 128, 146, 1);
+    height: 50rpx;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    text-align: center;
+}

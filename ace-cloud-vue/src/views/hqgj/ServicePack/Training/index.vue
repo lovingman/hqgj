@@ -215,7 +215,7 @@ export default {
         .then(() => {
           deleteByIds(this.ids).then(res => {
             if (res.status == 1) {
-              this.currentPage = 1;
+              this.tablePage = 1;
               this.$message.success("删除成功");
               this.getList();
             }
