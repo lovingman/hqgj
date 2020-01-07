@@ -23,7 +23,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="类型：">
-              <span>{{basicForm.typeName}}</span>
+              <span>{{typeName}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -31,12 +31,12 @@
               <span>{{basicForm.orgName}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="expertShow">
+          <el-col :span="12" v-if="this.basicForm.type == 3">
             <el-form-item label="专家：">
               <span>{{basicForm.baseOrganizationMember.name}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="expertShow">
+          <el-col :span="12" v-if="this.basicForm.type == 3">
             <el-form-item label="名额：">
               <span>{{basicForm.quota}}</span>
             </el-form-item>
@@ -46,7 +46,7 @@
               <span>{{basicForm.contactPersonTel}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="expertShow">
+          <el-col :span="12" v-if="this.basicForm.type == 3">
             <el-form-item label="地点：">
               <span>{{basicForm.address}}</span>
             </el-form-item>
@@ -68,7 +68,7 @@
           </el-form-item>
         </el-row>
       </el-form>
-      <div class="show-box" v-if="showService">
+      <div class="show-box" v-if="this.basicForm.type == 2">
         <div class="title">服务项目</div>
         <el-form label-width="120px" class="project-item">
           <div class="project-item-box">
@@ -104,7 +104,8 @@ export default {
       basicForm: {}, //数据容器
       showService: false, //是否显示
       expertShow: false, //专家类容是否显示
-      serviceList: [] //服务项目数组
+      serviceList: [], //服务项目数组
+      typeName: "" //类型名称
     };
   },
   created() {
@@ -117,22 +118,17 @@ export default {
       //请求数据接口
       getById(this.id).then(res => {
         if (res.status == 1) {
+          console.log(res);
           this.basicForm = res.data; //基本信息
           this.serviceList = res.data.financeItemList; //服务项目
           if (this.basicForm.type == 1) {
-            this.basicForm.typeName = "代理计账";
+            this.typeName = "代理计账";
           }
           if (this.basicForm.type == 2) {
-            this.basicForm.typeName = "财税管家";
-            this.showService = true;
-          } else {
-            this.showService = false;
+            this.typeName = "财税管家";
           }
           if (this.basicForm.type == 3) {
-            this.basicForm.typeName = "专家问诊";
-            this.expertShow = true;
-          } else {
-            this.expertShow = false;
+            this.typeName = "专家问诊";
           }
         }
       });
@@ -157,6 +153,9 @@ export default {
   .content-box {
     padding-top: 20px;
     padding-bottom: 30px;
+    span {
+      word-wrap: break-word;
+    }
     .title {
       font-weight: bold;
       font-size: 16px;
@@ -191,6 +190,9 @@ export default {
       float: right;
       margin-left: 40px;
       margin-right: 30px;
+      /deep/ .el-button--medium {
+        border-radius: 5px;
+      }
     }
   }
   .img-border {

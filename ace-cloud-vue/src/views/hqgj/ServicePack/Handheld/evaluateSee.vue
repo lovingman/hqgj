@@ -100,6 +100,9 @@ export default {
       margin-bottom: 20px;
       flex: 1;
     }
+    span {
+      word-wrap: break-word;
+    }
   }
   .title::after {
     content: "";
@@ -168,6 +171,9 @@ export default {
       float: right;
       margin-left: 40px;
       margin-right: 30px;
+      /deep/ .el-button--medium {
+        border-radius: 5px;
+      }
     }
   }
 }

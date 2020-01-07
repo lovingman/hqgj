@@ -1,7 +1,5 @@
 {
   "enablePullDownRefresh": true,
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "企业报名管理",
   "usingComponents": {
     "van-sticky": "/vant/weapp/sticky/index",

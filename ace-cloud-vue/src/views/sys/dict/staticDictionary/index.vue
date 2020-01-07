@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="2">
           <el-button-group>
-            <el-button type="primary" @click="create">创建</el-button>
+            <el-button type="primary" style="border-radius:5px;" @click="create">创建</el-button>
           </el-button-group>
         </el-col>
         <el-col :span="10">

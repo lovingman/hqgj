@@ -1,7 +1,5 @@
 {
   "enablePullDownRefresh": true,
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "培训提升服务包列表",
   "usingComponents": {
     "van-icon": "/vant/weapp/icon/index",

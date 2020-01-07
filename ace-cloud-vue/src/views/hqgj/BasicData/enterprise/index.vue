@@ -4,7 +4,7 @@
             <div class="handle-box">
                 <el-row>
                     <el-col :span="12">
-                        <el-button @click="create" icon="el-icon-plus" style="float: left" type="primary">创建</el-button>
+                        <el-button @click="create" icon="el-icon-plus" style="float: left;border-radius:5px;"  type="primary">创建</el-button>
                     </el-col>
                     <!--<el-col :span="14">-->
                         <!--<el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">-->

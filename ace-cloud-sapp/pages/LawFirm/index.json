@@ -1,6 +1,4 @@
 {
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "法律服务详情",
   "usingComponents": {
     "van-tab": "/vant/weapp/tab/index",

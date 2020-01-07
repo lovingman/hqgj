@@ -109,10 +109,10 @@
               </el-row>
               <el-row>
                 <el-form-item label="课件：">
-                  <spna v-for="item in scheduleModel.basicAnnexes">
+                  <span v-for="item in scheduleModel.basicAnnexes">
                     {{item.fileName+"."+item.fileURL.substr(item.fileURL.lastIndexOf(".") + 1)}}
                     <br />
-                  </spna>
+                  </span>
                 </el-form-item>
               </el-row>
             </div>
@@ -189,6 +189,9 @@ export default {
       padding-left: 20px;
       margin-bottom: 20px;
     }
+    /deep/ .el-form-item--medium .el-form-item__content {
+      word-wrap: break-word;
+    }
   }
   .title::after {
     content: "";
@@ -252,6 +255,9 @@ export default {
     position: absolute;
     right: 20px;
     top: 20px;
+    /deep/ .el-button--medium {
+      border-radius: 5px;
+    }
   }
 }
 </style>
