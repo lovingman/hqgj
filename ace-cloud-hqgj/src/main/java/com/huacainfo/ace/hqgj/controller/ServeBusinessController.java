@@ -96,7 +96,6 @@ public class ServeBusinessController extends BaseController {
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
     public ResponseDTO create(@RequestBody String jsons) throws Exception {
-        ServeBusiness obj = JSON.parseObject(jsons, ServeBusiness.class);
         return this.serveBusinessService.create(jsons, this.getCurUserProp());
     }
 

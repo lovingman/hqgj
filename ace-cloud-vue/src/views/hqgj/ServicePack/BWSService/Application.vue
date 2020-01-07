@@ -489,16 +489,16 @@
             //服务字符串转换数组
             changeArr(data) {
                 for (var i = 0; i < data.length; i++) {
-                    if (this.list.businessAppendList[i].type == "1") {
+                    if (this.list.businessAppendList[i].type == "57") {
                         this.option=data[i].option.split(',')
                     }
-                    if (this.list.businessAppendList[i].type == "2") {
+                    if (this.list.businessAppendList[i].type == "58") {
                         this.option2=data[i].option.split(',')
                     }
-                    if (this.list.businessAppendList[i].type == "3") {
+                    if (this.list.businessAppendList[i].type == "59") {
                         this.option3=data[i].option.split(',')
                     }
-                    if (this.list.businessAppendList[i].type == "4") {
+                    if (this.list.businessAppendList[i].type == "60") {
                         this.option4=data[i].option.split(',')
                     }
                 }
