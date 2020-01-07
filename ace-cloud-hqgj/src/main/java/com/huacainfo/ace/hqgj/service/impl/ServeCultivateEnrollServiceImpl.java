@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.PersonCenterDao;
 import com.huacainfo.ace.hqgj.dao.ServeCultivateDao;
 import com.huacainfo.ace.hqgj.model.ServeCultivate;
 import com.huacainfo.ace.hqgj.vo.ServeCultivateVo;
+import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -39,6 +41,8 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
     private ServeCultivateEnrollDao serveCultivateEnrollDao;
     @Resource
     private ServeCultivateDao serveCultivateDao;
+    @Resource
+    private PersonCenterDao personCenterDao;
 
     /**
      * @throws
@@ -89,6 +93,11 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if (CommonUtils.isBlank(serveCultivateId)) {
             return new ResponseDTO(ResultCode.FAIL, "培训提升基础表ID（关联serve_cultivate表id）不能为空！");
         }
+        UsersVo vo =personCenterDao.selectUserInfo(userProp.getUserId());
+        if(CommonUtils.isBlank(vo.getCompanyId())){
+            return new ResponseDTO(ResultCode.FAIL, "未绑定企业！");
+        }
+        o.setCompanyId(vo.getCompanyId());
         o.setIsSign("n");
         o.setCreateDate(new Date());
         o.setStatus("0");
