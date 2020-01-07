@@ -248,6 +248,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
+                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
