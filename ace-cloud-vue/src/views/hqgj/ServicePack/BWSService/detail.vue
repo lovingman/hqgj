@@ -625,7 +625,7 @@
             },
             //字符转换
             getName(data) {
-                if (data.type == 1) {
+                if (data.type == 57) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -638,7 +638,7 @@
                     data.optionName = arr.join('、');
                     return data;
                 }
-                if (data.type == 2) {
+                if (data.type == 58) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -652,7 +652,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 3) {
+                if (data.type == 59) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -667,7 +667,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 4){
+                if (data.type == 60){
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -681,7 +681,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 5){
+                if (data.type == 1){
                     return data;
                 }
             },
