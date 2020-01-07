@@ -7,7 +7,8 @@
 
 .img{
     width: 750rpx;
-    height: 5562rpx;
+    
+    height: 5263rpx;
 }
 
 .button {

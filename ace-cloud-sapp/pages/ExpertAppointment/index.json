@@ -1,7 +1,5 @@
 {
   "navigationBarTitleText": "专家问诊详情",
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
   "usingComponents": {
     "van-image": "/vant/weapp/image/index",
     "van-button": "/vant/weapp/button/index",

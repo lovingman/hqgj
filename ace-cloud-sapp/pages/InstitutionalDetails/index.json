@@ -1,6 +1,4 @@
 {
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "机构详情",
   "usingComponents": {
     "van-image": "/vant/weapp/image/index",
