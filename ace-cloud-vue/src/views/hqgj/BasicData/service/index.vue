@@ -161,7 +161,7 @@
                 this.query2.orgId=data.id;
                 personPage(this.query2).then(response => {
                     if(response.total!=0){
-                        this.$confirm("该企业下有成员信息，是否一并删除?", "提示", {
+                        this.$confirm("该机构下有成员信息，是否一并删除?", "提示", {
                             confirmButtonText: "确定",
                             cancelButtonText: "取消",
                             type: "warning"

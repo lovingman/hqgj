@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">创建服务包</div>
+    <div class="title">编辑服务包</div>
     <div class="content-box">
       <div class="title">基本信息</div>
       <el-form

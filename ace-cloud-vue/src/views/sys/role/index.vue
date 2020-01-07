@@ -7,26 +7,20 @@
             <el-button
               type="primary"
               @click="create"
+              style="border-radius:5px;"
               v-if="userBtn['/portal/role/create']"
             >{{userBtn['/portal/role/create']}}</el-button>
           </el-button-group>
         </el-col>
-
 
         <el-col :span="8">
           <el-input
             placeholder="请输入角色名称"
             v-model="query.roleName"
             @change="toggleChange"
-           class="input-with-select"
+            class="input-with-select"
           >
-
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              :loading="loading"
-              @click="handleQuery"
-            ></el-button>
+            <el-button slot="append" icon="el-icon-search" :loading="loading" @click="handleQuery"></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -45,12 +39,11 @@
             <el-table-column prop="roleName" label="角色名称" width="250" sortable></el-table-column>
             <el-table-column prop="typeName" label="角色类型" width="150" sortable></el-table-column>
             <el-table-column prop="syid" label="系统" width="150" sortable></el-table-column>
-            <el-table-column prop="createTime" label="创建时间"  width="250" sortable></el-table-column>
+            <el-table-column prop="createTime" label="创建时间" width="250" sortable></el-table-column>
 
             <el-table-column prop="opt" label="操作" align="right">
               <template slot-scope="props">
-
-                 <el-button
+                <el-button
                   type="text"
                   @click="assignPermissions(props.row)"
                   v-if="userBtn['/portal/role/insertRoleRes']"
@@ -138,9 +131,7 @@
           </el-row>
         </el-main>
       </el-container>
-      <div slot="footer" class="dialog-footer">
-
-      </div>
+      <div slot="footer" class="dialog-footer"></div>
 
       <el-container>
         <el-header style="height:1.5rem">
@@ -152,17 +143,17 @@
           element-loading-spinner="el-icon-loading"
         >
           <el-tree
-  :data="data"
-  show-checkbox
-  :expand-on-click-node="true"
-  :check-on-click-node="false"
-  :default-checked-keys="defaultCheckedKeys"
-  default-expand-all
-  node-key="id"
-  ref="tree"
-  highlight-current
-  :props="defaultProps">
-</el-tree>
+            :data="data"
+            show-checkbox
+            :expand-on-click-node="true"
+            :check-on-click-node="false"
+            :default-checked-keys="defaultCheckedKeys"
+            default-expand-all
+            node-key="id"
+            ref="tree"
+            highlight-current
+            :props="defaultProps"
+          ></el-tree>
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
@@ -173,29 +164,35 @@
 </template>
 
 <script>
-import { page, getById, deleteById, deleteByIds,selectRoleResByRoleId,getResTreeList} from "@/api/sys/role";
+import {
+  page,
+  getById,
+  deleteById,
+  deleteByIds,
+  selectRoleResByRoleId,
+  getResTreeList
+} from "@/api/sys/role";
 import { mapGetters } from "vuex";
-
 
 export default {
   data() {
     return {
-      dict:{},
+      dict: {},
       currentPage: 1, //初始页
       pagesize: 10, //  每页的数据
       rows: [],
       total: 0,
-      query: { roleName: ""},
+      query: { roleName: "" },
       loading: false,
       previewLoading: false,
       dialogPreviewVisible: false,
       o: {},
-      defaultProps:{
-          label:"text",
-          disabled:"id"
+      defaultProps: {
+        label: "text",
+        disabled: "id"
       },
-      data:[],
-      defaultCheckedKeys:[],
+      data: [],
+      defaultCheckedKeys: []
     };
   },
   computed: {
@@ -204,32 +201,29 @@ export default {
   created() {
     this.handlePageList();
     this.getResTreeList();
-
   },
   methods: {
-     getResTreeList(){
-        this.loading = true;
-        getResTreeList()
-        .then(response => {
-          this.loading = false;
-          this.data=response;
-        })
+    getResTreeList() {
+      this.loading = true;
+      getResTreeList().then(response => {
+        this.loading = false;
+        this.data = response;
+      });
     },
-     selectRoleResByRoleId(roleId){
-        this.loading = true;
-        selectRoleResByRoleId(roleId)
-        .then(response => {
-          this.loading = false;
-          this.defaultCheckedKeys=response.data;
-        })
+    selectRoleResByRoleId(roleId) {
+      this.loading = true;
+      selectRoleResByRoleId(roleId).then(response => {
+        this.loading = false;
+        this.defaultCheckedKeys = response.data;
+      });
     },
-    handleQuery:function(){
+    handleQuery: function() {
       this.currentPage = 1;
       this.handlePageList();
     },
     handleSizeChange: function(size) {
       this.pagesize = size;
-     // window.console.log(this.pagesize); //每页下拉显示数据
+      // window.console.log(this.pagesize); //每页下拉显示数据
     },
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
@@ -240,16 +234,15 @@ export default {
       this.query = Object.assign(this.query, {
         pageNum: this.currentPage,
         pageSize: this.pagesize,
-        totalRecord:this.total
+        totalRecord: this.total
       });
       //window.console.log(this.query);
       this.loading = true;
-      page(this.query)
-        .then(response => {
-          this.loading = false;
-          this.rows = response.rows;
-          this.total = response.total;
-        })
+      page(this.query).then(response => {
+        this.loading = false;
+        this.rows = response.rows;
+        this.total = response.total;
+      });
     },
     toggleChange(roleName) {
       this.currentPage = 1;
@@ -269,11 +262,10 @@ export default {
       })
         .then(() => {
           this.loading = true;
-          deleteById(data.roleId)
-            .then(response => {
-              this.loading = false;
-              this.handlePageList();
-            })
+          deleteById(data.roleId).then(response => {
+            this.loading = false;
+            this.handlePageList();
+          });
         })
         .catch(() => {});
     },
@@ -285,23 +277,25 @@ export default {
       //window.console.log(data);
       this.dialogPreviewVisible = true;
       this.previewLoading = true;
-      getById(data.roleId)
-        .then(response => {
-          this.previewLoading = false;
-          this.o = response.data;
-        })
+      getById(data.roleId).then(response => {
+        this.previewLoading = false;
+        this.o = response.data;
+      });
       this.selectRoleResByRoleId(data.roleId);
     },
-    assignPermissions(data){
-        this.$router.push({ path: "/sys/role/assignPermissions", query: { id: data.roleId } });
+    assignPermissions(data) {
+      this.$router.push({
+        path: "/sys/role/assignPermissions",
+        query: { id: data.roleId }
+      });
     }
   }
 };
 </script>
 <style>
- .input-with-select .el-input-group__prepend {
-    background-color: #fff;
-  }
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
 </style>
 
 

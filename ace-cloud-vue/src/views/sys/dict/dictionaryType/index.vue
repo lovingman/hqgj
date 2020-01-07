@@ -7,6 +7,7 @@
             <el-button
               type="primary"
               @click="create"
+              style="border-radius:5px;"
               v-if="userBtn['/portal/dictCategory/create']"
             >{{userBtn['/portal/dictCategory/create']}}</el-button>
           </el-button-group>
@@ -85,7 +86,12 @@
 </template>
 
 <script>
-import { Categorypage, getById, deleteById, deleteByIds } from "@/api/sys/dictCategory";
+import {
+  Categorypage,
+  getById,
+  deleteById,
+  deleteByIds
+} from "@/api/sys/dictCategory";
 import { mapGetters } from "vuex";
 export default {
   data() {

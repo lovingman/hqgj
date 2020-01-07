@@ -1,384 +1,455 @@
 <template>
-    <div class="container">
-        <div style="width: 100%;height: 20px">
-            <!--<el-button @click="Auditing" size="small" style="float: right" type="primary"-->
-            <!--v-if="this.$route.query.word=='examine'">完成审核-->
-            <!--</el-button>-->
-            <el-button @click="back" size="small" style="float: right" type="primary"
-                       v-if="this.$route.query.word=='preview'">返回
-            </el-button>
-        </div>
-        <div class="tab-pane" style="width: 100%">
-            <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
-                <el-tab-pane label="资料清单" name="1">
-                    <el-table
-                            :data="lists"
-                            @selection-change="handleSelectionChange"
-                            border
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
-                        <el-table-column align="center" type="selection" width="55"></el-table-column>
-                        <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="名称" prop="fileName" sortable='custom'>
-                        </el-table-column>
-                        <el-table-column label="提交时间" prop="createDate" width="300">
-                        </el-table-column>
-                        <el-table-column label="附件数" prop="annexNum" width="250">
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
-                            <template slot-scope="scope">
-                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
-                                <span class="strightline">|</span>
-                                <el-button @click="looking(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.id != null">预览
-                                </el-button>
-                                <el-button type="text" v-else="scope.row.id != null">
-                                    <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览
-                                    </router-link>
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <el-dropdown style="margin-top: 20px" trigger="click">
-                        <el-button>
-                            压缩包下载<i class="el-icon-arrow-down el-icon--right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>rar下载</el-dropdown-item>
-                            <el-dropdown-item>zip下载</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </el-tab-pane>
-                <el-tab-pane label="申请人信息" name="2">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">申请人信息</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-form :model="form" class="demo-ruleForm" label-width="150px">
-                        <el-row class="elrow">
-                            <el-col :span="8">
-                                <el-form-item label="姓名:" prop="name">
-                                    <span>{{form.applyPersonName}}</span>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="联系电话:" prop="name">
-                                    <span>{{form.applyPersonTel}}</span>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="身份证号:" prop="name">
-                                    <span>{{form.idCard}}</span>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row class="elrow">
-                            <el-form-item label="申请日期:" prop="name">
-                                <span>{{form.createDate}}</span>
-                            </el-form-item>
-                        </el-row>
-                    </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="基本信息" name="3">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
-                        <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
-                                   type="text"
-                                   v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
-                        </el-button>
-                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px" type="text"
-                             v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
-                        </div>
-
-                    </div>
-                    <el-divider></el-divider>
-                    <el-form :model="form" class="demo-ruleForm" label-width="150px">
-                        <el-row class="elrow">
-                            <el-col :span="12">
-                                <el-form-item label="企业名称:" prop="name">
-                                    <span>{{form.companyName}}</span>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="备用名:" prop="name">
-                                    <span>{{form.readyName}}</span>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row class="elrow">
-                            <el-col :span="12">
-                                <el-form-item label="注册资金:" prop="name">
-                                    <span>{{form.regBonus}}</span>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="企业地址:" prop="name">
-                                    <span>{{form.companyAddress}}</span>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row class="elrow">
-                            <el-form-item label="经营范围:" prop="name">
-                                <span>{{form.manageExtent}}</span>
-                            </el-form-item>
-                        </el-row>
-                    </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="法人、监事" name="4">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">法人、监事</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
-                        <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="姓名" prop="name" sortable='custom' width="120">
-                        </el-table-column>
-                        <el-table-column label="职位" prop="jobs" width="150">
-                        </el-table-column>
-                        <el-table-column label="联系电话" prop="mobile" width="150">
-                        </el-table-column>
-                        <el-table-column label="身份证附件" prop="basicAnnexes">
-                            <template slot-scope="scope">
-                                <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
-                                </viewer>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
-                            <template slot-scope="scope">
-                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
-                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
-                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
-                            <template slot-scope="scope">
-                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="股东" name="5">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">股东</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
-                        <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="股东姓名" prop="name" sortable='custom' width="120">
-                        </el-table-column>
-                        <el-table-column label="股份比例" prop="sharesProportion" width="150">
-                        </el-table-column>
-                        <el-table-column label="身份证附件" prop="basicAnnexes">
-                            <template slot-scope="scope">
-                                <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
-                                </viewer>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
-                            <template slot-scope="scope">
-                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
-                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
-                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
-                            <template slot-scope="scope">
-                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="财务" name="6">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">财务</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
-                        <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="姓名" prop="name" sortable='custom' width="120">
-                        </el-table-column>
-                        <el-table-column label="联系电话" prop="mobile" width="150">
-                        </el-table-column>
-                        <el-table-column label="身份证附件" prop="basicAnnexes">
-                            <template slot-scope="scope">
-                                <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pic"
-                                         style="line-height: 48px" v-for="attach in scope.row.basicAnnexes"/>
-                                </viewer>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
-                            <template slot-scope="scope">
-                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
-                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
-                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
-                            <template slot-scope="scope">
-                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="房屋证明" name="7">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">房屋证明</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                    >
-                        <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
-                        <el-table-column label="名称" prop="name" sortable='custom' width="250">
-                        </el-table-column>
-                        <el-table-column label="附件" prop="file">
-                            <template slot-scope="scope">
-                                <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
-                                </viewer>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="状态" prop="status" v-if="this.$route.query.word=='examine'" width="100">
-                            <template slot-scope="scope">
-                                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
-                                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
-                                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
-                            <template slot-scope="scope">
-                                <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">其他</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-form label-width="250px" ref="form">
-                        <el-form-item label="申请免费服务项目:">
-                            <div v-for="item in Other" >
-                                <span v-if="item.type==1">{{item.optionName}}</span>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="确定培训意向:">
-                            <div v-for="item in Other" >
-                                <span v-if="item.type==2">{{item.optionName}}</span>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="开户银行:">
-                            <div v-for="item in Other" >
-                                <span v-if="item.type==3">{{item.optionName}}</span>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="是否选择代理记账服务:">
-                            <div v-for="item in Other" >
-                                <span v-if="item.type==4">{{item.optionName}}</span>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="特殊说明:">
-                            <div v-for="item in Other">
-                                <span v-if="item.type==5">{{item.content}}</span>
-                            </div>
-                        </el-form-item>
-                    </el-form>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-        <!--预览弹窗-->
-        <el-dialog
-                :visible.sync="lookingVisible"
-                title="预览"
-                width="60%">
-            <div class="dialog-main">
-                <viewer :images="fileList">
-                    <img :key="attach.fileURL" :src="attach.fileURL"
-                         class="head_pics" v-for="attach in fileList"/>
-                </viewer>
-            </div>
-            <div class="dialog-footer" slot="footer">
-                <el-button @click="lookingVisible = false">取 消</el-button>
-                <el-button @click="lookingVisible = false" type="primary">确 定</el-button>
-            </div>
-        </el-dialog>
-        <!--基础信息审核弹窗-->
-        <el-dialog
-                :visible.sync="reviewVisible"
-                title="审核"
-                width="30%">
-            <div style="text-align: center">
-                <el-radio-group v-model="this.review.basicStatus">
-                    <el-radio :label="1" @click.native.prevent="clickitem(1)">通过</el-radio>
-                    <el-radio :label="2" @click.native.prevent="clickitem(2)">不通过</el-radio>
-                </el-radio-group>
-            </div>
-            <div class="dialog-footer" slot="footer">
-                <el-button @click="reviewVisible = false">取 消</el-button>
-                <el-button @click="handleReview" type="primary">确 定</el-button>
-            </div>
-        </el-dialog>
-        <!--资料清单审核弹窗-->
-        <el-dialog
-                :visible.sync="reviewDetailVisible"
-                title="审核"
-                width="30%">
-            <div style="text-align: center">
-                <el-radio-group v-model="this.reviewdata.status">
-                    <el-radio :label="1" @click.native.prevent="clickitem1(1)">通过</el-radio>
-                    <el-radio :label="2" @click.native.prevent="clickitem1(2)">不通过</el-radio>
-                </el-radio-group>
-            </div>
-            <div class="dialog-footer" slot="footer">
-                <el-button @click="reviewDetailVisible = false">取 消</el-button>
-                <el-button @click="handleDetail" type="primary">确 定</el-button>
-            </div>
-        </el-dialog>
+  <div class="container">
+    <div style="width: 100%;height: 20px">
+      <!--<el-button @click="Auditing" size="small" style="float: right" type="primary"-->
+      <!--v-if="this.$route.query.word=='examine'">完成审核-->
+      <!--</el-button>-->
+      <el-button
+        @click="back"
+        size="small"
+        style="float: right"
+        type="primary"
+        v-if="this.$route.query.word=='preview'"
+      >返回</el-button>
     </div>
-
+    <div class="tab-pane" style="width: 100%">
+      <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
+        <el-tab-pane label="资料清单" name="1">
+          <el-table
+            :data="lists"
+            @selection-change="handleSelectionChange"
+            class="table"
+            max-height="475"
+            ref="multipleTable"
+            v-loading="loading"
+          >
+            <el-table-column align="center" type="selection" width="55"></el-table-column>
+            <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+            <el-table-column label="名称" prop="fileName" sortable="custom"></el-table-column>
+            <el-table-column label="提交时间" prop="createDate" width="300"></el-table-column>
+            <el-table-column label="附件数" prop="annexNum" width="250"></el-table-column>
+            <el-table-column
+              align="right"
+              fixed="right"
+              header-align="center"
+              label="操作"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
+                <span class="strightline">|</span>
+                <el-button
+                  @click="looking(scope.$index,scope.row)"
+                  type="text"
+                  v-if="scope.row.id != null"
+                >预览</el-button>
+                <el-button type="text" v-else="scope.row.id != null">
+                  <router-link :to="{name:'application',query:{id:form.id}}" target="_blank">预览</router-link>
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-dropdown style="margin-top: 20px" trigger="click">
+            <el-button>
+              压缩包下载
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>rar下载</el-dropdown-item>
+              <el-dropdown-item>zip下载</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-tab-pane>
+        <el-tab-pane label="申请人信息" name="2">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">申请人信息</span>
+          </div>
+          <el-divider></el-divider>
+          <el-form :model="form" class="demo-ruleForm" label-width="150px">
+            <el-row class="elrow">
+              <el-col :span="8">
+                <el-form-item label="姓名:" prop="name">
+                  <span>{{form.applyPersonName}}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="联系电话:" prop="name">
+                  <span>{{form.applyPersonTel}}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="身份证号:" prop="name">
+                  <span>{{form.idCard}}</span>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row class="elrow">
+              <el-form-item label="申请日期:" prop="name">
+                <span>{{form.createDate}}</span>
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="基本信息" name="3">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
+            <el-button
+              @click="reviewBasic"
+              style="float: right;margin-right: 25px;padding-top: 1px"
+              type="text"
+              v-if="form.basicStatus!='1' && this.$route.query.word=='examine'"
+            >审核</el-button>
+            <div
+              class="green"
+              style="float: right;margin-right: 25px;padding-top: 1px"
+              type="text"
+              v-if="form.basicStatus=='1' && this.$route.query.word=='examine'"
+            >通过</div>
+          </div>
+          <el-divider></el-divider>
+          <el-form :model="form" class="demo-ruleForm" label-width="150px">
+            <el-row class="elrow">
+              <el-col :span="12">
+                <el-form-item label="企业名称:" prop="name">
+                  <span>{{form.companyName}}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="备用名:" prop="name">
+                  <span>{{form.readyName}}</span>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row class="elrow">
+              <el-col :span="12">
+                <el-form-item label="注册资金:" prop="name">
+                  <span>{{form.regBonus}}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="企业地址:" prop="name">
+                  <span>{{form.companyAddress}}</span>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row class="elrow">
+              <el-form-item label="经营范围:" prop="name">
+                <span>{{form.manageExtent}}</span>
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="法人、监事" name="4">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">法人、监事</span>
+          </div>
+          <el-divider></el-divider>
+          <el-table
+            :data="list"
+            @selection-change="handleSelectionChange"
+            class="table"
+            max-height="475"
+            ref="multipleTable"
+            v-loading="loading"
+          >
+            <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+            <el-table-column label="姓名" prop="name" sortable="custom" width="120"></el-table-column>
+            <el-table-column label="职位" prop="jobs" width="150"></el-table-column>
+            <el-table-column label="联系电话" prop="mobile" width="150"></el-table-column>
+            <el-table-column label="身份证附件" prop="basicAnnexes">
+              <template slot-scope="scope">
+                <viewer :images="scope.row.basicAnnexes">
+                  <img
+                    :key="attach.fileURL"
+                    :src="attach.fileURL"
+                    class="head_pic"
+                    v-for="attach in scope.row.basicAnnexes"
+                  />
+                </viewer>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              prop="status"
+              v-if="this.$route.query.word=='examine'"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="right"
+              fixed="right"
+              header-align="center"
+              label="操作"
+              v-if="this.$route.query.word=='examine'"
+              width="60"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  @click="reviewDetail(scope.$index,scope.row)"
+                  type="text"
+                  v-if="scope.row.status!= '1'"
+                >审核</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="股东" name="5">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">股东</span>
+          </div>
+          <el-divider></el-divider>
+          <el-table
+            :data="list"
+            @selection-change="handleSelectionChange"
+            class="table"
+            max-height="475"
+            ref="multipleTable"
+            v-loading="loading"
+          >
+            <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+            <el-table-column label="股东姓名" prop="name" sortable="custom" width="120"></el-table-column>
+            <el-table-column label="股份比例" prop="sharesProportion" width="150"></el-table-column>
+            <el-table-column label="身份证附件" prop="basicAnnexes">
+              <template slot-scope="scope">
+                <viewer :images="scope.row.basicAnnexes">
+                  <img
+                    :key="attach.fileURL"
+                    :src="attach.fileURL"
+                    class="head_pic"
+                    v-for="attach in scope.row.basicAnnexes"
+                  />
+                </viewer>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              prop="status"
+              v-if="this.$route.query.word=='examine'"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="right"
+              fixed="right"
+              header-align="center"
+              label="操作"
+              v-if="this.$route.query.word=='examine'"
+              width="60"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  @click="reviewDetail(scope.$index,scope.row)"
+                  type="text"
+                  v-if="scope.row.status!= '1'"
+                >审核</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="财务" name="6">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">财务</span>
+          </div>
+          <el-divider></el-divider>
+          <el-table
+            :data="list"
+            @selection-change="handleSelectionChange"
+            class="table"
+            max-height="475"
+            ref="multipleTable"
+            v-loading="loading"
+          >
+            <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+            <el-table-column label="姓名" prop="name" sortable="custom" width="120"></el-table-column>
+            <el-table-column label="联系电话" prop="mobile" width="150"></el-table-column>
+            <el-table-column label="身份证附件" prop="basicAnnexes">
+              <template slot-scope="scope">
+                <viewer :images="scope.row.basicAnnexes">
+                  <img
+                    :key="attach.fileURL"
+                    :src="attach.fileURL"
+                    class="head_pic"
+                    style="line-height: 48px"
+                    v-for="attach in scope.row.basicAnnexes"
+                  />
+                </viewer>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              prop="status"
+              v-if="this.$route.query.word=='examine'"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="right"
+              fixed="right"
+              header-align="center"
+              label="操作"
+              v-if="this.$route.query.word=='examine'"
+              width="60"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  @click="reviewDetail(scope.$index,scope.row)"
+                  type="text"
+                  v-if="scope.row.status!= '1'"
+                >审核</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="房屋证明" name="7">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">房屋证明</span>
+          </div>
+          <el-divider></el-divider>
+          <el-table
+            :data="list"
+            @selection-change="handleSelectionChange"
+            class="table"
+            max-height="475"
+            ref="multipleTable"
+          >
+            <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
+            <el-table-column label="名称" prop="name" sortable="custom" width="250"></el-table-column>
+            <el-table-column label="附件" prop="file">
+              <template slot-scope="scope">
+                <viewer :images="scope.row.basicAnnexes">
+                  <img
+                    :key="attach.fileURL"
+                    :src="attach.fileURL"
+                    class="head_pic"
+                    v-for="attach in scope.row.basicAnnexes"
+                  />
+                </viewer>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              prop="status"
+              v-if="this.$route.query.word=='examine'"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <div class="orange" type="text" v-if="scope.row.status=='0'">待审核</div>
+                <div class="green" type="text" v-if="scope.row.status=='1'">通过</div>
+                <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="right"
+              fixed="right"
+              header-align="center"
+              label="操作"
+              v-if="this.$route.query.word=='examine'"
+              width="60"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  @click="reviewDetail(scope.$index,scope.row)"
+                  type="text"
+                  v-if="scope.row.status!= '1'"
+                >审核</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">
+          <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
+            <span style="margin-left: 20px;font-weight:bold;">其他</span>
+          </div>
+          <el-divider></el-divider>
+          <el-form label-width="250px" ref="form">
+            <el-form-item label="申请免费服务项目:">
+              <div v-for="item in Other">
+                <span v-if="item.type==1">{{item.optionName}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="确定培训意向:">
+              <div v-for="item in Other">
+                <span v-if="item.type==2">{{item.optionName}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="开户银行:">
+              <div v-for="item in Other">
+                <span v-if="item.type==3">{{item.optionName}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="是否选择代理记账服务:">
+              <div v-for="item in Other">
+                <span v-if="item.type==4">{{item.optionName}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="特殊说明:">
+              <div v-for="item in Other">
+                <span v-if="item.type==5">{{item.content}}</span>
+              </div>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <!--预览弹窗-->
+    <el-dialog :visible.sync="lookingVisible" title="预览" width="60%">
+      <div class="dialog-main">
+        <viewer :images="fileList">
+          <img
+            :key="attach.fileURL"
+            :src="attach.fileURL"
+            class="head_pics"
+            v-for="attach in fileList"
+          />
+        </viewer>
+      </div>
+      <div class="dialog-footer" slot="footer">
+        <el-button @click="lookingVisible = false">取 消</el-button>
+        <el-button @click="lookingVisible = false" type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!--基础信息审核弹窗-->
+    <el-dialog :visible.sync="reviewVisible" title="审核" width="30%">
+      <div style="text-align: center">
+        <el-radio-group v-model="this.review.basicStatus">
+          <el-radio :label="1" @click.native.prevent="clickitem(1)">通过</el-radio>
+          <el-radio :label="2" @click.native.prevent="clickitem(2)">不通过</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="dialog-footer" slot="footer">
+        <el-button @click="reviewVisible = false">取 消</el-button>
+        <el-button @click="handleReview" type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!--资料清单审核弹窗-->
+    <el-dialog :visible.sync="reviewDetailVisible" title="审核" width="30%">
+      <div style="text-align: center">
+        <el-radio-group v-model="this.reviewdata.status">
+          <el-radio :label="1" @click.native.prevent="clickitem1(1)">通过</el-radio>
+          <el-radio :label="2" @click.native.prevent="clickitem1(2)">不通过</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="dialog-footer" slot="footer">
+        <el-button @click="reviewDetailVisible = false">取 消</el-button>
+        <el-button @click="handleDetail" type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -625,7 +696,7 @@
             },
             //字符转换
             getName(data) {
-                if (data.type == 57) {
+                if (data.type == 1) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -638,7 +709,7 @@
                     data.optionName = arr.join('、');
                     return data;
                 }
-                if (data.type == 58) {
+                if (data.type == 2) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -652,7 +723,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 59) {
+                if (data.type == 3) {
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -667,7 +738,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 60){
+                if (data.type == 4){
                     var nameArr = data.option.split(",");
                     var arr = [];
                     for (var i = 0; i < nameArr.length; i++) {
@@ -681,7 +752,7 @@
                     data.optionName=arr.join('、');
                     return data;
                 }
-                if (data.type == 1){
+                if (data.type == 5){
                     return data;
                 }
             },
