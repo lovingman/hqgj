@@ -1,8 +1,7 @@
 {
+  
   "enablePullDownRefresh": true,
-  "navigationBarBackgroundColor": "#2E88F2",
-  "navigationBarTextStyle": "white",
-  "navigationBarTitleText": "模板详情",
+  "navigationBarTitleText": "范本详情",
   "usingComponents": {
     "van-tab": "/vant/weapp/tab/index",
     "van-tabs": "/vant/weapp/tabs/index",
