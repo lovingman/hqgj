@@ -150,8 +150,8 @@
         </light-timeline>
       </div>
       <span class="dialog-footer" slot="footer">
-        <el-button @click="progressVisible = false">取 消</el-button>
-        <el-button @click="sign" type="primary">确 定</el-button>
+        <el-button @click="progressVisible = false" style="border-radius:5px;">取 消</el-button>
+        <el-button @click="sign" type="primary" style="border-radius:5px;">确 定</el-button>
       </span>
     </el-dialog>
   </div>

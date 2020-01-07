@@ -36,8 +36,8 @@
                             v-model.trim="addform.companyAddress"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="back">取消</el-button>
-                    <el-button @click="addhandle('ruleForm')" type="primary">提交</el-button>
+                    <el-button @click="back" style="border-radius:5px;">取消</el-button>
+                    <el-button @click="addhandle('ruleForm')" style="border-radius:5px;" type="primary">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>

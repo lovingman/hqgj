@@ -4,7 +4,7 @@
             <div class="handle-box">
                 <el-row>
                     <el-col :span="16">
-                        <el-button @click="createPerson" icon="el-icon-plus" style="float: left" type="primary">添加
+                        <el-button @click="createPerson" icon="el-icon-plus" style="float: left;border-radius:5px;" type="primary">添加
                         </el-button>
                     </el-col>
                     <!--<el-col :span="14">-->

@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="2">
           <el-button-group>
-            <el-button type="primary"  style="border-radius:5px;"  @click="create">创建</el-button>
+            <el-button type="primary" style="border-radius:5px;" @click="create">创建</el-button>
           </el-button-group>
         </el-col>
         <el-col :span="10">
@@ -106,7 +106,7 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogUploadVisible = false">关闭</el-button>
+        <el-button type="primary" @click="dialogUploadVisible = false" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
     <el-dialog title="排序" :visible.sync="dialogPreviewVisible" width="80%">
@@ -132,8 +132,8 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogPreviewVisible = false">关闭</el-button>
-        <el-button type="primary" @click="saveSorts()">保存</el-button>
+        <el-button @click="dialogPreviewVisible = false" style="border-radius:5px;">关闭</el-button>
+        <el-button type="primary" @click="saveSorts()" style="border-radius:5px;">保存</el-button>
       </div>
     </el-dialog>
   </div>

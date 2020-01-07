@@ -2,7 +2,7 @@
     <div class="container">
         <div class="title">
             <span>机构成员详情</span>
-            <el-button type="primary" style="float: right" @click="back">返回</el-button>
+            <el-button type="primary" style="float: right; border-radius:5px;" @click="back">返回</el-button>
         </div>
         <div class="handle-box">
             <el-form :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
