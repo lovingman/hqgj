@@ -44,6 +44,9 @@ export default {
     },
     getData: {
       type: Object
+    },
+    typeImg: {
+      type: String
     }
   },
   watch: {
@@ -52,6 +55,16 @@ export default {
       handler(newName, oldName) {
         if (newName) {
           this.submitType = newName;
+        }
+      },
+      immediate: true, //立刻
+      deep: true
+    },
+    typeImg: {
+      handler(newName, oldName) {
+        if (newName) {
+          this.typeImg = newName;
+          console.log(this.typeImg);
         }
       },
       immediate: true, //立刻
@@ -199,9 +212,18 @@ export default {
           // 文件对象
           let obj = {};
           if (that.submitType == "edit") {
-            that.actionUrls = "/hqgj/serveCultivate/updateCoverUrl";
-            obj.id = that.getData.id;
-            obj.coverUrl = newUrl;
+            if (that.typeImg == "2") {
+              console.log("222");
+              //2代表财税管家 培训编辑图片
+              that.actionUrls = "/hqgj/serveFinance/updateCoverUrl";
+              obj.id = that.getData.id;
+              obj.coverUrl = newUrl;
+            } else {
+              //培训编辑图片
+              that.actionUrls = "/hqgj/serveCultivate/updateCoverUrl";
+              obj.id = that.getData.id;
+              obj.coverUrl = newUrl;
+            }
           } else {
             that.actionUrls = "/hqgj-portal/www/uploadFileBase";
             obj.file = newUrl;

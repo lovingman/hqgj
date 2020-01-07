@@ -94,7 +94,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <photo :getData="getData" :submitType="submitType" ref="imgUpload"></photo>
+            <photo :getData="getData" :typeImg="typeImg" :submitType="submitType" ref="imgUpload"></photo>
           </el-row>
           <el-row>
             <el-form-item label="服务介绍：" prop="content">
@@ -189,6 +189,7 @@ export default {
       getData: {}, //编辑数据
       orgDisabled: true, //禁止选择服务机构
       submitType: "edit", //类型
+      typeImg: "2", // 2代表财税
       //服务包类型
       typeArr: [],
       //机构类型
@@ -340,6 +341,9 @@ export default {
                 arrs.id = res.rows[i].id;
                 arrs.name = res.rows[i].name;
                 this.contactPersonArr.push(arrs);
+                // if (this.serviceForm.contactId != res.rows[i].id) {
+                //   this.serviceForm.contactId = " ";
+                // }
               }
             }
           });
