@@ -151,7 +151,6 @@ public class ServeCultivateController extends BaseController {
     })
     @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
     public ResponseDTO update(@RequestBody String jsons) throws Exception {
-        ServeCultivate obj = JSON.parseObject(jsons, ServeCultivate.class);
         return this.serveCultivateService.update(jsons, this.getCurUserProp());
     }
 

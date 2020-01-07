@@ -1,273 +1,281 @@
 <template>
-    <div class="main-box">
-        <el-tabs :class="{noClick:noClickTabs}" v-model="tabsName">
-            <el-tab-pane label="基本信息" name="first">
-                <div class="content-box">
-                    <div class="title">基本信息</div>
-                    <el-form
-                            :inline="true"
-                            :model="basicForm"
-                            :rules="basicRules"
-                            class="formBox"
-                            label-width="120px"
-                            ref="basicForm"
-                    >
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item label="机构：" prop="orgId">
-                                    <el-select
-                                            :disabled="disabled"
-                                            @change="changeOrg"
-                                            clearable
-                                            placeholder="请选择机构"
-                                            v-model="basicForm.orgId"
-                                    >
-                                        <el-option
-                                                :key="item.id"
-                                                :label="item.name"
-                                                :value="item.id"
-                                                v-for="item in corpArr"
-                                        ></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item label="标题：" prop="title">
-                                    <el-input
-                                            clearable
-                                            maxlength="50"
-                                            placeholder="请输入标题"
-                                            show-word-limit
-                                            v-model="basicForm.title"
-                                    ></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="人数：" prop="cultivatePersonNumber">
-                                    <el-input
-                                            clearable
-                                            placeholder="请输入最多可报名人数"
-                                            v-model="basicForm.cultivatePersonNumber"
-                                    ></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item label="时间：" prop="timeArr">
-                                    <el-date-picker
-                                            end-placeholder="结束日期"
-                                            range-separator="至"
-                                            start-placeholder="开始日期"
-                                            type="datetimerange"
-                                            v-model="basicForm.timeArr"
-                                    ></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="地点：" prop="address">
-                                    <el-input clearable v-if="basicForm.detailedAddress!=''"
-                                              v-model="basicForm.detailedAddress"></el-input>
-                                    <el-button @click="getAddress" class="get-address">
-                                        <i class="el-icon-plus"></i>
-                                        <span>获取地点</span>
-                                    </el-button>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="12">
-                                <photo :getData="getData" :submitType="submitType" ref="imgUpload"></photo>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-form-item label="内容" prop="content">
-                                <el-input
-                                        :rows="8"
-                                        placeholder="请输入详细内容"
-                                        type="textarea"
-                                        v-model="basicForm.content"
-                                ></el-input>
-                                <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
-                            </el-form-item>
-                        </el-row>
-                    </el-form>
-                </div>
-            </el-tab-pane>
-            <el-tab-pane label="日程安排" name="second">
-                <div class="content-box">
-                    <div class="title">日程安排</div>
-                    <el-form
-                            :inline="true"
-                            :model="scheduleForm"
-                            :rules="scheduleRules"
-                            class="formBox scheduleBox"
-                            label-width="120px"
-                            ref="scheduleForm"
-                    >
-                        <div
-                                :key="scheduleModel.key"
-                                class="memberModel"
-                                v-for="(scheduleModel,index) in scheduleForm.scheduleModels"
-                        >
-                            <div class="schedule-top">
-                                <div class="schedule-title">日程安排-{{index+1}}</div>
-                                <div @click="removeModel(scheduleModel)" class="rtt">删除</div>
-                            </div>
-                            <el-row>
-                                <el-col :span="12">
-                                    <el-form-item
-                                            :key="scheduleModel.key"
-                                            :label="'名称：'"
-                                            :prop="'scheduleModels.'+index+'.title'"
-                                            :rules="scheduleRules.title"
-                                    >
-                                        <el-input
-                                                maxlength="50"
-                                                placeholder="请输入培训名称"
-                                                show-word-limit
-                                                type="text"
-                                                v-model="scheduleModel.title"
-                                        ></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item
-                                            :key="scheduleModel.key"
-                                            :label="'讲师：'"
-                                            :prop="'scheduleModels.'+index+'.lecturerId'"
-                                            :rules="scheduleRules.lecturerId"
-                                    >
-                                        <el-select
-                                                @change="changeLecturer($event,index)"
-                                                clearable
-                                                placeholder="请选择讲师"
-                                                v-model="scheduleModel.lecturerId"
-                                        >
-                                            <el-option
-                                                    :key="item.id"
-                                                    :label="item.name"
-                                                    :value="item.id"
-                                                    v-for="item in lecturerArr"
-                                            ></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">
-                                    <el-form-item
-                                            :key="scheduleModel.key"
-                                            :label="'地点：'"
-                                            :prop="'scheduleModels.'+index+'.detailedAddress'"
-                                            :rules="scheduleRules.detailedAddress"
-                                    >
-                                        <el-input
-                                                maxlength="50"
-                                                placeholder="请输入详细地址"
-                                                show-word-limit
-                                                type="text"
-                                                v-model="scheduleModel.detailedAddress"
-                                        ></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item
-                                            :key="scheduleModel.key"
-                                            :label="'时间：'"
-                                            :prop="'scheduleModels.'+index+'.timeArr'"
-                                            :rules="scheduleRules.timeArr"
-                                    >
-                                        <el-date-picker
-                                                end-placeholder="结束日期"
-                                                range-separator="至"
-                                                start-placeholder="开始日期"
-                                                type="datetimerange"
-                                                v-model="scheduleModel.timeArr"
-                                        ></el-date-picker>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-form-item
-                                        :key="scheduleModel.key"
-                                        :label="'简介：'"
-                                        :prop="'scheduleModels.'+index+'.content'"
-                                        :rules="scheduleRules.content"
-                                >
-                                    <el-input
-                                            :rows="8"
-                                            maxlength="200"
-                                            placeholder="简要概述培训内容，不超过200字"
-                                            show-word-limit
-                                            type="textarea"
-                                            v-model="scheduleModel.content"
-                                    ></el-input>
-                                </el-form-item>
-                            </el-row>
-                            <el-row>
-                                <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
-                                    <!--:file-list="showList[index].fileArr"-->
-                                    <div @mouseover="getImageTypeIndex(index)">
-                                        <el-upload
-                                                :on-remove="fileRemove"
-                                                :before-upload="beforeAvatarUpload"
-                                                :file-list="scheduleModel.showbasicAnnexes"
-                                                :http-request="uploadServer"
-                                                action="none"
-                                                class="upload-demo"
-                                                multipl>
-                                            <el-button size="small" type="primary">上传课件</el-button>
-                                            <div class="el-upload__tip" slot="tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M
-                                            </div>
-                                        </el-upload>
-                                    </div>
-                                </el-form-item>
-                            </el-row>
-                        </div>
-                        <el-button
-                                @click="addSchedule"
-                                style="margin-top:20px;margin-left:120px;"
-                                type="primary"
-                        >
-                            <i class="el-icon-plus"></i>添加日程
-                        </el-button>
-                    </el-form>
-                </div>
-            </el-tab-pane>
-        </el-tabs>
-        <!-- 底部按钮 -->
-        <div class="footer">
-            <div class="footer-flex">
-                <div v-if="isShow">
-                    <el-button @click="black">取消</el-button>
-                    <el-button @click="nextClick('basicForm')" type="primary">下一步</el-button>
-                </div>
-                <div v-if="!isShow">
-                    <el-button @click="prevClick">上一步</el-button>
-                    <el-button @click="totalSubmit('scheduleForm')" type="primary">提交</el-button>
-                </div>
-            </div>
+  <div class="main-box">
+    <el-tabs :class="{noClick:noClickTabs}" v-model="tabsName">
+      <el-tab-pane label="基本信息" name="first">
+        <div class="content-box">
+          <div class="title">基本信息</div>
+          <el-form
+            :inline="true"
+            :model="basicForm"
+            :rules="basicRules"
+            class="formBox"
+            label-width="120px"
+            ref="basicForm"
+          >
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="机构：" prop="orgId">
+                  <el-select
+                    :disabled="disabled"
+                    @change="changeOrg"
+                    clearable
+                    placeholder="请选择机构"
+                    v-model="basicForm.orgId"
+                  >
+                    <el-option
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                      v-for="item in corpArr"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="标题：" prop="title">
+                  <el-input
+                    clearable
+                    maxlength="50"
+                    placeholder="请输入标题"
+                    show-word-limit
+                    v-model="basicForm.title"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="人数：" prop="cultivatePersonNumber">
+                  <el-input
+                    clearable
+                    placeholder="请输入最多可报名人数"
+                    v-model="basicForm.cultivatePersonNumber"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="时间：" prop="timeArr">
+                  <el-date-picker
+                    end-placeholder="结束日期"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    type="datetimerange"
+                    v-model="basicForm.timeArr"
+                  ></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="地点：" prop="detailedAddress">
+                  <el-input clearable v-model="basicForm.detailedAddress"></el-input>
+                  <el-button @click="getAddress" class="get-address">
+                    <i class="el-icon-plus"></i>
+                    <span>获取地点</span>
+                  </el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <photo :getData="getData" :submitType="submitType" ref="imgUpload"></photo>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-form-item label="内容" prop="content">
+                <el-input
+                  :rows="8"
+                  placeholder="请输入详细内容"
+                  type="textarea"
+                  v-model="basicForm.content"
+                ></el-input>
+                <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
+              </el-form-item>
+            </el-row>
+          </el-form>
         </div>
-        <!--地图弹窗-->
-        <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
-            <div>
-                <div style="margin-bottom: 10px;">
-                    <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
-                        <el-button :loading="loading" @click="searchKeyword" icon="el-icon-search" slot="append"></el-button>
-                    </el-input>
-                    <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
-                    <el-button style="float: right;margin-right: 10px" @click="enterAddress" type="primary">确 定</el-button>
-                    <!--<input id="keyword" type="textbox" value />-->
-                    <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
-                </div>
-                <div id="container2"></div>
+      </el-tab-pane>
+      <el-tab-pane label="日程安排" name="second">
+        <div class="content-box">
+          <div class="title">日程安排</div>
+          <el-form
+            :inline="true"
+            :model="scheduleForm"
+            :rules="scheduleRules"
+            class="formBox scheduleBox"
+            label-width="120px"
+            ref="scheduleForm"
+          >
+            <div
+              :key="scheduleModel.key"
+              class="memberModel"
+              v-for="(scheduleModel,index) in scheduleForm.scheduleModels"
+            >
+              <div class="schedule-top">
+                <div class="schedule-title">日程安排-{{index+1}}</div>
+                <div @click="removeModel(scheduleModel)" class="rtt">删除</div>
+              </div>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    :key="scheduleModel.key"
+                    :label="'名称：'"
+                    :prop="'scheduleModels.'+index+'.title'"
+                    :rules="scheduleRules.title"
+                  >
+                    <el-input
+                      maxlength="50"
+                      placeholder="请输入培训名称"
+                      show-word-limit
+                      type="text"
+                      v-model="scheduleModel.title"
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    :key="scheduleModel.key"
+                    :label="'讲师：'"
+                    :prop="'scheduleModels.'+index+'.lecturerId'"
+                    :rules="scheduleRules.lecturerId"
+                  >
+                    <el-select
+                      @change="changeLecturer($event,index)"
+                      clearable
+                      placeholder="请选择讲师"
+                      v-model="scheduleModel.lecturerId"
+                    >
+                      <el-option
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                        v-for="item in lecturerArr"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    :key="scheduleModel.key"
+                    :label="'地点：'"
+                    :prop="'scheduleModels.'+index+'.detailedAddress'"
+                    :rules="scheduleRules.detailedAddress"
+                  >
+                    <el-input
+                      maxlength="50"
+                      placeholder="请输入详细地址"
+                      show-word-limit
+                      type="text"
+                      v-model="scheduleModel.detailedAddress"
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    :key="scheduleModel.key"
+                    :label="'时间：'"
+                    :prop="'scheduleModels.'+index+'.timeArr'"
+                    :rules="scheduleRules.timeArr"
+                  >
+                    <el-date-picker
+                      end-placeholder="结束日期"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      type="datetimerange"
+                      v-model="scheduleModel.timeArr"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-form-item
+                  :key="scheduleModel.key"
+                  :label="'简介：'"
+                  :prop="'scheduleModels.'+index+'.content'"
+                  :rules="scheduleRules.content"
+                >
+                  <el-input
+                    :rows="8"
+                    maxlength="200"
+                    placeholder="简要概述培训内容，不超过200字"
+                    show-word-limit
+                    type="textarea"
+                    v-model="scheduleModel.content"
+                  ></el-input>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item :label="'课件：'" :prop="'scheduleModels.'+index+'.courseware'">
+                  <!--:file-list="showList[index].fileArr"-->
+                  <div @mouseover="getImageTypeIndex(index)">
+                    <el-upload
+                      :on-remove="fileRemove"
+                      :before-upload="beforeAvatarUpload"
+                      :file-list="scheduleModel.showbasicAnnexes"
+                      :http-request="uploadServer"
+                      action="none"
+                      class="upload-demo"
+                      multipl
+                    >
+                      <el-button size="small" type="primary">上传课件</el-button>
+                      <div class="el-upload__tip" slot="tip">支持上传doc/ppt/excel/rar/zip文件，大小不超过10M</div>
+                    </el-upload>
+                  </div>
+                </el-form-item>
+              </el-row>
             </div>
-            <!--<span class="dialog-footer" slot="footer">-->
-        <!--<el-button @click="addressVisible = false">取 消</el-button>-->
-        <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
+            <el-button
+              @click="addSchedule"
+              style="margin-top:20px;margin-left:120px;"
+              type="primary"
+            >
+              <i class="el-icon-plus"></i>添加日程
+            </el-button>
+          </el-form>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div class="footer-flex">
+        <div v-if="isShow">
+          <el-button @click="black">取消</el-button>
+          <el-button @click="nextClick('basicForm')" type="primary">下一步</el-button>
+        </div>
+        <div v-if="!isShow">
+          <el-button @click="prevClick">上一步</el-button>
+          <el-button @click="totalSubmit('scheduleForm')" type="primary">提交</el-button>
+        </div>
+      </div>
+    </div>
+    <!--地图弹窗-->
+    <el-dialog :visible.sync="addressVisible" title="地图" width="60%">
+      <div>
+        <div style="margin-bottom: 10px;">
+          <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
+            <el-button
+              :loading="loading"
+              @click="searchKeyword"
+              icon="el-icon-search"
+              slot="append"
+            ></el-button>
+          </el-input>
+          <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
+          <el-button
+            style="float: right;margin-right: 10px"
+            @click="enterAddress"
+            type="primary"
+          >确 定</el-button>
+          <!--<input id="keyword" type="textbox" value />-->
+          <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
+        </div>
+        <div id="container2"></div>
+      </div>
+      <!--<span class="dialog-footer" slot="footer">-->
+      <!--<el-button @click="addressVisible = false">取 消</el-button>-->
+      <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
       <!--</span>-->
         </el-dialog>
     </div>
@@ -752,7 +760,7 @@ import photo from "../../publicTemplate/photo";
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
                 let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.ppt$|\.pdf$|\.jpg$|\.rar$|\.zip$/i.test(file.name);
-                const isLt2M = file.size / 1024 / 1024 < 50;
+                const isLt2M = file.size / 1024 / 1024 < 10;
                 if (!isRightType) {
                     this.$message.warning(
                         "上传文件只能是 xls、xlsx、doc、docx 、pptx、ppt、pdf、jpg、zip、rar格式!"
@@ -822,7 +830,7 @@ import photo from "../../publicTemplate/photo";
                 //设置Poi检索服务，用于本地检索、周边检索
                 that.searchService = new qq.maps.SearchService({
                     //设置搜索范围为北京
-                    location: "常德市武陵区",
+                    location: "常德",
                     // //设置搜索页码为1
                     // pageIndex: 1,
                     // //设置每页的结果数为5

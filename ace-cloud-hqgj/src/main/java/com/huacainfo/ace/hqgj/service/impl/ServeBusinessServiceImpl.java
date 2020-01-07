@@ -138,6 +138,9 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
+            if(CommonUtils.isBlank(o.getName())){
+                return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+            }
             int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
@@ -151,12 +154,11 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                 List<BasicAnnex> fileURL = o.getBasicAnnexes();
                 for (BasicAnnex a : fileURL) {
-                    if(CommonUtils.isBlank(a.getFileName())){
-                        return new ResponseDTO(ResultCode.FAIL, "文件名称不能为空！");
-                    }
+
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
+                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
@@ -246,6 +248,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
+                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
