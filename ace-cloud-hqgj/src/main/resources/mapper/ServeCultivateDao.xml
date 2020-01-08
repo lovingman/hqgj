@@ -174,7 +174,6 @@
         select
         <include refid="Vo_Column_List"/>,(t.cultivatePersonNumber-t.enrollPersopnNumber) as surplusQuota
         <include refid="From_Statement"/>
-        left join serve_cultivate_schedule s on s.serveCultivateId=t.id
         <include refid="Where_Condition"/>
         <choose>
             <when test='orderBy!=null and orderBy!=""'>
