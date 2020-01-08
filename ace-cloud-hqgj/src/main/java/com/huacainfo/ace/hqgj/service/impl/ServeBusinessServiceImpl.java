@@ -141,10 +141,10 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             if(CommonUtils.isBlank(o.getName())){
                 return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
             }
-            int temp = serveBusinessDetailDao.isExist(o);
+           /* int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-            }
+            }*/
             o.setCreateDate(new Date());
             o.setStatus("0");
             o.setCreateUserName(userProp.getName());
@@ -232,10 +232,13 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
-            int temp = serveBusinessDetailDao.isExist(o);
+            if(CommonUtils.isBlank(o.getName())){
+                return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+            }
+          /*  int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-            }
+            }*/
             o.setCreateDate(new Date());
             o.setStatus("1");
             o.setCreateUserName(userProp.getName());
