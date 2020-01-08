@@ -122,7 +122,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
     @Override
     public ResponseDTO relieveBind(UserProp userProp) {
         UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
-        if(!CommonUtils.isBlank(user.getUserType())) {
+        if(CommonUtils.isBlank(user.getUserType())) {
             return new ResponseDTO(ResultCode.FAIL, "未找到绑定数据！");
         }
             if (user.getUserType().equals("5")) {
