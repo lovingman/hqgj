@@ -157,7 +157,7 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPreviewVisible = false">关闭</el-button>
+        <el-button type="primary" @click="dialogPreviewVisible = false" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
   </div>

@@ -221,7 +221,7 @@
       <div class="dialog-footer" slot="footer"></div>
 
       <div class="dialog-footer" slot="footer">
-        <el-button @click="dialogPreviewVisible = false" type="primary">关闭</el-button>
+        <el-button @click="dialogPreviewVisible = false" type="primary" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
 
@@ -244,8 +244,8 @@
       </el-container>
 
       <div class="dialog-footer" slot="footer">
-        <el-button @click="dialogInitPwdVisible = false">取消</el-button>
-        <el-button :loading="initPwdLoading" @click="submitForm('ruleForm')" type="primary">保存</el-button>
+        <el-button @click="dialogInitPwdVisible = false" style="border-radius:5px;">取消</el-button>
+        <el-button :loading="initPwdLoading" @click="submitForm('ruleForm')" type="primary" style="border-radius:5px;">保存</el-button>
       </div>
     </el-dialog>
   </div>

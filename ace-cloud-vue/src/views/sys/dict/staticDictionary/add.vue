@@ -34,8 +34,8 @@
               <el-input v-model="addform.code"></el-input>
             </el-form-item>
             <el-form-item class="submit">
-              <el-button @click="back">取消</el-button>
-              <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+              <el-button @click="back" style="border-radius:5px;">取消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')" style="border-radius:5px;">保存</el-button>
             </el-form-item>
           </el-form>
         </el-main>

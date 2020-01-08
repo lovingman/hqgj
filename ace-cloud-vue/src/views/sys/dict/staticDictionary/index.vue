@@ -141,7 +141,7 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogUploadVisible = false">关闭</el-button>
+        <el-button type="primary" @click="dialogUploadVisible = false" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -155,7 +155,7 @@ import {
   deleteByIds,
   getList
 } from "@/api/sys/dict";
-import { Categorypage} from "@/api/sys/dictCategory";
+import { Categorypage } from "@/api/sys/dictCategory";
 import { mapGetters } from "vuex";
 import { fileUpload, filedown } from "@/api/sys";
 export default {
@@ -165,10 +165,10 @@ export default {
       currentPage: 1, //初始页
       pagesize: 10, //  每页的数据
       rows: [],
-      fenye:{
+      fenye: {
         currentPage: 1, // 列表显示初始页
         pagesize: 100, //  列表显示每页的数据
-        total: 0,
+        total: 0
       },
       total: 0,
       query: { name: "", categoryId: "" },
