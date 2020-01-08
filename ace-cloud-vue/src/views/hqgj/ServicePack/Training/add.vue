@@ -636,12 +636,17 @@ export default {
     //基本信息下一步
     nextClick(formName) {
       //验证子组件图片是否有上传照片
+      let photo;
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
-        if (valid) {
-        } else {
-          return false;
-        }
+        photo = valid;
       });
+      if (!photo) {
+        this.$message({
+          message: "请上传封面照片",
+          type: "error"
+        });
+        return;
+      }
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.tabsName = "second";

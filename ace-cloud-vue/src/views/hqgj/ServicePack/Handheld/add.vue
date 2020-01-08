@@ -75,13 +75,13 @@
             </el-col>
             <el-col :span="12" v-if="serviceForm.type == 3">
               <el-form-item label="名额：" prop="quota">
-                <el-input  v-model.trim="serviceForm.quota" clearable placeholder="请输入免费咨询名额"></el-input>
+                <el-input v-model.trim="serviceForm.quota" clearable placeholder="请输入免费咨询名额"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="联系方式：" prop="contactPersonTel">
                 <el-input
-                   v-model.trim="serviceForm.contactPersonTel"
+                  v-model.trim="serviceForm.contactPersonTel"
                   clearable
                   placeholder="请输入联系方式,例如：13500228899或者0736-1234567"
                 ></el-input>
@@ -89,7 +89,7 @@
             </el-col>
             <el-col :span="12" v-if="serviceForm.type == 3">
               <el-form-item label="地点：" prop="address">
-                <el-input  v-model.trim="serviceForm.address" clearable placeholder="请输入地点"></el-input>
+                <el-input v-model.trim="serviceForm.address" clearable placeholder="请输入地点"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -102,7 +102,7 @@
                 clearable
                 type="textarea"
                 placeholder="详细介绍服务内容"
-                 v-model.trim="serviceForm.content"
+                v-model.trim="serviceForm.content"
                 rows="10"
               ></el-input>
             </el-form-item>
@@ -150,7 +150,7 @@
                       :rules="serviceRules.price"
                       :key="domain.key"
                     >
-                      <el-input  v-model.trim="domain.price" clearable placeholder="请输入价格"></el-input>
+                      <el-input v-model.trim="domain.price" clearable placeholder="请输入价格"></el-input>
                     </el-form-item>
                   </el-col>
                 </div>
@@ -406,12 +406,17 @@ export default {
     //提交
     submission(formName) {
       //验证子组件图片是否有上传照片
+      let photo;
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
-        if (valid) {
-        } else {
-          return false;
-        }
+        photo = valid;
       });
+      if (!photo) {
+        this.$message({
+          message: "请上传封面照片",
+          type: "error"
+        });
+        return;
+      }
       //验证其他信息
       this.$refs[formName].validate(valid => {
         if (valid) {

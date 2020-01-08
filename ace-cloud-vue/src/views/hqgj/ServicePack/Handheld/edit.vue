@@ -412,12 +412,18 @@ export default {
     //提交
     submission(formName) {
       //验证子组件图片是否有上传照片
+   
+        let photo;
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
-        if (valid) {
-        } else {
-          return false;
-        }
+        photo = valid;
       });
+      if (!photo) {
+        this.$message({
+          message: "请上传封面照片",
+          type: "error"
+        });
+        return;
+      }
       //验证其他信息
       this.$refs[formName].validate(valid => {
         if (valid) {
