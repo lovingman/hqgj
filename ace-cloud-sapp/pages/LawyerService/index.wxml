@@ -20,23 +20,23 @@
         </view>
       </view>
     </van-tab>
-    <van-tab title-style="color:#ffffff" title="法律模板">
+    <van-tab title-style="color:#ffffff" title="企业合同范本">
       <view class="search">
-        <view class="title">大家都在下载的法律合同模板</view>
-        <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索模板名称" bind:change="onChange" bind:search="onSearch">
+        <view class="title">搜索一下 立即下载</view>
+        <van-search background="#4b90ff" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索企业合同范本" bind:change="onChange" bind:search="onSearch">
         </van-search>
+        
       </view>
       <view class="files">
         <view class="title">
-          全部模板（{{basicLength}}）
+          全部范本({{basicLength}}）
         </view>
-        <view class="file" wx:for="{{basicAnnexArr}}" wx:key="{{index}}" wx:for-item="item" catchtap='openFile' data-src='{{item.fileURL}}'>
+        <view class="file" wx:for="{{basicAnnexArr}}" wx:key="{{index}}" wx:for-item="item" catchtap="templateClick" data-index="{{index}}">
           <view class="name">
             {{item.title}}
           </view>
           <view class="other">
             <view>{{item.createDate}} </view>
-            <view data-url='{{item.basicAnnexes}}' catchtap="downloadFile" class="download">下载</view>
           </view>
         </view>
       </view>

@@ -141,10 +141,11 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
             return new ResponseDTO(ResultCode.FAIL, "数据错误");
         }
         UsersVo vo =personCenterDao.selectUserInfo(userProp.getUserId());
-
+        if(CommonUtils.isBlank(vo.getCompanyId())){
+            return new ResponseDTO(ResultCode.FAIL, "未绑定企业");
+        }
         o.setCompanyId(vo.getCompanyId());
         o.setOrgId(f.getOrgId());
-
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());

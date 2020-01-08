@@ -239,7 +239,7 @@
          left join serve_business_detail d on s.id=d.businessId
          left join serve_business_append a on a.businessId=s.id
          left join basic_annex an on an.relationId=d.id
-         where s.id=#{id,jdbcType=VARCHAR}
+         where s.id=#{id,jdbcType=VARCHAR} ORDER BY an.fileType asc
     </select>
 
     <update id="updateBasicStatus">
@@ -253,7 +253,7 @@
       set shUserId = #{shUserId,jdbcType=VARCHAR},
       shUserName = #{shUserName,jdbcType=VARCHAR},
       shDate = now(),
-      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+      modifyDate =  now()
       where id = #{id,jdbcType=VARCHAR}
     </update>
 

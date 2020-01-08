@@ -51,7 +51,7 @@
 }
 
 .modal .card .info {
-  width: 440rpx;
+  width: 560rpx;
   display: flex;
   flex-direction: column;
   justify-content: center;

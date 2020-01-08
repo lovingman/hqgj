@@ -752,7 +752,7 @@ import photo from "../../publicTemplate/photo";
             // 上传前对文件的大小的判断
             beforeAvatarUpload(file) {
                 let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.ppt$|\.pdf$|\.jpg$|\.rar$|\.zip$/i.test(file.name);
-                const isLt2M = file.size / 1024 / 1024 < 10;
+                const isLt2M = file.size / 1024 / 1024 < 50;
                 if (!isRightType) {
                     this.$message.warning(
                         "上传文件只能是 xls、xlsx、doc、docx 、pptx、ppt、pdf、jpg、zip、rar格式!"
@@ -822,7 +822,7 @@ import photo from "../../publicTemplate/photo";
                 //设置Poi检索服务，用于本地检索、周边检索
                 that.searchService = new qq.maps.SearchService({
                     //设置搜索范围为北京
-                    location: "常德",
+                    location: "常德市武陵区",
                     // //设置搜索页码为1
                     // pageIndex: 1,
                     // //设置每页的结果数为5

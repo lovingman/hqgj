@@ -138,10 +138,13 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
-            int temp = serveBusinessDetailDao.isExist(o);
+            if(CommonUtils.isBlank(o.getName())){
+                return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+            }
+           /* int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-            }
+            }*/
             o.setCreateDate(new Date());
             o.setStatus("0");
             o.setCreateUserName(userProp.getName());
@@ -151,12 +154,11 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
                 List<BasicAnnex> fileURL = o.getBasicAnnexes();
                 for (BasicAnnex a : fileURL) {
-                    if(CommonUtils.isBlank(a.getFileName())){
-                        return new ResponseDTO(ResultCode.FAIL, "文件名称不能为空！");
-                    }
+
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
+                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
@@ -230,10 +232,13 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
-            int temp = serveBusinessDetailDao.isExist(o);
+            if(CommonUtils.isBlank(o.getName())){
+                return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+            }
+          /*  int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
-            }
+            }*/
             o.setCreateDate(new Date());
             o.setStatus("1");
             o.setCreateUserName(userProp.getName());
@@ -246,6 +251,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
+                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
@@ -380,20 +386,35 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         }
         int i=  serveBusinessDao.updateBasicStatus(id,status,type);
         if(type.equals("basicStatus") && status.equals("2") ){
-            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
-            serveBusinessDao.updateBasicStatus(id,"2","status");
+            int o=serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+            int s= serveBusinessDao.updateBasicStatus(id,"2","status");
+            if(s<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
         }
         if(type.equals("status") && status.equals("1") ){
-            serveBusinessDao.updateBasicStatus(id,"0","tab");
-            serveBusinessDao.updateShUserId(userProp.getUserId(),userProp.getName());
+           int o= serveBusinessDao.updateBasicStatus(id,"0","tab");
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+           int s= serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
+            if(s<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
         }
         if(type.equals("tab") && status.equals("7")){
-            serveBusinessDao.updateBasicStatus(id,"3","status");
+           int o= serveBusinessDao.updateBasicStatus(id,"3","status");
+            if(o<0){
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
             //新增企业和积分
             insertCompany(id,userProp);
         }
         if (i <= 0) {
-            return new ResponseDTO(ResultCode.FAIL, "更新失败");
+            return new ResponseDTO(ResultCode.FAIL, "内部错误");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }

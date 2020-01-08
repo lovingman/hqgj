@@ -90,10 +90,13 @@
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
                         <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
                                    type="text"
-                                   v-if="form.basicStatus!='1' && this.$route.query.word=='examine'">审核
+                                   v-if="form.basicStatus=='0' && this.$route.query.word=='examine'">审核
                         </el-button>
-                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px" type="text"
+                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
                              v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
+                        </div>
+                        <div class="red" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
+                             v-if="form.basicStatus=='2' && this.$route.query.word=='examine'">驳回修改
                         </div>
 
                     </div>
@@ -301,29 +304,29 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">
-                    <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
-                        <span style="margin-left: 20px;font-weight:bold;">其他</span>
-                    </div>
-                    <el-divider></el-divider>
-                    <el-form label-width="250px" ref="form">
-                        <el-form-item label="申请免费服务项目:">
-                            <span>工商注册代办服务（含公章一套）、银行基本户开户代办服务 、银行开户费、小额账户管理费</span>
-                        </el-form-item>
-                        <el-form-item label="确定培训意向:">
-                            <span>是否愿意参加创业培训、是否愿意加入创业孵化基地</span>
-                        </el-form-item>
-                        <el-form-item label="开户银行:">
-                            <span>兴业银行各分行</span>
-                        </el-form-item>
-                        <el-form-item label="是否选择代理记账服务:">
-                            <span>选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</span>
-                        </el-form-item>
-                        <el-form-item label="特殊说明:">
-                            <span>无</span>
-                        </el-form-item>
-                    </el-form>
-                </el-tab-pane>
+                <!--<el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">-->
+                    <!--<div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">-->
+                        <!--<span style="margin-left: 20px;font-weight:bold;">其他</span>-->
+                    <!--</div>-->
+                    <!--<el-divider></el-divider>-->
+                    <!--<el-form label-width="250px" ref="form">-->
+                        <!--<el-form-item label="申请免费服务项目:">-->
+                            <!--<span>工商注册代办服务（含公章一套）、银行基本户开户代办服务 、银行开户费、小额账户管理费</span>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="确定培训意向:">-->
+                            <!--<span>是否愿意参加创业培训、是否愿意加入创业孵化基地</span>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="开户银行:">-->
+                            <!--<span>兴业银行各分行</span>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="是否选择代理记账服务:">-->
+                            <!--<span>选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</span>-->
+                        <!--</el-form-item>-->
+                        <!--<el-form-item label="特殊说明:">-->
+                            <!--<span>无</span>-->
+                        <!--</el-form-item>-->
+                    <!--</el-form>-->
+                <!--</el-tab-pane>-->
             </el-tabs>
         </div>
         <!--预览弹窗-->
@@ -682,11 +685,11 @@
                     this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
-                if (tab.name == 8) {
-                    this.query3.businessId = this.$route.query.id
-                    getAppend(this.query3).then(response => {
-                    })
-                }
+                // if (tab.name == 8) {
+                //     this.query3.businessId = this.$route.query.id
+                //     getAppend(this.query3).then(response => {
+                //     })
+                // }
             },
             //基础信息审核弹窗
             reviewBasic() {

@@ -4,11 +4,11 @@
   <view class="subject">
     <view class="title van-multi-ellipsis--l2">{{basicForm.title}} </view>
     <view class="adress">
-      <van-icon name="location" />{{basicForm.detailedAddress}}</view>
+      <van-icon name="location" />{{astFilter.addressIntercept(basicForm.detailedAddress)}}</view>
   </view>
-  <view class="organization">
+  <view class="organization" bindtap="orgClick" data-id="{{basicForm.baseOrganization.id}}">
     <view class="image">
-      <van-image width="100%" fit="cover" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image width="100%" fit="cover" height="100%" src="{{basicForm.baseOrganization.fmUrl}}" />
     </view>
     <view class="text">
       <view class="title van-multi-ellipsis--l2">{{basicForm.baseOrganization.orgName}}</view>

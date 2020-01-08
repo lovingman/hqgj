@@ -98,8 +98,8 @@
                     </el-col>
                 </el-row>
                 <el-form-item style="bottom: 10px;margin-left: 300px">
-                    <el-button @click="back">取消</el-button>
-                    <el-button @click="handleEdit('ruleForm')" type="primary">提交</el-button>
+                    <el-button @click="back" style="border-radius:5px;">取消</el-button>
+                    <el-button @click="handleEdit('ruleForm')" type="primary" style="border-radius:5px;">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>

@@ -200,6 +200,9 @@ Page({
    */
   onReachBottom: function() {
     let that = this;
+    if (thta.data.isload) {
+      return;
+    }
     that.data.query.pageNum++;
     that.getList();
   },

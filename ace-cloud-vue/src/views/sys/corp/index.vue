@@ -7,29 +7,30 @@
             <el-button
               type="primary"
               @click="create"
+              style="border-radius:5px;"
               v-if="userBtn['/portal/corp/create']"
             >{{userBtn['/portal/corp/create']}}</el-button>
           </el-button-group>
         </el-col>
         <!--<el-col :span="2">-->
-          <!--<el-dropdown style="line-height:2rem;" @command="handleCommand">-->
-            <!--<span class="el-dropdown-link">-->
-              <!--Excel-->
-              <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-            <!--</span>-->
-            <!--<el-dropdown-menu slot="dropdown">-->
-              <!--<el-dropdown-item-->
-                <!--command="importXls"-->
-                <!--icon="el-icon-thirdupload"-->
-                <!--v-if="userBtn['/portal/corp/importXls']"-->
-              <!--&gt;{{userBtn['/portal/corp/importXls']}}</el-dropdown-item>-->
-              <!--<el-dropdown-item-->
-                <!--command="exportXls"-->
-                <!--icon="el-icon-thirddownload"-->
-                <!--v-if="userBtn['/portal/corp/exportXls']"-->
-              <!--&gt;{{userBtn['/portal/corp/exportXls']}}</el-dropdown-item>-->
-            <!--</el-dropdown-menu>-->
-          <!--</el-dropdown>-->
+        <!--<el-dropdown style="line-height:2rem;" @command="handleCommand">-->
+        <!--<span class="el-dropdown-link">-->
+        <!--Excel-->
+        <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+        <!--</span>-->
+        <!--<el-dropdown-menu slot="dropdown">-->
+        <!--<el-dropdown-item-->
+        <!--command="importXls"-->
+        <!--icon="el-icon-thirdupload"-->
+        <!--v-if="userBtn['/portal/corp/importXls']"-->
+        <!--&gt;{{userBtn['/portal/corp/importXls']}}</el-dropdown-item>-->
+        <!--<el-dropdown-item-->
+        <!--command="exportXls"-->
+        <!--icon="el-icon-thirddownload"-->
+        <!--v-if="userBtn['/portal/corp/exportXls']"-->
+        <!--&gt;{{userBtn['/portal/corp/exportXls']}}</el-dropdown-item>-->
+        <!--</el-dropdown-menu>-->
+        <!--</el-dropdown>-->
         <!--</el-col>-->
 
         <el-col :span="14">
@@ -54,18 +55,18 @@
             style="width:90%;float: right"
           >
             <!--<el-select-->
-              <!--v-model="query.type"-->
-              <!--class="type"-->
-              <!--clearable-->
-              <!--slot="prepend"-->
-              <!--placeholder="请选择单位类型"-->
+            <!--v-model="query.type"-->
+            <!--class="type"-->
+            <!--clearable-->
+            <!--slot="prepend"-->
+            <!--placeholder="请选择单位类型"-->
             <!--&gt;-->
-              <!--<el-option-->
-                <!--v-for="item in dict['48']"-->
-                <!--:key="item.code"-->
-                <!--:label="item.name"-->
-                <!--:value="item.code"-->
-              <!--&gt;</el-option>-->
+            <!--<el-option-->
+            <!--v-for="item in dict['48']"-->
+            <!--:key="item.code"-->
+            <!--:label="item.name"-->
+            <!--:value="item.code"-->
+            <!--&gt;</el-option>-->
             <!--</el-select>-->
             <el-button slot="append" icon="el-icon-search" :loading="loading" @click="handleQuery"></el-button>
           </el-input>
@@ -151,8 +152,8 @@
             <el-col :span="20">{{o.id}}</el-col>
           </el-row>
           <!--<el-row :gutter="40">-->
-            <!--<el-col :span="4">类型</el-col>-->
-            <!--<el-col :span="20">{{o.typeName}}</el-col>-->
+          <!--<el-col :span="4">类型</el-col>-->
+          <!--<el-col :span="20">{{o.typeName}}</el-col>-->
           <!--</el-row>-->
 
           <el-row :gutter="40">
@@ -162,7 +163,7 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPreviewVisible = false">关闭</el-button>
+        <el-button type="primary" @click="dialogPreviewVisible = false" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
 
@@ -194,7 +195,7 @@
         </el-main>
       </el-container>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogUploadVisible = false">关闭</el-button>
+        <el-button type="primary" @click="dialogUploadVisible = false" style="border-radius:5px;">关闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -376,7 +377,7 @@ export default {
       }
 
       let blob = new Blob([data]);
-      let fileName = "单位名册"  + ".xlsx";
+      let fileName = "单位名册" + ".xlsx";
       if ("download" in document.createElement("a")) {
         // 不是IE浏览器
         let url = window.URL.createObjectURL(blob);
