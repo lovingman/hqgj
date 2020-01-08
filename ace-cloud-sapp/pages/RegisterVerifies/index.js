@@ -15,7 +15,7 @@ Page({
         nameVali: 'chineseName',
         idCard: '',
         idCardState: false,
-        idCardVali: 'IdCard',
+        idCardVali: 'idCard',
         nextData: {},
         nickName: '',
         unionId: '',

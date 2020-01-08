@@ -76,7 +76,7 @@
 					"id": 2,
 					"name": "创业服务包新增修改",
 					"pathName": "pages/RegProcess/index",
-					"query": "",
+					"query": "id=db5cb124d6e54dccb12488afbd459f62",
 					"scene": null
 				},
 				{

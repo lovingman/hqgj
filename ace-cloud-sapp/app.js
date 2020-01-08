@@ -1,3 +1,4 @@
+
 var request = require('./utils/request.js');
 var config = require('./utils/config.js');
 var util = require('./utils/util.js');
@@ -63,12 +64,6 @@ App({
         islogin: false,
         isGetUserInfo: false,
         isGetOpenid: false
-
     }
-
-
-    /*小程序主动更新
-     */
-
 
 })
