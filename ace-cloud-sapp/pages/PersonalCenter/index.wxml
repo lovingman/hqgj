@@ -69,7 +69,6 @@
     <view class="signOut">
         <van-button catch:tap="signOutHandler" round plain hairline size="large">退出登录</van-button>
     </view>
-    <van-dialog id="van-dialog" />
     <van-overlay show="{{ show }}" bind:click="onClickHide">
         <view class="wrapper_org">
             <view class="block">
@@ -96,3 +95,4 @@
     </van-overlay>
 </view>
 <van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

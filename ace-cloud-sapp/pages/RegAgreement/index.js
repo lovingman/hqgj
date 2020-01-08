@@ -1,4 +1,6 @@
 // pages/RegAgreement/index.js
+const app = getApp()
+import Dialog from '../../vant/weapp/dialog/dialog';
 Page({
 
     /**
@@ -95,9 +97,20 @@ Page({
     },
     //同意跳转
     agreeClick: function() {
-        wx.navigateTo({
-            url: '/pages/RegProcess/index'
-        })
+        if (app.globalData.islogin) {
+            wx.navigateTo({
+                url: '/pages/RegProcess/index'
+            })
+        } else {
+            Dialog.alert({
+                title: '提示',
+                message: '登录后可以查看“我的”页面'
+            }).then(() => {
+                wx.navigateTo({
+                    url: '../SignIn/index?url=' + encodeURIComponent(util.getCurrentPageUrlWithArgs()),
+                })
+            });
+        }
     },
 
     /**

@@ -189,37 +189,77 @@ Auth.wxUserInfo = function(e) {
         var userInfo = e.detail.userInfo;
         // 判断用户是否授权
         if (userInfo != null && userInfo != undefined) { //授权
-            wx.login({
-                success: function(res) {
-                    console.log(res);
-                    // return;
-                    let args = {
-                        iv: e.detail.iv,
-                        encryptedData: e.detail.encryptedData,
-                        signature: e.detail.signature,
-                        rawData: e.detail.rawData,
-                        jscode: res.code,
-                        sysId: 'hqgj'
-                    };
-                    request.post(config.authority, args).then(response => {
-                        let res = response.data;
-                        if (res.status == '1') {
-                            resolve(res.data);
-                        }else{
-                            reject(error);
+            wx.checkSession({
+                success: function() {
+                    //session 未过期，并且在本生命周期一直有效
+                    wx.getUserInfo({
+                        success(res){
+                            console.log("wx.getUserInfo");
+                            // return;
+                            let args = {
+                                iv: e.detail.iv,
+                                encryptedData: e.detail.encryptedData,
+                                signature: e.detail.signature,
+                                rawData: e.detail.rawData,
+                                jscode: res.code,
+                                sysId: 'hqgj'
+                            };
+                            request.post(config.authority, args).then(response => {
+                                let res = response.data;
+                                if (res.status == '1') {
+                                    resolve(res.data);
+                                } else {
+                                    reject(res);
+                                }
+                            }).catch(error => {
+                                wx.showToast({
+                                    title: "授权失败，请重试",
+                                    icon: 'none',
+                                    duration: 2000
+                                });
+                                reject(error);
+                            })
+                        },
+                        fail(err){
+                            console.log(err);
+                            reject(err);
                         }
-                    }).catch(error => {
-                        wx.showToast({
-                            title: "授权失败，请重试",
-                            icon: 'none',
-                            duration: 2000
-                        });
-                        reject(error);
                     })
                 },
-                fail: function(err) {
-                    console.log(err);
-                    reject(err);
+                fail: function() {
+                    wx.login({
+                        success: function (res) {
+                            console.log("wx.login")
+                            // return;
+                            let args = {
+                                iv: e.detail.iv,
+                                encryptedData: e.detail.encryptedData,
+                                signature: e.detail.signature,
+                                rawData: e.detail.rawData,
+                                jscode: res.code,
+                                sysId: 'hqgj'
+                            };
+                            request.post(config.authority, args).then(response => {
+                                let res = response.data;
+                                if (res.status == '1') {
+                                    resolve(res.data);
+                                } else {
+                                    reject(error);
+                                }
+                            }).catch(error => {
+                                wx.showToast({
+                                    title: "授权失败，请重试",
+                                    icon: 'none',
+                                    duration: 2000
+                                });
+                                reject(error);
+                            })
+                        },
+                        fail: function (err) {
+                            console.log(err);
+                            reject(err);
+                        }
+                    });
                 }
             });
         } else { //不授权

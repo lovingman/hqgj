@@ -1,6 +1,7 @@
 // pages/RegProcess/index.js
 var cfg = require("../../utils/config.js");
 var request = require("../../utils/request.js");
+import Toast from '../../vant/weapp/toast/toast';
 Page({
 
     /**
@@ -10,235 +11,238 @@ Page({
         id: '',
         dicObj: {},
         fileList: [], //图片上传文件
+        areaList: [],
+        areaCodeList: [],
         active: 0, //tab切换
-        result1: {
-            type: 1,
-            option: [],
-        },
-        result2: {
-            type: 2,
-            option: [],
-        },
-        result3: {
-            type: 3,
-            option: [],
-        },
-        result4: {
-            type: 4,
-            option: [],
-        },
-        special: {
-            type: 5,
-            option: 0,
-            content: ""
-        },
         username: "",
         showPickerAreas: false, //是否显示picker
-        serveBusinessAppend: [],
-        serveBusinessDetail: [],
-        serveBusiness: {
-            companyName: '',
-            readyName: '',
-            legalPerson: '',
-            regBonus: '',
-            areaCode: '',
-            areaType: '请选择区域',
-            companyAddress: '',
-            manageExtent: ''
+        dataCollection: [],
+        formCollection: [{
+            companyName: '', // 企业名称
+            readyName: '', // 备用名称
+            regBonus: '', // 注册资金
+            areaCode: '', //公司地址
+            areaType: '请选择区域', //地址文字信息
+            companyAddress: '', //公司详细地址
+            manageExtent: '' //经营范围
         },
-        finance: { //财务
-            name: "",
-            mobile: "",
-            type: 4,
-            basicAnnexes: [{
-                fileURL: "",
-                fileName: "财务身份证附件",
-                fileType: 1
-            }, {
-                fileURL: "",
-                fileName: "财务身份证附件",
-                fileType: 2
-            }]
-        },
-        legalPerson: { //法人
-            name: "",
-            mobile: "",
-            type: 1,
-            basicAnnexes: [{
-                fileURL: "",
-                fileName: "法人身份证附件",
-                fileType: 1
-            }, {
-                fileURL: "",
-                fileName: "法人身份证附件",
-                fileType: 2
-            }]
-        },
-        shareholder: [{ //股东
-            name: "",
-            sharesProportion: "",
-            type: 3,
-            basicAnnexes: [{
-                fileURL: "",
-                fileName: "股东身份证附件",
-                fileType: 1
-            }, {
-                fileURL: "",
-                fileName: "股东身份证附件",
-                fileType: 2
-            }]
-        }],
-        supervisor: [{ //监事
-            name: "",
-            mobile: "",
-            type: 2,
-            basicAnnexes: [{
-                fileURL: "",
-                fileName: "监事身份证附件",
-                fileType: 1
-            }, {
-                fileURL: "",
-                fileName: "监事身份证附件",
-                fileType: 2
-            }]
-        }],
-        contract1: { //房产证复印件
-            name: "房产证复印件",
-            type: 6,
-            basicAnnexes: [{
-                fileName: "房产合同复印件",
-                fileURL: ""
+        {
+            type1: [{ //法人
+                name: "",
+                mobile: "",
+                type: 1,
+                basicAnnexes: [{
+                    fileURL: "",
+                    fileName: "法人身份证附件(正面)",
+                    fileType: 1
+                }, {
+                    fileURL: "",
+                    fileName: "法人身份证附件(反面)",
+                    fileType: 2
+                }]
+            }],
+            type2: [{ //监事
+                name: "",
+                mobile: "",
+                type: 2,
+                basicAnnexes: [{
+                    fileURL: "",
+                    fileName: "监事身份证附件(正面)",
+                    fileType: 1
+                }, {
+                    fileURL: "",
+                    fileName: "监事身份证附件(反面)",
+                    fileType: 2
+                }]
             }]
         },
-        contract2: { //房东营业执照
-            name: "房东营业执照",
-            type: 7,
-            basicAnnexes: [{
-                fileName: "房东营业执照",
-                fileURL: ""
+        {
+            type3: [{
+                name: "",
+                sharesProportion: "",
+                type: 3,
+                basicAnnexes: [{
+                    fileURL: "",
+                    fileName: "股东身份证附件(正面)",
+                    fileType: 1
+                },
+                {
+                    fileURL: "",
+                    fileName: "股东身份证附件(反面)",
+                    fileType: 2
+                }
+                ]
             }]
         },
-        contract3: { //租赁合同复印件
-            name: "租赁合同复印件",
-            type: 5,
-            basicAnnexes: [{
-                fileName: "租赁合同复印件",
-                fileURL: ""
+        {
+            type4: [{
+                name: "",
+                mobile: "",
+                type: 4,
+                basicAnnexes: [{
+                    fileURL: "",
+                    fileName: "财务身份证附件(正面)",
+                    fileType: 1
+                },
+                {
+                    fileURL: "",
+                    fileName: "财务身份证附件(反面)",
+                    fileType: 2
+                }
+                ]
             }]
-        },
-        contract4: { //房屋无偿提供使用证明
-            name: "房屋无偿提供使用证明",
-            type: 8,
-            basicAnnexes: [{
-                fileName: "房屋无偿提供使用证明",
-                fileURL: ""
-            }]
-        },
-        areaList: []
+        }, {
+            type6: {
+                name: "房产证复印件",
+                type: 6,
+                basicAnnexes: []
+            },
+
+            type7: {
+                name: "房东营业执照",
+                type: 7,
+                basicAnnexes: []
+            },
+            type5: {
+                name: "租赁合同复印件",
+                type: 5,
+                basicAnnexes: []
+            },
+            type8: {
+                name: "房屋无偿提供使用证明",
+                type: 8,
+                basicAnnexes: []
+            }
+        }, {
+            option1: {
+                type: 1,
+                option: 0,
+                content: ""
+            },
+            option57: {
+                type: 57,
+                options: [],
+                option: '',
+            },
+            option58: {
+                type: 58,
+                option: 0,
+            },
+            option59: {
+                type: 59,
+                option: 0,
+            },
+            option60: {
+                type: 60,
+                option: 0,
+            }
+        }
+        ]
     },
-    getData(id) { //获取创业服务包详情
+    getData() { //获取创业服务包详情
         let that = this;
+        if (!that.data.id) {
+            return;
+        }
         request.getJSON(cfg.serveBusinessPreviewInfoUrl, {
-            id: id
+            id: that.data.id
         }).then(rst => {
             const res = rst.data;
-            console.log(res.data)
             if (res.status == 1) {
-                this.data.supervisor = [];
-                this.data.shareholder = [];
-                let businessDetailList = res.data.businessDetailList;
-                let businessAppendList = res.data.businessAppendList;
-                let serveBusiness = res.data.serveBusiness;
-                businessDetailList.forEach((item) => {
-                    if (item.type == 1) {
-                        that.data.legalPerson = item;
-                    }
-                    if (item.type == 2) {
-                        this.data.supervisor.push(item);
-                    }
-                    if (item.type == 3) {
-                        this.data.shareholder.push(item);
-                    }
-                    if (item.type == 4) {
-                        this.data.finance = item;
-                    }
-                    if (item.type == 5) {
-                        this.data.contract3 = item;
-                    }
-                    if (item.type == 6) {
-                        this.data.contract1 = item;
-                    }
-                    if (item.type == 7) {
-                        this.data.contract2 = item;
-                    }
-                    if (item.type == 8) {
-                        this.data.contract4 = item;
-                    }
-                })
-                businessAppendList.forEach((item) => {
-                    if (item.type == 1) {
-                        item.option = item.option.split(',');
-                        that.data.result1 = item;
-                    }
-                    if (item.type == 2) {
-                        that.data.result2 = item;
-                    }
-                    if (item.type == 3) {
-                        that.data.result3 = item;
-                    }
-                    if (item.type == 4) {
-                        that.data.result4 = item;
-                    }
-                    if (item.type == 5) {
-                        that.data.special = item;
-                    }
-                })
+                let x = res.data.serveBusiness;
+                let r = [];
+                that.formatAreaCode(that.data.areaCodeList, x.areaCode, r)
+                console.log(r);
+                let _1 = {
+                    companyName: x.companyName, // 企业名称
+                    readyName: x.readyName, // 备用名称
+                    regBonus: x.regBonus, // 注册资金
+                    areaCode: x.areaCode, //公司地址
+                    areaType: r.join(' '), //地址文字信息
+                    companyAddress: x.companyAddress, //公司详细地址
+                    manageExtent: x.manageExtent //经营范围
+                }
+                that.data.dataCollection.push(_1);
+                that.formatTypeList(res.data.businessDetailList);
+                that.formatOptionList(res.data.businessAppendList);
                 that.setData({
-                    serveBusiness: serveBusiness,
-                    legalPerson: that.data.legalPerson,
-                    supervisor: that.data.supervisor,
-                    shareholder: that.data.shareholder,
-                    finance: that.data.finance,
-                    contract1: that.data.contract1,
-                    contract2: that.data.contract2,
-                    contract3: that.data.contract3,
-                    contract4: that.data.contract4,
-                    result1: that.data.result1,
-                    result2: that.data.result2,
-                    result3: that.data.result3,
-                    result4: that.data.result4,
-                    special: that.data.special
+                    formCollection: that.data.dataCollection
                 })
             }
         })
     },
-    onChange1(event) {
-        this.data.result1.option = event.detail
-        this.setData({
-            result1: this.data.result1
-        });
-        console.log(this.data.result1)
+    changeTabHandler(e) {
+        this.data.active = e.detail.index;
     },
-    onChange2(event) {
-        this.data.result2.option = event.detail
-        this.setData({
-            result2: this.data.result2
+    formatTypeList(data) {
+        let that = this;
+        let b = {
+            type1: [],
+            type2: [],
+            type3: [],
+            type4: [],
+            type5: {},
+            type6: {},
+            type7: {},
+            type8: {}
+        }
+        for (let i of data) {
+            if (i.type < 5) {
+                b['type' + i.type].push(i)
+            } else {
+                b['type' + i.type] = i;
+            }
+        }
+        that.data.dataCollection.push({
+            type1: b.type1,
+            type2: b.type2,
         });
-        console.log(this.data.result2)
+        that.data.dataCollection.push({
+            type3: b.type3,
+        })
+        that.data.dataCollection.push({
+            type4: b.type4,
+        })
+        that.data.dataCollection.push({
+            type5: b.type5,
+            type6: b.type6,
+            type7: b.type7,
+            type8: b.type8,
+        })
     },
-    onChange3(event) {
-        this.data.result3.option = event.detail
-        this.setData({
-            result3: this.data.result3
-        });
-        console.log(this.data.result3)
+    formatOptionList(data) {
+        let r = {};
+        for (let i of data) {
+            if (i.type == '57') {
+                i.options = i.option.split(',')
+            }
+            r['option' + i.type] = i;
+        }
+        this.data.dataCollection.push(r);
     },
-    onChange4(event) {
-        this.data.result4.option = event.detail
+    formatAreaCode(list, areaCode, r) {
+        for (let i of list) {
+            if (areaCode.indexOf(i.id) == 0) {
+                r.push(i.text);
+                if (i.children && i.children.length) {
+                    this.formatAreaCode(i.children, areaCode, r);
+                } else {
+                    return r;
+                }
+            }
+        }
+    },
+    onSelectChange(e) {
+        let type = e.currentTarget.dataset.type;
+        if(type=='57'){
+            this.data.formCollection[5]['option' + type].options = e.detail
+        }else{
+            this.data.formCollection[5]['option' + type].option = e.detail
+        }
+        let f = `formCollection[5].option${type}`
         this.setData({
-            result4: this.data.result4
+            [f]: this.data.formCollection[5]['option' + type]
         });
-        console.log(this.data.result4)
     },
     //获取字典
     getDic() {
@@ -247,10 +251,8 @@ Page({
             categoryIds: '57,58,59,60'
         }
         request.getJSON(cfg.getByCategoryUrl, datas).then(rst => {
-            console.log(rst);
             let res = rst.data;
             if (res.status == 1) {
-                console.log(res.data)
                 that.setData({
                     dicObj: res.data
                 })
@@ -258,7 +260,6 @@ Page({
         })
     },
     changes(e) { //控制行政区划
-        console.log(e)
         if (e.detail.index == 1) {
             this.data.areaList.forEach((item) => {
                 if (item.className == "column2") {
@@ -274,35 +275,32 @@ Page({
     getAreaTree() {
         let that = this;
         request.getJSON(cfg.getAreaTreeUrl + "?pid=430702&type=1&hasSelf=true", {}).then(rst => {
-            console.log(rst);
             let res = rst.data;
             if (res.status == 1) {
-                console.log(res.data[0])
+                this.getData();
                 let obj = [];
                 // obj[]  
                 for (var i = 0; i < res.data[0].children.length; i++) {
                     obj = obj.concat(res.data[0].children[i].children)
                 }
-                console.log(obj)
+                that.data.areaCodeList = res.data;
                 that.data.areaList = [{
-                        values: res.data,
-                        className: 'column0'
-                    },
-                    {
-                        values: res.data[0].children,
-                        className: 'column1'
-                    },
-                    {
-                        values: res.data[0].children[0].children,
-                        className: 'column2',
-                        defaultIndex: 0
-                    }
+                    values: res.data,
+                    className: 'column0'
+                },
+                {
+                    values: res.data[0].children,
+                    className: 'column1'
+                },
+                {
+                    values: res.data[0].children[0].children,
+                    className: 'column2',
+                    defaultIndex: 0
+                }
                 ]
                 that.setData({
                     areaList: that.data.areaList
                 })
-                // this.data.areaList.province_list[res.data[0].id] = res.data[0].text;
-                // console.log(this.data.areaList)
             }
         })
     },
@@ -314,19 +312,29 @@ Page({
             type: 2,
             basicAnnexes: [{
                 fileURL: "",
-                fileName: "监事身份证附件",
+                fileName: "监事身份证附件（正面）",
                 fileType: 1
             }, {
                 fileURL: "",
-                fileName: "监事身份证附件",
+                fileName: "监事身份证附件（反面）",
                 fileType: 2
             }]
         };
-        this.data.supervisor.push(obj);
+        this.data.formCollection[1].type2.push(obj);
+        let f = 'formCollection[1].type2'
         this.setData({
-            supervisor: this.data.supervisor
+            [f]: this.data.formCollection[1].type2
         })
     },
+    removeSupervisor(e) {
+        let index = e.currentTarget.dataset.index;
+        this.data.formCollection[1].type2.splice(index, 1);
+        let f = 'formCollection[1].type2'
+        this.setData({
+            [f]: this.data.formCollection[1].type2
+        })
+    },
+
     //添加股东
     addShareholder() {
         let obj = {
@@ -335,28 +343,37 @@ Page({
             type: 3,
             basicAnnexes: [{
                 fileURL: "",
-                fileName: "股东身份证附件",
+                fileName: "股东身份证附件（正面）",
                 fileType: 1
             }, {
                 fileURL: "",
-                fileName: "股东身份证附件",
+                fileName: "股东身份证附件（反面）",
                 fileType: 2
             }]
         };
-        this.data.shareholder.push(obj);
+        this.data.formCollection[2].type3.push(obj);
+        let f = 'formCollection[2].type3';
         this.setData({
-            shareholder: this.data.shareholder
+            [f]: this.data.formCollection[2].type3
+        })
+    },
+    removeShareholder(e) {
+        let index = e.currentTarget.dataset.index;
+        this.data.formCollection[2].type3.splice(index, 1);
+        let f = 'formCollection[2].type3'
+        this.setData({
+            [f]: this.data.formCollection[2].type3
         })
     },
     //图片上传前
-    afterRead(event) {
+    afterRead(e) {
         let that = this;
-        let index = event.currentTarget.dataset.index;
+        let obj = e.currentTarget.dataset.obj;
+        let type = e.currentTarget.dataset.type;
+        let index = e.currentTarget.dataset.index;
         const {
             file
-        } = event.detail;
-        console.log(event)
-        console.log(file)
+        } = e.detail;
         //当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
         wx.uploadFile({
             url: 'http://192.168.2.114/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
@@ -366,149 +383,208 @@ Page({
                 file: file.path
             },
             success(res) {
-                console.log(res)
                 // 上传完成需要更新 fileList
                 // const { fileList = [] } = this.data;
                 // fileList.push({ ...file, url: res.data });
-                if (event.currentTarget.dataset.file) { //如果有正反
-                    if (event.currentTarget.dataset.obj == "shareholder") {
-                        if (event.currentTarget.dataset.file == 1) {
-                            that.data.shareholder[index].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
-                        } else {
-                            that.data.shareholder[index].basicAnnexes[1].fileURL = JSON.parse(res.data).data;
-                        }
-                    } else if (event.currentTarget.dataset.obj == "supervisor") {
-                        if (event.currentTarget.dataset.file == 1) {
-                            that.data.supervisor[index].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
-                        } else {
-                            that.data.supervisor[index].basicAnnexes[1].fileURL = JSON.parse(res.data).data;
-                        }
-                    } else {
-                        if (event.currentTarget.dataset.file == 1) {
-                            that.data[event.currentTarget.dataset.obj].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
-                        } else {
-                            that.data[event.currentTarget.dataset.obj].basicAnnexes[1].fileURL = JSON.parse(res.data).data;
-                        }
-                    }
-                } else {
-                    that.data[event.currentTarget.dataset.obj].basicAnnexes[0].fileURL = JSON.parse(res.data).data;
-                }
                 that.setData({
-                    [event.currentTarget.dataset.obj]: that.data[event.currentTarget.dataset.obj]
+                    [obj + '[' + index + '].basicAnnexes[' + type + '].fileURL']: JSON.parse(res.data).data
                 })
-                console.log(that.data[event.currentTarget.dataset.obj])
+            }
+        });
+    },
+    afterRead_two(e) {
+        let that = this;
+        let obj = e.currentTarget.dataset.obj;
+        let type = e.currentTarget.dataset.type;
+        const {
+            file
+        } = e.detail;
+        //当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+        wx.uploadFile({
+            url: 'http://192.168.2.114/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
+            filePath: file.path,
+            name: 'file',
+            formData: {
+                file: file.path
+            },
+            success(res) {
+                // 上传完成需要更新 fileList
+                // const { fileList = [] } = this.data;
+                // fileList.push({ ...file, url: res.data });
+                that.data[obj][4][type].basicAnnexes.push({
+                    fileURL: JSON.parse(res.data).data
+                });
+                that.setData({
+                    [obj + '[4].' + type + '.basicAnnexes']: that.data[obj][4][type].basicAnnexes
+                })
             }
         });
     },
     //其它双向绑定
-    bindinput: function(e) {
-        this.data[e.currentTarget.dataset.obj][e.currentTarget.dataset.model] = e.detail;
+    bindinput(e) {
+        let feild = 'formCollection[' + this.data.active + '].' + e.currentTarget.dataset.model;
+        let v = e.detail;
+        if (typeof (e.detail) == 'object') {
+            v = v.value
+        }
+        this.setData({
+            [feild]: v
+        })
+    },
+    bindObjInput(e) {
+        let obj = e.currentTarget.dataset.obj;
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+        this.setData({
+            [obj + '[' + index + '].' + model]: e.detail
+        })
+    },
+    bindinput_two(e) {
+        this.setData({
+            [`formCollection[5].option1.content`]: e.detail
+        })
     },
     //股东双向绑定
-    bindinputs: function(e) {
+    bindinputs(e) {
         this.data.shareholder[e.currentTarget.dataset.index][e.currentTarget.dataset.model] = e.detail;
         this.setData({
             shareholder: this.data.shareholder
         })
     },
     //监事双向绑定
-    bindinputy: function(e) {
+    bindinputy(e) {
         this.data.supervisor[e.currentTarget.dataset.index][e.currentTarget.dataset.model] = e.detail;
         this.setData({
             supervisor: this.data.supervisor
         })
     },
-    showPickerArea: function() {
-        console.log(123)
+    showPickerArea() {
         this.setData({
             showPickerAreas: !this.data.showPickerAreas
         })
     },
-    cancelshowPickerArea: function() {
+    textAreaLineChange(e) {
+        this.setData({
+            txtHeight: e.detail.height
+        })
+    },
+    cancelshowPickerArea() {
         this.setData({
             showPickerAreas: !this.data.showPickerAreas
         })
     },
-    confirms: function(e) {
-        this.data.serveBusiness.areaCode = e.detail.value[e.detail.value.length - 1].id;
+    confirms(e) {
+        let r = this.data.formCollection[0];
+        r.areaCode = e.detail.value[e.detail.value.length - 1].id;
         let str = [];
         e.detail.value.forEach((item) => {
             str.push(item.text)
         })
-        this.data.serveBusiness.areaType = str.join(',');
+        r.areaType = str.join(',');
         this.setData({
-            serveBusiness: this.data.serveBusiness,
+            [`formCollection[0]`]: r,
             showPickerAreas: !this.data.showPickerAreas
         })
     },
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
-        console.log(options)
-        this.getAreaTree()
+    onLoad(options) {
+        console.log(1);
+        this.getAreaTree();
         if (options.id) {
-            this.setData({
-                id: options.id
-            })
+            this.data.id = options.id
         }
-        // console.log(areaList.default)
-        // this.setData({
-        //   areaList: areaList.default
-        // })
     },
-    clickTab: function(e) {
+    clickTab(e) {
         this.setData({
             active: e.detail.index
         })
     },
-    nextClick: function() {
+    nextClick() {
         this.setData({
             active: this.data.active + 1
         })
     },
-    preClick: function() {
+    preClick() {
         this.setData({
             active: this.data.active - 1
         })
     },
     submit() {
+        let that = this;
+        for (let i = 0; i < 1; i++) {
+            console.log(that.data.formCollection);
+            console.log(i);
+            let k = that.deeploop(that.data.formCollection[i])
+            if (k) {
+                Toast.fail({
+                    message: "有未填写信息",
+                    zIndex: 1000
+                });
+                console.log(i);
+                that.setData({
+                    active: i
+                })
+                return;
+            }
+        }
         let obj = {
             serveBusiness: {},
             serveBusinessDetail: [],
             serveBusinessAppend: []
+        };
+        for (let item of that.data.formCollection) {
+            for (let i in item) {
+                if (i.indexOf('type') == 0) {
+                    if (Array.isArray(item[i])) {
+                        for (let r of item[i]) {
+                            obj.serveBusinessDetail.push(r);
+                        }
+                    } else {
+                        obj.serveBusinessDetail.push(item[i]);
+                    }
+                } else if (i.indexOf('option') == 0) {
+                    if (i == 'option57') {
+                        item[i].option = item[i].options.join(',');
+                    };
+                    obj.serveBusinessAppend.push(item[i]);
+                } else {
+                    obj.serveBusiness[i] = item[i];
+                }
+            }
         }
-        obj.serveBusiness = this.data.serveBusiness;
-        obj.serveBusinessDetail = [this.data.legalPerson, this.data.finance, this.data.contract1, this.data.contract2, this.data.contract3, this.data.contract4];
-        if (this.data.shareholder.length > 0) {
-            this.data.shareholder.forEach((item) => {
-                obj.serveBusinessDetail.push(item);
-            })
-        }
-        if (this.data.supervisor.length > 0) {
-            this.data.supervisor.forEach((item) => {
-                obj.serveBusinessDetail.push(item);
-            })
-        }
-        let result1 = {
-            type: 1,
-            option: this.data.result1.option.join(",")
-        }
-        obj.serveBusinessAppend = [result1, this.data.result2, this.data.result3, this.data.result4, this.data.special];
-        console.log(JSON.stringify(obj))
-        if (obj.serveBusiness.id) {
+        if (that.data.id) {
+            obj.serveBusiness.id = that.data.id;
             this.upDatas(obj);
         } else {
             this.addData(obj);
         }
     },
+    deeploop(data) {
+        let that = this;
+        for (let keys in data) { // 遍历目标
+            if (data.hasOwnProperty(keys)) {
+                console.log(keys);
+                if (data[keys] && typeof data[keys] === 'object') { // 如果值是对象，就递归一下
+                    if (that.deeploop(data[keys])) {
+                        return true;
+                    };
+                } else { // 如果不是，就直接赋值
+                    if (!data[keys] && data[keys] !== 0) {
+                        console.log(1);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    },
     addData(obj) { //新增
         let that = this;
         request.postJSON(cfg.serveBusinessCreateUrl, obj).then(rst => {
-            console.log(rst);
             let res = rst.data;
             if (res.status == 1) {
-                console.log(res.data)
 
             }
         })
@@ -516,61 +592,69 @@ Page({
     upDatas(obj) { //修改
         let that = this;
         request.postJSON(cfg.serveBusinessUpdateUrl, obj).then(rst => {
-            console.log(rst);
             let res = rst.data;
             if (res.status == 1) {
-                console.log(res.data)
 
             }
+        })
+    },
+    removeImgHandler(e) {
+        let that = this;
+        let obj = e.currentTarget.dataset.obj;
+        let type = e.currentTarget.dataset.type;
+        let index = e.currentTarget.dataset.index;
+        that.data[obj][4][type].basicAnnexes.splice(index, 1);
+        that.setData({
+            [obj + '[4].' + type + '.basicAnnexes']: that.data[obj][4][type].basicAnnexes
         })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function() {
+    onReady() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {
+    onShow() {
+        console.log(2);
         this.getDic();
-        this.getData(this.data.id);
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function() {
+    onHide() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function() {
+    onUnload() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function() {
+    onPullDownRefresh() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function() {
+    onReachBottom() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function() {
+    onShareAppMessage() {
 
     }
 })
