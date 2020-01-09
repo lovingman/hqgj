@@ -12,7 +12,7 @@
     </view>
     <view class="footer">
         <view class="cancel">
-            <van-button round plain hairline type="default">不同意</van-button>
+            <van-button round plain hairline bindtap="disagreeClick" type="default">不同意</van-button>
         </view>
         <view class="agree">
             <van-button round type="info" bindtap="agreeClick">同意</van-button>
@@ -20,3 +20,4 @@
     </view>
 </view>
 <van-dialog id="van-dialog" />
+    <van-toast id="van-toast" />

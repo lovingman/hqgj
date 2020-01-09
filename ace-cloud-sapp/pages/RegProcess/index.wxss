@@ -1,4 +1,13 @@
 /* pages/RegProcess/index.wxss */
+.phoneBtn{
+    position: fixed;
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background: #2e88f2;
+    right: 10rpx;
+    bottom: 200rpx;
+}
 
 page {
     height: 100%;
