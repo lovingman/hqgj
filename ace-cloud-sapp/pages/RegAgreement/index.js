@@ -1,6 +1,8 @@
 // pages/RegAgreement/index.js
 const app = getApp()
+var util = require("../../utils/util.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
+import Toast from '../../vant/weapp/toast/toast';
 Page({
 
     /**
@@ -112,7 +114,9 @@ Page({
             });
         }
     },
-
+    disagreeClick() {
+        Toast.fail("同意之后才能进行下一步")
+    },
     /**
      * 生命周期函数--监听页面加载
      */

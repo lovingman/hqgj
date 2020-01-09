@@ -17,126 +17,129 @@ Page({
         username: "",
         showPickerAreas: false, //是否显示picker
         dataCollection: [],
+        flagVail: {
+            type5: '',
+            type8: ''
+        },
         formCollection: [{
-            companyName: '', // 企业名称
-            readyName: '', // 备用名称
-            regBonus: '', // 注册资金
-            areaCode: '', //公司地址
-            areaType: '请选择区域', //地址文字信息
-            companyAddress: '', //公司详细地址
-            manageExtent: '' //经营范围
-        },
-        {
-            type1: [{ //法人
-                name: "",
-                mobile: "",
-                type: 1,
-                basicAnnexes: [{
-                    fileURL: "",
-                    fileName: "法人身份证附件(正面)",
-                    fileType: 1
-                }, {
-                    fileURL: "",
-                    fileName: "法人身份证附件(反面)",
-                    fileType: 2
+                companyName: '', // 企业名称
+                readyName: '', // 备用名称
+                regBonus: '', // 注册资金
+                areaCode: '', //公司地址
+                areaType: '请选择区域', //地址文字信息
+                companyAddress: '', //公司详细地址
+                manageExtent: '' //经营范围
+            },
+            {
+                type1: [{ //法人
+                    name: "",
+                    mobile: "",
+                    type: 1,
+                    basicAnnexes: [{
+                        fileURL: "",
+                        fileName: "法人身份证附件(正面)",
+                        fileType: 1
+                    }, {
+                        fileURL: "",
+                        fileName: "法人身份证附件(反面)",
+                        fileType: 2
+                    }]
+                }],
+                type2: [{ //监事
+                    name: "",
+                    mobile: "",
+                    type: 2,
+                    basicAnnexes: [{
+                        fileURL: "",
+                        fileName: "监事身份证附件(正面)",
+                        fileType: 1
+                    }, {
+                        fileURL: "",
+                        fileName: "监事身份证附件(反面)",
+                        fileType: 2
+                    }]
                 }]
-            }],
-            type2: [{ //监事
-                name: "",
-                mobile: "",
-                type: 2,
-                basicAnnexes: [{
-                    fileURL: "",
-                    fileName: "监事身份证附件(正面)",
-                    fileType: 1
-                }, {
-                    fileURL: "",
-                    fileName: "监事身份证附件(反面)",
-                    fileType: 2
+            },
+            {
+                type3: [{
+                    name: "",
+                    sharesProportion: "",
+                    type: 3,
+                    basicAnnexes: [{
+                            fileURL: "",
+                            fileName: "股东身份证附件(正面)",
+                            fileType: 1
+                        },
+                        {
+                            fileURL: "",
+                            fileName: "股东身份证附件(反面)",
+                            fileType: 2
+                        }
+                    ]
                 }]
-            }]
-        },
-        {
-            type3: [{
-                name: "",
-                sharesProportion: "",
-                type: 3,
-                basicAnnexes: [{
-                    fileURL: "",
-                    fileName: "股东身份证附件(正面)",
-                    fileType: 1
+            },
+            {
+                type4: [{
+                    name: "",
+                    mobile: "",
+                    type: 4,
+                    basicAnnexes: [{
+                            fileURL: "",
+                            fileName: "财务身份证附件(正面)",
+                            fileType: 1
+                        },
+                        {
+                            fileURL: "",
+                            fileName: "财务身份证附件(反面)",
+                            fileType: 2
+                        }
+                    ]
+                }]
+            }, {
+                type6: {
+                    name: "房产证复印件",
+                    type: 6,
+                    basicAnnexes: []
                 },
-                {
-                    fileURL: "",
-                    fileName: "股东身份证附件(反面)",
-                    fileType: 2
-                }
-                ]
-            }]
-        },
-        {
-            type4: [{
-                name: "",
-                mobile: "",
-                type: 4,
-                basicAnnexes: [{
-                    fileURL: "",
-                    fileName: "财务身份证附件(正面)",
-                    fileType: 1
+                type7: {
+                    name: "房东营业执照",
+                    type: 7,
+                    basicAnnexes: []
                 },
-                {
-                    fileURL: "",
-                    fileName: "财务身份证附件(反面)",
-                    fileType: 2
+                type5: {
+                    name: "租赁合同复印件",
+                    type: 5,
+                    basicAnnexes: []
+                },
+                type8: {
+                    name: "房屋无偿提供使用证明",
+                    type: 8,
+                    basicAnnexes: []
                 }
-                ]
-            }]
-        }, {
-            type6: {
-                name: "房产证复印件",
-                type: 6,
-                basicAnnexes: []
-            },
-
-            type7: {
-                name: "房东营业执照",
-                type: 7,
-                basicAnnexes: []
-            },
-            type5: {
-                name: "租赁合同复印件",
-                type: 5,
-                basicAnnexes: []
-            },
-            type8: {
-                name: "房屋无偿提供使用证明",
-                type: 8,
-                basicAnnexes: []
+            }, {
+                option1: {
+                    type: 1,
+                    option: 0,
+                    content: ""
+                },
+                option57: {
+                    type: 57,
+                    options: [],
+                    option: '',
+                },
+                option58: {
+                    type: 58,
+                    option: 0,
+                },
+                option59: {
+                    type: 59,
+                    option: 0,
+                },
+                option60: {
+                    type: 60,
+                    option: 0,
+                }
             }
-        }, {
-            option1: {
-                type: 1,
-                option: 0,
-                content: ""
-            },
-            option57: {
-                type: 57,
-                options: [],
-                option: '',
-            },
-            option58: {
-                type: 58,
-                option: 0,
-            },
-            option59: {
-                type: 59,
-                option: 0,
-            },
-            option60: {
-                type: 60,
-                option: 0,
-            }
-        }
         ]
     },
     getData() { //获取创业服务包详情
@@ -234,9 +237,9 @@ Page({
     },
     onSelectChange(e) {
         let type = e.currentTarget.dataset.type;
-        if(type=='57'){
+        if (type == '57') {
             this.data.formCollection[5]['option' + type].options = e.detail
-        }else{
+        } else {
             this.data.formCollection[5]['option' + type].option = e.detail
         }
         let f = `formCollection[5].option${type}`
@@ -285,18 +288,18 @@ Page({
                 }
                 that.data.areaCodeList = res.data;
                 that.data.areaList = [{
-                    values: res.data,
-                    className: 'column0'
-                },
-                {
-                    values: res.data[0].children,
-                    className: 'column1'
-                },
-                {
-                    values: res.data[0].children[0].children,
-                    className: 'column2',
-                    defaultIndex: 0
-                }
+                        values: res.data,
+                        className: 'column0'
+                    },
+                    {
+                        values: res.data[0].children,
+                        className: 'column1'
+                    },
+                    {
+                        values: res.data[0].children[0].children,
+                        className: 'column2',
+                        defaultIndex: 0
+                    }
                 ]
                 that.setData({
                     areaList: that.data.areaList
@@ -424,7 +427,7 @@ Page({
     bindinput(e) {
         let feild = 'formCollection[' + this.data.active + '].' + e.currentTarget.dataset.model;
         let v = e.detail;
-        if (typeof (e.detail) == 'object') {
+        if (typeof(e.detail) == 'object') {
             v = v.value
         }
         this.setData({
@@ -513,9 +516,14 @@ Page({
     },
     submit() {
         let that = this;
-        for (let i = 0; i < 1; i++) {
-            console.log(that.data.formCollection);
-            console.log(i);
+        let j = 6
+        if (that.data.id) {
+            j = 1
+        }
+        for (let i = 0; i < j; i++) {
+            if (i == 5) {
+                continue;
+            }
             let k = that.deeploop(that.data.formCollection[i])
             if (k) {
                 Toast.fail({
@@ -528,6 +536,27 @@ Page({
                 })
                 return;
             }
+        }
+        let b = that.data.formCollection[4];
+        let flag = false;
+        if (b.type6.basicAnnexes.length !== 1){
+             flag = true;
+        }
+        if (b.type7.basicAnnexes.length !== 1) {
+             flag = true;
+        }
+        if ((b.type5.basicAnnexes.length || b.type8.basicAnnexes.length) !== 1) {
+             flag = true;
+        }
+        if (flag) {
+            Toast.fail({
+                message: "有未填写信息",
+                zIndex: 1000
+            });
+            that.setData({
+                active: 4
+            })
+            return;
         }
         let obj = {
             serveBusiness: {},
@@ -565,14 +594,13 @@ Page({
         let that = this;
         for (let keys in data) { // 遍历目标
             if (data.hasOwnProperty(keys)) {
-                console.log(keys);
+                console.log(JSON.stringify(data[keys]));
                 if (data[keys] && typeof data[keys] === 'object') { // 如果值是对象，就递归一下
                     if (that.deeploop(data[keys])) {
                         return true;
                     };
                 } else { // 如果不是，就直接赋值
                     if (!data[keys] && data[keys] !== 0) {
-                        console.log(1);
                         return true;
                     }
                 }
