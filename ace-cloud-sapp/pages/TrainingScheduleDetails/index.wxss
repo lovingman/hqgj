@@ -52,7 +52,7 @@
 
 .org .info .info1 {
     display: flex;
-    align-items: center
+    align-items: center;
 }
 
 .org .info .info1 .name {
@@ -62,7 +62,8 @@
     font-weight: bold;
     line-height: 1.5em;
 }
-.org .info .info1 .iconfont{
+
+.org .info .info1 .iconfont {
     margin-right: 4rpx;
 }
 
@@ -108,6 +109,7 @@
     font-size: 28rpx;
     font-family: PingFangSC-regular;
     line-height: 1.5em;
+    word-break: break-word;
 }
 
 .mod .textColor {

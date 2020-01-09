@@ -1,8 +1,10 @@
 // pages/ExpertAppointment/index.js
 var cfg = require("../../utils/config.js");
+var util = require("../../utils/util.js");
 var request = require("../../utils/request.js");
 import Dialog from '../../vant/weapp/dialog/dialog';
 import Toast from '../../vant/weapp/toast/toast';
+const app = getApp()
 Page({
 
   /**
@@ -13,6 +15,7 @@ Page({
     basicForm: {}, //数据容器
     specialityList: [], //领域数组
     expertId: '', //专家ID
+    getCurrentPageUrlWithArgs: "", //当前页面URL+参数
   },
   //获取数据
   getById: function() {
@@ -34,27 +37,48 @@ Page({
   expertClick: function() {
     var that = this;
     let basicForm = that.data.basicForm;
-    if (basicForm.surplusQuota != 0) {
-      Dialog.confirm({
-        title: '专家确认',
-        message: '是否预约该专家为您服务'
-      }).then(() => {
-        request.postJSON(cfg.financeOrder, {
-          financeId: that.data.id,
-          type: 3,
-          contactId: that.data.expertId
-        }).then(res => {
-          if (res.data.status == 1) {
-            Toast.fail("预约" + res.data.message);
-            this.getById();
-          }
+    if (app.globalData.islogin) {
+      if (app.globalData.userInfo.companyId != null) {
+        if (basicForm.surplusQuota != 0) {
+          Dialog.confirm({
+            title: '专家确认',
+            message: '是否预约该专家为您服务'
+          }).then(() => {
+            request.postJSON(cfg.financeOrder, {
+              financeId: that.data.id,
+              type: 3,
+              contactId: that.data.expertId
+            }).then(res => {
+              if (res.data.status == 1) {
+                Toast.fail("预约" + res.data.message);
+                this.getById();
+              }
+            })
+          }).catch(() => {
+            Toast.fail("已取消当前操作");
+          });
+        } else {
+          Toast.fail("预约名额已满");
+        }
+      } else {
+        Dialog.alert({
+          message: '未绑定企业，请前往个人中心绑定'
+        }).then(() => {
+          // on close
         })
-      }).catch(() => {
-        Toast.fail("已取消当前操作");
-      });
+      }
+
     } else {
-      Toast.fail("预约名额已满");
+      Dialog.alert({
+        message: '未登录，请先登录'
+      }).then(() => {
+        // on close
+        wx.navigateTo({
+          url: '../SignIn/index?url=' + encodeURIComponent(that.data.getCurrentPageUrlWithArgs),
+        })
+      })
     }
+
   },
 
   //拨打电话
@@ -79,7 +103,8 @@ Page({
   onLoad: function(options) {
     var that = this;
     that.setData({
-      id: options.id
+      id: options.id,
+      getCurrentPageUrlWithArgs: util.getCurrentPageUrlWithArgs()
     })
     that.getById();
   },

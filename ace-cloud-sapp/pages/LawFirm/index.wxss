@@ -139,7 +139,6 @@
   line-height: 1.5em;
 }
 
-
 .btn {
   width: 700rpx;
   position: fixed;
@@ -147,4 +146,9 @@
   left: 50%;
   transform: translate(-50%, 0);
   background-color: #fff;
+}
+
+.content  .van-sticky {
+  border-bottom: 1rpx solid #eee;
+  margin-bottom: 20rpx;
 }

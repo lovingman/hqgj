@@ -158,10 +158,14 @@ Page({
     },
     signOutHandler() {
         wx.setStorageSync('Authorization', '');
+        app.globalData.islogin = false;
+        app.globalData.userInfo = '';
         Toast.success({
             message: "退出成功",
             onClose: () => {
-                this.isloginHandler();
+                wx.reLaunch({
+                    url: "/pages/index/index"
+                })
             }
         });
     },

@@ -219,7 +219,7 @@
 }
 
 .sign .iconfont {
-    margin-right: 6rpx;
-    font-size: 26rpx;
-    display: inline-flex;
+  margin-right: 6rpx;
+  font-size: 26rpx;
+  display: inline-flex;
 }
