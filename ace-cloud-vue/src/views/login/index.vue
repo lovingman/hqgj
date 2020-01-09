@@ -6,10 +6,15 @@
           <el-col :span="2" class="margin:auto">
             <!-- <div class="logos">
               <img :src="logoimg" class="logo-img" />
-            </div> -->
+            </div>-->
           </el-col>
           <el-col :span="24">
-            <div class="sys-name">常德市武陵区慧企管家服务平台</div>
+            <div class="sys-name">
+              <img
+                :src="smllLogo"
+                style="width: 35px;height: 35px;margin-top: 12px;float: left; margin-right: 15px;"
+              />常德市武陵区慧企管家服务平台
+            </div>
           </el-col>
         </el-row>
       </el-header>
@@ -85,9 +90,9 @@
           </el-row>
         </el-card>
       </el-main>
-      <el-footer style="height:10vh">
+      <!-- <el-footer style="height:10vh">
         <div class="footer">Copyright © 2015-2019 All Rights Reserved. 湘ICP备15020529号</div>
-      </el-footer>
+      </el-footer>-->
     </el-container>
   </div>
 </template>
@@ -115,6 +120,7 @@ export default {
     return {
       loginimg: require("@/assets/images/login.png"),
       logoimg: require("@/assets/images/logo.png"),
+      smllLogo: require("@/assets/images/smlllogo.png"),
       loginForm: {
         username: "",
         password: ""
@@ -323,14 +329,14 @@ $light_gray: #666d7e;
       font-weight: bold;
     }
   }
-.sys-name{
-  width: 60rem;
-  margin: 20px auto auto;
-  text-align: left;
-  line-height: 0;
-  height: 50px;
-  line-height: 50px;
-}
+  .sys-name {
+    width: 60rem;
+    margin: 20px auto auto;
+    text-align: left;
+    line-height: 0;
+    height: 50px;
+    line-height: 50px;
+  }
   .show-pwd {
     position: absolute;
     right: 10px;
