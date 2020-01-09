@@ -1,102 +1,103 @@
 <view class="index">
-  <view class="header">
-    <van-image fit="cover" width="100%" height="400rpx" src="{{detailsForm.fmUrl}}" />
-    <van-sticky offset-top="{{60}}">
-      <view class="float">
-        <view class="img">
-          <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
+    <view class="header">
+        <van-image fit="cover" width="100%" height="400rpx" src="{{detailsForm.fmUrl}}" />
+        <van-sticky offset-top="{{60}}">
+            <view class="float">
+                <view class="img">
+                    <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
+                </view>
+                <view class="text">
+                    <view class="title van-ellipsis">
+                        {{detailsForm.baseOrganization.orgName}}
+                    </view>
+                    <view class="subTitle van-ellipsis">
+                        <van-icon name="location" /> {{detailsForm.baseOrganization.orgAddress}}
+                    </view>
+                    <view class="bottom">
+                        <view class="sign">
+                            <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+                    </view>
+                </view>
+            </view>
+        </van-sticky>
+    </view>
+    <view class="mod first">
+        <view class="title">
+            机构简介
         </view>
         <view class="text">
-          <view class="title van-ellipsis">
-            {{detailsForm.baseOrganization.orgName}}
-          </view>
-          <view class="subTitle van-ellipsis">
-            <van-icon name="location" /> {{detailsForm.baseOrganization.orgAddress}}
-          </view>
-          <view class="bottom">
-          <view class="sign">
-              <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-          </view>
+            {{detailsForm.baseOrganization.content}}
         </view>
-      </view>
-    </van-sticky>
-  </view>
-  <view class="mod first">
-    <view class="title">
-      机构简介
     </view>
-    <view class="text">
-      {{detailsForm.baseOrganization.content}}
-    </view>
-  </view>
-  <view class="mod">
-    <view class="title">
-      服务介绍
-    </view>
-    <view class="text">
-      {{detailsForm.content}}
-    </view>
-  </view>
-  <view class="mod last">
-    <view class="title">
-      费用说明
-    </view>
-    <view class="text">
-      通过此平台注册企业成功后，平台发放500积分，积分用于抵扣该项服务的费用，实际产生的费用由常德市武陵区工信局为你提供资金补贴。 下单前，请先咨询服务机构，具体以沟通事项为准。
-    </view>
-  </view>
-  <view class="footer">
-    <view class="phone" catchtap="telePhoneClick" data-id="{{detailsForm.contactPersonTel}}">
-      <view>
-        <van-icon name="phone" />
-      </view>
-      <view>
-        免费咨询
-      </view>
-    </view>
-    <view class="btn">
-      <van-button round type="info" size="large" wx:if="{{detailsForm.type == 2}}" bindtap="orderClick">立即下单</van-button>
-      <van-button round type="info" size="large" wx:if="{{detailsForm.integral <= 500 && detailsForm.type != 2}}" bindtap="orderClick">500积分抵扣</van-button>
-    </view>
-  </view>
-  <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
-    <view class="goods">
-      <view class="img">
-        <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
-      </view>
-      <view class="text">
-        <view class="title van-ellipsis">
-          {{detailsForm.baseOrganization.orgName}}
+    <view class="mod">
+        <view class="title">
+            服务介绍
         </view>
-        <view class="price" wx:if="{{isTrue}}">
-          ￥
-          <text>{{detailsForm.minPrice}}~{{detailsForm.maxPrice}}</text>
+        <view class="text">
+            {{detailsForm.content}}
         </view>
-        <view class="price" wx:if="{{isPrice}}">
-          ￥
-          <text>{{priceModel.price}}</text>
-        </view>
-      </view>
     </view>
-    <view class="option">
-      <view class="title">
-        服务项目
-      </view>
-      <view class="service-box">
-        <view class='service-list {{showId == item.id ? "active" : ""}}' bindtap="activeClick" wx:for="{{financeItemArr}}" wx:for-item="{{item}}" wx:key="{{index}}" wx:for-item="item" data-id="{{item.id}}" data-index="{{index}}">
-          <text>{{item.itemName}}</text>
+    <view class="mod last" wx:if="{{detailsForm.type != 2}}">
+        <view class="title">
+            费用说明
         </view>
-      </view>
-      <!-- <van-radio-group value="{{ radio }}">
+        <view class="text">
+            通过此平台注册企业成功后，平台赠送500积分，积分可在平台内抵扣服务费用，超出的部分由您自行承担，下单前请先咨询服务机构，最终解释权归武陵区中小企业公共服务平台所有。
+        </view>
+    </view>
+    <view class="footer">
+        <view class="phone" catchtap="telePhoneClick" data-id="{{detailsForm.contactPersonTel}}">
+            <view>
+                <van-icon name="phone" />
+            </view>
+            <view>
+                免费咨询
+            </view>
+        </view>
+        <view class="btn">
+            <van-button round type="info" size="large" wx:if="{{detailsForm.status == 1}}">暂未上线</van-button>
+            <van-button round type="info" size="large" wx:if="{{detailsForm.type == 2 && detailsForm.status != 1}}" bindtap="orderClick">立即下单</van-button>
+            <van-button round type="info" size="large" wx:if="{{detailsForm.integral <= 500 && detailsForm.type != 2 && detailsForm.status != 1}}" bindtap="orderClick">500积分抵扣</van-button>
+        </view>
+    </view>
+    <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
+        <view class="goods">
+            <view class="img">
+                <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
+            </view>
+            <view class="text">
+                <view class="title van-ellipsis">
+                    {{detailsForm.baseOrganization.orgName}}
+                </view>
+                <view class="price" wx:if="{{isTrue}}">
+                    ￥
+                    <text>{{detailsForm.minPrice}}~{{detailsForm.maxPrice}}</text>
+                </view>
+                <view class="price" wx:if="{{isPrice}}">
+                    ￥
+                    <text>{{priceModel.price}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="option">
+            <view class="title">
+                服务项目
+            </view>
+            <view class="service-box">
+                <view class='service-list {{showId == item.id ? "active" : ""}}' bindtap="activeClick" wx:for="{{financeItemArr}}" wx:for-item="{{item}}" wx:key="{{index}}" wx:for-item="item" data-id="{{item.id}}" data-index="{{index}}">
+                    <text>{{item.itemName}}</text>
+                </view>
+            </view>
+            <!-- <van-radio-group value="{{ radio }}">
         <van-radio class="{{radio=='1'?'chcked':''}}" use-icon-slot value="{{ radio }}" name="1" wx:for="{{financeItemArr}}" wx:for-item="{{item}}">
           {{item.itemName}}
         </van-radio>
       </van-radio-group> -->
-    </view>
-    <view class="btn orderBtn">
-      <van-button round type="info" size="large" bindtap="orderDetermine">确定</van-button>
-    </view>
-  </van-popup>
-  <van-toast id="van-toast" />
-  <van-dialog id="van-dialog" />
+        </view>
+        <view class="btn orderBtn">
+            <van-button round type="info" size="large" bindtap="orderDetermine">确定</van-button>
+        </view>
+    </van-popup>
+    <van-toast id="van-toast" />
+    <van-dialog id="van-dialog" />
 </view>

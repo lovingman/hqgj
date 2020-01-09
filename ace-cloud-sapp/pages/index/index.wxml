@@ -29,7 +29,12 @@
             热门培训
             <van-icon name="fire" />
         </view>
-        <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}">
+        <view wx:if="{{trainTotal == 0}}" class="no-tis">
+            <view class="no-text">
+                因临近春节，暂未安排培训
+            </view>
+        </view>
+        <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" wx:if="{{trainTotal != 0}}">
             <swiper-item wx:for="{{trainList}}" wx:key="{{index}}" wx:for-item="item" catchtap="trainClick" data-index='{{index}}'>
                 <view class="swiper-content">
                     <view class="title van-multi-ellipsis">

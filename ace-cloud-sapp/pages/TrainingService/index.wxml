@@ -13,10 +13,10 @@
       <view class="info">
         <view class="name van-multi-ellipsis">{{item.title}}</view>
         <view class="org">
-          <van-icon name="location" />{{astFilter.addressIntercept(item.detailedAddress)}}
+          <van-icon name="location" />{{item.detailedAddress}}
         </view>
         <view class="org">
-          <van-icon name="clock-o" /> {{astFilter.timeYMDHM(item.startDate)}}
+          <van-icon name="clock-o" /> {{item.startDate}}
           <view class="state greay" wx:if="{{item.status == 3}}">已结束</view>
           <view class="state" wx:if="{{item.status == 1 && item.surplusQuota > 0}}">仅剩名额{{item.surplusQuota}}个</view>
           <view class="state red" wx:if="{{item.surplusQuota == 0}}">已满员</view>

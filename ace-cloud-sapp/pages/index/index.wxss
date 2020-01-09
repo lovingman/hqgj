@@ -131,9 +131,11 @@
     background: #fff;
     padding-bottom: 40rpx;
 }
-.news .title{
+
+.news .title {
     background: #fff;
 }
+
 .news .list {
     padding: 24rpx;
     width: 700rpx;
@@ -154,4 +156,19 @@
     font-size: 24rpx;
     font-family: PingFangSC-regular;
     margin-top: 14rpx;
+}
+
+.no-tis {
+    padding: 0 30rpx;
+    border-bottom: 20rpx solid #f7f9fc;
+}
+
+.no-text {
+    background-color: #fff;
+    padding: 30rpx;
+    text-align: center;
+    margin-bottom: 20rpx;
+    font-size: 30rpx;
+    color: rgba(121, 128, 146, 1);
+    border-radius: 10rpx;
 }
