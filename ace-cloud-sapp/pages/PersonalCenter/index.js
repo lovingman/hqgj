@@ -56,7 +56,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        this.initUserInfo();
+        let that=this;
+        Auth.checkLogin(that);
+        that.initUserInfo();
     },
 
     // 判断是否登录
@@ -112,6 +114,7 @@ Page({
                 Toast.success(r.message)
                 app.globalData.islogin = false;
                 this.isloginHandler();
+                Auth.checkLogin(that);
             } else {
                 Toast.fail(r.message)
             }

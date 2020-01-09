@@ -27,33 +27,18 @@ Auth.checkSession = function(appPage, flag) {
 
     }
 }
-// 检查登录
+// 检查登录状态
 Auth.checkLogin = function(appPage) {
-    // 微信登录信息
     let wxLoginInfo = wx.getStorageSync('wxLoginInfo');
-    wx.checkSession({
-        success: function() {
-            if (!wxLoginInfo.js_code) {
-                Auth.wxLogin().then(res => {
-                    appPage.setData({
-                        wxLoginInfo: res
-                    });
-                    wx.setStorageSync('wxLoginInfo', res);
-                    console.log('checkSession_success_wxLogins');
-                })
-            }
-        },
-        fail: function() {
-            Auth.wxLogin().then(res => {
-                appPage.setData({
-                    wxLoginInfo: res
-                });
-                wx.setStorageSync('wxLoginInfo', res);
-                console.log('checkSession_fail_wxLoginfo');
-            })
-        }
+    Auth.wxLogin().then(res => {
+        appPage.setData({
+            wxLoginInfo: res
+        });
+        wx.setStorageSync('wxLoginInfo', res);
+        console.log('checkSession_success_wxLogins');
     })
 }
+
 Auth.checkAgreeGetUser = function(e, app, appPage, authFlag) {
     let wxLoginInfo = wx.getStorageSync('wxLoginInfo');
     if (wxLoginInfo.js_code) {
@@ -99,7 +84,20 @@ Auth.checkAgreeGetUser = function(e, app, appPage, authFlag) {
 }
 
 Auth.wxLogin = function() {
-    return new Promise(function(resolve, reject) {})
+    return new Promise(function(resolve, reject) {
+        wx.login({
+            success: function(res) {
+                let args = {};
+                args.js_code = res.code;
+                resolve(args);
+            },
+            fail: function(err) {
+                console.log(err);
+                reject(err);
+            }
+        });
+    })
+
 }
 
 // 同意获取用户信息
@@ -188,40 +186,33 @@ Auth.wxUserInfo = function(e) {
     return new Promise(function(resolve, reject) {
         var userInfo = e.detail.userInfo;
         // 判断用户是否授权
-        if (userInfo != null && userInfo != undefined) { //授权
-            wx.login({
-                success: function(res) {
-                    console.log(res);
-                    // return;
-                    let args = {
-                        iv: e.detail.iv,
-                        encryptedData: e.detail.encryptedData,
-                        signature: e.detail.signature,
-                        rawData: e.detail.rawData,
-                        jscode: res.code,
-                        sysId: 'hqgj'
-                    };
-                    request.post(config.authority, args).then(response => {
-                        let res = response.data;
-                        if (res.status == '1') {
-                            resolve(res.data);
-                        }else{
-                            reject(error);
-                        }
-                    }).catch(error => {
-                        wx.showToast({
-                            title: "授权失败，请重试",
-                            icon: 'none',
-                            duration: 2000
-                        });
-                        reject(error);
-                    })
-                },
-                fail: function(err) {
-                    console.log(err);
-                    reject(err);
+        let wxLoginInfo = wx.getStorageSync('wxLoginInfo');
+        if (userInfo != null && userInfo != undefined && wxLoginInfo != null & wxLoginInfo != undefined) { //授权
+            // return;
+            let args = {
+                iv: e.detail.iv,
+                encryptedData: e.detail.encryptedData,
+                signature: e.detail.signature,
+                rawData: e.detail.rawData,
+                jscode: wxLoginInfo.js_code,
+                sysId: 'hqgj'
+            };
+            request.post(config.authority, args).then(response => {
+                let res = response.data;
+                if (res.status == '1') {
+                    resolve(res.data);
+                } else {
+                    reject(error);
                 }
-            });
+            }).catch(error => {
+                wx.showToast({
+                    title: "授权失败，请重试",
+                    icon: 'none',
+                    duration: 2000
+                });
+                Auth.checkLogin(that);
+                reject(error);
+            })
         } else { //不授权
             console.log(333, '执行到这里，说明拒绝了授权')
             wx.showToast({

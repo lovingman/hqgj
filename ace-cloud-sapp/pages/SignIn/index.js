@@ -26,7 +26,6 @@ Page({
     onLoad: function(options) {
         var that = this;
         that.data.url=options.url;
-        Auth.setUserInfoData(that);
         Auth.checkLogin(that);
     },
     getUserInfo: function(e) {
