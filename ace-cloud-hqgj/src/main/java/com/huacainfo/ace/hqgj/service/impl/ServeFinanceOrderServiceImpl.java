@@ -147,7 +147,7 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         o.setCompanyId(vo.getCompanyId());
         o.setOrgId(f.getOrgId());
         o.setCreateDate(new Date());
-        o.setStatus("1");
+        o.setStatus("0");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
