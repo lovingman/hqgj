@@ -13,6 +13,8 @@ public class ServeCultivateDetail extends ServeCultivate {
     private Integer surplusQuota;
     //当前用户 是否报名
     private Integer isEnroll;
+    //是否签到
+    private Integer isSign;
     private BaseOrganization baseOrganization;
     private List<BasicAnnex> basicAnnexList;
     private List<ServeCultivateEnroll> cultivateEnrollList;
@@ -56,5 +58,13 @@ public class ServeCultivateDetail extends ServeCultivate {
 
     public void setIsEnroll(Integer isEnroll) {
         this.isEnroll = isEnroll;
+    }
+
+    public Integer getIsSign() {
+        return isSign;
+    }
+
+    public void setIsSign(Integer isSign) {
+        this.isSign = isSign;
     }
 }
