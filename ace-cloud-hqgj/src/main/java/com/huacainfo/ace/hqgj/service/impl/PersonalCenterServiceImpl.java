@@ -168,14 +168,28 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
         if (CommonUtils.isBlank(appId)) {
             return new ResponseDTO(ResultCode.FAIL, "未找到数据！");
         }
-        MapWechatSys sys=new MapWechatSys();
-        sys.setId(GUIDUtil.getGUID());
-        sys.setUserId(userProp.getUserId());
-        sys.setUnionId(unionId);
-        sys.setCreateDate(new Date());
-        sys.setAppId(appId);
-        sys.setSysId("hqgj");
-        registerDao.insertMapWechatSys(sys);
+        int temp = registerDao.isUnionid(unionId);
+        if(temp>0){
+            MapWechatSys sys = new MapWechatSys();
+            sys.setUserId(userProp.getUserId());
+            sys.setUnionId(unionId);
+           int i= registerDao.updateMapWechatSys(sys);
+           if(i<=0){
+               return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
+           }
+        }else {
+            MapWechatSys sys = new MapWechatSys();
+            sys.setId(GUIDUtil.getGUID());
+            sys.setUserId(userProp.getUserId());
+            sys.setUnionId(unionId);
+            sys.setCreateDate(new Date());
+            sys.setAppId(appId);
+            sys.setSysId("hqgj");
+            int i= registerDao.insertMapWechatSys(sys);
+            if(i<=0){
+                return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 }

@@ -52,5 +52,7 @@ public interface RegisterDao {
 
     int insertMapWechatSys(MapWechatSys mapWechatSys);
 
+    int updateMapWechatSys(MapWechatSys mapWechatSys);
+
     String selectAppId();
 }

@@ -92,11 +92,7 @@
     select user_id from portal_hqgj.users
     </select>
 
-    <select id="isUnionid" parameterType="java.lang.String" resultType="int">
-            select count(1)
-        from ace_hqgj_wxms.map_wechat_sys
-        where unionId = #{unionid,jdbcType=VARCHAR}
-  </select>
+
 
     <update id="updateUsers" parameterType="com.huacainfo.ace.common.security.model.Users">
     update portal_hqgj.users
@@ -124,6 +120,12 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
+    <select id="isUnionid" parameterType="java.lang.String" resultType="int">
+            select count(1)
+        from ace_hqgj_wxms.map_wechat_sys
+        where unionId = #{unionid,jdbcType=VARCHAR}
+  </select>
+
     <insert id="insertMapWechatSys" parameterType="com.huacainfo.ace.hqgj.model.MapWechatSys">
     insert into ace_hqgj_wxms.map_wechat_sys (id, appType, unionId,
       userId, status, remark,
@@ -134,6 +136,12 @@
       #{createDate,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}
       )
   </insert>
+
+    <update id="updateMapWechatSys" parameterType="com.huacainfo.ace.hqgj.model.MapWechatSys">
+      update ace_hqgj_wxms.map_wechat_sys
+      set  userId = #{userId,jdbcType=VARCHAR}
+      where unionId = #{unionid,jdbcType=VARCHAR}
+  </update>
 
     <select id="selectAppId" resultType="java.lang.String">
     select appId
