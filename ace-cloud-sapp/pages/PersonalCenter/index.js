@@ -15,7 +15,7 @@ Page({
         navigates: [{
                 text: '注册记录',
                 imgUrl: '/assets/image/icon3-1.png',
-                path: '/'
+                path: '/pages/ServiceEnterprise/index'
             },
             {
                 text: '培训记录',
@@ -56,7 +56,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        let that=this;
+        let that = this;
         Auth.checkLogin(that);
         that.initUserInfo();
     },

@@ -14,6 +14,7 @@ Page({
         areaList: [],
         areaCodeList: [],
         active: 0, //tab切换
+        phoneBar: false,
         username: "",
         showPickerAreas: false, //是否显示picker
         dataCollection: [],
@@ -172,6 +173,11 @@ Page({
                     formCollection: that.data.dataCollection
                 })
             }
+        })
+    },
+    phoneBarCloseHandler() {
+        this.setData({
+            phoneBar: false
         })
     },
     changeTabHandler(e) {
@@ -539,14 +545,14 @@ Page({
         }
         let b = that.data.formCollection[4];
         let flag = false;
-        if (b.type6.basicAnnexes.length !== 1){
-             flag = true;
+        if (b.type6.basicAnnexes.length !== 1) {
+            flag = true;
         }
         if (b.type7.basicAnnexes.length !== 1) {
-             flag = true;
+            flag = true;
         }
         if ((b.type5.basicAnnexes.length || b.type8.basicAnnexes.length) !== 1) {
-             flag = true;
+            flag = true;
         }
         if (flag) {
             Toast.fail({
@@ -613,7 +619,17 @@ Page({
         request.postJSON(cfg.serveBusinessCreateUrl, obj).then(rst => {
             let res = rst.data;
             if (res.status == 1) {
-
+                Toast.success({
+                    message: "申请注册成功\n返回个人中心",
+                    zIndex: 2000,
+                    onClose() {
+                        wx.reLaunch({
+                            url: '/pages/PersonalCenter/index',
+                        })
+                    }
+                });
+            } else {
+                Toast.fail(res.message);
             }
         })
     },
@@ -622,7 +638,17 @@ Page({
         request.postJSON(cfg.serveBusinessUpdateUrl, obj).then(rst => {
             let res = rst.data;
             if (res.status == 1) {
-
+                Toast.success({
+                    message: "修改成功\n返回个人中心",
+                    zIndex: 2000,
+                    onClose(){
+                        wx.reLaunch({
+                            url: '/pages/PersonalCenter/index',
+                        })
+                    }
+                });
+            }else{
+                Toast.fail(res.message);
             }
         })
     },
@@ -684,5 +710,19 @@ Page({
      */
     onShareAppMessage() {
 
+    },
+    callPhone() {
+        this.setData({
+            phoneBar: true
+        })
+    },
+    callPhoneHandler(e) {
+        let number = e.currentTarget.dataset.number;
+        wx.makePhoneCall({
+            phoneNumber: number, //仅为示例，并非真实的电话号码
+            fail() {
+                Toast.fail("调用电话失败")
+            }
+        })
     }
 })

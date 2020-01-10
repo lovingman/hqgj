@@ -55,12 +55,12 @@
             </view>
         </view>
         <view class="btn">
-            <van-button round type="info" size="large" wx:if="{{detailsForm.status == 1}}">暂未上线</van-button>
+            <van-button round type="info" disabled size="large" wx:if="{{detailsForm.status == 1}}">暂未上线</van-button>
             <van-button round type="info" size="large" wx:if="{{detailsForm.type == 2 && detailsForm.status != 1}}" bindtap="orderClick">立即下单</van-button>
             <van-button round type="info" size="large" wx:if="{{detailsForm.integral <= 500 && detailsForm.type != 2 && detailsForm.status != 1}}" bindtap="orderClick">500积分抵扣</van-button>
         </view>
     </view>
-    <van-popup closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
+    <van-popup safe-area-inset-bottom closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">
         <view class="goods">
             <view class="img">
                 <van-image width="100%" height="100%" lazy-load fit="cover" src="{{detailsForm.baseOrganization.fmUrl}}" />
