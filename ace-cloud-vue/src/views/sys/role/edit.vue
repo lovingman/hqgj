@@ -16,7 +16,7 @@
             </el-form-item>
 
             <el-form-item label="角色类型" prop="type">
-             <el-select v-model="form.type" placeholder="请选择单位类型" style="width:100%">
+             <el-select v-model="form.type" placeholder="请选择角色类型" style="width:100%">
                 <el-option
                   v-for="item in dict['40']"
                   :key="item.code"
@@ -35,7 +35,7 @@
              <el-form-item label="归属系统" prop="syid">
               <el-select
                 v-model="form.syid"
-                placeholder="请选择归属统"
+                placeholder="请选择归属系统"
                 style="width:100%">
                 <el-option
                 v-for="item in dict['41']"
@@ -76,7 +76,7 @@ export default {
         remark:""
       },
       rules: {
-        name: [
+        roleName: [
           { required: true, message: "请输入角色名称", trigger: "blur" },
           { min: 2, max: 50, message: "长度在 2 到 50 个字符", trigger: "blur" }
         ],

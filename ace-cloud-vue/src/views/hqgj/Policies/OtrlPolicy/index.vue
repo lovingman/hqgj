@@ -2,7 +2,7 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-button @click="create" style="float:left;" type="primary">创建</el-button>
+        <el-button @click="create" v-if="userBtn['/hqgj/lawPolicy/create']" style="float:left;" type="primary">创建</el-button>
         <el-col :span="10" class="selectSearch">
           <el-col :span="7" style="margin-right:20px;">
             <el-select @change="handleStatus" clearable placeholder="请选择" v-model="statusObj">
@@ -38,11 +38,11 @@
             <el-button
               @click="release(scope.$index,scope.row)"
               type="text"
-              v-if="scope.row.status=='1'"
+              v-if="scope.row.status=='1' && userBtn['/hqgj/lawPolicy/updateStatus']"
             >发布</el-button>
             <!--<el-button v-if="scope.row.status=='2'" type="text">发布</el-button>-->
-            <el-button @click="edit(scope.$index,scope.row)" type="text">编辑</el-button>
-            <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
+            <el-button @click="edit(scope.$index,scope.row)" v-if="userBtn['/hqgj/lawPolicy/update']" type="text">编辑</el-button>
+            <el-button @click="handleDele(scope.$index,scope.row)" v-if="userBtn['/hqgj/lawPolicy/deleteById']" type="text">删除</el-button>
             <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
           </template>
         </el-table-column>
@@ -62,7 +62,7 @@
 
 <script>
 import { getPolicy, deletePolicyById, updateStatus } from "@/api/hqgj/Policies";
-
+import {mapGetters} from "vuex";
 export default {
   name: "index",
   data() {
@@ -93,6 +93,9 @@ export default {
       },
       tableData: []
     };
+  },
+  computed: {
+    ...mapGetters(["userBtn"])
   },
   created() {
     this.getlist();

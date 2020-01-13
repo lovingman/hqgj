@@ -94,7 +94,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <photo ref="imgUpload"></photo>
+            <photo ref="imgUpload" :getData="getData"></photo>
           </el-row>
           <el-row>
             <el-form-item label="服务介绍：" prop="content">
@@ -192,6 +192,7 @@ export default {
       corpArr: [],
       //专家类型
       contactPersonArr: [],
+      getData: {}, //专家形象照片
       //服务包容器
       serviceForm: {
         type: "", //类型
@@ -347,11 +348,14 @@ export default {
     changeContactPerson(value) {
       let obj = {};
       obj = this.contactPersonArr.find(item => {
-        //这里的userList就是上面遍历的数据源
+        //这里的contactPersonArr就是上面遍历的数据源
         return item.id === value; //筛选出匹配数据
       });
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
+      let arrs = {};
+      arrs.fmUrl = obj.fmUrl;
+      this.getData = arrs;
     },
     //类型选择
     changeType(value) {
@@ -391,6 +395,7 @@ export default {
                 let obj = {};
                 obj.id = personnelRows[i].id;
                 obj.name = personnelRows[i].name;
+                obj.fmUrl = personnelRows[i].imagePhoto;
                 this.contactPersonArr.push(obj);
               }
             }

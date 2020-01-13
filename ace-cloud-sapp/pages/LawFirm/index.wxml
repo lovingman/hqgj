@@ -49,6 +49,7 @@
       <van-image width="100%" height="1260rpx" lazy-load fit="cover" src="/assets/image/detail.png" />
     </van-tab>
   </van-tabs>
+  <view class="bottom"></view>
   <view class="btn">
     <van-button round type="info" size="large" bindtap="phoneClick" data-id="{{basicForm.contactPersonTel}}">免费咨询</van-button>
   </view>

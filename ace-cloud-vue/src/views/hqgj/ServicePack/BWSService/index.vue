@@ -93,13 +93,13 @@
               @click="examine(scope.$index,scope.row)"
               height="40"
               type="text"
-              v-if="scope.row.status=='0' || scope.row.status=='2'"
+              v-if="(scope.row.status=='0' || scope.row.status=='2') && userBtn['/hqgj/serveBusiness/selectBasicStatus']"
             >审核</el-button>
             <el-button
               @click="progress(scope.$index,scope.row)"
               height="40"
               type="text"
-              v-if="scope.row.status=='1'"
+              v-if="scope.row.status=='1' && userBtn['/hqgj/serveBusiness/updateBasicStatus']"
             >进度标记</el-button>
             <el-button
               v-if="scope.row.status=='3'"
@@ -107,9 +107,9 @@
               height="40"
               type="text"
             >进度记录</el-button>
-            <span class="strightline">|</span>
-            <el-button @click="dele(scope.$index,scope.row)" type="text">删除</el-button>
-            <span class="strightline">|</span>
+            <span class="strightline" v-if="((scope.row.status=='0' || scope.row.status=='2') && userBtn['/hqgj/serveBusiness/selectBasicStatus']) || (scope.row.status=='1' && userBtn['/hqgj/serveBusiness/updateBasicStatus']) || (scope.row.status=='3')">|</span>
+            <el-button @click="dele(scope.$index,scope.row)" v-if="userBtn['/hqgj/serveBusiness/deleteById']" type="text">删除</el-button>
+            <span class="strightline" v-if="userBtn['/hqgj/serveBusiness/deleteById']">|</span>
             <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
           </template>
         </el-table-column>
@@ -166,7 +166,7 @@ import {
   updateBasicStatus
 } from "@/api/hqgj/BWSService";
 import { getAreaTree, getDict } from "@/api/sys";
-
+import {mapGetters} from "vuex";
 export default {
   name: "index",
   data() {
@@ -212,6 +212,9 @@ export default {
       value: ""
       //   timeArr: []
     };
+  },
+  computed: {
+    ...mapGetters(["userBtn"])
   },
   created() {
     this.getlist();
@@ -360,7 +363,7 @@ export default {
 .container {
   padding: 20px;
   background-color: #fff;
- 
+
 }
 .handle-box {
   /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {

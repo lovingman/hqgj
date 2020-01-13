@@ -1,6 +1,7 @@
 {
-  "usingComponents": {
-      "van-button": "/vant/weapp/button/index",
-      "van-steps": "/vant/weapp/steps/index"
-  }
+    "navigationBarTitleText": "注册进度",
+    "usingComponents": {
+        "van-button": "/vant/weapp/button/index",
+        "van-steps": "/vant/weapp/steps/index"
+    }
 }

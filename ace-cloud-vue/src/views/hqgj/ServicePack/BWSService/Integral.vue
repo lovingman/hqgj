@@ -3,7 +3,7 @@
     <div class="table">
       <div class="handle-box">
         <el-row>
-          <el-col :span="18">
+          <el-col :span="18" v-if="userBtn['/hqgj/serveBusinessIntegral/create']">
             <el-button
               @click="create"
               icon="el-icon-plus"
@@ -11,6 +11,7 @@
               type="primary"
             >创建</el-button>
           </el-col>
+          <el-col :span="18" v-else="userBtn['/hqgj/serveBusinessIntegral/create']">&nbsp;</el-col>
           <!--<el-col :span="4">-->
           <!--<el-input-->
           <!--v-model="query.companyName"-->
@@ -50,7 +51,7 @@
           <template slot-scope="scope">
             <!--<el-button @click="" type="text">编辑</el-button>-->
             <!--<span class="strightline">|</span>-->
-            <el-button @click="deletIntegral(scope.$index,scope.row)" type="text">删除</el-button>
+            <el-button @click="deletIntegral(scope.$index,scope.row)" v-if="userBtn['/hqgj/serveBusinessIntegral/deleteById']" type="text">删除</el-button>
             <!--<span class="strightline">|</span>-->
             <!--<el-button @click="preview" type="text">详情</el-button>-->
           </template>
@@ -71,6 +72,7 @@
 
 <script>
 import { getPage, deleteIntegral } from "@/api/hqgj/BWSService";
+import {mapGetters} from "vuex";
 export default {
   name: "index",
   data() {
@@ -86,6 +88,9 @@ export default {
       value: "",
       value2: ""
     };
+  },
+  computed: {
+    ...mapGetters(["userBtn"])
   },
   created() {
     this.getlist();

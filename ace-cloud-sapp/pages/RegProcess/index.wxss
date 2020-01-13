@@ -1,16 +1,25 @@
 /* pages/RegProcess/index.wxss */
-.phoneBtn{
-    position: fixed;
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50%;
-    background: #2e88f2;
-    right: 10rpx;
-    bottom: 200rpx;
-}
 
 page {
     height: 100%;
+}
+
+.phoneBtn {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(65, 135, 242, 1);
+    margin-bottom: 40rpx;
+    height: 50rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phoneBtn .customer {
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 6rpx;
 }
 
 .index {
@@ -294,11 +303,12 @@ page {
     float: right;
 }
 
-.van-button--mini  .van-button__text{
+.van-button--mini  .van-button__text {
     font-size: 28rpx;
     color: rgba(46, 136, 242, 1);
 }
-.van-radio__label{
+
+.van-radio__label {
     text-align: left;
 }
 

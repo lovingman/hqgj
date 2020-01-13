@@ -1,9 +1,9 @@
 <!--pages/RegProgress/index.wxml-->
 <view>
     <view class="content">
-        <van-steps steps="{{ steps }}" direction="vertical" active="{{ active }}" />
+        <van-steps steps="{{ steps }}" active-color="{{activeColor}}" direction="vertical" active="{{ active }}" />
     </view>
-    <view class="btn">
-        <van-button round type="info" size="large" bindtap="updata">确定</van-button>
+    <view class="btn" wx:if="{{flag}}">
+        <van-button round type="info" size="large" bindtap="updata">前去修改</van-button>
     </view>
 </view>

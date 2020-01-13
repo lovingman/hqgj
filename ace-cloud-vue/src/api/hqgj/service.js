@@ -7,6 +7,14 @@ export function getList(query) {
         params: query
     })
 }
+
+export function getUser(query) {
+    return request({
+        url: '/hqgj/personalCenter/homePage',
+        method: 'get',
+        params: query
+    })
+}
 export function getById(id) {
     return request({
         url: '/hqgj/baseOrganization/getById',

@@ -2,7 +2,7 @@
     <view class="modal" wx:for="{{servicePack}}" wx:key="index" wx:for-item="item">
         <view class="header van-hairline--bottom">
             <text>企业注册申请</text>
-            <view class="right">进度查询
+            <view catchtap="progressHandler" data-id="{{item.id}}" class="right">进度查询
                 <van-icon name="arrow" />
             </view>
         </view>
@@ -17,46 +17,7 @@
             </view>
         </view>
     </view>
-
-    <view class="modal">
-        <view class="header van-hairline--bottom">
-            <text>培训提升服务</text>
-            <view class="right">全部培训
-                <van-icon name="arrow" />
-            </view>
-        </view>
-        <view class="content">
-            <view class="title">《全面提升逻辑思维能力--结构化思维及在企业管理中的应用》</view>
-            <view class="footer">
-                <van-icon name="clock-o" />10.18 14:00-16:00</view>
-            <view class="footer">
-                <van-icon name="location" />
-                <text>常德市武陵区互联网产业园</text>
-                <text class="state">待线下签到</text>
-            </view>
-        </view>
-    </view>
-    <view class="modal">
-        <view class="header van-hairline--bottom">
-            <text>专家问诊</text>
-            <view class="right">全部记录
-                <van-icon name="arrow" />
-            </view>
-        </view>
-        <view class="content">
-            <view class="card">
-                <view class="img">
-                    <van-image round width="100%" height="100%" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-                </view>
-                <view class="info">
-                    <view class="name">王麒霖</view>
-                    <view class="org">常德市武陵区会计事务所·投资顾问</view>
-                </view>
-            </view>
-            <view class="footer">
-                <text>申请时间：2019-10-11 12:00:00</text>
-                <text class="state">待专家确认</text>
-            </view>
-        </view>
+    <view class="tip" wx:if="{{!servicePack.length}}">
+        无注册记录
     </view>
 </view>
