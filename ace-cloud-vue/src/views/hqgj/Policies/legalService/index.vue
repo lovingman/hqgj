@@ -2,7 +2,7 @@
     <div class="main-box">
         <div class="header">
             <el-row>
-                <el-button @click="create" style="float:left;" type="primary">创建</el-button>
+                <el-button @click="create" style="float:left;" v-if="userBtn['/hqgj/lawServe/create']" type="primary">创建</el-button>
                 <el-col :span="10" class="selectSearch">
                     <el-input class="input-with-select" clearable placeholder="请输入名称" v-model="query.title">
                         <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
@@ -18,8 +18,8 @@
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button @click="download(scope.$index,scope.row)" type="text">下载</el-button>
-                        <el-button @click="edit(scope.$index,scope.row)" type="text">编辑</el-button>
-                        <el-button @click="handleDele(scope.$index,scope.row)" type="text">删除</el-button>
+                        <el-button @click="edit(scope.$index,scope.row)" v-if="userBtn['/hqgj/lawServe/update']" type="text">编辑</el-button>
+                        <el-button @click="handleDele(scope.$index,scope.row)" v-if="userBtn['/hqgj/lawServe/deleteById']" type="text">删除</el-button>
                         <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
@@ -40,7 +40,7 @@
 <script>
     import {getServe, deleteServeById} from "@/api/hqgj/Policies";
     import {getAnnex} from "@/api/hqgj/BWSService";
-
+    import {mapGetters} from "vuex";
     export default {
         name: "index",
         data() {
@@ -57,6 +57,9 @@
                 },
                 tableData: []
             };
+        },
+        computed: {
+            ...mapGetters(["userBtn"])
         },
         created() {
             this.getlist();
