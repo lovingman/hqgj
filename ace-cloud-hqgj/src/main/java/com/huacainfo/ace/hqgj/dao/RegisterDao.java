@@ -2,6 +2,7 @@ package com.huacainfo.ace.hqgj.dao;
 
 import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.hqgj.model.MapWechatSys;
+import com.huacainfo.ace.hqgj.model.WechatConfig;
 import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -54,5 +55,5 @@ public interface RegisterDao {
 
     int updateMapWechatSys(MapWechatSys mapWechatSys);
 
-    String selectAppId();
+    WechatConfig findBySysId();
 }

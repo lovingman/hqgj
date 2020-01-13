@@ -12,6 +12,7 @@ import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.BaseCompanyMember;
 import com.huacainfo.ace.hqgj.model.BaseOrganization;
 import com.huacainfo.ace.hqgj.model.MapWechatSys;
+import com.huacainfo.ace.hqgj.model.WechatConfig;
 import com.huacainfo.ace.hqgj.service.PersonalCenterService;
 import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
@@ -109,7 +110,12 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      */
     @Override
     public ResponseDTO homePage(UserProp userProp) {
-        UsersVo user= personCenterDao.selectUserInfo(userProp.getUserId());
+        UsersVo user=null;
+        try {
+             user = personCenterDao.selectUserInfo(userProp.getUserId());
+        }catch (Exception e){
+            return new ResponseDTO(ResultCode.FAIL, "用户信息获取失败！");
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！",user);
     }
 
@@ -164,8 +170,8 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
      */
     @Override
     public ResponseDTO bindUnionId(UserProp userProp,String unionId){
-        String appId=registerDao.selectAppId();
-        if (CommonUtils.isBlank(appId)) {
+        WechatConfig config=registerDao.findBySysId();
+        if (config==null||CommonUtils.isEmpty(config.getAppId())) {
             return new ResponseDTO(ResultCode.FAIL, "未找到数据！");
         }
         int temp = registerDao.isUnionid(unionId);
@@ -183,7 +189,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
             sys.setUserId(userProp.getUserId());
             sys.setUnionId(unionId);
             sys.setCreateDate(new Date());
-            sys.setAppId(appId);
+            sys.setAppId(config.getAppId());
             sys.setSysId("hqgj");
             int i= registerDao.insertMapWechatSys(sys);
             if(i<=0){
