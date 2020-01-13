@@ -97,6 +97,6 @@ public interface ServeFinanceOrderService {
      * @return
      * @throws Exception
      */
-    ResponseDTO updateStatus(String id,String status) throws Exception;
+    ResponseDTO updateStatus(String id,String status,UserProp userProp) throws Exception;
 
 }

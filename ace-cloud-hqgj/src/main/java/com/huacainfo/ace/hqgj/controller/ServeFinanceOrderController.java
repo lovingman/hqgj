@@ -224,7 +224,7 @@ public class ServeFinanceOrderController extends BaseController {
         if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
-        return serveFinanceOrderService.updateStatus(id,status);
+        return serveFinanceOrderService.updateStatus(id,status,this.getCurUserProp());
     }
 
 

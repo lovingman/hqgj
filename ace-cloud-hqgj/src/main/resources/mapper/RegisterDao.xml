@@ -143,8 +143,8 @@
       where unionId = #{unionid,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectAppId" resultType="java.lang.String">
-    select appId
+    <select id="findBySysId" resultType="com.huacainfo.ace.hqgj.model.WechatConfig">
+    select appId,appSecret,accessToken,ticket,expiresIn,refreshTime,deadTime,appName
     from ace_hqgj_wxms.wechat_config
     where sysId = 'hqgj'
     </select>

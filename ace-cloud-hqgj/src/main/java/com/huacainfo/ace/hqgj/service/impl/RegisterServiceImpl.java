@@ -12,6 +12,7 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.constant.CommonConstant;
 import com.huacainfo.ace.hqgj.dao.RegisterDao;
 import com.huacainfo.ace.hqgj.model.MapWechatSys;
+import com.huacainfo.ace.hqgj.model.WechatConfig;
 import com.huacainfo.ace.hqgj.service.RegisterService;
 import com.huacainfo.ace.hqgj.vo.UsersVo;
 import org.slf4j.Logger;
@@ -176,8 +177,8 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Log(operationObj = "微信和用户绑定", operationType = "创建", detail = "创建系统登录账户")
     private ResponseDTO insertMapWechatSys(Users dto){
-        String appId=registerDao.selectAppId();
-        if (CommonUtils.isBlank(appId)) {
+        WechatConfig config=registerDao.findBySysId();
+        if (config==null||CommonUtils.isEmpty(config.getAppId())) {
             return new ResponseDTO(ResultCode.FAIL, "未找到数据！");
         }
         MapWechatSys sys=new MapWechatSys();
@@ -185,7 +186,7 @@ public class RegisterServiceImpl implements RegisterService {
         sys.setUserId(dto.getUserId());
         sys.setUnionId(dto.getUnionId());
         sys.setCreateDate(new Date());
-        sys.setAppId(appId);
+        sys.setAppId(config.getAppId());
         sys.setSysId("hqgj");
         registerDao.insertMapWechatSys(sys);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
