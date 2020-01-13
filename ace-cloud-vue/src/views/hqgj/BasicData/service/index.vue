@@ -103,7 +103,8 @@ import {
   deleteById,
   deleteByIds,
   exportXls,
-  personPage
+  personPage,
+  getUser
 } from "@/api/hqgj/service";
 import { getAreaTree, getDict } from "@/api/sys";
 import {mapGetters} from "vuex";
@@ -119,10 +120,12 @@ export default {
       multipleSelection: [], //选中行数据
       dict: [], //服务机构类型
       list: [],
+      userinfo:{},
       typeObj: "",
       query: {
         orgName: "",
-        type: ""
+        type: "",
+        id:""
       },
       query2: {
         orgId: ""
@@ -137,10 +140,22 @@ export default {
     ...mapGetters(["userBtn"])
   },
   created() {
-    this.getlist();
+    this.getUserlist();
     this.dictQuery();
   },
   methods: {
+    getUserlist(){
+      getUser().then(response=>{
+        this.userinfo = response.data;
+        if(this.userinfo.userType == 4){
+          this.getlist();
+        }else{
+          this.query.id = this.userinfo.corpId;
+          this.getlist();
+        }
+        console.log(123)
+      })
+    },
     handleQuery: function() {
       this.currentPage = 1;
       this.getlist();
