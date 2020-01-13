@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="title">编辑服务机构</div>
+        <div class="title">机构编辑</div>
         <div class="handle-box">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="类型:" prop="type">
