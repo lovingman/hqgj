@@ -3,9 +3,10 @@
         <div class="table">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="12" v-if="userBtn['/hqgj/baseCompany/create']" >
                         <el-button @click="create" icon="el-icon-plus" style="float: left;border-radius:5px;"  type="primary">创建</el-button>
                     </el-col>
+                    <el-col :span="12" v-else="userBtn['/hqgj/baseCompany/create']">&nbsp;</el-col>
                     <!--<el-col :span="14">-->
                         <!--<el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">-->
                             <!--<el-button>-->
@@ -61,12 +62,12 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button @click="person(scope.$index,scope.row)" height="40" type="text">员工管理</el-button>
-                        <span class="strightline">|</span>
-                        <el-button @click="edit(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
-                        <span class="strightline">|</span>
-                        <el-button @click="handleDelete(scope.$index,scope.row)" type="text">删除</el-button>
-                        <span class="strightline">|</span>
+                        <el-button @click="person(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseCompanyMember/page']" height="40" type="text">员工管理</el-button>
+                        <span class="strightline" v-if="userBtn['/hqgj/baseCompanyMember/page']">|</span>
+                        <el-button @click="edit(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseCompany/update']" height="40" type="text">编辑</el-button>
+                        <span class="strightline" v-if="userBtn['/hqgj/baseCompany/update']" >|</span>
+                        <el-button @click="handleDelete(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseCompany/deleteById']" type="text">删除</el-button>
+                        <span class="strightline" v-if="userBtn['/hqgj/baseCompany/deleteById']">|</span>
                         <el-button @click="preview(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
@@ -86,6 +87,7 @@
 
 <script>
     import {getList, deleteById, deleteByIds, exportXls,personPage} from "@/api/hqgj/enterprise";
+    import {mapGetters} from "vuex";
 
     export default {
         name: "index",
@@ -118,6 +120,9 @@
                 }
 
             };
+        },
+        computed: {
+            ...mapGetters(["userBtn"])
         },
         created() {
             this.getlist();

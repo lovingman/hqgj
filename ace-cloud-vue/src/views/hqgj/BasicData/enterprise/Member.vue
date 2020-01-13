@@ -55,7 +55,7 @@
                     <template slot-scope="scope">
                         <!--<el-button @click="" height="40" type="text" @click="editPerson">编辑</el-button>-->
                         <!--<span class="strightline">|</span>-->
-                        <el-button @click="Delete(scope.$index,scope.row)" type="text">删除</el-button>
+                        <el-button @click="Delete(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseCompanyMember/deleteById']" type="text">删除</el-button>
                         <!--<span class="strightline">|</span>-->
                         <!--<el-button @click="previewPerson" type="text">详情</el-button>-->
                     </template>
@@ -77,6 +77,7 @@
 
 <script>
     import {personPage,deletePerson,deletePersons,exportXlsPerson} from "@/api/hqgj/enterprise";
+    import {mapGetters} from "vuex";
     export default {
         name: "Member",
         data() {
@@ -96,6 +97,9 @@
                     name: ""
                 }
             };
+        },
+        computed: {
+            ...mapGetters(["userBtn"])
         },
         created() {
             this.getlist();

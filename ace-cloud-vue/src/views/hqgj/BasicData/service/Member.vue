@@ -3,10 +3,11 @@
         <div class="table">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="16">
+                    <el-col :span="16" v-if="userBtn['/hqgj/baseOrganizationMember/create']">
                         <el-button @click="createPerson" icon="el-icon-plus" style="float: left;border-radius:5px;" type="primary">添加
                         </el-button>
                     </el-col>
+                    <el-col :span="16" v-else="userBtn['/hqgj/baseOrganizationMember/create']">&nbsp;</el-col>
                     <!--<el-col :span="14">-->
                         <!--<el-dropdown @command="handleCommand" style="line-height: 35px;" trigger="click">-->
                             <!--<el-button>-->
@@ -46,10 +47,10 @@
                 </el-table-column>
                 <el-table-column align="right" fixed="right" header-align="center" label="操作" width="150">
                     <template slot-scope="scope">
-                        <el-button @click="editPerson(scope.$index,scope.row)" height="40" type="text">编辑</el-button>
-                        <span class="strightline">|</span>
-                        <el-button @click="Delete(scope.$index,scope.row)" type="text">删除</el-button>
-                        <span class="strightline">|</span>
+                        <el-button @click="editPerson(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseOrganizationMember/update']" height="40" type="text">编辑</el-button>
+                        <span class="strightline" v-if="userBtn['/hqgj/baseOrganizationMember/update']">|</span>
+                        <el-button @click="Delete(scope.$index,scope.row)" v-if="userBtn['/hqgj/baseOrganizationMember/deleteById']" type="text">删除</el-button>
+                        <span class="strightline" v-if="userBtn['/hqgj/baseOrganizationMember/deleteById']">|</span>
                         <el-button @click="previewPerson(scope.$index,scope.row)" type="text">详情</el-button>
                     </template>
                 </el-table-column>
@@ -69,7 +70,7 @@
 
 <script>
     import {personPage, deletePerson, deletePersons,exportXlsPerson} from "@/api/hqgj/service";
-
+    import {mapGetters} from "vuex";
     export default {
         name: "Member",
         data() {
@@ -88,6 +89,9 @@
                     name:""
                 }
             };
+        },
+        computed: {
+            ...mapGetters(["userBtn"])
         },
         created() {
             this.getlist();
