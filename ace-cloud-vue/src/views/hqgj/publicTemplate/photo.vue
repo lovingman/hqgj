@@ -79,6 +79,15 @@ export default {
       },
       immediate: true, //立刻
       deep: false
+    },
+    "getData.fmUrl": {
+      handler(newName, oldName) {
+        if (newName) {
+          this.initEditForm({ fmUrl: newName });
+        }
+      },
+      immediate: false, //立刻
+      deep: true
     }
   },
   data() {
