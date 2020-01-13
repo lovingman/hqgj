@@ -152,3 +152,6 @@
   border-bottom: 1rpx solid #eee;
   margin-bottom: 20rpx;
 }
+.bottom{
+    height: 200rpx;
+}
