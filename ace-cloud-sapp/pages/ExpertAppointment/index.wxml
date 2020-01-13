@@ -1,7 +1,7 @@
 <view>
   <view class="org">
     <view class="img">
-      <van-image round width="100%" height="100%" fit="cover" src="{{basicForm.baseOrganizationMember.imagePhoto}}" />
+      <van-image round width="100%" height="100%" fit="cover" src="{{basicForm.fmUrl}}" />
     </view>
     <view class="info">
       <view class="info1">
@@ -30,7 +30,7 @@
       简介
     </view>
     <view class="text">
-      {{basicForm.baseOrganizationMember.content}}
+      {{basicForm.content}}
     </view>
   </view>
   <view class="mod">
