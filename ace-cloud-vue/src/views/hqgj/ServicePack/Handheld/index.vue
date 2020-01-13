@@ -2,11 +2,16 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-col :span="10">
+        <el-col :span="6">
           <el-button type="primary" style="float:left;" @click="create">创建</el-button>
         </el-col>
-        <el-col class="selectSearch" :span="14">
+        <el-col class="selectSearch" :span="18">
           <el-col :span="5">
+            <el-select v-model="query.type" clearable placeholder="请选择服务类型">
+              <el-option v-for="item in typeArr" :key="item.code" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="5" :offset="1">
             <el-select v-model="query.orgId" clearable placeholder="请选择服务机构">
               <el-option
                 v-for="item in mechanismArr"
@@ -26,7 +31,7 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="12" :offset="1">
+          <el-col :span="6" :offset="1">
             <el-input
               placeholder="请输入服务机构名称"
               v-model.trim="query.orgName"
@@ -72,7 +77,11 @@
             <el-button type="text" v-if="scope.row.status =='0'" @click="examine(scope.row)">审核</el-button>
             <el-button type="text" v-if="scope.row.status =='1'" @click="online(scope.row)">上线</el-button>
             <el-button type="text" v-if="scope.row.status =='3'" @click="offline(scope.row)">下线</el-button>
-            <el-button type="text" v-if="scope.row.status !='4' && scope.row.status !='2'" @click="edit(scope.row)">编辑</el-button>
+            <el-button
+              type="text"
+              v-if="scope.row.status !='4' && scope.row.status !='2'"
+              @click="edit(scope.row)"
+            >编辑</el-button>
             <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
@@ -118,6 +127,7 @@ import {
   updateStatus,
   deleteByIds
 } from "@/api/hqgj/handheld";
+import { getDict } from "@/api/sys";
 export default {
   name: "index",
   data() {
@@ -130,10 +140,13 @@ export default {
       query: {
         orgName: "", //搜索
         orgId: "", //服务机构
-        status: "" //状态
+        status: "", //状态
+        type: "" //类型
       },
       //机构容器
       mechanismArr: [],
+      //服务类型
+      typeArr: [],
       //审核容器
       updateState: {
         status: 1,
@@ -172,6 +185,7 @@ export default {
   },
   created() {
     this.getList();
+    this.dictQuery();
     this.getOrgArr();
   },
   methods: {
@@ -191,7 +205,13 @@ export default {
         }
       });
     },
-
+    //获取类型字典
+    dictQuery() {
+      getDict("55").then(res => {
+        this.typeArr = res.data["55"]; //类型字典
+        console.log(this.typeArr);
+      });
+    },
     //选择tableSize事件
     handleTableSize(size) {
       this.tableSize = size;

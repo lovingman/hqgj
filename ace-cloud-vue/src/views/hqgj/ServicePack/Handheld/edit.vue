@@ -289,9 +289,9 @@ export default {
     };
   },
   created() {
-    this.dictQuery();
-    this.load();
     this.loadUser();
+    this.load();
+    this.dictQuery();
   },
   methods: {
     //获取用户信息
@@ -302,9 +302,10 @@ export default {
           //如果是工信局请求服务机构数据, 2是会计师服务type值
           let obj = 2;
           this.orgDisabled = false;
-          this.corpArr = [];
           lecturerMechanism(obj).then(res => {
             if (res.status == 1) {
+              console.log(res);
+              this.corpArr = [];
               this.orgRows = res.rows;
               for (let i = 0; i < this.orgRows.length; i++) {
                 var obj = {};
@@ -330,6 +331,7 @@ export default {
           this.getData = res.data; //传递给子组件的数据
           this.changeType(res.data.type);
           //机构数组
+          this.corpArr = [];
           var arrs = {};
           arrs.id = res.data.orgId;
           arrs.name = res.data.orgName;
@@ -340,10 +342,8 @@ export default {
                 let arrs = {};
                 arrs.id = res.rows[i].id;
                 arrs.name = res.rows[i].name;
+                arrs.fmUrl = res.rows[i].imagePhoto;
                 this.contactPersonArr.push(arrs);
-                // if (this.serviceForm.contactId != res.rows[i].id) {
-                //   this.serviceForm.contactId = " ";
-                // }
               }
             }
           });
@@ -370,6 +370,7 @@ export default {
       });
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
+      this.getData.fmUrl = obj.fmUrl;
     },
     //类型选择
     changeType(value) {
@@ -412,8 +413,8 @@ export default {
     //提交
     submission(formName) {
       //验证子组件图片是否有上传照片
-   
-        let photo;
+
+      let photo;
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
         photo = valid;
       });

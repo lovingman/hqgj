@@ -83,7 +83,7 @@
 					"id": 3,
 					"name": "创业服务包进度条",
 					"pathName": "pages/RegProgress/index",
-					"query": "",
+					"query": "id=db5cb124d6e54dccb12488afbd459f62",
 					"scene": null
 				},
 				{
@@ -287,6 +287,13 @@
 					"name": "这是什么",
 					"pathName": "pages/ServiceAccounting/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ServiceEnterprise/index",
+					"pathName": "pages/ServiceEnterprise/index",
+					"query": "id=db5cb124d6e54dccb12488afbd459f62",
 					"scene": null
 				}
 			]
