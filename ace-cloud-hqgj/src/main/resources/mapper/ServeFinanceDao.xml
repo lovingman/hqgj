@@ -141,7 +141,7 @@
         select
         <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode,o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
         m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,m.jobs mjobs,m.mobile mmobile,
-        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3' and o.status!='1'))as surplusQuota,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and o.type='3' and o.status!='1'))as surplusQuota,
         (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
         (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
         (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) as integral,
@@ -171,7 +171,7 @@
         select
         <include refid="Vo_Column_List"/>,o.orgName,o.areaCode orgAreaCode, o.orgAddress, o.content orgContent,o.fmUrl orgFmUrl,
         m.`name`mName,m.content mContent,m.speciality,m.imagePhoto,m.id mId,m.jobs mjobs,m.mobile mmobile,
-        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and type='3') )as surplusQuota,
+        (t.quota-(SELECT count(*) from serve_finance_order o where o.financeId=t.id and o.type='3' and o.status!='1') )as surplusQuota,
         case p.type
         when '4' then   '常德市'
         when '3' then   CONCAT('常德市',p.name)

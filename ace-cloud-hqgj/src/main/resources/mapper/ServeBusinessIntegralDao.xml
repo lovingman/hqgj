@@ -164,10 +164,11 @@
     update serve_business_integral
     <if test='type!= null and type == "reduce"'>
     set surplusIntegral =surplusIntegral - 500
+        where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>0
     </if>
     <if test='type!= null and type == "add"'>
      set surplusIntegral =surplusIntegral + 500
+        where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>=0
      </if>
-    where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>=0
     </update>
 </mapper>

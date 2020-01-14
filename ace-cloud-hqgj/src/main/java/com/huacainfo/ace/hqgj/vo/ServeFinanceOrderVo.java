@@ -1,5 +1,6 @@
 package com.huacainfo.ace.hqgj.vo;
 
+import com.huacainfo.ace.hqgj.model.ServeFinance;
 import com.huacainfo.ace.hqgj.model.ServeFinanceOrder;
 
 
@@ -20,6 +21,8 @@ public class ServeFinanceOrderVo extends ServeFinanceOrder {
     private String userName;
     //预约人电话
     private String userMobile;
+
+    private ServeFinance serveFinance;
     @Override
     public String getFmUrl() {
         return fmUrl;
@@ -76,5 +79,13 @@ public class ServeFinanceOrderVo extends ServeFinanceOrder {
 
     public void setUserMobile(String userMobile) {
         this.userMobile = userMobile;
+    }
+
+    public ServeFinance getServeFinance() {
+        return serveFinance;
+    }
+
+    public void setServeFinance(ServeFinance serveFinance) {
+        this.serveFinance = serveFinance;
     }
 }
