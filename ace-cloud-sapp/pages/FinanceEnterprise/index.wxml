@@ -18,23 +18,17 @@
                             <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
                     </view>
                 </view>
+                <van-icon name="arrow" />
             </view>
         </van-sticky>
     </view>
     <view class="mod first">
         <view class="title">
-            机构简介
-        </view>
-        <view class="text">
-            {{detailsForm.baseOrganization.content}}
-        </view>
-    </view>
-    <view class="mod">
-        <view class="title">
             服务介绍
         </view>
         <view class="text">
-            {{detailsForm.content}}
+        <rich-text nodes="{{detailsForm.content}}"></rich-text>
+            
         </view>
     </view>
     <view class="mod last" wx:if="{{detailsForm.type != 2}}">
@@ -56,8 +50,8 @@
         </view>
         <view class="btn">
             <van-button round type="info" disabled size="large" wx:if="{{detailsForm.status == 1}}">暂未上线</van-button>
-            <van-button round type="info" size="large" wx:if="{{detailsForm.type == 2 && detailsForm.status != 1}}" bindtap="orderClick">立即下单</van-button>
-            <van-button round type="info" size="large" wx:if="{{detailsForm.integral <= 500 && detailsForm.type != 2 && detailsForm.status != 1}}" bindtap="orderClick">500积分抵扣</van-button>
+            <van-button round type="info" size="large" wx:elif="{{detailsForm.type == 2}}" bindtap="orderClick">立即下单</van-button>
+            <van-button round type="info" size="large" wx:elif="{{detailsForm.type != 2}}" bindtap="orderClick">500积分抵扣</van-button>
         </view>
     </view>
     <van-popup safe-area-inset-bottom closeable close-icon="close" show="{{ show }}" round position="bottom" bind:close="onClose">

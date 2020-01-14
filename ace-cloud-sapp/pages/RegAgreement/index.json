@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "创业服协议",
+    "navigationBarTitleText": "创业服务包协议",
     "usingComponents": {
         "van-button": "/vant/weapp/button/index",
         "van-dialog": "/vant/weapp/dialog/index"

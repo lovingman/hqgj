@@ -135,10 +135,10 @@
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
     </select>
-    <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeBusinessIntegral" resultType="int">
+    <select id="isExist" parameterType="java.lang.String" resultType="int">
             select count(1)
         from serve_business_integral
-        where id = #{id,jdbcType=VARCHAR}
+        where companyId = #{companyId,jdbcType=VARCHAR}
   </select>
     <delete id="deleteByIds">
         delete from serve_business_integral
@@ -162,7 +162,13 @@
 
     <update id="updateIntegral" parameterType="java.lang.String">
     update serve_business_integral
-    set surplusIntegral =surplusIntegral-500
-    where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>0
+    <if test='type!= null and type == "reduce"'>
+    set surplusIntegral =surplusIntegral - 500
+        where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>0
+    </if>
+    <if test='type!= null and type == "add"'>
+     set surplusIntegral =surplusIntegral + 500
+        where companyId=(select m.companyId from base_company_member m where m.id=#{userId}) and  surplusIntegral>=0
+     </if>
     </update>
 </mapper>

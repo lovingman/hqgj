@@ -22,7 +22,7 @@
 }
 
 .float .text {
-  width: 510rpx;
+  width: 480rpx;
   word-wrap: break-word;
 }
 

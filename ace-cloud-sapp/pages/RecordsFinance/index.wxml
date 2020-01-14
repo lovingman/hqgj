@@ -16,10 +16,10 @@
                         </view>
                         <view class="card">
                             <view class="img">
-                                <van-image width="100%" height="100%" fit="cover" src="{{itm.imagePhoto}}" />
+                                <van-image width="100%" height="100%" fit="cover" src="{{itm.serveFinance.fmUrl}}" />
                             </view>
                             <view class="info">
-                                <view class="name van-multi-ellipsis">{{itm.orgName}}</view>
+                                <view class="name van-ellipsis">{{itm.orgName}}</view>
                                 <view class="service">{{itm.itemName}}</view>
                                 <view class="price">￥{{itm.price?itm.price:"0.00"}}</view>
                             </view>
@@ -27,7 +27,7 @@
                         <view class="handler">
                             <view class="type">#{{astFilter.financeType(itm.type)}}</view>
                             <view>
-                                <van-button wx:if="{{itm.status=='0'}}" catchtap="cancelOrder" data-id="{{itm.id}}" data-index="{{idx}}" class="btnStyle1" plain hairline round size="small">取消报名</van-button>
+                                <van-button wx:if="{{itm.status=='0'}}" catchtap="cancelOrder" data-id="{{itm.id}}" data-index="{{idx}}" class="btnStyle1" plain hairline round size="small">取消订单</van-button>
                                 <van-button wx:if="{{itm.status!='0'}}" catchtap="deleteOrder" data-id="{{itm.id}}" data-index="{{idx}}" class="del" plain round hairline size="small">删除</van-button>
                                 <van-button wx:if="{{itm.status=='31'}}" catchtap="evaluateOrder" data-id="{{itm.id}}" data-index="{{idx}}" data-type="{{itm.type}}" data-orderNo="{{itm.orderNo}}" data-orgId="{{itm.orgId}}" plain round type="info" size="small">评价</van-button>
                             </view>

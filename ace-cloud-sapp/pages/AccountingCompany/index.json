@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "法律服务详情",
+  "usingComponents": {
+    "van-tab": "/vant/weapp/tab/index",
+    "van-tabs": "/vant/weapp/tabs/index",
+    "van-image": "/vant/weapp/image/index",
+    "van-icon": "/vant/weapp/icon/index",
+    "van-button": "/vant/weapp/button/index"
+  }
+}

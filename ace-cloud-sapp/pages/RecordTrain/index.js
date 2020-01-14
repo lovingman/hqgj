@@ -169,6 +169,7 @@ Page({
         });
     },
     deleteEnroll(e) {
+        let that=this;
         Dialog.confirm({
             title: '注意',
             message: '确定删除'
@@ -184,13 +185,7 @@ Page({
                         message: "删除成功",
                         zIndex: 1000
                     });
-                    let idx = that.data.active;
-                    let targetObj = that.data.tabs[idx];
-                    targetObj.list.splice(index, 1);
-                    let list = "tabs[" + idx + "].list"
-                    that.setData({
-                        [list]: targetObj.list
-                    })
+                    that.onPullDownRefresh();
                 } else {
                     Toast.fail({
                         message: "删除失败",

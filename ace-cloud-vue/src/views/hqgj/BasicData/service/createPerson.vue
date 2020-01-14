@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="title" style="margin-bottom: 30px">添加机构成员</div>
+        <div class="title" style="margin-bottom: 30px">机构成员添加</div>
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-row>
@@ -330,12 +330,12 @@
             //限制用户上传的形象照格式和大小
             beforeAvatarUpload(file) {
                 var isRightType = /^image\/(jpeg|png|jpg)$/.test(file.type);
-                var imgSize = file.size / 1024 / 1024 < 5;
+                var imgSize = file.size / 1024 / 1024 < 10;
                 if (!isRightType) {
                     this.$message.warning("上传头像图片只能是 jpg、jpeg、png 格式!");
                 }
                 if (!imgSize) {
-                    this.$message.warning("上传头像图片大小不能超过 5MB!");
+                    this.$message.warning("上传头像图片大小不能超过 10MB!");
                 }
                 return isRightType && imgSize;
             },

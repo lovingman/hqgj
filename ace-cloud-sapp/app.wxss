@@ -1,5 +1,5 @@
 /**app.wxss**/
-@import "vantyle/index.wxss";
+@import "/vantyle/index.wxss";
 @import '/assets/fonts/iconfont.wxss';
 .container {
   height: 100%;

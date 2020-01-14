@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="title">创建服务机构</div>
+        <div class="title">机构创建</div>
         <div class="handle-box">
             <el-form :model="addform" :rules="addrules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="类型:" prop="type">

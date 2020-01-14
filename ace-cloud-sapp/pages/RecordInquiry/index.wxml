@@ -19,7 +19,7 @@
                                 <van-image width="100%" height="100%" round fit="cover" src="{{itm.imagePhoto}}" />
                             </view>
                             <view class="info">
-                                <view class="name van-multi-ellipsis">{{itm.mName}}</view>
+                                <view class="name van-ellipsis">{{itm.mName}}</view>
                                 <view class="service">{{itm.orgName}}</view>
                             </view>
                         </view>

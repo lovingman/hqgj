@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="title" style="margin-bottom: 30px">编辑企业</div>
+        <div class="title" style="margin-bottom: 30px">企业编辑</div>
         <div class="handle-box">
             <el-form :model="form" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm">
                 <el-form-item label="企业名称:" prop="companyName">

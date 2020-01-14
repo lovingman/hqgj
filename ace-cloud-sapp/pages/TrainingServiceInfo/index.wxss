@@ -188,6 +188,7 @@
     left: 50%;
     transform: translate(-50%, 0);
     background-color: #fff;
+    z-index: 99999;
 }
 
 .btn .remark {

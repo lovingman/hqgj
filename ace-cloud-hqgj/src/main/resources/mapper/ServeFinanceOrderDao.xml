@@ -97,12 +97,30 @@
         <result column="imagePhoto" jdbcType="VARCHAR" property="imagePhoto"/>
         <result column="userName" jdbcType="VARCHAR" property="userName"/>
         <result column="userMobile" jdbcType="VARCHAR" property="userMobile"/>
-
+    <association property="serveFinance" javaType="com.huacainfo.ace.hqgj.model.ServeFinance">
+      <id column="fcid" jdbcType="VARCHAR" property="id"/>
+      <result column="fcorgId" jdbcType="VARCHAR" property="orgId"/>
+      <result column="fcorgName" jdbcType="VARCHAR" property="orgName"/>
+      <result column="fccontactId" jdbcType="VARCHAR" property="contactId"/>
+      <result column="fccontactPersonName" jdbcType="VARCHAR" property="contactPersonName"/>
+      <result column="fccontactPersonTel" jdbcType="VARCHAR" property="contactPersonTel"/>
+      <result column="fcaddress" jdbcType="VARCHAR" property="address"/>
+      <result column="fcquota" jdbcType="INTEGER" property="quota"/>
+      <result column="fctype" jdbcType="VARCHAR" property="type"/>
+      <result column="fcfmUrl" jdbcType="VARCHAR" property="fmUrl"/>
+      <result column="fccontent" jdbcType="VARCHAR" property="content"/>
+      <result column="fcstatus" jdbcType="VARCHAR" property="status"/>
+   </association>
     </resultMap>
     <sql id="Vo_Column_List">
     t.id, t.orderNo, t.financeId, t.type, t.orgId,  t.orgPersonName, t.orgPersonTel, t.companyId,  t.companyPersonName,
      t.companyPersonTel, t.address, t.quota, t.fmUrl, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName,
       t.modifyDate, t.status,t.itemId,t.contactId
+  </sql>
+    <sql id="Vo_OtherColumn_List">
+    o.orgName,o.fmUrl,co.companyName,f.itemName,f.price,m.id contactId,m.name mName,m.imagePhoto,u.name userName,u.mobile userMobile,
+     fc.id fcid, fc.orgId fcorgId, fc.contactPersonName fccontactPersonName, fc.contactPersonTel fccontactPersonTel, fc.address fcaddress,
+      fc.quota fcquota, fc.type fctype, fc.fmUrl fcfmUrl, fc.content fccontent
   </sql>
     <sql id="From_Statement">
     FROM serve_finance_order t
@@ -147,10 +165,12 @@
     </sql>
     <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.fmUrl,co.companyName,f.itemName,f.price,m.id contactId,m.name mName,m.imagePhoto,u.name userName,u.mobile userMobile
+        <include refid="Vo_Column_List"/>,
+        <include refid="Vo_OtherColumn_List"/>
         <include refid="From_Statement"/>
         left join  base_organization o on o.id=t.orgId
         left join  base_company co on  co.id=t.companyId
+        left join  serve_finance fc on fc.id=t.financeId
         left join  serve_finance_item f on f.id=t.itemId
         left join  base_organization_member m on m.id=t.contactId
         left join  portal_hqgj.users u on u.user_id=t.createUserId
@@ -158,11 +178,13 @@
     </select>
     <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
         select
-        <include refid="Vo_Column_List"/>,o.orgName,o.fmUrl,co.companyName,f.itemName,f.price,m.id contactId,m.name mName,m.imagePhoto,u.name userName,u.mobile userMobile
+        <include refid="Vo_Column_List"/>,
+        <include refid="Vo_OtherColumn_List"/>
         <include refid="From_Statement"/>
         left join  base_organization o on o.id=t.orgId
         left join  base_company co on  co.id=t.companyId
         left join  serve_finance_item f on f.id=t.itemId
+        left join  serve_finance fc on fc.id=t.financeId
         left join  base_organization_member m on m.id=t.contactId
         left join  portal_hqgj.users u on u.user_id=t.createUserId
         <include refid="Where_Condition"/>

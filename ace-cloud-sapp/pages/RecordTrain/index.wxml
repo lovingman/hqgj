@@ -11,7 +11,7 @@
                                 <van-image width="100%" height="100%" fit="cover" src="{{itm.fmUrl}}" />
                             </view>
                             <view class="info">
-                                <view class="name van-multi-ellipsis--l2">{{itm.companyName}}</view>
+                                <view class="name van-multi-ellipsis--l2">{{itm.title}}</view>
                                 <view class="org">
                                     <van-icon name="clock-o" />{{ astFilter.timeMDHM(itm.startDate)}}-{{astFilter.timeHM(itm.endDate)}}</view>
                             </view>

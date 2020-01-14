@@ -46,19 +46,19 @@
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip">拍摄要求</view>
+                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">
-                            <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                            <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                             <van-uploader class="van-uploaders" data-obj="formCollection[1].type1" data-index="{{index}}" data-type="0" bind:after-read="afterRead">
                             </van-uploader>
                             <text>拍摄/上传正面</text>
                         </view>
                         <view class="img">
-                            <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                            <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                             <van-uploader class="van-uploaders" data-obj="formCollection[1].type1" data-index="{{index}}" data-type="1" bind:after-read="afterRead">
                             </van-uploader>
                             <text>拍摄/上传国徽面</text>
@@ -79,19 +79,19 @@
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip">拍摄要求</view>
+                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
-                                <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                                <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                                 <van-uploader class="van-uploaders" data-obj="formCollection[1].type2" data-index="{{index}}" data-type="0" bind:after-read="afterRead">
                                 </van-uploader>
                                 <text>拍摄/上传正面</text>
                             </view>
                             <view class="img">
-                                <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                                <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                                 <van-uploader class="van-uploaders" data-obj="formCollection[1].type2" data-index="{{index}}" data-type="1" bind:after-read="afterRead">
                                 </van-uploader>
                                 <text>拍摄/上传国徽面</text>
@@ -131,19 +131,19 @@
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip">拍摄要求</view>
+                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
-                                <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                                <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                                <image  mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                                 <van-uploader class="van-uploaders" data-obj="formCollection[2].type3" data-index="{{index}}" data-type="0" bind:after-read="afterRead">
                                 </van-uploader>
                                 <text>拍摄/上传正面</text>
                             </view>
                             <view class="img">
-                                <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                                <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                                 <van-uploader class="van-uploaders" data-obj="formCollection[2].type3" data-index="{{index}}" data-type="1" bind:after-read="afterRead">
                                 </van-uploader>
                                 <text>拍摄/上传国徽面</text>
@@ -164,7 +164,7 @@
                 </view>
             </view>
             <view class="phoneBtn" catchtap="callPhone">
-                <image class="customer" src="/assets/image/customer.png"></image>遇到问题了？点击致电咨询
+                <image  class="customer" src="/assets/image/customer.png"></image>遇到问题了？点击致电咨询
             </view>
         </van-tab>
         <van-tab title="财务">
@@ -179,19 +179,19 @@
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip">拍摄要求</view>
+                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">
-                            <image class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                            <image class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                             <van-uploader class="van-uploaders" data-obj="formCollection[3].type4" data-index="{{index}}" data-type="0" bind:after-read="afterRead">
                             </van-uploader>
                             <text>拍摄/上传正面</text>
                         </view>
                         <view class="img">
-                            <image class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                            <image class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[0].fileType==2}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
+                            <image mode="aspectFill" class="idcard2" wx:if="{{item.basicAnnexes[1].fileType==2}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                             <van-uploader class="van-uploaders" data-obj="formCollection[3].type4" data-index="{{index}}" data-type="1" bind:after-read="afterRead">
                             </van-uploader>
                             <text>拍摄/上传国徽面</text>
@@ -224,13 +224,13 @@
                 <view class="upload">
                     <view class="imgs">
                         <view class="img" wx:for="{{formCollection[4].type6.basicAnnexes}}" wx:key="index">
-                            <image class="photo" src="{{item.fileURL}}"></image>
+                            <image mode="aspectFill" class="photo" src="{{item.fileURL}}"></image>
                             <view data-obj="formCollection" catchtap="removeImgHandler" data-type="type6" data-index="{{index}}" class="remove">
                                 <van-icon name="clear" />
                             </view>
                         </view>
                         <view class="img">
-                            <image class="photo"></image>
+                            <image mode="aspectFill" class="photo"></image>
                             <van-uploader class="van-uploaders" data-obj="formCollection" data-type="type6" bind:after-read="afterRead_two">
                             </van-uploader>
                         </view>
@@ -247,7 +247,7 @@
                 <view class="upload">
                     <view class="imgs">
                         <view class="img" wx:for="{{formCollection[4].type7.basicAnnexes}}" wx:key="index">
-                            <image class="photo" src="{{item.fileURL}}"></image>
+                            <image mode="aspectFill" class="photo" src="{{item.fileURL}}"></image>
                             <view catchtap="removeImgHandler" data-obj="formCollection" data-type="type7" data-index="{{index}}" class="remove">
                                 <van-icon name="clear" />
                             </view>
@@ -271,7 +271,7 @@
                 <view class="upload">
                     <view class="imgs">
                         <view class="img" wx:for="{{formCollection[4].type5.basicAnnexes}}" wx:key="index">
-                            <image class="photo" src="{{item.fileURL}}"></image>
+                            <image mode="aspectFill" class="photo" src="{{item.fileURL}}"></image>
                             <view catchtap="removeImgHandler" class="remove" data-obj="formCollection" data-type="type5" data-index="{{index}}">
                                 <van-icon name="clear" />
                             </view>
@@ -295,7 +295,7 @@
                 <view class="upload">
                     <view class="imgs">
                         <view class="img" wx:for="{{formCollection[4].type8.basicAnnexes}}" wx:key="index">
-                            <image class="photo" src="{{item.fileURL}}"></image>
+                            <image mode="aspectFill" class="photo" src="{{item.fileURL}}"></image>
                             <view catchtap="removeImgHandler" class="remove" data-obj="formCollection" data-type="type8" data-index="{{index}}">
                                 <van-icon name="clear" />
                             </view>
