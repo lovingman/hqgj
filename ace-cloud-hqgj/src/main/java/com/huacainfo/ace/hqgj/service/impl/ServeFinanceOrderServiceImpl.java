@@ -153,7 +153,7 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
         o.setModifyDate(new Date());
         this.serveFinanceOrderDao.insert(o);
         //下单成功减去积分
-        serveBusinessIntegralDao.updateIntegral(userProp.getUserId());
+        serveBusinessIntegralDao.updateIntegral(userProp.getUserId(),"reduce");
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -255,11 +255,17 @@ public class ServeFinanceOrderServiceImpl implements ServeFinanceOrderService {
      * @throws Exception
      */
     @Override
-    public ResponseDTO updateStatus(String id,String status) throws Exception {
+    @Transactional
+    public ResponseDTO updateStatus(String id,String status,UserProp userProp) throws Exception {
+        if(status.equals("1")) {
+            //订单取消增加积分
+            serveBusinessIntegralDao.updateIntegral(userProp.getUserId(), "add");
+        }
         int i=  serveFinanceOrderDao.updateStatus(id,status);
         if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "更新失败");
         }
+
         return new ResponseDTO(ResultCode.SUCCESS, "更新成功", status);
     }
 

@@ -228,6 +228,7 @@
         <result column="surplusQuota" jdbcType="INTEGER" property="surplusQuota"/>
         <result column="isEnroll" jdbcType="INTEGER" property="isEnroll"/>
         <result column="isSign" jdbcType="INTEGER" property="isSign"/>
+        <result column="endEnroll" jdbcType="INTEGER" property="endEnroll"/>
 
        <association property="baseOrganization" javaType="com.huacainfo.ace.hqgj.model.BaseOrganization">
            <id column="orgId" jdbcType="VARCHAR" property="id"/>
@@ -256,7 +257,8 @@
     SELECT  <include refid="Vo_Column_List"/>,
        e.`enrollName` enrollName,o.id orgId,o.orgName,o.fmUrl orgfmUrl,o.areaCode,o.content orgcontent,o.orgAddress,
        a.id baId,a.fileName,a.fileURL,(t.cultivatePersonNumber-t.enrollPersopnNumber) as surplusQuota,
-      (SELECT count(1) FROM `serve_cultivate_enroll` e where e.serveCultivateId=#{id,jdbcType=VARCHAR} and e.createUserId=#{userId,jdbcType=VARCHAR})as isEnroll,
+        DATE_FORMAT(NOW(),"%Y-%m-%d %H:%i")>DATE_FORMAT(t.startDate,"%Y-%m-%d %H:%i")as endEnroll,
+      (SELECT count(1) FROM `serve_cultivate_enroll` e where e.serveCultivateId=#{id,jdbcType=VARCHAR} and e.createUserId=#{userId,jdbcType=VARCHAR} and e.status!='1')as isEnroll,
       (SELECT count(1) FROM `serve_cultivate_enroll` e where e.serveCultivateId=#{id,jdbcType=VARCHAR} and e.createUserId=#{userId,jdbcType=VARCHAR} and e.status='2')as isSign
     from serve_cultivate t
     left join serve_cultivate_enroll e on e.serveCultivateId=t.id

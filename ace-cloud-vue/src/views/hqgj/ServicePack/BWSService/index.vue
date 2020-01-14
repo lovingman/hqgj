@@ -62,7 +62,7 @@
             <el-input
               class="input-with-select"
               clearable
-              placeholder="请输入公司名称、申请人姓名"
+              placeholder="请输入公司/申请人姓名"
               v-model="query.applyPersonName"
             >
               <el-button :loading="loading" @click="search" icon="el-icon-search" slot="append"></el-button>
@@ -75,7 +75,7 @@
       <el-table :data="list" class="table" max-height="475" ref="multipleTable" v-loading="loading">
         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
         <el-table-column label="流水编号" prop="lsNo" width="180"></el-table-column>
-        <el-table-column label="注册企业名称" prop="companyName"></el-table-column>
+        <el-table-column label="注册企业名称" prop="companyName" :show-overflow-tooltip="true"  min-width="125"></el-table-column>
         <el-table-column label="申请人" prop="applyPersonName" width="150"></el-table-column>
         <el-table-column label="联系电话" prop="applyPersonTel" width="180"></el-table-column>
         <el-table-column label="申请日期" prop="createDate" width="180"></el-table-column>
@@ -369,6 +369,11 @@ export default {
   /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
     width: 100%;
   }
+}
+
+.input-with-select {
+  float: right;
+  width: 300px;
 }
 
 .red {

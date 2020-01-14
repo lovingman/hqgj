@@ -25,11 +25,11 @@ public interface ServeBusinessIntegralDao {
 
     int findCount(@Param("condition") ServeBusinessIntegralQVo condition);
 
-    int isExist(ServeBusinessIntegral o);
+    int isExist(String companyId);
 
     int deleteByIds(String[] ids);
 
     List<IntegralDetailedVo> integralDetailed(@Param("userId") String userId);
 
-    int updateIntegral(@Param("userId") String userId);
+    int updateIntegral(@Param("userId") String userId,@Param("type")String type);
 }

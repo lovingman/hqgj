@@ -83,9 +83,9 @@ public class ServeBusinessIntegralServiceImpl implements ServeBusinessIntegralSe
             return new ResponseDTO(ResultCode.FAIL, "企业ID（关联base_company表id）不能为空！");
         }
 
-        int temp = this.serveBusinessIntegralDao.isExist(o);
+        int temp = this.serveBusinessIntegralDao.isExist(o.getCompanyId());
         if (temp > 0) {
-            return new ResponseDTO(ResultCode.FAIL, "积分管理名称重复！");
+            return new ResponseDTO(ResultCode.FAIL, "企业积分已经存在！");
         }
         o.setCreateDate(new Date());
         o.setStatus("1");
