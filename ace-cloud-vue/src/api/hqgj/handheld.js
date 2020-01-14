@@ -40,7 +40,7 @@ export function orgChange(query) {
 //编辑修改
 export function update(data) {
   return request({
-    url: '/hqgj/serveFinance/update ',
+    url: '/hqgj/serveFinance/update',
     method: 'post',
     data: data
   })

@@ -67,12 +67,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="地点：" prop="address">
-                  <el-input
-                    clearable
-                    v-if="basicForm.detailedAddress!=''"
-                    v-model="basicForm.detailedAddress"
-                  ></el-input>
+                <el-form-item label="地点：" prop="detailedAddress">
+                  <el-input clearable v-model="basicForm.detailedAddress"></el-input>
                   <el-button @click="getAddress" class="get-address">
                     <i class="el-icon-plus"></i>
                     <span>获取地点</span>
@@ -86,14 +82,13 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-form-item label="内容" prop="content">
-                <el-input
-                  :rows="8"
-                  placeholder="请输入详细内容"
-                  type="textarea"
-                  v-model.trim="basicForm.content"
-                ></el-input>
-                <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
+              <el-form-item label="内容" prop="content" :class="{isError:hideError}">
+                <!-- 工具栏容器 -->
+                <div class="ckeditor">
+                  <div id="toolbar-container"></div>
+                  <!-- 编辑器容器 -->
+                  <div id="editor"></div>
+                </div>
               </el-form-item>
             </el-row>
           </el-form>
@@ -132,7 +127,7 @@
                       placeholder="请输入培训名称"
                       show-word-limit
                       type="text"
-                       v-model.trim="scheduleModel.title"
+                      v-model.trim="scheduleModel.title"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -172,7 +167,7 @@
                       placeholder="请输入详细地址"
                       show-word-limit
                       type="text"
-                       v-model.trim="scheduleModel.detailedAddress"
+                      v-model.trim="scheduleModel.detailedAddress"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -206,7 +201,7 @@
                     placeholder="简要概述培训内容，不超过200字"
                     show-word-limit
                     type="textarea"
-                     v-model.trim="scheduleModel.content"
+                    v-model.trim="scheduleModel.content"
                   ></el-input>
                 </el-form-item>
               </el-row>
@@ -257,18 +252,27 @@
       <div>
         <div style="margin-bottom: 10px;">
           <el-input style="width: 300px" clearable placeholder="请输入地点名称" v-model="addressname">
-            <el-button :loading="loading" @click="searchKeyword" icon="el-icon-search" slot="append"></el-button>
+            <el-button
+              :loading="loading"
+              @click="searchKeyword"
+              icon="el-icon-search"
+              slot="append"
+            ></el-button>
           </el-input>
           <el-button style="float: right" @click="addressVisible = false">取 消</el-button>
-          <el-button style="float: right;margin-right: 10px" @click="enterAddress" type="primary">确 定</el-button>
+          <el-button
+            style="float: right;margin-right: 10px"
+            @click="enterAddress"
+            type="primary"
+          >确 定</el-button>
           <!--<input id="keyword" type="textbox" value />-->
           <!--<el-button @click="searchKeyword" type="text" value="search">搜索</el-button>-->
         </div>
         <div id="container"></div>
       </div>
       <!--<span class="dialog-footer" slot="footer">-->
-        <!--<el-button @click="addressVisible = false">取 消</el-button>-->
-        <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
+      <!--<el-button @click="addressVisible = false">取 消</el-button>-->
+      <!--<el-button @click="enterAddress" type="primary">确 定</el-button>-->
       <!--</span>-->
     </el-dialog>
   </div>
@@ -279,20 +283,24 @@ import {
   getUser,
   lecturerMechanism,
   lecturerPage,
-  fileUpload
+  fileUpload,
+  fileUpImg
 } from "@/api/sys";
-import EditorBar from "../../publicTemplate/wangEnduit";
-import photo from "../../publicTemplate/photo";
 
+import photo from "../../publicTemplate/photo";
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
 export default {
-  components: { EditorBar, photo },
+  components: { photo },
   name: "add",
   data() {
     return {
-      addressname:"",//地图搜索值
+      hideError: false, //隐藏报错信息
+      addressname: "", //地图搜索值
       uploadfileindex: "", //上传标识
       address: "", //详细地址
       latitude: [], //经纬度
+      loading: false, //loading加载状态
       markers: [],
       searchService: [],
       geocoder: [],
@@ -301,6 +309,7 @@ export default {
       noClickTabs: true, //是否可以点击选项卡
       isShow: true, //是否显示
       disabled: true, //机构是否禁止选择
+      editor: "", //编辑器实例
       //附件列表
       showList: [],
       filelist: [],
@@ -342,6 +351,13 @@ export default {
             required: true,
             message: "请选择时间",
             trigger: "change"
+          }
+        ],
+        detailedAddress: [
+          {
+            required: true,
+            message: "请选择地址",
+            trigger: "blur"
           }
         ],
         cultivatePersonNumber: [
@@ -418,7 +434,67 @@ export default {
   created() {
     this.loadUser();
   },
+  mounted() {
+    this.initCKEditor();
+  },
   methods: {
+    //富文本编辑器
+    initCKEditor() {
+      class myUploadLoader {
+        constructor(loader) {
+          this.loader = loader;
+        }
+        upload() {
+          //重置上传路径
+          return this.loader.file.then(
+            file =>
+              new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.addEventListener(
+                  "load",
+                  function() {
+                    this.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                    fileUpImg(this.actionUrls, { file: reader.result }).then(
+                      res => {
+                        debugger;
+                        if (res.status == 1) {
+                          resolve({
+                            default: res.data
+                          });
+                        } else {
+                          reject(err);
+                        }
+                      }
+                    );
+                  },
+                  false
+                );
+                reader.readAsDataURL(file);
+              })
+          );
+        }
+        abort() {}
+      }
+      function myUpload(e) {
+        // 使用 CKeditor 提供的 API 修改上传适配器
+        e.plugins.get("FileRepository").createUploadAdapter = loader =>
+          new myUploadLoader(loader);
+      }
+      CKEditor.create(document.querySelector("#editor"), {
+        language: "zh-cn",
+        removePlugins: ["MediaEmbed"], //除去视频按钮
+        extraPlugins: [myUpload] // 添加自定义图片上传适配插件
+      })
+        .then(editor => {
+          const toolbarContainer = document.querySelector("#toolbar-container");
+          toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    //地图
     intMap() {
       var that = this;
       var map = new qq.maps.Map(document.getElementById("container"), {
@@ -647,6 +723,8 @@ export default {
         });
         return;
       }
+
+      this.basicForm.content = this.editor.getData();
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.tabsName = "second";
@@ -669,7 +747,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           //基本信息
-          console.log(this.basicForm.startLng, this.basicForm.startLat);
           let serveCultivate = {
             title: this.basicForm.title, //标题
             orgId: this.basicForm.orgId, //机构ID
@@ -687,7 +764,8 @@ export default {
               this.basicForm.timeArr.length > 0
                 ? this.basicForm.timeArr[1]
                 : "", //结束时间
-            content: this.basicForm.content //内容
+
+            content: this.editor.getData() //内容
           };
           //日程
           //日程开始时间和结束时间
@@ -930,6 +1008,9 @@ export default {
     /deep/ .el-form-item {
       width: 100%;
     }
+    /deep/ .el-select {
+      width: 100%;
+    }
 
     /deep/ .el-form-item__content {
       width: calc(~"100% - 120px");
@@ -950,7 +1031,11 @@ export default {
       }
     }
   }
-
+  .isError {
+    /deep/ .el-form-item__error {
+      display: none;
+    }
+  }
   .scheduleBox {
     padding: 20px 50px 0 30px;
 
@@ -979,6 +1064,13 @@ export default {
         border-radius: 4px;
         margin-left: 20px;
       }
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
 }

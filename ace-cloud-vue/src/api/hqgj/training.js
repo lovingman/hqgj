@@ -63,7 +63,7 @@ export function registrationPage(query) {
 //报名管理删除
 export function registrationDeleteByIds(ids) {
   return request({
-    url: '/hqgj/serveCultivateEnroll/page',
+    url: '/hqgj/serveCultivateEnroll/deleteByIds',
     method: 'post',
     params: {
       ids: ids

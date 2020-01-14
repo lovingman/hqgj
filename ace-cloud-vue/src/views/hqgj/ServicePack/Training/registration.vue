@@ -54,7 +54,11 @@
           class="right-txt"
         >
           <template slot-scope="scope">
-            <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
+            <el-button
+              type="text"
+              @click="deleteById(scope.row)"
+              v-if="userBtn['/hqgj/serveCultivateEnroll/deleteByIds']"
+            >{{userBtn['/hqgj/serveCultivateEnroll/deleteByIds']}}</el-button>
           </template>
         </el-table-column>
       </el-table>

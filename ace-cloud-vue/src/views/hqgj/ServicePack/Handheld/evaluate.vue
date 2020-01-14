@@ -2,9 +2,9 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-col class="selectSearch" :span="12">
+        <el-col class="selectSearch" :span="20">
           <el-col :span="12">
-            <el-col :span="10">
+            <el-col :span="11">
               <el-date-picker
                 v-model="query.startTime"
                 format="yyyy-MM-dd"
@@ -13,10 +13,10 @@
                 placeholder="选择开始时间"
               ></el-date-picker>
             </el-col>
-            <el-col :span="4" style=" text-align: center; line-height: 36px;">
+            <el-col :span="2" style=" text-align: center; line-height: 36px;">
               <span class="text">至</span>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="11">
               <el-date-picker
                 v-model="query.endTime"
                 format="yyyy-MM-dd"
@@ -49,7 +49,17 @@
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="createUserName" sortable label="姓名" width="160"></el-table-column>
-        <el-table-column prop="evaluateContent" sortable label="评价内容"></el-table-column>
+        <el-table-column
+          prop="evaluateContent"
+          sortable
+          label="评价内容"
+          min-width="220"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.evaluateContent }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="evaluateGrade" sortable label="服务评分" width="200">
           <template slot-scope="scope">
             <el-rate
@@ -60,7 +70,11 @@
             ></el-rate>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构" min-width="180" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.orgName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="createDate" sortable label="评价时间" width="200"></el-table-column>
         <el-table-column label="操作" fixed="right" width="140" align="right" header-align="center">
           <template slot-scope="scope">

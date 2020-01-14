@@ -2,16 +2,28 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-col :span="6">
-          <el-button type="primary" style="float:left;" @click="create">创建</el-button>
+        <el-col :span="2">
+          <el-button
+            type="primary"
+            style="float:left;"
+            @click="create"
+            v-if="userBtn['/hqgj/serveFinance/create']"
+          >{{userBtn['/hqgj/serveFinance/create']}}</el-button>
         </el-col>
-        <el-col class="selectSearch" :span="18">
+        <el-col class="selectSearch" :span="22">
+          <el-col :span="5" :offset="1" v-if="this.userType != 4">&nbsp;</el-col>
           <el-col :span="5">
             <el-select v-model="query.type" clearable placeholder="请选择服务类型">
-              <el-option v-for="item in typeArr" :key="item.code" :label="item.name" :value="item.code"></el-option>
+              <el-option
+                v-for="item in typeArr"
+                :key="item.code"
+                :label="item.name"
+                :value="item.code"
+              ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="5" :offset="1">
+
+          <el-col :span="5" :offset="1" v-if="this.userType == 4">
             <el-select v-model="query.orgId" clearable placeholder="请选择服务机构">
               <el-option
                 v-for="item in mechanismArr"
@@ -60,7 +72,11 @@
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构" min-width="220" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.orgName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="contactPersonTel" sortable label="联系方式" width="140"></el-table-column>
         <el-table-column prop="createDate" sortable label="创建时间" width="200"></el-table-column>
         <el-table-column prop="status" sortable label="状态" width="120">
@@ -74,15 +90,31 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
           <template slot-scope="scope">
-            <el-button type="text" v-if="scope.row.status =='0'" @click="examine(scope.row)">审核</el-button>
-            <el-button type="text" v-if="scope.row.status =='1'" @click="online(scope.row)">上线</el-button>
-            <el-button type="text" v-if="scope.row.status =='3'" @click="offline(scope.row)">下线</el-button>
             <el-button
               type="text"
-              v-if="scope.row.status !='4' && scope.row.status !='2'"
+              v-if="userBtn['/hqgj/serveFinance/updateStatus'] && scope.row.status =='0'"
+              @click="examine(scope.row)"
+            >{{userBtn['/hqgj/serveFinance/updateStatus']}}</el-button>
+            <el-button
+              type="text"
+              v-if="userBtn['/hqgj/serveFinance/updateStatusa'] && scope.row.status =='1'"
+              @click="online(scope.row)"
+            >{{userBtn['/hqgj/serveFinance/updateStatusa']}}</el-button>
+            <el-button
+              type="text"
+              v-if="userBtn['/hqgj/serveFinance/updateStatusb'] && scope.row.status =='3'"
+              @click="offline(scope.row)"
+            >{{userBtn['/hqgj/serveFinance/updateStatusb']}}</el-button>
+            <el-button
+              type="text"
+              v-if="userBtn['/hqgj/serveFinance/update'] && scope.row.status !='4' && scope.row.status !='2'"
               @click="edit(scope.row)"
-            >编辑</el-button>
-            <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
+            >{{userBtn['/hqgj/serveFinance/update']}}</el-button>
+            <el-button
+              type="text"
+              @click="deleteById(scope.row)"
+              v-if="userBtn['/hqgj/serveFinance/deleteByIds']"
+            >{{userBtn['/hqgj/serveFinance/deleteByIds']}}</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
         </el-table-column>
@@ -127,7 +159,9 @@ import {
   updateStatus,
   deleteByIds
 } from "@/api/hqgj/handheld";
-import { getDict } from "@/api/sys";
+import { getDict, getUser } from "@/api/sys";
+
+import { mapGetters } from "vuex";
 export default {
   name: "index",
   data() {
@@ -137,6 +171,7 @@ export default {
       tableSize: 10, //每页参数
       examineVisible: false, //审核弹出框是否显示
       loading: false, //加载状态
+      userType: "", // //1律师服务 2会计师服务 3培训机构 4工信局
       query: {
         orgName: "", //搜索
         orgId: "", //服务机构
@@ -184,11 +219,28 @@ export default {
     };
   },
   created() {
-    this.getList();
     this.dictQuery();
     this.getOrgArr();
+    this.getUser();
+  },
+  computed: {
+    ...mapGetters(["userBtn"])
   },
   methods: {
+    //请求登陆人信息
+    getUser() {
+      getUser().then(res => {
+        this.userType = res.data.userType;
+        this.corpId = res.data.corpId; //机构ID
+        if (this.userType != 4) {
+          //如果不是工信局传递当前登录人的机构ID来匹配列表
+          this.query.orgId = this.corpId;
+          this.getList();
+        } else {
+          this.getList();
+        }
+      });
+    },
     //请求page
     getList() {
       this.loading = true;
@@ -198,6 +250,7 @@ export default {
         totalRecord: this.total
       });
       page(this.query).then(res => {
+        console.log(this.query);
         if (res.status == 1) {
           this.tableData = res.rows;
           this.total = res.total;

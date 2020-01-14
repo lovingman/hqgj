@@ -38,12 +38,12 @@
           <el-col :span="24">
             <el-form-item label="内容:" prop="content">
               <el-input
-                      type="textarea"
-                      placeholder="请输入内容"
-                      v-model.trim="serviceForm.content"
-                      rows="20"
-                      maxlength="10000"
-                      show-word-limit
+                type="textarea"
+                placeholder="请输入内容"
+                v-model.trim="serviceForm.content"
+                rows="20"
+                maxlength="10000"
+                show-word-limit
               ></el-input>
               <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->
             </el-form-item>
@@ -55,7 +55,7 @@
     <div class="footer">
       <div class="footer-flex">
         <el-button @click="back">取消</el-button>
-        <el-button @click="handleAdd('serviceForm')" type="primary">确定</el-button>
+        <el-button @click="handleAdd('serviceForm')" type="primary">提交</el-button>
       </div>
     </div>
   </div>
@@ -63,7 +63,7 @@
 
 
 <script>
-  import {createPolicy} from "@/api/hqgj/Policies";
+import { createPolicy } from "@/api/hqgj/Policies";
 import EditorBar from "../../publicTemplate/wangEnduit";
 export default {
   name: "add",
@@ -96,15 +96,15 @@ export default {
     };
   },
   methods: {
-    handleAdd(formName){
+    handleAdd(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          createPolicy(this.serviceForm).then(response=>{
+          createPolicy(this.serviceForm).then(response => {
             if (response.status == 1) {
               this.$message.success("创建成功");
               this.back();
             }
-          })
+          });
         } else {
           return false;
         }
@@ -114,7 +114,7 @@ export default {
       this.$router.push({
         path: "/hqgj/Policies/OtrlPolicy"
       });
-    },
+    }
     // change(val) {
     //   console.log(val);
     // }
