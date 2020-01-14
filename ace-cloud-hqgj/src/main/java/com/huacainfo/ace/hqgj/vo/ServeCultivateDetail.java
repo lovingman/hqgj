@@ -15,6 +15,8 @@ public class ServeCultivateDetail extends ServeCultivate {
     private Integer isEnroll;
     //是否签到
     private Integer isSign;
+    //结束报名  1结束，2未结束
+    private Integer endEnroll;
     private BaseOrganization baseOrganization;
     private List<BasicAnnex> basicAnnexList;
     private List<ServeCultivateEnroll> cultivateEnrollList;
@@ -66,5 +68,13 @@ public class ServeCultivateDetail extends ServeCultivate {
 
     public void setIsSign(Integer isSign) {
         this.isSign = isSign;
+    }
+
+    public Integer getEndEnroll() {
+        return endEnroll;
+    }
+
+    public void setEndEnroll(Integer endEnroll) {
+        this.endEnroll = endEnroll;
     }
 }
