@@ -9,14 +9,14 @@ Page({
      * 页面的初始数据
      */
     data: {
-        captchaTxt:'发送验证码',
-        disabled:false,
-        countdown:60,
+        captchaTxt: '发送验证码',
+        disabled: false,
+        countdown: 60,
         account: '',
         accountState: false,
         accountVali: 'mobilePhone',
         password: '',
-        captcha:'',
+        captcha: '',
         captchaVali: 'len4Num',
         passwordState: false,
         passwordVali: 'thanlen6Str',
@@ -25,24 +25,28 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
 
     },
-    getcode(){
+    getcode() {
         let that = this;
-        if (that.validateHandler('account')){
-            request.post(config.getCaptcha, { mobile:that.data.account}).then(rst => {
-                that.settime();
+        if (that.validateHandler('account')) {
+            request.post(config.getCaptcha, {
+                mobile: that.data.account
+            }).then(rst => {
+                let r = rst.data;
+                if (r.status == '1') {
+                    that.settime();
+                } else {
+                    Toast.fail(r.message);
+                }
+
             });
-        }else{
-            wx.showToast({
-                title: '手机号码错误',
-                icon:'warn'
-            })
-            return;
+        } else {
+            Toast.fail('手机号码错误');
         }
     },
-    settime(){
+    settime() {
         let that = this;
         if (that.data.countdown == 0) {
             that.setData({
@@ -56,7 +60,7 @@ Page({
                 disabled: true
             });
             that.data.countdown--;
-            setTimeout(function () {
+            setTimeout(function() {
                 that.settime()
             }, 1000)
         }
@@ -85,9 +89,9 @@ Page({
         })
         return false
     },
-    next(){
-        let that=this;
-        if (!that.validateHandler('account')){
+    next() {
+        let that = this;
+        if (!that.validateHandler('account')) {
             Toast.fail('手机号码错误');
             return;
         }
@@ -100,7 +104,7 @@ Page({
             return;
         }
         wx.navigateTo({
-          url: "../RegisterVerifies/index?account=" + that.data.account + "&captcha=" + that.data.captcha + "&password=" + that.data.password
+            url: "../RegisterVerifies/index?account=" + that.data.account + "&captcha=" + that.data.captcha + "&password=" + that.data.password
         })
         // request.post(config.register,data).then(
         //     res=>{
@@ -109,7 +113,7 @@ Page({
         //             Toast.success({
         //                 message:'注册成功',
         //                 onClose:()=>{
-                            
+
         //                 }
         //             });
         //         }else{
@@ -125,49 +129,49 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

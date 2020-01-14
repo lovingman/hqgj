@@ -46,7 +46,7 @@
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip">拍摄要求</view>
+                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">
@@ -79,7 +79,7 @@
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip">拍摄要求</view>
+                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
@@ -131,7 +131,7 @@
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip">拍摄要求</view>
+                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
@@ -179,7 +179,7 @@
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip">拍摄要求</view>
+                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">

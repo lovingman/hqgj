@@ -54,7 +54,7 @@ Page({
       if (app.globalData.userInfo.companyId != null) {
         if (that.data.type == 1) {
           var detailsObj = that.data.detailsForm;
-          if (detailsObj.integral == 500) {
+          if (detailsObj.integral >= 500) {
             Dialog.confirm({
               title: '确认订单',
               message: '是否抵扣积分'
@@ -64,7 +64,7 @@ Page({
                 type: 1,
               }).then(res => {
                 if (res.data.status == 1) {
-                  Toast.fail("订单" + res.data.message);
+                  Toast.success("订单" + res.data.message);
                   this.getById();
                 }
               })
@@ -113,7 +113,7 @@ Page({
               itemId: that.data.itemId
             }).then(res => {
               if (res.data.status == 1) {
-                Toast.fail("下单" + res.data.message);
+                  Toast.success("下单" + res.data.message);
                 that.setData({
                   show: false,
                 });

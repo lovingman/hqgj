@@ -224,8 +224,13 @@ page {
 }
 
 .model .upload .text .tip {
+    font-size: 25rpx;
     color: rgba(46, 136, 242, 1);
 }
+ .model .upload .text .tip .warning{
+     color: #FFB600;
+     font-size: 28rpx;
+ }
 
 .model .upload .imgs {
     padding: 46rpx 20rpx;

@@ -157,6 +157,13 @@
     font-size: 28rpx;
     font-family: PingFangSC-regular;
 }
+.other button{
+    position: relative !important;
+    outline: none;
+}
+.other button::after{
+   border: 0px solid rgba(0, 0, 0, 0.2); 
+}
 
 .signOut {
     width: 540rpx;

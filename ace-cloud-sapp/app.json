@@ -1,71 +1,70 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/forum/index",
-    "pages/logs/logs",
-    "pages/body/index",
-    "pages/RegEnterprise/index",
-    "pages/RegAgreement/index",
-    "pages/RegProcess/index",
-    "pages/RegProgress/index",
-    "pages/FinanceTax/index",
-    "pages/FinanceEnterprise/index",
-    "pages/ExpertConsultation/index",
-    "pages/ExpertAppointment/index",
-    "pages/ServiceEnterprise/index",
-    "pages/TrainingInstitutions/index",
-    "pages/TrainingEnrollmentManagement/index",
-    "pages/ServiceAccounting/index",
-    "pages/SignIn/index",
-    "pages/RegisterVerifies/index",
-    "pages/Register/index",
-    "pages/PersonalCenter/index",
-    "pages/RecordTrain/index",
-    "pages/RecordsFinance/index",
-    "pages/RecordInquiry/index",
-    "pages/TrainingService/index",
-    "pages/TrainingServiceInfo/index",
-    "pages/TrainingScheduleDetails/index",
-    "pages/LawyerService/index",
-    "pages/Forget/index",
-    "pages/LawFirm/index",
-    "pages/PolicyService/index",
-    "pages/PolicyServiceDetail/index",
-    "pages/JoinEnterprises/index",
-    "pages/ModifyPwd/index",
-    "pages/PointManage/index",
-    "pages/TrainingManagement/index",
-    "pages/LawyerTemplate/index",
-    "pages/InstitutionalDetails/index"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
-  },
-  "component": true,
-  "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "van-toast": "/vant/weapp/toast/index"
-  },
-  "tabBar": {
-    "color": "#a9b7b7",
-    "selectedColor": "#2E88F2",
-    "borderStyle": "white",
-    "list": [
-      {
-        "selectedIconPath": "/assets/image/icon4-2.png",
-        "iconPath": "/assets/image/icon4-1.png",
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "selectedIconPath": "/assets/image/icon4-6.png",
-        "iconPath": "/assets/image/icon4-5.png",
-        "pagePath": "pages/PersonalCenter/index",
-        "text": "我的"
-      }
-    ]
-  }
+    "pages": [
+        "pages/index/index",
+        "pages/logs/logs",
+        "pages/RegEnterprise/index",
+        "pages/AccountingCompany/index",
+        "pages/RegAgreement/index",
+        "pages/RegProcess/index",
+        "pages/RegProgress/index",
+        "pages/FinanceTax/index",
+        "pages/FinanceEnterprise/index",
+        "pages/ExpertConsultation/index",
+        "pages/ExpertAppointment/index",
+        "pages/ServiceEnterprise/index",
+        "pages/TrainingInstitutions/index",
+        "pages/TrainingEnrollmentManagement/index",
+        "pages/ServiceAccounting/index",
+        "pages/SignIn/index",
+        "pages/RegisterVerifies/index",
+        "pages/Register/index",
+        "pages/PersonalCenter/index",
+        "pages/RecordTrain/index",
+        "pages/RecordsFinance/index",
+        "pages/RecordInquiry/index",
+        "pages/TrainingService/index",
+        "pages/TrainingServiceInfo/index",
+        "pages/TrainingScheduleDetails/index",
+        "pages/LawyerService/index",
+        "pages/Forget/index",
+        "pages/LawFirm/index",
+        "pages/PolicyService/index",
+        "pages/PolicyServiceDetail/index",
+        "pages/JoinEnterprises/index",
+        "pages/ModifyPwd/index",
+        "pages/PointManage/index",
+        "pages/TrainingManagement/index",
+        "pages/LawyerTemplate/index",
+        "pages/InstitutionalDetails/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    },
+    "component": true,
+    "sitemapLocation": "sitemap.json",
+    "usingComponents": {
+        "van-toast": "/vant/weapp/toast/index"
+    },
+    "tabBar": {
+        "color": "#a9b7b7",
+        "selectedColor": "#2E88F2",
+        "borderStyle": "white",
+        "list": [
+            {
+                "selectedIconPath": "/assets/image/icon4-2.png",
+                "iconPath": "/assets/image/icon4-1.png",
+                "pagePath": "pages/index/index",
+                "text": "首页"
+            },
+            {
+                "selectedIconPath": "/assets/image/icon4-6.png",
+                "iconPath": "/assets/image/icon4-5.png",
+                "pagePath": "pages/PersonalCenter/index",
+                "text": "我的"
+            }
+        ]
+    }
 }

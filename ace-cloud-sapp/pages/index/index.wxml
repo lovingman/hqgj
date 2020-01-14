@@ -37,7 +37,7 @@
         <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" wx:if="{{trainTotal != 0}}">
             <swiper-item wx:for="{{trainList}}" wx:key="{{index}}" wx:for-item="item" catchtap="trainClick" data-index='{{index}}'>
                 <view class="swiper-content">
-                    <view class="title van-multi-ellipsis">
+                    <view class="title van-ellipsis">
                         {{item.title}}
                     </view>
                     <view class="remark">

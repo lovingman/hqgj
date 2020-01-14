@@ -46,7 +46,7 @@ Page({
                     serveCultivateId: that.data.id
                 }).then(res => {
                     if (res.data.status == 1) {
-                        Toast.fail(res.data.message);
+                        Toast.success(res.data.message);
                         this.getById(); //更新当前请求数据
                     }
                 })
