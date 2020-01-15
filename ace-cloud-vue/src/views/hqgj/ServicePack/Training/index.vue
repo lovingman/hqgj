@@ -121,6 +121,7 @@
 
 <script>
 import { page, deleteByIds, updateStatus } from "@/api/hqgj/training";
+import { getUser } from "@/api/sys";
 import { mapGetters } from "vuex";
 export default {
   name: "index",
@@ -169,12 +170,26 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getUser();
   },
   computed: {
     ...mapGetters(["userBtn"])
   },
   methods: {
+    //请求登陆人信息
+    getUser() {
+      getUser().then(res => {
+        this.userType = res.data.userType;
+        this.corpId = res.data.corpId; //机构ID
+        if (this.userType != 4) {
+          //如果不是工信局传递当前登录人的机构ID来匹配列表
+          this.query.orgId = this.corpId;
+          this.getList();
+        } else {
+          this.getList();
+        }
+      });
+    },
     //请求page
     getList() {
       this.loading = true;
