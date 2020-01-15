@@ -37,14 +37,20 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="内容:" prop="content">
-              <el-input
-                type="textarea"
-                placeholder="请输入内容"
-                v-model.trim="serviceForm.content"
-                rows="20"
-                maxlength="10000"
-                show-word-limit
-              ></el-input>
+              <!-- 工具栏容器 -->
+              <div class="ckeditor">
+                <div id="toolbar-container"></div>
+                <!-- 编辑器容器 -->
+                <div id="editor"></div>
+              </div>
+              <!--<el-input-->
+                <!--type="textarea"-->
+                <!--placeholder="请输入内容"-->
+                <!--v-model.trim="serviceForm.content"-->
+                <!--rows="20"-->
+                <!--maxlength="10000"-->
+                <!--show-word-limit-->
+              <!--&gt;</el-input>-->
               <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->
             </el-form-item>
           </el-col>
@@ -63,10 +69,14 @@
 
 <script>
 import { getPolicyById, updatePolicy } from "@/api/hqgj/Policies";
+import {fileUpImg} from "@/api/sys";
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
 export default {
   name: "edit",
   data() {
     return {
+      editor: "", //编辑器实例
       //数据
       serviceForm: {
         title: "",
@@ -95,14 +105,19 @@ export default {
   created() {
     this.getDetails();
   },
+  mounted() {
+    this.initCKEditor();
+  },
   methods: {
     getDetails() {
       this.id = this.$route.query.id;
       getPolicyById(this.id).then(response => {
         this.serviceForm = response.data;
+        this.editor.setData(this.serviceForm.content);
       });
     },
     handleEdit(formName) {
+      this.serviceForm.content = this.editor.getData();
       this.$refs[formName].validate(valid => {
         if (valid) {
           updatePolicy(this.serviceForm).then(response => {
@@ -115,6 +130,62 @@ export default {
           return false;
         }
       });
+    },
+    //富文本编辑器
+    initCKEditor() {
+      class myUploadLoader {
+        constructor(loader) {
+          this.loader = loader;
+        }
+        upload() {
+          //重置上传路径
+          return this.loader.file.then(
+                  file =>
+                          new Promise((resolve, reject) => {
+                            let reader = new FileReader();
+                            reader.addEventListener(
+                                    "load",
+                                    function() {
+                                      this.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                                      fileUpImg(this.actionUrls, { file: reader.result }).then(
+                                              res => {
+                                                debugger;
+                                                if (res.status == 1) {
+                                                  resolve({
+                                                    default: res.data
+                                                  });
+                                                } else {
+                                                  reject(err);
+                                                }
+                                              }
+                                      );
+                                    },
+                                    false
+                            );
+                            reader.readAsDataURL(file);
+                          })
+          );
+        }
+        abort() {}
+      }
+      function myUpload(e) {
+        // 使用 CKeditor 提供的 API 修改上传适配器
+        e.plugins.get("FileRepository").createUploadAdapter = loader =>
+                new myUploadLoader(loader);
+      }
+      CKEditor.create(document.querySelector("#editor"), {
+        language: "zh-cn",
+        removePlugins: ["MediaEmbed"], //除去视频按钮
+        extraPlugins: [myUpload] // 添加自定义图片上传适配插件
+      })
+              .then(editor => {
+                const toolbarContainer = document.querySelector("#toolbar-container");
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
+              })
+              .catch(error => {
+                console.error(error);
+              });
     },
     back() {
       this.$router.push({
@@ -156,6 +227,14 @@ export default {
       /deep/ .el-upload-dragger {
         width: 100%;
       }
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
   .footer {
