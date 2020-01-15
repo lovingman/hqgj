@@ -201,7 +201,7 @@
 <style lang="less" scoped>
     .main-box {
         background: #fff;
-
+        height: 100%;
         .formBox {
             padding-right: 50px;
         }
