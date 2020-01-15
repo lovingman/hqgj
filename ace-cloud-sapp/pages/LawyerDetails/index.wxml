@@ -1,0 +1,38 @@
+<view>
+    <view class="org">
+        <view class="img">
+            <van-image round width="100%" height="100%" fit="cover" src="{{basicForm.imagePhoto}}" />
+        </view>
+        <view class="info">
+            <view class="info1">
+                <view class="name">{{basicForm.name}}</view>
+                <view class="sign">
+                    <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+            </view>
+            <view class="info2 van-ellipsis">
+                {{basicForm.orgName?basicForm.orgName:''}}·{{basicForm.jobs}}
+            </view>
+        </view>
+    </view>
+    <view class="mod">
+        <view class="title">
+            专家介绍
+        </view>
+        <view class="title">
+            擅长领域
+        </view>
+        <view class="goodList">
+            <view class="item" wx:for="{{specialityList}}" wx:key="{{index}}" wx:for-item="item" data-index='{{index}}'>
+                {{item ? item:'无'}}
+            </view>
+        </view>
+        <view class="title">
+            简介
+        </view>
+        <view class="text">
+            {{basicForm.content}}
+        </view>
+    </view>
+    <van-toast id="van-toast" />
+    <van-dialog id="van-dialog" />
+</view>

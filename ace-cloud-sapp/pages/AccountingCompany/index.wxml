@@ -1,56 +1,27 @@
 <view>
-  <view class="wrap">
-    <view class="img">
-      <van-image width="100%" height="100%" lazy-load fit="cover" src="{{basicForm.fmUrl}}" />
-    </view>
-    <view class="text">
-      <view class="title van-ellipsis">
-        {{basicForm.orgName}}
-      </view>
-      <view class="subTitle van-ellipsis">
-        <van-icon name="location" /> {{basicForm.orgAddress}}
-      </view>
-      <view class="bottom">
-        <view class="sign">
-          <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-      </view>
-    </view>
-  </view>
-  <van-tabs class="content" border="{{false}}" line-width="30" color="#2E88F2" sticky animated swipeable bind:click="tabClick">
-    <van-tab title="简介">
-      <view class="title">
-        <icon class="iconfont icon-jieshao"></icon>机构简介
-      </view>
-      <view class="text">
-        {{basicForm.content}}
-      </view>
-    </van-tab>
-    <van-tab title="律师成员">
-      <view class="item" wx:for="{{orgArr}}" wx:key="{{index}}" wx:for-item="item" data-index='{{index}}'>
+    <view class="wrap">
         <view class="img">
-          <van-image round width="100%" height="100%" fit="cover" src="{{item.imagePhoto}}" />
+            <van-image width="100%" height="100%" lazy-load fit="cover" src="{{basicForm.fmUrl}}" />
         </view>
-        <view class="info">
-          <view class="info1">
-            <view class="name">{{item.name}}</view>
-            <view class="sign">
-              <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
-          </view>
-          <view class="info2 van-ellipsis">
-            <icon class="iconfont icon-credentials_icon"></icon>{{basicForm.orgName}}·{{item.jobs}}
-          </view>
-          <view class="info3 van-multi-ellipsis--l2">
-            {{item.content}}
-          </view>
+        <view class="text">
+            <view class="title van-ellipsis">
+                {{basicForm.orgName}}
+            </view>
+            <view class="subTitle van-ellipsis">
+                <van-icon name="location" /> {{basicForm.orgAddress}}
+            </view>
+            <view class="bottom">
+                <view class="sign">
+                    <icon class="iconfont icon-yirenzheng"></icon>已认证</view>
+            </view>
         </view>
-      </view>
-    </van-tab>
-    <van-tab title="服务收费明细">
-      <van-image width="90%" height="1260rpx" lazy-load fit="cover" src="/assets/image/detail.png" />
-    </van-tab>
-  </van-tabs>
-  <view class="bottoms"></view>
-  <view class="btn">
-    <van-button round type="info" size="large" bindtap="phoneClick" data-id="{{basicForm.contactPersonTel}}">免费咨询</van-button>
-  </view>
+    </view>
+    <view class="content">
+        <view class="title">
+            <icon class="iconfont icon-jieshao"></icon>机构简介
+        </view>
+        <view class="text">
+            <rich-text nodes="{{basicForm.content}}"></rich-text>
+        </view>
+    </view>
 </view>

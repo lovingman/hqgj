@@ -35,6 +35,7 @@
         "pages/PointManage/index",
         "pages/TrainingManagement/index",
         "pages/LawyerTemplate/index",
+        "pages/LawyerDetails/index",
         "pages/InstitutionalDetails/index"
     ],
     "window": {

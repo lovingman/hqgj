@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "法律服务详情",
+  "navigationBarTitleText": "机构详情",
   "usingComponents": {
     "van-tab": "/vant/weapp/tab/index",
     "van-tabs": "/vant/weapp/tabs/index",
