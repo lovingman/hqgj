@@ -27,7 +27,7 @@
         <div class="table-box">
             <el-table :data="tableData" style="width: 100%" v-loading="loading">
                 <el-table-column align="center" label="序号" type="index" width="80"></el-table-column>
-                <el-table-column label="政策名称" prop="title" sortable></el-table-column>
+                <el-table-column label="政策名称" prop="title" :show-overflow-tooltip="true" min-width="126"></el-table-column>
                 <el-table-column label="创建时间" prop="createDate" sortable width="180"></el-table-column>
                 <el-table-column label="状态" prop="status" sortable width="100">
                     <template slot-scope="scope">
