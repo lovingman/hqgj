@@ -27,7 +27,6 @@
           <!--</el-col>-->
           <el-col :span="6">
             <el-select
-              style="float: right"
               v-model="typeObj"
               clearable
               placeholder="全部类型"
@@ -330,6 +329,5 @@ export default {
 }
 .input-with-select {
   float: right;
-  width: 350px;
 }
 </style>
