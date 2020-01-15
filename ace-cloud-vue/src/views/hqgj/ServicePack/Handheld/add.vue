@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">创建服务包</div>
+    <div class="title">财税服务包创建</div>
     <div class="content-box">
       <div class="title">基本信息</div>
       <el-form
@@ -36,7 +36,7 @@
           <div class="ties" v-if="serviceForm.type == 3">选择该类型，用户可免费享受咨询服务</div>
         </el-row>
         <!-- 代理财政是否显示 -->
-        <div v-if="this.serviceForm.type != ''" class="show-box">
+        <div class="show-box">
           <el-row>
             <el-col :span="12">
               <el-form-item label="服务机构：" prop="orgId">
@@ -98,13 +98,12 @@
           </el-row>
           <el-row>
             <el-form-item label="服务介绍：" prop="content">
-              <el-input
-                clearable
-                type="textarea"
-                placeholder="详细介绍服务内容"
-                v-model.trim="serviceForm.content"
-                rows="10"
-              ></el-input>
+              <!-- 工具栏容器 -->
+              <div class="ckeditor">
+                <div id="toolbar-container"></div>
+                <!-- 编辑器容器 -->
+                <div id="editor"></div>
+              </div>
             </el-form-item>
           </el-row>
           <el-row v-if="serviceForm.type == 2">
@@ -176,8 +175,16 @@
 
 <script>
 import { create } from "@/api/hqgj/handheld";
-import { getDict, getUser, lecturerMechanism, lecturerPage } from "@/api/sys";
+import {
+  getDict,
+  getUser,
+  lecturerMechanism,
+  lecturerPage,
+  fileUpImg
+} from "@/api/sys";
 import photo from "../../publicTemplate/photo";
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
 export default {
   components: {
     photo
@@ -193,6 +200,8 @@ export default {
       //专家类型
       contactPersonArr: [],
       getData: {}, //专家形象照片
+      editor: "", //编辑器实例
+      types: "1", //默认加载代理记账
       //服务包容器
       serviceForm: {
         type: "", //类型
@@ -226,10 +235,10 @@ export default {
         contactPersonTel: [
           {
             required: true,
-            message: "请输入联系方式,例如：13500228899或者0736-1234567",
+            message: "请输入联系方式,例如：13500228899或者07361234567",
             trigger: "blur"
           },
-          { validator: this.globalMethods.checkIntegerP, trigger: "blur" }
+          { validator: this.globalMethods.checkNumbar, trigger: "blur" }
         ],
         orgId: [
           {
@@ -289,9 +298,14 @@ export default {
     this.dictQuery();
     this.loadUser();
   },
+  mounted() {
+    this.initCKEditor();
+  },
   methods: {
     //获取用户信息
     loadUser() {
+      this.serviceForm.type = "1";
+      this.changeType(this.serviceForm.type);
       getUser().then(res => {
         this.userType = res.data.userType; //1律师服务 2会计师服务 3培训机构 4工信局
         this.dataRows = res.data;
@@ -343,6 +357,62 @@ export default {
       getDict("55").then(res => {
         this.typeArr = res.data["55"]; //类型字典
       });
+    },
+    //富文本编辑器
+    initCKEditor() {
+      class myUploadLoader {
+        constructor(loader) {
+          this.loader = loader;
+        }
+        upload() {
+          //重置上传路径
+          return this.loader.file.then(
+            file =>
+              new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.addEventListener(
+                  "load",
+                  function() {
+                    this.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                    fileUpImg(this.actionUrls, { file: reader.result }).then(
+                      res => {
+                        debugger;
+                        if (res.status == 1) {
+                          resolve({
+                            default: res.data
+                          });
+                        } else {
+                          reject(err);
+                        }
+                      }
+                    );
+                  },
+                  false
+                );
+                reader.readAsDataURL(file);
+              })
+          );
+        }
+        abort() {}
+      }
+      function myUpload(e) {
+        // 使用 CKeditor 提供的 API 修改上传适配器
+        e.plugins.get("FileRepository").createUploadAdapter = loader =>
+          new myUploadLoader(loader);
+      }
+      CKEditor.create(document.querySelector("#editor"), {
+        language: "zh-cn",
+        removePlugins: ["MediaEmbed"], //除去视频按钮
+        extraPlugins: [myUpload] // 添加自定义图片上传适配插件
+      })
+        .then(editor => {
+          const toolbarContainer = document.querySelector("#toolbar-container");
+          toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     //专家选择
     changeContactPerson(value) {
@@ -422,6 +492,7 @@ export default {
         });
         return;
       }
+      this.serviceForm.content = this.editor.getData();
       //验证其他信息
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -488,6 +559,9 @@ export default {
     }
     /deep/ .el-select {
       width: 100%;
+    }
+    /deep/ .el-input--medium .el-input__inner {
+      padding-right: 80px;
     }
   }
   .ties {
@@ -599,6 +673,13 @@ export default {
         border-radius: 4px;
         margin-left: 20px;
       }
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
 }

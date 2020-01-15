@@ -2,7 +2,12 @@
   <div class="main-box">
     <div class="header">
       <el-row>
-        <el-button type="primary" style="float:left;" @click="create">创建</el-button>
+        <el-button
+          type="primary"
+          style="float:left;"
+          @click="create"
+          v-if="userBtn['/hqgj/serveCultivate/create']"
+        >{{userBtn['/hqgj/serveCultivate/create']}}</el-button>
         <el-col class="selectSearch" :span="10">
           <el-col :span="7">
             <el-select v-model="query.status" @change="toggleSelect" clearable placeholder="请选择">
@@ -15,7 +20,12 @@
             </el-select>
           </el-col>
           <el-col :span="16" :offset="1">
-            <el-input placeholder="请输入标题"  v-model.trim="query.title" clearable class="input-with-select">
+            <el-input
+              placeholder="请输入标题"
+              v-model.trim="query.title"
+              clearable
+              class="input-with-select"
+            >
               <el-button slot="append" icon="el-icon-search" :loading="loading" @click="search"></el-button>
             </el-input>
           </el-col>
@@ -31,7 +41,11 @@
         element-loading-spinner="el-icon-loading"
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
-        <el-table-column prop="title" sortable label="培训标题"></el-table-column>
+        <el-table-column prop="title" sortable label="培训标题" min-width="220" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.title }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="cultivatePersonNumber" sortable width="120" label="培训人数"></el-table-column>
         <el-table-column prop="enrollPersopnNumber" sortable width="120" label="报名人数"></el-table-column>
         <el-table-column prop="startDate" sortable width="180" label="开始时间"></el-table-column>
@@ -48,18 +62,26 @@
         <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="release(scope.row)" v-if="scope.row.status =='4'">发布</el-button>
-            <el-button type="text" @click="examine(scope.row)" v-if="scope.row.status =='0'">审核</el-button>
+            <el-button
+              type="text"
+              @click="examine(scope.row)"
+              v-if="userBtn['/hqgj/serveCultivate/updateStatus']&& scope.row.status =='0'"
+            >{{userBtn['/hqgj/serveCultivate/updateStatus']}}</el-button>
             <el-button
               type="text"
               @click="registrationClick(scope.row)"
-              v-if="scope.row.status =='1' || scope.row.status =='3' "
-            >报名管理</el-button>
+              v-if="userBtn['/hqgj/serveCultivateEnroll/page'] && scope.row.status =='1' || scope.row.status =='3' "
+            >{{userBtn['/hqgj/serveCultivateEnroll/page']}}</el-button>
             <el-button
               type="text"
-              v-if="scope.row.status !='3' && scope.row.status !='2'"
+              v-if="userBtn['/hqgj/serveCultivate/update'] && scope.row.status !='3' && scope.row.status !='2'"
               @click="update(scope.row)"
-            >编辑</el-button>
-            <el-button type="text" @click="deleteById(scope.row)">删除</el-button>
+            >{{userBtn['/hqgj/serveCultivate/update']}}</el-button>
+            <el-button
+              type="text"
+              v-if="userBtn['/hqgj/serveCultivate/deleteByIds'] "
+              @click="deleteById(scope.row)"
+            >{{userBtn['/hqgj/serveCultivate/deleteByIds']}}</el-button>
             <el-button type="text" @click="seeClick(scope.row)">详情</el-button>
           </template>
         </el-table-column>
@@ -99,6 +121,8 @@
 
 <script>
 import { page, deleteByIds, updateStatus } from "@/api/hqgj/training";
+import { getUser } from "@/api/sys";
+import { mapGetters } from "vuex";
 export default {
   name: "index",
   data() {
@@ -146,9 +170,26 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getUser();
+  },
+  computed: {
+    ...mapGetters(["userBtn"])
   },
   methods: {
+    //请求登陆人信息
+    getUser() {
+      getUser().then(res => {
+        this.userType = res.data.userType;
+        this.corpId = res.data.corpId; //机构ID
+        if (this.userType != 4) {
+          //如果不是工信局传递当前登录人的机构ID来匹配列表
+          this.query.orgId = this.corpId;
+          this.getList();
+        } else {
+          this.getList();
+        }
+      });
+    },
     //请求page
     getList() {
       this.loading = true;

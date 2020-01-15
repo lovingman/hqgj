@@ -409,6 +409,15 @@ export default {
 					callback();
 				}
 			},
+			//只能输入数字
+			checkNumbar(rule, value, callback) {
+				if (value && !(/^[0-9]\d*$/).test(value)) {
+					callback(new Error('只能输入数字'));
+				} else {
+					callback();
+				}
+
+			},
 			//整数加小数点4位
 			checkIntegerFour(rule, value, callback) {
 				var reg = /^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,4})?$/;

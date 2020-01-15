@@ -3,9 +3,9 @@
     <div class="header">
       <el-row>
         <!-- <el-button type="primary" style="float:left;">数据导出</el-button> -->
-        <el-col class="selectSearch" :span="18">
-          <el-col :span="10">
-            <el-col :span="10">
+        <el-col class="selectSearch" :span="24">
+          <el-col :span="9">
+            <el-col :span="11">
               <el-date-picker
                 v-model="query.startTime"
                 format="yyyy-MM-dd"
@@ -14,10 +14,10 @@
                 placeholder="选择开始时间"
               ></el-date-picker>
             </el-col>
-            <el-col :span="4" style=" text-align: center; line-height: 36px;">
+            <el-col :span="2" style=" text-align: center; line-height: 36px;">
               <span class="text">至</span>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="11">
               <el-date-picker
                 v-model="query.endTime"
                 format="yyyy-MM-dd"
@@ -42,7 +42,7 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="5" :offset="1">
+          <el-col :span="6" :offset="1">
             <el-input
               placeholder="请输入订单号"
               v-model.trim="query.orderNo"
@@ -64,7 +64,11 @@
         element-loading-spinner="el-icon-loading"
       >
         <el-table-column type="index" width="80" label="序号"></el-table-column>
-        <el-table-column prop="orderNo" sortable label="订单号"></el-table-column>
+        <el-table-column prop="orderNo" sortable label="订单号" min-width="220" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.orderNo }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="type" sortable label="类型" width="120">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.type=='1'">代理记账</div>
@@ -72,8 +76,22 @@
             <div type="text" v-if="scope.row.type=='3'">专家问诊</div>
           </template>
         </el-table-column>
-        <el-table-column prop="orgName" sortable label="服务机构"></el-table-column>
-        <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
+        <el-table-column prop="orgName" sortable label="服务机构" min-width="160" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.orgName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="companyName"
+          sortable
+          label="企业名称"
+          min-width="200"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.companyName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="createDate" sortable label="下单时间" width="200"></el-table-column>
         <el-table-column prop="status" sortable label="状态" width="140">
           <template slot-scope="scope">

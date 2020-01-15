@@ -68,11 +68,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="地点：" prop="address">
-                  <el-input
-                    clearable
-                    v-if="basicForm.detailedAddress!=''"
-                    v-model="basicForm.detailedAddress"
-                  ></el-input>
+                  <el-input clearable v-model="basicForm.detailedAddress"></el-input>
                   <el-button @click="getAddress" class="get-address">
                     <i class="el-icon-plus"></i>
                     <span>获取地点</span>
@@ -87,13 +83,12 @@
             </el-row>
             <el-row>
               <el-form-item label="内容" prop="content">
-                <el-input
-                  :rows="8"
-                  placeholder="请输入详细内容"
-                  type="textarea"
-                  v-model="basicForm.content"
-                ></el-input>
-                <!-- <editor-bar v-model="basicForm.content" :isClear="isClear" @change="change"></editor-bar> -->
+                <!-- 工具栏容器 -->
+                <div class="ckeditor">
+                  <div id="toolbar-container"></div>
+                  <!-- 编辑器容器 -->
+                  <div id="editor"></div>
+                </div>
               </el-form-item>
             </el-row>
           </el-form>
@@ -291,11 +286,13 @@ import {
   getUser,
   lecturerMechanism,
   lecturerPage,
-  fileUpload
+  fileUpload,
+  fileUpImg
 } from "@/api/sys";
 import EditorBar from "../../publicTemplate/wangEnduit";
 import photo from "../../publicTemplate/photo";
-
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
 export default {
   components: { EditorBar, photo },
   name: "edit",
@@ -311,6 +308,7 @@ export default {
       latitude: [], //经纬度
       markers: [],
       searchService: [],
+      loading: false, //laoding加载状态
       geocoder: [],
       addressVisible: false,
       tabsName: "first", //选项卡展示第几个
@@ -319,6 +317,7 @@ export default {
       getData: {}, //编辑数据
       submitType: "edit", //类型
       disabled: true, //机构是否禁止选择
+      editor: "", //编辑器实例
       //基本信息
       basicForm: {
         corpName: "", //机构名称
@@ -422,7 +421,67 @@ export default {
     this.load();
     this.loadUser();
   },
+  mounted() {
+    this.initCKEditor();
+  },
   methods: {
+    //富文本编辑器
+    initCKEditor() {
+      class myUploadLoader {
+        constructor(loader) {
+          this.loader = loader;
+        }
+        upload() {
+          //重置上传路径
+          return this.loader.file.then(
+            file =>
+              new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.addEventListener(
+                  "load",
+                  function() {
+                    this.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                    fileUpImg(this.actionUrls, { file: reader.result }).then(
+                      res => {
+                        debugger;
+                        if (res.status == 1) {
+                          resolve({
+                            default: res.data
+                          });
+                        } else {
+                          reject(err);
+                        }
+                      }
+                    );
+                  },
+                  false
+                );
+                reader.readAsDataURL(file);
+              })
+          );
+        }
+        abort() {}
+      }
+      function myUpload(e) {
+        // 使用 CKeditor 提供的 API 修改上传适配器
+        e.plugins.get("FileRepository").createUploadAdapter = loader =>
+          new myUploadLoader(loader);
+      }
+      CKEditor.create(document.querySelector("#editor"), {
+        language: "zh-cn",
+        removePlugins: ["MediaEmbed"], //除去视频按钮
+        extraPlugins: [myUpload] // 添加自定义图片上传适配插件
+      })
+        .then(editor => {
+          const toolbarContainer = document.querySelector("#toolbar-container");
+          toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
+          console.log(this.editor);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     //获取数据
     load() {
       this.id = this.$route.query.id;
@@ -432,6 +491,7 @@ export default {
           //显示文件列表
           this.basicForm = res.data; //基本信息
           this.getData = res.data; //传递给子组件的数据
+          this.editor.setData(this.basicForm.content); //显示编辑器的内容
           //时间数组
           var obj = [];
           obj.push(res.data.startDate); //开始时间
@@ -599,6 +659,7 @@ export default {
         });
         return;
       }
+      this.basicForm.content = this.editor.getData();
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.tabsName = "second";
@@ -635,7 +696,7 @@ export default {
               this.basicForm.timeArr.length > 0
                 ? this.basicForm.timeArr[1]
                 : "", //结束时间
-            content: this.basicForm.content //内容
+            content: this.editor.getData() //内容
           };
           //日程
           //日程开始时间和结束时间
@@ -1059,6 +1120,13 @@ export default {
         border-radius: 4px;
         margin-left: 20px;
       }
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
 }
