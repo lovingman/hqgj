@@ -23,7 +23,7 @@
             :on-remove="unitPictrueRemove"
           >
             <i class="el-icon-plus"></i>
-            <div class="el-upload__tip" slot="tip">支持jpg.png，大小不超过10M</div>
+            <div class="el-upload__tip" slot="tip" style="line-height: 14px;">支持jpg.png，大小不超过10M</div>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
@@ -321,6 +321,12 @@ export default {
     /deep/ .el-upload--picture-card {
       display: none;
     }
+    /deep/ .el-upload__tip {
+      margin-top: -10px;
+    }
+  }
+  /deep/ .el-upload-list--picture-card .el-upload-list__item-thumbnail {
+    object-fit: cover;
   }
   .isError {
     /deep/ .el-form-item__error {

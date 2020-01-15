@@ -57,7 +57,13 @@
             </el-row>
             <el-row>
               <el-form-item label="内容：">
-                <span>{{basicForm.content}}</span>
+                <!-- <span v-html="basicForm.content"></span> -->
+                <!-- 工具栏容器 -->
+                <div class="ckeditor">
+                  <div id="toolbar-container"></div>
+                  <!-- 编辑器容器 -->
+                  <div id="editor"></div>
+                </div>
               </el-form-item>
             </el-row>
           </el-form>
@@ -125,6 +131,7 @@
 
 <script>
 import { getById } from "@/api/hqgj/training";
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 export default {
   name: "see",
   data() {
@@ -140,6 +147,9 @@ export default {
   created() {
     this.load();
   },
+  mounted() {
+    this.initCKEditor();
+  },
   methods: {
     //获取数据
     load() {
@@ -149,10 +159,21 @@ export default {
         if (res.status == 1) {
           console.log(res);
           this.basicForm = res.data; //基本信息
+          this.editor.setData(this.basicForm.content);
           this.scheduleModelList = res.data.scheduleList;
-          console.log(this.scheduleModelList);
         }
       });
+    },
+    //富文本编辑器
+    initCKEditor() {
+      CKEditor.create(document.querySelector("#editor"))
+        .then(editor => {
+          editor.isReadOnly = true; //将编辑器设为只读
+          this.editor = editor;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     //返回
     black() {
@@ -257,6 +278,13 @@ export default {
     top: 20px;
     /deep/ .el-button--medium {
       border-radius: 5px;
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
 }

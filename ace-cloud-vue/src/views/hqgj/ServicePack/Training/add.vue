@@ -67,7 +67,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="地点：" prop="detailedAddress">
+                <el-form-item label="地点：" prop="detailedAddress" class="address-box">
                   <el-input clearable v-model="basicForm.detailedAddress"></el-input>
                   <el-button @click="getAddress" class="get-address">
                     <i class="el-icon-plus"></i>
@@ -744,6 +744,7 @@ export default {
     },
     //提交数据
     totalSubmit(formName) {
+      this.basicForm.content = this.editor.getData();
       this.$refs[formName].validate(valid => {
         if (valid) {
           //基本信息
@@ -765,7 +766,7 @@ export default {
                 ? this.basicForm.timeArr[1]
                 : "", //结束时间
 
-            content: this.editor.getData() //内容
+            content: this.basicForm.content //内容
           };
           //日程
           //日程开始时间和结束时间
@@ -941,7 +942,10 @@ export default {
 
 .main-box {
   background-color: #fff;
-
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 0;
+  }
   /deep/ .el-tabs__nav-scroll {
     padding: 0 20px;
   }
@@ -1011,7 +1015,9 @@ export default {
     /deep/ .el-select {
       width: 100%;
     }
-
+    /deep/ .el-input--medium .el-input__inner {
+      padding-right: 80px;
+    }
     /deep/ .el-form-item__content {
       width: calc(~"100% - 120px");
     }
@@ -1028,6 +1034,20 @@ export default {
 
       i {
         margin: 0 10px 0 0;
+      }
+    }
+    .address-box {
+      position: relative;
+      /deep/ .el-form-item__content {
+        padding-left: 140px;
+      }
+      /deep/ .el-input--medium .el-input__inner {
+        padding-right: 20px;
+      }
+      .get-address {
+        position: absolute;
+        left: 0;
+        top: 4px;
       }
     }
   }
@@ -1068,10 +1088,22 @@ export default {
   }
   .ckeditor {
     width: 100%;
-    border: 1px solid #ddd;
-    /deep/ .ck-editor__editable {
-      min-height: 200px;
+    border: 1px solid #dcdfe6;
+    /deep/ .ck.ck-toolbar {
+      border: none;
+      border-bottom: 1px solid #dcdfe6;
+      background-color: #f5f7fa;
     }
+    /deep/ .ck-editor__editable {
+      height: 300px;
+      overflow-y: auto;
+    }
+  }
+  .ck.ck-editor__editable_inline > :last-child {
+    margin: 0 !important;
+  }
+  .ck.ck-editor__editable_inline > :first-child {
+    margin: 0 !important;
   }
 }
 </style>
