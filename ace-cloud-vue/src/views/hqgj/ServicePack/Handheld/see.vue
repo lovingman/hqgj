@@ -55,7 +55,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="封面：">
+            <el-form-item label="封面：" style="margin-bottom:20px;">
               <span class="img-border">
                 <img :src="basicForm.fmUrl" />
               </span>
@@ -169,6 +169,13 @@ export default {
 <style lang="less" scoped>
 .main-box {
   background-color: #fff;
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 0;
+  }
+  /deep/ .el-form-item {
+    margin-bottom: 10px;
+  }
   /deep/ .el-tabs__nav-scroll {
     padding: 0 20px;
   }

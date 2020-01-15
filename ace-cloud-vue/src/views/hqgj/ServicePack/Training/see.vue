@@ -34,7 +34,7 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="开始和截至时间：">
+                <el-form-item label="开始/截止时间：">
                   <span>{{basicForm.startDate}}</span>
                   <span style="padding: 0 10px;">至</span>
                   <span>{{basicForm.endDate}}</span>
@@ -48,7 +48,7 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="封面：">
+                <el-form-item label="封面：" style="margin-bottom:20px;">
                   <span class="img-border">
                     <img :src="basicForm.fmUrl" />
                   </span>
@@ -198,6 +198,13 @@ export default {
 <style lang="less" scoped>
 .main-box {
   background-color: #fff;
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 0;
+  }
+  /deep/ .el-form-item {
+    margin-bottom: 10px;
+  }
   /deep/ .el-tabs__nav-scroll {
     padding: 0 20px;
   }
@@ -282,9 +289,10 @@ export default {
   }
   .ckeditor {
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid #dcdfe6;
     /deep/ .ck-editor__editable {
-      min-height: 200px;
+      height: 300px;
+      overflow-y: auto;
     }
   }
 }
