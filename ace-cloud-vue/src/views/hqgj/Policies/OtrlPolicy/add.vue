@@ -242,7 +242,7 @@
             border: 1px solid #ddd;
 
             /deep/ .ck-editor__editable {
-                min-height: 200px;
+                height: 600px;
             }
         }
 

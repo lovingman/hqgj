@@ -21,7 +21,7 @@
                         <!--</el-dropdown>-->
                     <!--</el-col>-->
                     <el-col :span="6">
-                        <el-select style="float: right" v-model="query.source" clearable placeholder="来源">
+                        <el-select v-model="query.source" clearable placeholder="来源">
                             <el-option
                                     :key="item.value"
                                     :label="item.label"
@@ -282,8 +282,10 @@
         padding: 20px;
         background-color: #fff;
     }
+    .selectSearch {
+        float: right;
+    }
     .input-with-select{
         float: right;
-        width: 350px;
     }
 </style>

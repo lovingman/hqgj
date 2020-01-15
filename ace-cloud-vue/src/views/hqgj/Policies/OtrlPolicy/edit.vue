@@ -202,6 +202,7 @@ export default {
 <style lang="less" scoped>
 .main-box {
   background: #fff;
+  height: 100%;
   .formBox {
     padding-right: 50px;
   }
@@ -234,7 +235,7 @@ export default {
     border: 1px solid #ddd;
 
     /deep/ .ck-editor__editable {
-      min-height: 200px;
+      min-height: 700px;
     }
   }
   .footer {
