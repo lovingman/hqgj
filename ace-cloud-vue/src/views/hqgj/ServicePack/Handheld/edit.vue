@@ -411,6 +411,7 @@ export default {
                 arrs.id = res.rows[i].id;
                 arrs.name = res.rows[i].name;
                 arrs.fmUrl = res.rows[i].imagePhoto;
+                arrs.phone = res.rows[i].mobile;
                 this.contactPersonArr.push(arrs);
               }
             }
@@ -439,6 +440,7 @@ export default {
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
       this.getData.fmUrl = obj.fmUrl;
+      this.serviceForm.contactPersonTel = obj.phone;
     },
     //类型选择
     changeType(value) {
@@ -552,7 +554,7 @@ export default {
   background: #fff;
   min-height: 100%;
   /deep/ .el-row {
-    margin-bottom: 0;
+    margin-bottom: 12px;
   }
 
   .formBox {

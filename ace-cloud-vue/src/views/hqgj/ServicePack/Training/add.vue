@@ -944,7 +944,7 @@ export default {
   background-color: #fff;
   min-height: 100%;
   /deep/ .el-row {
-    margin-bottom: 0;
+    margin-bottom: 12px;
   }
   /deep/ .el-tabs__nav-scroll {
     padding: 0 20px;

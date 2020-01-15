@@ -340,10 +340,13 @@ export default {
               this.contactPersonArr = [];
               this.serviceForm.contactId = "";
               let personnelRows = res.rows;
+              console.log(personnelRows);
               for (let i = 0; i < personnelRows.length; i++) {
                 let obj = {};
                 obj.id = personnelRows[i].id;
                 obj.name = personnelRows[i].name;
+                obj.fmUrl = personnelRows[i].imagePhoto;
+                obj.phone = personnelRows[i].mobile;
                 this.contactPersonArr.push(obj);
               }
             }
@@ -422,6 +425,7 @@ export default {
       });
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
+      this.serviceForm.contactPersonTel = obj.phone;
       let arrs = {};
       arrs.fmUrl = obj.fmUrl;
       this.getData = arrs;
@@ -438,6 +442,9 @@ export default {
         } else {
           this.removeDomain();
         }
+      }
+      if (value == 3) {
+        this.serviceForm.contactPersonTel = "";
       }
     },
     //服务机构选择
@@ -550,7 +557,7 @@ export default {
   background: #fff;
   min-height: 100%;
   /deep/ .el-row {
-    margin-bottom: 0;
+    margin-bottom: 12px;
   }
   .formBox {
     padding-right: 50px;
