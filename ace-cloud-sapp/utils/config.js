@@ -1,5 +1,5 @@
-// var server = "https://test.huacainfo.com";
-var server = "http://192.168.2.114";
+var server = "https://test.huacainfo.com";
+// var server = "http://192.168.2.114";
 var config = {
     login: `${server}/hqgj-portal/security/login`,
     authority: `${server}/wxmss/www/mini/authority`, //微信授权
@@ -15,9 +15,11 @@ var config = {
     scheduleGetByIdUrl: `${server}/hqgj/www/serveCultivate/scheduleGetById`, //日程列表详情
     financePageUrL: `${server}/hqgj/www/serveFinance/page`, //财税服务page请求
     financeIdUrl: `${server}/hqgj/www/serveFinance/getById`, //财税服务列表详情
-    baseOrganizationUrl: `${server}/hqgj/www/baseOrganization/page`, //法律服务page请求
-    baseOrganizationByIdUrl: `${server}/hqgj/www/baseOrganization/getById`, //法律服务列表详情
+    baseOrganizationUrl: `${server}/hqgj/www/baseOrganization/page`, //机构page请求
+    organizationList: `${server}/hqgj/baseOrganization/page`, //组织列表 
+    baseOrganizationByIdUrl: `${server}/hqgj/www/baseOrganization/getById`, //机构详情
     baseOrganizationMemberUrl: `${server}/hqgj/www/baseOrganizationMember/page`, //法律服务列表成员page
+    baseOrganizationById: `${server}/hqgj/www/baseOrganizationMember/getById`, //机构成员详情
     basicAnnexUrl: `${server}/hqgj/www/basicAnnex/page`, //附件page
     lawServePageUrl: `${server}/hqgj/www/lawServe/policyPage`, //政策服务page
     lawServeByIdUrl: `${server}/hqgj/www/lawServe/policyGetById`, //政策服务详情
@@ -38,7 +40,6 @@ var config = {
     businessPage: `${server}/hqgj/serveBusiness/businessPage`, //创业服务page
     serveBusinessPreviewInfoUrl: `${server}/hqgj/serveBusiness/previewInfo`, //创业服务详情
     enterpriseList: `${server}/hqgj/baseCompany/page`, //企业列表  / 
-    organizationList: `${server}/hqgj/baseOrganization/page`, //组织列表 
     joinOrg: `${server}/hqgj/personalCenter/bingUser`, //加入组织企业
     relieveBind: `${server}/hqgj/personalCenter/relieveBind`, //解除组织企业
     modifyPwd: `${server}/hqgj-portal/users/updatePwd`, //修改密码

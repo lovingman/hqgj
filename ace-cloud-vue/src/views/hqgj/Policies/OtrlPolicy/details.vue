@@ -16,7 +16,7 @@
                     <span>{{serviceForm.createDate}}</span>
                 </el-form-item>
                 <el-form-item label="内容:" prop="content" style="width: 95%">
-                    <span style="word-wrap: break-word;word-break: break-all;">{{serviceForm.content}}</span>
+                    <span v-html="serviceForm.content" style="word-wrap: break-word;word-break: break-all;">{{serviceForm.content}}</span>
                 </el-form-item>
                 <!--<el-form-item>-->
                     <!--<el-button @click="back" type="primary">返回</el-button>-->

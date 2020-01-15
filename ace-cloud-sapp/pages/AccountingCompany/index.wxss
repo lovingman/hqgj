@@ -33,7 +33,6 @@
   font-family: PingFangSC-bold;
   line-height: 1.5em;
 }
-.wrap .text .sign
 
 .wrap .subTitle {
   overflow: hidden;
@@ -83,7 +82,8 @@ display: flex;
   color: rgba(121, 128, 146, 1);
   font-size: 28rpx;
   font-family: PingFangSC-regular;
-  padding: 0 30rpx;
+  width: 690rpx;
+  margin: auto;
   line-height: 1.5em;
   word-wrap: break-word;
 }
@@ -139,21 +139,4 @@ display: flex;
   font-size: 22rpx;
   font-family: PingFangSC-regular;
   line-height: 1.5em;
-}
-
-.btn {
-  width: 700rpx;
-  position: fixed;
-  bottom: 80rpx;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: #fff;
-}
-
-.content  .van-sticky {
-  border-bottom: 1rpx solid #eee;
-  margin-bottom: 20rpx;
-}
-.bottoms{
-    height: 200rpx;
 }
