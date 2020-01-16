@@ -119,10 +119,13 @@ export default {
           if (this.basicForm.type == 3) {
             this.basicForm.typeName = "专家问诊";
           }
+          if (this.basicForm.status == 0 || this.basicForm.status == 2) {
+            this.basicForm.statusName = "待完成";
+          }
           if (this.basicForm.status == 1) {
             this.basicForm.statusName = "已取消";
           }
-          if (this.basicForm.type == 3) {
+          if (this.basicForm.status > 30) {
             this.basicForm.statusName = "已完成";
           }
         }

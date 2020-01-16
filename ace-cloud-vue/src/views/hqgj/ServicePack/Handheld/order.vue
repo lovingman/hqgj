@@ -228,7 +228,7 @@ export default {
     },
     //完成操作
     complete(row) {
-      let statusType = 1;
+      let statusType = "31";
       let rowId = row.id;
       this.$confirm("确定是否完成该项服务?", "提示", {
         confirmButtonText: "确定",
