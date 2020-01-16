@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="title">
-      <span>政策服务详情</span>
+      <span>法律服务详情</span>
       <el-button @click="back" style="float:right;border-radius:5px;" type="primary">返回</el-button>
     </div>
     <div class="handle-box">

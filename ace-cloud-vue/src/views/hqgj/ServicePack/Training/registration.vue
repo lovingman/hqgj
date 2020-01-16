@@ -77,6 +77,7 @@
 
 <script>
 import { registrationPage, registrationDeleteByIds } from "@/api/hqgj/training";
+import { mapGetters } from "vuex";
 export default {
   name: "registration",
   data() {
@@ -112,15 +113,13 @@ export default {
   created() {
     this.load();
   },
+  computed: {
+    ...mapGetters(["userBtn"])
+  },
   methods: {
     load() {
       this.query.serveCultivateId = this.$route.query.id;
-      registrationPage(this.query).then(res => {
-        if (res.status == 1) {
-          this.tableData = res.rows;
-          this.total = res.total;
-        }
-      });
+      this.getList();
     },
     //page列表
     getList() {
@@ -132,6 +131,7 @@ export default {
       });
       registrationPage(this.query).then(res => {
         if (res.status == 1) {
+          console.log(res);
           this.tableData = res.rows;
           this.total = res.total;
           this.loading = false;
