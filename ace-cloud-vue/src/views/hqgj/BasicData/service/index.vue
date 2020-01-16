@@ -6,7 +6,6 @@
           <el-col :span="12" v-if="userBtn['/hqgj/baseOrganization/create']">
             <el-button
               @click="create"
-              icon="el-icon-plus"
               style="float: left;border-radius:5px;"
               type="primary"
             >创建</el-button>
