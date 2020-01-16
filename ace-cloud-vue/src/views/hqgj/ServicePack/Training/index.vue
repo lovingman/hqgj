@@ -8,7 +8,7 @@
           @click="create"
           v-if="userBtn['/hqgj/serveCultivate/create']"
         >{{userBtn['/hqgj/serveCultivate/create']}}</el-button>
-        <el-col class="selectSearch" :span="10">
+        <el-col class="selectSearch" :span="16">
           <el-col :span="7">
             <el-select v-model="query.status" @change="toggleSelect" clearable placeholder="请选择">
               <el-option
@@ -343,6 +343,9 @@ export default {
     /deep/ .el-button--medium {
       border-radius: 4px;
       height: 36px;
+    }
+    /deep/ .el-select {
+      width: 100%;
     }
     .selectSearch {
       float: right;

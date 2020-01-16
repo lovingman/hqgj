@@ -16,10 +16,15 @@
                     <span>{{serviceForm.createDate}}</span>
                 </el-form-item>
                 <el-form-item label="内容:" prop="content" style="width: 95%">
-                    <span v-html="serviceForm.content" style="word-wrap: break-word;word-break: break-all;">{{serviceForm.content}}</span>
+                    <div class="ckeditor">
+                        <div id="toolbar-container"></div>
+                        <!-- 编辑器容器 -->
+                        <div id="editor"></div>
+                    </div>
+                    <!--<span v-html="serviceForm.content" style="word-wrap: break-word;word-break: break-all;">{{serviceForm.content}}</span>-->
                 </el-form-item>
                 <!--<el-form-item>-->
-                    <!--<el-button @click="back" type="primary">返回</el-button>-->
+                <!--<el-button @click="back" type="primary">返回</el-button>-->
                 <!--</el-form-item>-->
             </el-form>
         </div>
@@ -28,6 +33,8 @@
 
 <script>
     import {getPolicyById} from "@/api/hqgj/Policies";
+    import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+
     export default {
         name: "details",
         data() {
@@ -40,8 +47,11 @@
                 },
             };
         },
-        created(){
+        created() {
             this.getDetails();
+        },
+        mounted() {
+            this.initCKEditor();
         },
         methods: {
             getDetails() {
@@ -49,8 +59,20 @@
                 getPolicyById(this.id)
                     .then(response => {
                         this.serviceForm = response.data;
+                        this.editor.setData(this.serviceForm.content);
                     })
 
+            },
+            //富文本编辑器
+            initCKEditor() {
+                CKEditor.create(document.querySelector("#editor"))
+                    .then(editor => {
+                        editor.isReadOnly = true; //将编辑器设为只读
+                        this.editor = editor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             },
             back() {
                 this.$router.push({
@@ -80,5 +102,13 @@
     .handle-box {
         padding-top: 40px;
         padding-bottom: 40px;
+    }
+
+    .ckeditor {
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+    .ckeditor /deep/ .ck-editor__editable {
+        height: 480px;
     }
 </style>

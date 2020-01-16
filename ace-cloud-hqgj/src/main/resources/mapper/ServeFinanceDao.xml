@@ -61,6 +61,7 @@
       address = #{address,jdbcType=VARCHAR},
       quota = #{quota,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
+      fmUrl=#{fmUrl,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},

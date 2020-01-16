@@ -55,7 +55,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="封面：">
+            <el-form-item label="封面：" style="margin-bottom:20px;">
               <span class="img-border">
                 <img :src="basicForm.fmUrl" />
               </span>
@@ -64,7 +64,13 @@
         </el-row>
         <el-row>
           <el-form-item label="服务介绍：">
-            <span>{{basicForm.content}}</span>
+            <!-- <span style="padding:0;margin:0;" v-html="basicForm.content"></span> -->
+            <!-- 工具栏容器 -->
+            <div class="ckeditor">
+              <div id="toolbar-container"></div>
+              <!-- 编辑器容器 -->
+              <div id="editor"></div>
+            </div>
           </el-form-item>
         </el-row>
       </el-form>
@@ -96,6 +102,7 @@
 
 <script>
 import { getById } from "@/api/hqgj/handheld";
+import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 export default {
   name: "see",
   data() {
@@ -105,11 +112,15 @@ export default {
       showService: false, //是否显示
       expertShow: false, //专家类容是否显示
       serviceList: [], //服务项目数组
-      typeName: "" //类型名称
+      typeName: "", //类型名称
+      editor: "" //编辑器实例
     };
   },
   created() {
     this.load();
+  },
+  mounted() {
+    this.initCKEditor();
   },
   methods: {
     //获取数据
@@ -121,6 +132,7 @@ export default {
           console.log(res);
           this.basicForm = res.data; //基本信息
           this.serviceList = res.data.financeItemList; //服务项目
+          this.editor.setData(this.basicForm.content);
           if (this.basicForm.type == 1) {
             this.typeName = "代理计账";
           }
@@ -133,7 +145,17 @@ export default {
         }
       });
     },
-
+    //富文本编辑器
+    initCKEditor() {
+      CKEditor.create(document.querySelector("#editor"))
+        .then(editor => {
+          editor.isReadOnly = true; //将编辑器设为只读
+          this.editor = editor;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     //返回
     black() {
       this.$router.push({
@@ -147,6 +169,13 @@ export default {
 <style lang="less" scoped>
 .main-box {
   background-color: #fff;
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 0;
+  }
+  /deep/ .el-form-item {
+    margin-bottom: 10px;
+  }
   /deep/ .el-tabs__nav-scroll {
     padding: 0 20px;
   }
@@ -234,6 +263,13 @@ export default {
       float: right;
       color: #0971ea;
       cursor: pointer;
+    }
+  }
+  .ckeditor {
+    width: 100%;
+    border: 1px solid #ddd;
+    /deep/ .ck-editor__editable {
+      min-height: 200px;
     }
   }
 }

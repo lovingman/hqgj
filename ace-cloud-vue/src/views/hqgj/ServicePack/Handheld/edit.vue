@@ -348,6 +348,7 @@ export default {
       }
       CKEditor.create(document.querySelector("#editor"), {
         language: "zh-cn",
+
         removePlugins: ["MediaEmbed"], //除去视频按钮
         extraPlugins: [myUpload] // 添加自定义图片上传适配插件
       })
@@ -410,6 +411,7 @@ export default {
                 arrs.id = res.rows[i].id;
                 arrs.name = res.rows[i].name;
                 arrs.fmUrl = res.rows[i].imagePhoto;
+                arrs.phone = res.rows[i].mobile;
                 this.contactPersonArr.push(arrs);
               }
             }
@@ -438,6 +440,7 @@ export default {
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
       this.getData.fmUrl = obj.fmUrl;
+      this.serviceForm.contactPersonTel = obj.phone;
     },
     //类型选择
     changeType(value) {
@@ -480,7 +483,6 @@ export default {
     //提交
     submission(formName) {
       //验证子组件图片是否有上传照片
-
       let photo;
       this.$refs["imgUpload"].$refs["photoForm"].validate(valid => {
         photo = valid;
@@ -492,7 +494,7 @@ export default {
         });
         return;
       }
-      this.serviceForm.content = this.editor.content;
+      this.serviceForm.content = this.editor.getData();
       //验证其他信息
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -550,6 +552,10 @@ export default {
 <style scoped lang="less">
 .main-box {
   background: #fff;
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 12px;
+  }
 
   .formBox {
     padding-right: 50px;
@@ -577,12 +583,19 @@ export default {
     color: #aaa;
     padding-left: 120px;
     margin-top: -15px;
+    margin-bottom: 10px;
   }
   .ckeditor {
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid #dcdfe6;
+    /deep/ .ck.ck-toolbar {
+      border: none;
+      border-bottom: 1px solid #dcdfe6;
+      background-color: #f5f7fa;
+    }
     /deep/ .ck-editor__editable {
-      min-height: 200px;
+      height: 300px;
+      overflow-y: auto;
     }
   }
   .title {
@@ -706,6 +719,12 @@ export default {
         margin-left: 20px;
       }
     }
+  }
+  .ck.ck-editor__editable_inline > :last-child {
+    margin: 0 !important;
+  }
+  .ck.ck-editor__editable_inline > :first-child {
+    margin: 0 !important;
   }
 }
 </style>

@@ -201,7 +201,7 @@
 <style lang="less" scoped>
     .main-box {
         background: #fff;
-
+        height: 100%;
         .formBox {
             padding-right: 50px;
         }
@@ -242,7 +242,7 @@
             border: 1px solid #ddd;
 
             /deep/ .ck-editor__editable {
-                height: 600px;
+                height: 580px;
             }
         }
 

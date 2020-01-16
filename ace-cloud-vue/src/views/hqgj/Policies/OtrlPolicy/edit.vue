@@ -235,7 +235,7 @@ export default {
     border: 1px solid #ddd;
 
     /deep/ .ck-editor__editable {
-      min-height: 700px;
+      height: 580px;
     }
   }
   .footer {

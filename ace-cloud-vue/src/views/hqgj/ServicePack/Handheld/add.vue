@@ -201,7 +201,6 @@ export default {
       contactPersonArr: [],
       getData: {}, //专家形象照片
       editor: "", //编辑器实例
-      types: "1", //默认加载代理记账
       //服务包容器
       serviceForm: {
         type: "", //类型
@@ -341,10 +340,13 @@ export default {
               this.contactPersonArr = [];
               this.serviceForm.contactId = "";
               let personnelRows = res.rows;
+              console.log(personnelRows);
               for (let i = 0; i < personnelRows.length; i++) {
                 let obj = {};
                 obj.id = personnelRows[i].id;
                 obj.name = personnelRows[i].name;
+                obj.fmUrl = personnelRows[i].imagePhoto;
+                obj.phone = personnelRows[i].mobile;
                 this.contactPersonArr.push(obj);
               }
             }
@@ -423,6 +425,7 @@ export default {
       });
       this.serviceForm.contactId = value;
       this.serviceForm.contactPersonName = obj.name;
+      this.serviceForm.contactPersonTel = obj.phone;
       let arrs = {};
       arrs.fmUrl = obj.fmUrl;
       this.getData = arrs;
@@ -439,6 +442,9 @@ export default {
         } else {
           this.removeDomain();
         }
+      }
+      if (value == 3) {
+        this.serviceForm.contactPersonTel = "";
       }
     },
     //服务机构选择
@@ -549,6 +555,10 @@ export default {
 <style scoped lang="less">
 .main-box {
   background: #fff;
+  min-height: 100%;
+  /deep/ .el-row {
+    margin-bottom: 12px;
+  }
   .formBox {
     padding-right: 50px;
     /deep/ .el-form-item {
@@ -571,6 +581,7 @@ export default {
     color: #aaa;
     padding-left: 120px;
     margin-top: -15px;
+    margin-bottom: 10px;
   }
   .title {
     font-size: 16px;
@@ -677,10 +688,22 @@ export default {
   }
   .ckeditor {
     width: 100%;
-    border: 1px solid #ddd;
-    /deep/ .ck-editor__editable {
-      min-height: 200px;
+    border: 1px solid #dcdfe6;
+    /deep/ .ck.ck-toolbar {
+      border: none;
+      border-bottom: 1px solid #dcdfe6;
+      background-color: #f5f7fa;
     }
+    /deep/ .ck-editor__editable {
+      height: 300px;
+      overflow-y: auto;
+    }
+  }
+  .ck.ck-editor__editable_inline > :last-child {
+    margin: 0 !important;
+  }
+  .ck.ck-editor__editable_inline > :first-child {
+    margin: 0 !important;
   }
 }
 </style>
