@@ -92,8 +92,12 @@ Page({
             if (res.data.status == 1) {
                 that.setData({
                     basicForm: res.data.data,
+                    basicFormContent: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;"')
+                    .replace(/<figure/g, '<div')
+                    .replace(/\/figure>/g, '\div>'), //富文本内容，替换掉fiugre标签不显示图片问题，换成div
                     basicAnnexList: res.data.data.basicAnnexList
                 })
+                console.log(that.data.basicFormContent);
             }
         })
         request.getJSON(cfg.enrollPage, {

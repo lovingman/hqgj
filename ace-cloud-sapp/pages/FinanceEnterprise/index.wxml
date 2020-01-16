@@ -27,7 +27,7 @@
             服务介绍
         </view>
         <view class="text">
-            <rich-text nodes="{{detailsForm.content}}"></rich-text>
+            <rich-text nodes="{{detailsFormContent}}"></rich-text>
         </view>
     </view>
     <view class="mod last" wx:if="{{detailsForm.type != 2}}">

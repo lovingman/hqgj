@@ -147,6 +147,8 @@ Page({
             if (res.data.status == 1) {
                 that.setData({
                     detailsForm: res.data.data,
+                    detailsFormContent: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;"').replace(/<figure/g, '<div')
+                        .replace(/\/figure>/g, '\div>'),
                     financeItemArr: res.data.data.financeItemList
                 })
             }

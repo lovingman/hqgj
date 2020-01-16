@@ -1,34 +1,34 @@
 <view>
-  <view class="banner">
-    <van-image width="100%" height="100%" fit="cover" src="/assets/image/icon-banner1.png" />
-  </view>
-  <van-sticky>
-    <view class="title1">
-      专家服务
+    <view class="banner">
+        <van-image width="100%" height="100%" fit="cover" src="/assets/image/icon-banner1.png" />
     </view>
-  </van-sticky>
-  <view class="list">
-    <view class="item" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
-      <view class="img">
-        <van-image round width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
-      </view>
-      <view class="info">
-        <view class="info1">
-          <text class="name">{{item.baseOrganizationMember.name}}</text>
-          <view class="sign">
-            <icon class="iconfont icon-yirenzheng"></icon>
-            已认证</view>
-          <text class="num">仅剩{{item.surplusQuota}}个名额</text>
+    <van-sticky>
+        <view class="title1">
+            专家服务
         </view>
-        <view class="info2 van-ellipsis">
-          <icon class="iconfont icon-credentials_icon"></icon>{{item.baseOrganization.orgName}}·{{item.baseOrganizationMember.jobs}}
+    </van-sticky>
+    <view class="list">
+        <view class="item" wx:for="{{listArr}}" wx:key="{{index}}" wx:for-item="item" bindtap="listClcik" data-index='{{index}}'>
+            <view class="img">
+                <van-image round width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
+            </view>
+            <view class="info">
+                <view class="info1">
+                    <text class="name">{{item.baseOrganizationMember.name}}</text>
+                    <view class="sign">
+                        <icon class="iconfont icon-yirenzheng"></icon>
+                        已认证</view>
+                    <text class="num">仅剩{{item.surplusQuota}}个名额</text>
+                </view>
+                <view class="info2 van-ellipsis">
+                    <icon class="iconfont icon-credentials_icon"></icon>{{item.baseOrganization.orgName}}·{{item.baseOrganizationMember.jobs}}
+                </view>
+                <view class="info3 van-multi-ellipsis--l2">
+                    <rich-text nodes="{{item.content}}" bindtap="tap"></rich-text>
+                </view>
+            </view>
         </view>
-        <view class="info3 van-multi-ellipsis--l2">
-          {{item.content}}
-        </view>
-      </view>
     </view>
-  </view>
-  <view wx:if="{{isload}}" class="loadState">已经没有了</view>
-  <view wx:if="{{loading}}" class="loadState">正在加载中</view>
+    <view wx:if="{{isload}}" class="loadState">已经没有了</view>
+    <view wx:if="{{loading}}" class="loadState">正在加载中</view>
 </view>

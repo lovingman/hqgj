@@ -41,7 +41,10 @@
                 <!-- <view class="subtitle">
           学习对象
         </view> -->
-                <view class="text"><rich-text nodes="{{basicForm.content}}" bindtap="tap"></rich-text></view>
+                <view class="text">
+                    <rich-text nodes="{{basicFormContent}}" bindtap="tap"></rich-text>
+
+                </view>
                 <view class="title">
                     <icon class="iconfont icon-jieshao"></icon>课件下载
                     <text class="remark">报名后现场签到，才能下载资料</text>
@@ -62,8 +65,10 @@
             <view class="calendar" wx:for="{{scheduleList}}" wx:key="{{index}}" wx:for-item="item" bindtap="scheduleClcik" data-index='{{index}}'>
                 <view class="title">{{item.title}} </view>
                 <view class="other">
-                <view class="date"> <van-icon name="clock-o" />{{item.startDate}}</view>
-                <view class="date"><van-icon class="icon1" name="location" />{{item.detailedAddress}}</view>
+                    <view class="date">
+                        <van-icon name="clock-o" />{{item.startDate}}至{{item.endDate}}</view>
+                    <view class="date">
+                        <van-icon class="icon1" name="location" />{{item.detailedAddress}}</view>
                     <!-- <van-icon name="clock-o" />{{item.startDate}} -->
                     <!-- <van-icon class="icon1" name="location" />{{item.detailedAddress}} -->
                     <text class="tip">查看</text>
