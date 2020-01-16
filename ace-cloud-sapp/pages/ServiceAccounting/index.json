@@ -1,7 +1,8 @@
 {
-  "usingComponents": {
-      "van-button": "/vant/weapp/button/index",
-            "van-dialog": "/vant/weapp/dialog/index",
-            "van-toast": "/vant/weapp/toast/index"
-  }
+    "navigationBarTitleText": "服务管理",
+    "usingComponents": {
+        "van-button": "/vant/weapp/button/index",
+        "van-dialog": "/vant/weapp/dialog/index",
+        "van-toast": "/vant/weapp/toast/index"
+    }
 }

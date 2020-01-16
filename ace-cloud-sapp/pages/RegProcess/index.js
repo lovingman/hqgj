@@ -536,7 +536,6 @@ Page({
                     message: "有未填写信息",
                     zIndex: 1000
                 });
-                console.log(i);
                 that.setData({
                     active: i
                 })
@@ -545,13 +544,13 @@ Page({
         }
         let b = that.data.formCollection[4];
         let flag = false;
-        if (b.type6.basicAnnexes.length !== 1) {
+        if (b.type6.basicAnnexes.length < 1) {
             flag = true;
         }
-        if (b.type7.basicAnnexes.length !== 1) {
+        if (b.type7.basicAnnexes.length < 1) {
             flag = true;
         }
-        if ((b.type5.basicAnnexes.length || b.type8.basicAnnexes.length) !== 1) {
+        if ((b.type5.basicAnnexes.length + b.type8.basicAnnexes.length) < 1) {
             flag = true;
         }
         if (flag) {
@@ -641,13 +640,13 @@ Page({
                 Toast.success({
                     message: "修改成功\n返回个人中心",
                     zIndex: 2000,
-                    onClose(){
+                    onClose() {
                         wx.reLaunch({
                             url: '/pages/PersonalCenter/index',
                         })
                     }
                 });
-            }else{
+            } else {
                 Toast.fail(res.message);
             }
         })
