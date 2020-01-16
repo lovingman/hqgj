@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">创建</div>
+    <div class="title">法律服务创建</div>
     <div class="conetnet-box">
       <el-form
         :inline="true"

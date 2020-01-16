@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">编辑</div>
+    <div class="title">政策服务编辑</div>
     <div class="conetnet-box">
       <el-form
         :model="serviceForm"
@@ -44,12 +44,12 @@
                 <div id="editor"></div>
               </div>
               <!--<el-input-->
-                <!--type="textarea"-->
-                <!--placeholder="请输入内容"-->
-                <!--v-model.trim="serviceForm.content"-->
-                <!--rows="20"-->
-                <!--maxlength="10000"-->
-                <!--show-word-limit-->
+              <!--type="textarea"-->
+              <!--placeholder="请输入内容"-->
+              <!--v-model.trim="serviceForm.content"-->
+              <!--rows="20"-->
+              <!--maxlength="10000"-->
+              <!--show-word-limit-->
               <!--&gt;</el-input>-->
               <!--<editor-bar v-model="serviceForm.content" :isClear="isClear" @change="change"></editor-bar>-->
             </el-form-item>
@@ -69,7 +69,7 @@
 
 <script>
 import { getPolicyById, updatePolicy } from "@/api/hqgj/Policies";
-import {fileUpImg} from "@/api/sys";
+import { fileUpImg } from "@/api/sys";
 import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
 export default {
@@ -140,30 +140,30 @@ export default {
         upload() {
           //重置上传路径
           return this.loader.file.then(
-                  file =>
-                          new Promise((resolve, reject) => {
-                            let reader = new FileReader();
-                            reader.addEventListener(
-                                    "load",
-                                    function() {
-                                      this.actionUrls = "/hqgj-portal/www/uploadFileBase";
-                                      fileUpImg(this.actionUrls, { file: reader.result }).then(
-                                              res => {
-                                                debugger;
-                                                if (res.status == 1) {
-                                                  resolve({
-                                                    default: res.data
-                                                  });
-                                                } else {
-                                                  reject(err);
-                                                }
-                                              }
-                                      );
-                                    },
-                                    false
-                            );
-                            reader.readAsDataURL(file);
-                          })
+            file =>
+              new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.addEventListener(
+                  "load",
+                  function() {
+                    this.actionUrls = "/hqgj-portal/www/uploadFileBase";
+                    fileUpImg(this.actionUrls, { file: reader.result }).then(
+                      res => {
+                        debugger;
+                        if (res.status == 1) {
+                          resolve({
+                            default: res.data
+                          });
+                        } else {
+                          reject(err);
+                        }
+                      }
+                    );
+                  },
+                  false
+                );
+                reader.readAsDataURL(file);
+              })
           );
         }
         abort() {}
@@ -171,21 +171,21 @@ export default {
       function myUpload(e) {
         // 使用 CKeditor 提供的 API 修改上传适配器
         e.plugins.get("FileRepository").createUploadAdapter = loader =>
-                new myUploadLoader(loader);
+          new myUploadLoader(loader);
       }
       CKEditor.create(document.querySelector("#editor"), {
         language: "zh-cn",
         removePlugins: ["MediaEmbed"], //除去视频按钮
         extraPlugins: [myUpload] // 添加自定义图片上传适配插件
       })
-              .then(editor => {
-                const toolbarContainer = document.querySelector("#toolbar-container");
-                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-                this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
-              })
-              .catch(error => {
-                console.error(error);
-              });
+        .then(editor => {
+          const toolbarContainer = document.querySelector("#toolbar-container");
+          toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          this.editor = editor; //将编辑器保存起来，用来随时获取编辑器中的内容等，执行一些操作
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     back() {
       this.$router.push({
