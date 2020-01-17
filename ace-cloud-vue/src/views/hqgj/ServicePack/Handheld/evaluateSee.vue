@@ -2,7 +2,7 @@
   <div class="main-box">
     <div class="content-box">
       <div class="title-top">
-        <div class="title">评价管理详情</div>
+        <div class="title">评价详情</div>
         <div class="rtt">
           <el-button @click="black" type="primary">返回</el-button>
         </div>
