@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">财税服务包创建</div>
+    <div class="title">财税服务创建</div>
     <div class="content-box">
       <div class="title">基本信息</div>
       <el-form
@@ -472,6 +472,7 @@ export default {
                 obj.id = personnelRows[i].id;
                 obj.name = personnelRows[i].name;
                 obj.fmUrl = personnelRows[i].imagePhoto;
+                obj.phone = personnelRows[i].mobile;
                 this.contactPersonArr.push(obj);
               }
             }
