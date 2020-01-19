@@ -193,7 +193,7 @@ public class ServeBusinessDetailController extends BaseController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "/previewImg", notes = "根据主键修改创业服务资料清单表状态")
+    @ApiOperation(value = "/previewImg", notes = "创业服务基础信息预览图片信息")
     @GetMapping(value = "/previewImg", produces = "application/json;charset=UTF-8")
     public ResponseDTO previewImg(String id, String type) throws Exception{
         return  this.serveBusinessDetailService.previewImg(id,type);
