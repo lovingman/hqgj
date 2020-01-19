@@ -230,7 +230,7 @@ public class ServeFinanceOrderController extends BaseController {
 
 
     /**
-     * 修改状态
+     * 修改状态 取消订单
      * @param id
      * @param status
      * @return
