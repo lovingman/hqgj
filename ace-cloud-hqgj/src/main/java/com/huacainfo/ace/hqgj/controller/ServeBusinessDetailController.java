@@ -185,4 +185,17 @@ public class ServeBusinessDetailController extends BaseController {
     public ResponseDTO updateProjectState(@RequestBody  ServeBusinessDetail serveBusinessDetail)throws Exception {
         return  this.serveBusinessDetailService.updateState(serveBusinessDetail);
     }
+
+    /**
+     * 创业服务基础信息预览图片信息
+     * @param id
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/previewImg", notes = "根据主键修改创业服务资料清单表状态")
+    @GetMapping(value = "/previewImg", produces = "application/json;charset=UTF-8")
+    public ResponseDTO previewImg(String id, String type) throws Exception{
+        return  this.serveBusinessDetailService.previewImg(id,type);
+    }
 }

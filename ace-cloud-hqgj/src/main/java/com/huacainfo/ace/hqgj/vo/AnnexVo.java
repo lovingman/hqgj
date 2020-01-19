@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class AnnexVo {
     private  String id;
-    private  String dtype;
+    private  String type;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
     private  String fileName;
@@ -20,12 +20,12 @@ public class AnnexVo {
         this.id = id;
     }
 
-    public String getDtype() {
-        return dtype;
+    public String getType() {
+        return type;
     }
 
-    public void setDtype(String dtype) {
-        this.dtype = dtype;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getCreateDate() {

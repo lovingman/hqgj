@@ -103,4 +103,7 @@ public interface ServeBusinessDetailService {
     ResponseDTO<AnnexVo> annexList(String id);
 
     ResponseDTO updateState(ServeBusinessDetail serveBusinessDetail) throws Exception;
+
+
+    ResponseDTO previewImg(String id,String type)throws Exception;
 }

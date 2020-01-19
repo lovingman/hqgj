@@ -235,4 +235,26 @@ public class ServeBusinessDetailServiceImpl implements ServeBusinessDetailServic
         this.serveBusinessDetailDao.updateState(serveBusinessDetail);
         return new ResponseDTO(ResultCode.SUCCESS, "成功");
     }
+
+
+    /**
+     * 创业服务基础信息预览图片信息
+     * @param id
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ResponseDTO previewImg(String id, String type) throws Exception {
+        if (CommonUtils.isBlank(id)||CommonUtils.isBlank(type)) {
+            return new ResponseDTO(ResultCode.FAIL, "主键不能为空！");
+        }
+        ResponseDTO<List<ServeBusinessDetailVo>> rst = new ResponseDTO<>();
+        List<ServeBusinessDetailVo> list=serveBusinessDetailDao.previewImg(id,type);
+        if(list.size()<0){
+            return new ResponseDTO(ResultCode.FAIL, "获取信息失败！");
+        }
+        rst.setData(list);
+        return rst;
+    }
 }

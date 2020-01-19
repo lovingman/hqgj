@@ -53,7 +53,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     private BaseCompanyDao baseCompanyDao;
     @Resource
     private ServeBusinessIntegralDao serveBusinessIntegralDao;
-
+    @Resource
+    private PersonCenterDao personCenterDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -462,10 +463,12 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "企业管理名称重复！");
         }
+        String areaName=personCenterDao.selectAreaName(s.getAreaCode());
         o.setSource("2");
         o.setLegalPerson(vo.getName());
         o.setAreaCode(s.getAreaCode());
         o.setCompanyAddress(s.getCompanyAddress());
+        o.setCompleteAddress(areaName==null?s.getCompanyAddress():areaName+s.getCompanyAddress());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
