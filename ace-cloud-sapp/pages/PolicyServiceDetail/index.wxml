@@ -1,9 +1,9 @@
 <view>
-  <view class="title">{{basicForm.title}}</view>
-  <view class="time">
-    发布时间：{{basicForm.createDate}}
-  </view>
-  <view class="text">
-    {{basicForm.content}}
-  </view>
+    <view class="title">{{basicForm.title}}</view>
+    <view class="time">
+        发布时间：{{basicForm.createDate}}
+    </view>
+    <view class="text">
+        <rich-text nodes="{{basicForm.content}}"></rich-text>
+    </view>
 </view>

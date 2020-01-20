@@ -46,7 +46,6 @@
         </view> -->
                 <view class="text">
                     <rich-text nodes="{{basicFormContent}}" bindtap="tap"></rich-text>
-
                 </view>
                 <view class="title">
                     <icon class="iconfont icon-jieshao"></icon>课件下载

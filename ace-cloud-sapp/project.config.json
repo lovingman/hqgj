@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -76,7 +76,7 @@
 					"id": 2,
 					"name": "创业服务包新增修改",
 					"pathName": "pages/RegProcess/index",
-					"query": "id=db5cb124d6e54dccb12488afbd459f62",
+					"query": "id=9570effaf222408d93d0bfae6572e05e",
 					"scene": null
 				},
 				{
@@ -94,10 +94,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "财税单位信息",
 					"pathName": "pages/FinanceEnterprise/index",
-					"query": "",
+					"query": "id=6c250a1d62924acab76f24e1f6437e97",
 					"scene": null
 				},
 				{
