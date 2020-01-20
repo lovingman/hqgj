@@ -138,6 +138,15 @@
     LEFT JOIN serve_business_detail d ON ba.relationId = d.id
     LEFT JOIN serve_business b ON b.id = d.businessId
     WHERE
-	ba.type = '3' and b.id = #{businessId,jdbcType=VARCHAR}
+        <choose>
+            <when test="type !=null and type != ''">
+                d.type=#{type}
+            </when>
+            <otherwise>
+                ba.type = '3'
+            </otherwise>
+        </choose>
+	and b.id = #{businessId,jdbcType=VARCHAR}
     </select>
+
 </mapper>

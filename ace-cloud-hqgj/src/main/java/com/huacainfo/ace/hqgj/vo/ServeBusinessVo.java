@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ServeBusinessVo extends ServeBusiness {
 private static final long serialVersionUID = 1L;
+    private String areaName;
     private ServeBusiness serveBusiness;
  private List<ServeBusinessDetailVo> businessDetailList;
  private List<ServeBusinessAppend> businessAppendList;
@@ -34,5 +35,13 @@ private static final long serialVersionUID = 1L;
 
     public void setServeBusiness(ServeBusiness serveBusiness) {
         this.serveBusiness = serveBusiness;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 }

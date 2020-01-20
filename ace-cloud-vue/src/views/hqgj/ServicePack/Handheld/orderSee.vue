@@ -2,81 +2,81 @@
   <div class="main-box">
     <div class="content-box">
       <div class="title-top">
-        <div class="title">基本信息</div>
+        <div class="title">订单详情</div>
         <div class="rtt">
           <el-button @click="black" type="primary">返回</el-button>
         </div>
       </div>
       <el-form label-width="140px" class="formBox">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="订单号：">
-              <span>{{basicForm.orderNo}}</span>
+              <span>{{basicForm.orderNo ? basicForm.orderNo:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="类型：">
-              <span>{{basicForm.typeName}}</span>
+              <span>{{basicForm.typeName ? basicForm.typeName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="企业名称：">
-              <span>{{basicForm.companyName}}</span>
+              <span>{{basicForm.companyName ? basicForm.companyName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="姓名：">
-              <span>{{basicForm.userName}}</span>
+              <span>{{basicForm.userName ? basicForm.userName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="联系方式：">
-              <span>{{basicForm.userMobile}}</span>
+              <span>{{basicForm.userMobile ? basicForm.userMobile:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="服务机构：">
-              <span>{{basicForm.orgName}}</span>
+              <span>{{basicForm.orgName ? basicForm.orgName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="创建时间：">
-              <span>{{basicForm.createDate}}</span>
+              <span>{{basicForm.createDate ? basicForm.createDate:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.type == 1">
+          <el-col :span="11" v-if="basicForm.type == 1">
             <el-form-item label="抵扣积分：">
               <span>500积分</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.type == 3">
+          <el-col :span="11" v-if="basicForm.type == 3">
             <el-form-item label="专家：">
-              <span>{{basicForm.mName}}</span>
+              <span>{{basicForm.mName ? basicForm.mName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.type == 2">
+          <el-col :span="11" v-if="basicForm.type == 2">
             <el-form-item label="服务项目：">
-              <span>{{basicForm.itemName}}</span>
+              <span>{{basicForm.itemName ? basicForm.itemName:' &nbsp; '}}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.type == 2">
+          <el-col :span="11" v-if="basicForm.type == 2">
             <el-form-item label="服务金额：">
-              <span>{{basicForm.price}}</span>
+              <span>{{basicForm.price ? basicForm.price:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="状态：">
-              <span>{{basicForm.statusName}}</span>
+              <span>{{basicForm.statusName ? basicForm.statusName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.status == 3">
+          <el-col :span="11" v-if="basicForm.status == 3">
             <el-form-item label="完成时间：">
-              <span>{{basicForm.modifyDate}}</span>
+              <span>{{basicForm.modifyDate ? basicForm.modifyDate:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="basicForm.status == 1">
+          <el-col :span="11" v-if="basicForm.status == 1">
             <el-form-item label="取消时间：">
-              <span>{{basicForm.modifyDate}}</span>
+              <span>{{basicForm.modifyDate ? basicForm.modifyDate:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
         </el-row>

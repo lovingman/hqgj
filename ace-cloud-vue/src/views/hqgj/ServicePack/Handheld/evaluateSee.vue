@@ -2,7 +2,7 @@
   <div class="main-box">
     <div class="content-box">
       <div class="title-top">
-        <div class="title">基本信息</div>
+        <div class="title">评价详情</div>
         <div class="rtt">
           <el-button @click="black" type="primary">返回</el-button>
         </div>
@@ -11,32 +11,32 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="姓名：">
-              <span>{{basicForm.createUserName}}</span>
+              <span>{{basicForm.createUserName ? basicForm.createUserName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="企业名称：">
-              <span>{{basicForm.companyName}}</span>
+              <span>{{basicForm.companyName ? basicForm.companyName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务机构：">
-              <span>{{basicForm.orgName}}</span>
+              <span>{{basicForm.orgName ? basicForm.orgName:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务评分：">
-              <span>{{basicForm.evaluateGrade}}分</span>
+              <span>{{basicForm.evaluateGrade ? basicForm.evaluateGrade:' &nbsp; '}}分</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务评价：">
-              <span>{{basicForm.evaluateContent}}</span>
+              <span>{{basicForm.evaluateContent ? basicForm.evaluateContent:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务时间：">
-              <span>{{basicForm.createDate}}</span>
+              <span>{{basicForm.createDate ? basicForm.createDate:' &nbsp; '}}</span>
             </el-form-item>
           </el-col>
         </el-row>

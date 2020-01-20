@@ -1,14 +1,19 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {
+  MessageBox,
+  Message
+} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {
+  getToken
+} from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-   // baseURL: "http://39.97.185.200:9011", // url = base url + request url
-   // baseURL: "http://10.0.0.12:9011", // url = base url + request url
-  //  baseURL: "http://192.168.2.114", // url = base url + request url
+  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: "http://39.97.185.200:9011", // url = base url + request url
+  // baseURL: "http://10.0.0.12:9011", // url = base url + request url
+  baseURL: "http://192.168.2.114", // url = base url + request url
   // baseURL: "http://111.8.133.83:9011", // url = base url + request url
   // baseURL: "http://zx.huacainfo.com/", // url = base url + request url
   // baseURL: "http://test.huacainfo.com/webapp/#", // url = base url + request url
@@ -42,7 +47,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -52,7 +57,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
-    if(!res.receiveTime){
+    if (!res.receiveTime) {
       return res;
     }
 

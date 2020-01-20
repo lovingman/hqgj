@@ -53,7 +53,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     private BaseCompanyDao baseCompanyDao;
     @Resource
     private ServeBusinessIntegralDao serveBusinessIntegralDao;
-
+    @Resource
+    private PersonCenterDao personCenterDao;
     /**
      * @throws
      * @Title:find!{bean.name}List
@@ -107,21 +108,21 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "创建", detail = "创建创业服务包")
     public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
-        JSONObject jsonObj= JSON.parseObject(jsons);
-        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessDetail")) {
+        JSONObject jsonObj = JSON.parseObject(jsons);
+        if (!jsonObj.containsKey("serveBusiness") || !jsonObj.containsKey("serveBusinessDetail")) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        ServeBusiness serveBusiness=JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
-        List<ServeBusinessDetail> serveBusinessDetails=new ArrayList<ServeBusinessDetail>(
+        ServeBusiness serveBusiness = JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
+        List<ServeBusinessDetail> serveBusinessDetails = new ArrayList<ServeBusinessDetail>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
-        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
+        List<ServeBusinessAppend> appends = new ArrayList<ServeBusinessAppend>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
-        Users user =registerDao.selectUserInfo(userProp.getUserId());
+        Users user = registerDao.selectUserInfo(userProp.getUserId());
         //基础信息
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
-        String businessId=GUIDUtil.getGUID();
+        String businessId = GUIDUtil.getGUID();
         serveBusiness.setId(businessId);
-        serveBusiness.setLsNo("CY"+sdf.format(new Date()));
+        serveBusiness.setLsNo("CY" + sdf.format(new Date()));
         serveBusiness.setApplyPersonName(userProp.getName());
         serveBusiness.setApplyPersonTel(user.getMobile());
         serveBusiness.setIdCard(user.getIdCard());
@@ -131,14 +132,17 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         serveBusiness.setCreateUserId(userProp.getUserId());
         serveBusiness.setModifyDate(new Date());
         serveBusiness.setBasicStatus("0");
-        this.serveBusinessDao.insert(serveBusiness);
 
+        int i = this.serveBusinessDao.insert(serveBusiness);
+        if (i < 0) {
+            return new ResponseDTO(ResultCode.FAIL, "失败！");
+        }
         //人员信息
-        for(ServeBusinessDetail o:serveBusinessDetails) {
+        for (ServeBusinessDetail o : serveBusinessDetails) {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
-            if(CommonUtils.isBlank(o.getName())){
+            if (CommonUtils.isBlank(o.getName())) {
                 return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
             }
            /* int temp = serveBusinessDetailDao.isExist(o);
@@ -158,7 +162,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
-                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
+                    a.setFileName(a.getFileName() == null ? o.getName() : a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
@@ -170,8 +174,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             serveBusinessDetailDao.insert(o);
         }
         //其他选项
-        if(appends!=null){
-            for(ServeBusinessAppend append:appends){
+        if (appends != null) {
+            for (ServeBusinessAppend append : appends) {
                 append.setId(GUIDUtil.getGUID());
                 append.setBusinessId(businessId);
                 append.setCreateDate(new Date());
@@ -201,14 +205,14 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "变更", detail = "变更创业服务包")
     public ResponseDTO update(String jsons, UserProp userProp) throws Exception {
-        JSONObject jsonObj= JSON.parseObject(jsons);
-        if(!jsonObj.containsKey("serveBusiness")||!jsonObj.containsKey("serveBusinessDetail")) {
+        JSONObject jsonObj = JSON.parseObject(jsons);
+        if (!jsonObj.containsKey("serveBusiness") || !jsonObj.containsKey("serveBusinessDetail")) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        ServeBusiness serveBusiness=JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
-        List<ServeBusinessDetail> serveBusinessDetails=new ArrayList<ServeBusinessDetail>(
+        ServeBusiness serveBusiness = JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
+        List<ServeBusinessDetail> serveBusinessDetails = new ArrayList<ServeBusinessDetail>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
-        List<ServeBusinessAppend> appends=new ArrayList<ServeBusinessAppend>(
+        List<ServeBusinessAppend> appends = new ArrayList<ServeBusinessAppend>(
                 JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
 
         if (CommonUtils.isBlank(serveBusiness.getId())) {
@@ -220,19 +224,19 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         serveBusiness.setModifyUserName(userProp.getName());
         serveBusiness.setModifyUserId(userProp.getUserId());
         this.serveBusinessDao.updateByPrimaryKey(serveBusiness);
-        String businessId=serveBusiness.getId();
+        String businessId = serveBusiness.getId();
         //清除人员后新增
-        List<String> list =serveBusinessDao.selectBusinessId(businessId);
-        String[] sb =new String[list.size()];
+        List<String> list = serveBusinessDao.selectBusinessId(businessId);
+        String[] sb = new String[list.size()];
         basicAnnexDao.deleteByRelationIds(list.toArray(sb));
         serveBusinessDetailDao.deleteByBusinessIds(businessId.split(","));
         serveBusinessAppendDao.deleteByBusinessIds(businessId.split(","));
         //人员信息
-        for(ServeBusinessDetail o:serveBusinessDetails) {
+        for (ServeBusinessDetail o : serveBusinessDetails) {
             String memberId = GUIDUtil.getGUID();
             o.setId(memberId);
             o.setBusinessId(businessId);
-            if(CommonUtils.isBlank(o.getName())){
+            if (CommonUtils.isBlank(o.getName())) {
                 return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
             }
           /*  int temp = serveBusinessDetailDao.isExist(o);
@@ -251,7 +255,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     a.setId(GUIDUtil.getGUID());
                     a.setRelationId(memberId);
                     a.setFileURL(a.getFileURL());
-                    a.setFileName(a.getFileName()==null?o.getName():a.getFileName());
+                    a.setFileName(a.getFileName() == null ? o.getName() : a.getFileName());
                     //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
                     a.setType("3");
                     a.setRemark("创业服务资料清单附件");
@@ -263,8 +267,8 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             serveBusinessDetailDao.insert(o);
         }
         //其他选项
-        if(appends!=null){
-            for(ServeBusinessAppend append:appends){
+        if (appends != null) {
+            for (ServeBusinessAppend append : appends) {
                 append.setId(GUIDUtil.getGUID());
                 append.setBusinessId(businessId);
                 append.setCreateDate(new Date());
@@ -332,7 +336,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     public ResponseDTO deleteByIds(String[] ids) throws Exception {
         //清除
         List<String> list = serveBusinessDetailDao.selectBusinessIds(ids);
-        String[] sb =new String[list.size()];
+        String[] sb = new String[list.size()];
         this.serveBusinessDao.deleteByIds(ids);
         serveBusinessDetailDao.deleteByBusinessIds(ids);
         serveBusinessAppendDao.deleteByBusinessIds(ids);
@@ -342,76 +346,77 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
 
 
     /**
-     *创业服务包免费服务申请表
+     * 创业服务包免费服务申请表
+     *
      * @param id
      * @return
      * @throws Exception
      */
     @Override
     public ResponseDTO<ServeBusinessVo> previewInfo(String id) throws Exception {
-        if(CommonUtils.isBlank(id)){
+        if (CommonUtils.isBlank(id)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        ServeBusinessVo vo =serveBusinessDao.previewInfo(id);
-        if(vo==null){
+        ServeBusinessVo vo = serveBusinessDao.previewInfo(id);
+        if (vo == null) {
             return new ResponseDTO(ResultCode.FAIL, "查无数据！");
         }
-        return  new ResponseDTO(ResultCode.SUCCESS, "成功！",vo);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！", vo);
     }
 
     /**
      * 审核基础信息
+     *
      * @param id
      * @param status
      * @return
      */
     @Override
     @Transactional
-    public ResponseDTO updateBasicStatus(String id, String status,String type,UserProp userProp) {
-        if(CommonUtils.isBlank(id)||CommonUtils.isBlank(status)||CommonUtils.isBlank(type)){
+    public ResponseDTO updateBasicStatus(String id, String status, String type, UserProp userProp) {
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status) || CommonUtils.isBlank(type)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
         //基础信息审核状态
-        if(type.equals("1")){
-            type="basicStatus";
-        }
-        else if(type.equals("2")){
-            type="status";
+        if (type.equals("1")) {
+            type = "basicStatus";
+        } else if (type.equals("2")) {
+            type = "status";
         }
         //标记修改
-        else if(type.equals("3")){
-            type="tab";
-        }else{
+        else if (type.equals("3")) {
+            type = "tab";
+        } else {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        int i=  serveBusinessDao.updateBasicStatus(id,status,type);
-        if(type.equals("basicStatus") && status.equals("2") ){
-            int o=serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
-            if(o<0){
+        int i = serveBusinessDao.updateBasicStatus(id, status, type);
+        if (type.equals("basicStatus") && status.equals("2")) {
+            int o = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName());
+            if (o < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }
-            int s= serveBusinessDao.updateBasicStatus(id,"2","status");
-            if(s<0){
-                return new ResponseDTO(ResultCode.FAIL, "内部错误");
-            }
-        }
-        if(type.equals("status") && status.equals("1") ){
-           int o= serveBusinessDao.updateBasicStatus(id,"0","tab");
-            if(o<0){
-                return new ResponseDTO(ResultCode.FAIL, "内部错误");
-            }
-           int s= serveBusinessDao.updateShUserId(id,userProp.getUserId(),userProp.getName());
-            if(s<0){
+            int s = serveBusinessDao.updateBasicStatus(id, "2", "status");
+            if (s < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }
         }
-        if(type.equals("tab") && status.equals("7")){
-           int o= serveBusinessDao.updateBasicStatus(id,"3","status");
-            if(o<0){
+        if (type.equals("status") && status.equals("1")) {
+            int o = serveBusinessDao.updateBasicStatus(id, "0", "tab");
+            if (o < 0) {
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+            int s = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName());
+            if (s < 0) {
+                return new ResponseDTO(ResultCode.FAIL, "内部错误");
+            }
+        }
+        if (type.equals("tab") && status.equals("7")) {
+            int o = serveBusinessDao.updateBasicStatus(id, "3", "status");
+            if (o < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }
             //新增企业和积分
-            insertCompany(id,userProp);
+            insertCompany(id, userProp);
         }
         if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "内部错误");
@@ -421,56 +426,60 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
 
     /**
      * 是否完成审核
+     *
      * @param id
      * @return
      */
     @Override
     public ResponseDTO selectBasicStatus(String id) {
-        if(CommonUtils.isBlank(id)){
+        if (CommonUtils.isBlank(id)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        List<String> count=serveBusinessDao.selectBasicStatus(id);
-        return   new ResponseDTO(ResultCode.SUCCESS, "成功！",count);
+        List<String> count = serveBusinessDao.selectBasicStatus(id);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！", count);
     }
 
     /**
      * 创建企业并获取积分
+     *
      * @param id
      */
 
-    private ResponseDTO insertCompany(String id,UserProp userProp) {
+    private ResponseDTO insertCompany(String id, UserProp userProp) {
         ServeBusiness s = serveBusinessDao.selectVoByPrimaryKey(id);
-        ServeBusinessDetailQVo qVo=new ServeBusinessDetailQVo();
+        ServeBusinessDetailQVo qVo = new ServeBusinessDetailQVo();
         qVo.setType("1");
         qVo.setBusinessId(id);
-        List<ServeBusinessDetailVo> list=serveBusinessDetailDao.findList(qVo,0,10,null);
-        if (s == null || list.size()<=0) {
+        List<ServeBusinessDetailVo> list = serveBusinessDetailDao.findList(qVo, 0, 10, null);
+        if (s == null || list.size() <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "数据错误！");
         }
-        ServeBusinessDetailVo  vo=list.get(0);
+        ServeBusinessDetailVo vo = list.get(0);
         BaseCompany o = new BaseCompany();
-        String companyId=GUIDUtil.getGUID();
+        String companyId = GUIDUtil.getGUID();
         o.setId(companyId);
         o.setCompanyName(s.getCompanyName());
         int temp = this.baseCompanyDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "企业管理名称重复！");
         }
+        String areaName=personCenterDao.selectAreaName(s.getAreaCode());
         o.setSource("2");
         o.setLegalPerson(vo.getName());
         o.setAreaCode(s.getAreaCode());
         o.setCompanyAddress(s.getCompanyAddress());
+        o.setCompleteAddress(areaName==null?s.getCompanyAddress():areaName+s.getCompanyAddress());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
-        int i=this.baseCompanyDao.insert(o);
-        if(i<=0){
+        int i = this.baseCompanyDao.insert(o);
+        if (i <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "内部错误！");
         }
 
-        ServeBusinessIntegral integral =new ServeBusinessIntegral();
+        ServeBusinessIntegral integral = new ServeBusinessIntegral();
         integral.setId(GUIDUtil.getGUID());
         integral.setCompanyId(companyId);
         integral.setCompanyName(s.getCompanyName());
@@ -482,13 +491,12 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         integral.setCreateUserName(userProp.getName());
         integral.setCreateUserId(userProp.getUserId());
         integral.setModifyDate(new Date());
-        int j=serveBusinessIntegralDao.insert(integral);
-        if(j<=0){
+        int j = serveBusinessIntegralDao.insert(integral);
+        if (j <= 0) {
             return new ResponseDTO(ResultCode.FAIL, "内部错误！");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
-
 
 
 }

@@ -214,11 +214,11 @@ public class BasicAnnexController extends BaseController {
      * @param res
      * @throws Exception
      */
-    @RequestMapping(value = "/downloadZip")
-    public ResponseDTO downloadZip(String businessId, HttpServletResponse res) throws Exception {
+    @RequestMapping(value = "/downloadFile")
+    public ResponseDTO downloadFile(String businessId,String type, HttpServletResponse res) throws Exception {
         res.setContentType("multipart/form-data");
         res.setCharacterEncoding("utf-8");
-        return  basicAnnexService.businessFileUrlList(businessId);
+        return  basicAnnexService.businessFileUrlList(businessId,type);
     }
 
 }

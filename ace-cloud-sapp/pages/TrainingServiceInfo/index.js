@@ -20,25 +20,25 @@ Page({
         basicAnnexList: [], //课件列表数组
     },
     //tab切换日常调取日程接口
-    tabClick: function (event) {
+    tabClick: function(event) {
         var that = this;
         var index = parseInt(event.detail.index); //获取当前点击的tabs的索引值
         if (index == 1) { //0是培训介绍， 1是日程安排
             request.getJSON(cfg.schedulePageUrl, {
                 serveCultivateId: that.data.id
             }).
-                then(res => {
-                    console.log(res);
-                    if (res.data.status == 1) {
-                        that.setData({
-                            scheduleList: res.data.rows
-                        })
-                    }
-                })
+            then(res => {
+                console.log(res);
+                if (res.data.status == 1) {
+                    that.setData({
+                        scheduleList: res.data.rows
+                    })
+                }
+            })
         }
     },
     //点击报名先判断是否登录
-    isSign: function (e) {
+    isSign: function(e) {
         var that = this;
         if (app.globalData.islogin) {
             if (app.globalData.userInfo.companyId != null) {
@@ -69,13 +69,13 @@ Page({
         }
     },
     //点击报名企业跳转
-    registrationEnterpriseClick: function () {
+    registrationEnterpriseClick: function() {
         wx.navigateTo({
             url: '/pages/TrainingManagement/index?id=' + this.data.id,
         })
     },
     //点击日程去详情
-    scheduleClcik: function (e) {
+    scheduleClcik: function(e) {
         var index = parseInt(e.currentTarget.dataset.index);
         var listId = this.data.scheduleList[index].id;
         wx.navigateTo({
@@ -83,7 +83,7 @@ Page({
         })
     },
     //请求页面数据
-    getById: function () {
+    getById: function() {
         var that = this;
         request.getJSON(cfg.selectByIdDetailsUrl, {
             id: that.data.id
@@ -93,8 +93,8 @@ Page({
                 that.setData({
                     basicForm: res.data.data,
                     basicFormContent: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;"')
-                    .replace(/<figure/g, '<div')
-                    .replace(/\/figure>/g, '\div>'), //富文本内容，替换掉fiugre标签不显示图片问题，换成div
+                        .replace(/<figure/g, '<div')
+                        .replace(/\/figure>/g, '\div>'), //富文本内容，替换掉fiugre标签不显示图片问题，换成div
                     basicAnnexList: res.data.data.basicAnnexList
                 })
                 console.log(that.data.basicFormContent);
@@ -112,7 +112,7 @@ Page({
         })
     },
     //点击复制文件
-    downloadFile: function (e) {
+    downloadFile: function(e) {
         console.log(e);
         let that = this;
         if (app.globalData.islogin) { //判断是否登录
@@ -120,7 +120,7 @@ Page({
                 let links = e.currentTarget.dataset.url;
                 wx.setClipboardData({
                     data: links,
-                    success: function (res) {
+                    success: function(res) {
                         Notify({
                             type: 'success',
                             message: '复制成功，请前往浏览器打开下载'
@@ -172,11 +172,11 @@ Page({
         console.log(e)
         wx.downloadFile({
             url: e.currentTarget.dataset.src,
-            success: function (res) {
+            success: function(res) {
                 const filePath = res.tempFilePath
                 wx.openDocument({
                     filePath: filePath,
-                    success: function (res) {
+                    success: function(res) {
                         console.log('打开文档成功')
                     }
                 })
@@ -184,17 +184,36 @@ Page({
         })
     },
     //点击机构跳转详情
-    orgClick: function (e) {
+    orgClick: function(e) {
         console.log(e);
         let listId = e.currentTarget.dataset.id;
         wx.navigateTo({
             url: '/pages/InstitutionalDetails/index?id=' + listId,
         })
     },
+    //调取地图
+    getLocation() {
+        let that = this;
+        wx.getLocation({
+            type: 'wgs84',
+            success(res) {
+                console.log(res);
+                // const latitude = that.data.basicForm.startLat;
+                // const longitude = that.data.basicForm.startLng;
+                wx.openLocation({
+                    latitude: that.data.basicForm.startLat,
+                    longitude: that.data.basicForm.startLng,
+                    scale: 18,
+                    name: that.data.basicForm.detailedAddress
+                })
+
+            }
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         var that = this;
         console.log(options.id);
         that.setData({
@@ -207,49 +226,49 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

@@ -98,6 +98,6 @@ public interface BasicAnnexService {
      * @return
      * @throws Exception
      */
-    ResponseDTO<String> businessFileUrlList(String businessId)throws Exception;
+    ResponseDTO<String> businessFileUrlList(String businessId,String type)throws Exception;
 
 }

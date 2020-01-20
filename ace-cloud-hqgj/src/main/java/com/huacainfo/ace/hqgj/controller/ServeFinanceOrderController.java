@@ -229,4 +229,19 @@ public class ServeFinanceOrderController extends BaseController {
 
 
 
+    /**
+     * 修改状态 取消订单
+     * @param id
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "/updateStatus1", notes = "修改状态")
+    @PostMapping(value = "/updateStatus1", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateStatus1(String id, String status)throws Exception {
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        return serveFinanceOrderService.updateStatus(id,status,this.getCurUserProp());
+    }
+
 }

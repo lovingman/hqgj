@@ -103,6 +103,7 @@
   </sql>
     <sql id="From_Statement">
     FROM serve_cultivate t
+    left join serve_cultivate_schedule s on s.serveCultivateId=t.id
   </sql>
     <sql id="Where_Condition">
         <where>
@@ -165,7 +166,6 @@
         <include refid="Vo_Column_List"/>,
         <include refid="Vo_CultivateColumn_List"/>,o.orgName
         <include refid="From_Statement"/>
-        left join serve_cultivate_schedule s on s.serveCultivateId=t.id
         left join base_organization o on o.id=t.orgId
         left join basic_annex ba on ba.relationId = s.id and ba.type='1'
         where t.id = #{id,jdbcType=VARCHAR}

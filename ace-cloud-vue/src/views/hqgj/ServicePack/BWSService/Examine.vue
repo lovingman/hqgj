@@ -2,21 +2,16 @@
     <div class="container">
         <div style="width: 100%;height: 20px">
             <el-button @click="Auditing" size="small" style="float: right" type="primary"
-                       v-if="this.$route.query.word=='examine'">完成审核
+                v-if="this.$route.query.word=='examine'">完成审核
             </el-button>
         </div>
         <div class="tab-pane" style="width: 100%">
             <el-tabs @tab-click="handleClick" style="width: 100%" v-model="activeName">
                 <el-tab-pane label="资料清单" name="1">
-                    <el-table
-                            :data="lists"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
-                        <el-table-column :selectable='selectInit' align="center" type="selection"
-                                         width="55"></el-table-column>
+                    <el-table :data="lists" @selection-change="handleSelectionChange" class="table" max-height="475"
+                        ref="multipleTable" v-loading="loading">
+                        <el-table-column :selectable='selectInit' align="center" type="selection" width="55">
+                        </el-table-column>
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="名称" prop="fileName" sortable='custom'>
                         </el-table-column>
@@ -27,20 +22,20 @@
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
                                 <el-button @click="FileDownload(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.id != null">下载
+                                    v-if="scope.row.id != null">下载
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
                                     <router-link :to="{name:'application',query:{id:form.id,name:'download'}}"
-                                                 target="_blank">下载
+                                        target="_blank">下载
                                     </router-link>
                                 </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.id != null">预览
+                                    v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
                                     <router-link :to="{name:'application',query:{id:form.id,name:'see'}}"
-                                                 target="_blank">预览
+                                        target="_blank">预览
                                     </router-link>
                                 </el-button>
                             </template>
@@ -89,14 +84,13 @@
                     <div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">
                         <span style="margin-left: 20px;font-weight:bold;">基本信息</span>
                         <el-button @click="reviewBasic" style="float: right;margin-right: 25px;padding-top: 1px"
-                                   type="text"
-                                   v-if="form.basicStatus=='0' && this.$route.query.word=='examine'">审核
+                            type="text" v-if="form.basicStatus=='0' && this.$route.query.word=='examine'">审核
                         </el-button>
-                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
-                             v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
+                        <div class="green" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px"
+                            type="text" v-if="form.basicStatus=='1' && this.$route.query.word=='examine'">通过
                         </div>
-                        <div class="red" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px" type="text"
-                             v-if="form.basicStatus=='2' && this.$route.query.word=='examine'">驳回修改
+                        <div class="red" style="float: right;margin-right: 25px;padding-top: 1px;font-size: 13px"
+                            type="text" v-if="form.basicStatus=='2' && this.$route.query.word=='examine'">驳回修改
                         </div>
 
                     </div>
@@ -138,13 +132,8 @@
                         <span style="margin-left: 20px;font-weight:bold;">法人、监事</span>
                     </div>
                     <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
+                    <el-table :data="list" @selection-change="handleSelectionChange" class="table" max-height="475"
+                        ref="multipleTable" v-loading="loading">
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="姓名" prop="name" sortable='custom' width="120">
                         </el-table-column>
@@ -155,8 +144,8 @@
                         <el-table-column label="身份证附件" prop="basicAnnexes">
                             <template slot-scope="scope">
                                 <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
+                                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pic"
+                                        v-for="attach in scope.row.basicAnnexes" />
                                 </viewer>
                             </template>
                         </el-table-column>
@@ -167,11 +156,11 @@
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center" label="操作"
+                            v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
+                                    v-if="scope.row.status!= '1'">审核
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -182,26 +171,21 @@
                         <span style="margin-left: 20px;font-weight:bold;">股东</span>
                     </div>
                     <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
+                    <el-table :data="list" @selection-change="handleSelectionChange" class="table" max-height="475"
+                        ref="multipleTable" v-loading="loading">
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="股东姓名" prop="name" sortable='custom' width="120">
                         </el-table-column>
                         <el-table-column label="股份比例" prop="sharesProportion" width="150">
                             <template slot-scope="scope">
-                                <div type="text" >{{scope.row.sharesProportion}}%</div>
+                                <div type="text">{{scope.row.sharesProportion}}%</div>
                             </template>
                         </el-table-column>
                         <el-table-column label="身份证附件" prop="basicAnnexes">
                             <template slot-scope="scope">
                                 <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
+                                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pic"
+                                        v-for="attach in scope.row.basicAnnexes" />
                                 </viewer>
                             </template>
                         </el-table-column>
@@ -212,11 +196,11 @@
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center" label="操作"
+                            v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
+                                    v-if="scope.row.status!= '1'">审核
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -227,13 +211,8 @@
                         <span style="margin-left: 20px;font-weight:bold;">财务</span>
                     </div>
                     <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                            v-loading="loading">
+                    <el-table :data="list" @selection-change="handleSelectionChange" class="table" max-height="475"
+                        ref="multipleTable" v-loading="loading">
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="姓名" prop="name" sortable='custom' width="120">
                         </el-table-column>
@@ -243,7 +222,7 @@
                             <template slot-scope="scope">
                                 <viewer :images="scope.row.basicAnnexes">
                                     <img :key="attach.fileURL" :src="attach.fileURL" class="head_pic"
-                                         style="line-height: 48px" v-for="attach in scope.row.basicAnnexes"/>
+                                        style="line-height: 48px" v-for="attach in scope.row.basicAnnexes" />
                                 </viewer>
                             </template>
                         </el-table-column>
@@ -254,11 +233,11 @@
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center" label="操作"
+                            v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
+                                    v-if="scope.row.status!= '1'">审核
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -269,21 +248,16 @@
                         <span style="margin-left: 20px;font-weight:bold;">房屋证明</span>
                     </div>
                     <el-divider></el-divider>
-                    <el-table
-                            :data="list"
-                            @selection-change="handleSelectionChange"
-                            class="table"
-                            max-height="475"
-                            ref="multipleTable"
-                    >
+                    <el-table :data="list" @selection-change="handleSelectionChange" class="table" max-height="475"
+                        ref="multipleTable">
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="名称" prop="name" sortable='custom' width="250">
                         </el-table-column>
                         <el-table-column label="附件" prop="file">
                             <template slot-scope="scope">
                                 <viewer :images="scope.row.basicAnnexes">
-                                    <img :key="attach.fileURL" :src="attach.fileURL"
-                                         class="head_pic" v-for="attach in scope.row.basicAnnexes"/>
+                                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pic"
+                                        v-for="attach in scope.row.basicAnnexes" />
                                 </viewer>
                             </template>
                         </el-table-column>
@@ -294,50 +268,46 @@
                                 <div class="red" type="text" v-if="scope.row.status=='2'">驳回修改</div>
                             </template>
                         </el-table-column>
-                        <el-table-column align="right" fixed="right" header-align="center"
-                                         label="操作" v-if="this.$route.query.word=='examine'" width="60">
+                        <el-table-column align="right" fixed="right" header-align="center" label="操作"
+                            v-if="this.$route.query.word=='examine'" width="60">
                             <template slot-scope="scope">
                                 <el-button @click="reviewDetail(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.status!= '1'">审核
+                                    v-if="scope.row.status!= '1'">审核
                                 </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
                 <!--<el-tab-pane label="其他" name="8" v-if="this.$route.query.word=='preview'">-->
-                    <!--<div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">-->
-                        <!--<span style="margin-left: 20px;font-weight:bold;">其他</span>-->
-                    <!--</div>-->
-                    <!--<el-divider></el-divider>-->
-                    <!--<el-form label-width="250px" ref="form">-->
-                        <!--<el-form-item label="申请免费服务项目:">-->
-                            <!--<span>工商注册代办服务（含公章一套）、银行基本户开户代办服务 、银行开户费、小额账户管理费</span>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="确定培训意向:">-->
-                            <!--<span>是否愿意参加创业培训、是否愿意加入创业孵化基地</span>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="开户银行:">-->
-                            <!--<span>兴业银行各分行</span>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="是否选择代理记账服务:">-->
-                            <!--<span>选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</span>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="特殊说明:">-->
-                            <!--<span>无</span>-->
-                        <!--</el-form-item>-->
-                    <!--</el-form>-->
+                <!--<div style="border-left:thick solid #007cff;margin-left: 10px;margin-top: 9px">-->
+                <!--<span style="margin-left: 20px;font-weight:bold;">其他</span>-->
+                <!--</div>-->
+                <!--<el-divider></el-divider>-->
+                <!--<el-form label-width="250px" ref="form">-->
+                <!--<el-form-item label="申请免费服务项目:">-->
+                <!--<span>工商注册代办服务（含公章一套）、银行基本户开户代办服务 、银行开户费、小额账户管理费</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="确定培训意向:">-->
+                <!--<span>是否愿意参加创业培训、是否愿意加入创业孵化基地</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="开户银行:">-->
+                <!--<span>兴业银行各分行</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="是否选择代理记账服务:">-->
+                <!--<span>选择武陵区中小企业公共服务平台推荐的代理记账机构，合作条款及收费详见合同；</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="特殊说明:">-->
+                <!--<span>无</span>-->
+                <!--</el-form-item>-->
+                <!--</el-form>-->
                 <!--</el-tab-pane>-->
             </el-tabs>
         </div>
         <!--预览弹窗-->
-        <el-dialog
-                :visible.sync="lookingVisible"
-                title="预览"
-                width="60%">
+        <el-dialog :visible.sync="lookingVisible" title="预览" width="60%">
             <div class="dialog-main">
                 <viewer :images="fileList">
-                    <img :key="attach.fileURL" :src="attach.fileURL"
-                         class="head_pics" v-for="attach in fileList"/>
+                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pics" v-for="attach in fileList" />
                 </viewer>
             </div>
             <div class="dialog-footer" slot="footer">
@@ -346,10 +316,7 @@
             </div>
         </el-dialog>
         <!--基础信息审核弹窗-->
-        <el-dialog
-                :visible.sync="reviewVisible"
-                title="审核"
-                width="30%">
+        <el-dialog :visible.sync="reviewVisible" title="审核" width="30%">
             <div style="text-align: center">
                 <el-radio-group v-model="this.review.basicStatus">
                     <el-radio :label="1" @click.native.prevent="clickitem(1)">通过</el-radio>
@@ -362,10 +329,7 @@
             </div>
         </el-dialog>
         <!--资料清单审核弹窗-->
-        <el-dialog
-                :visible.sync="reviewDetailVisible"
-                title="审核"
-                width="30%">
+        <el-dialog :visible.sync="reviewDetailVisible" title="审核" width="30%">
             <div style="text-align: center">
                 <el-radio-group v-model="this.reviewdata.status">
                     <el-radio :label="1" @click.native.prevent="clickitem1(1)">通过</el-radio>
@@ -392,9 +356,12 @@
         updateState,
         getannexList,
         getAnnex,
-        getAppend, downloadZip
+        getAppend,
+        downloadZip
     } from "@/api/hqgj/BWSService";
-    import {getAreaTree} from "@/api/sys";
+    import {
+        getAreaTree
+    } from "@/api/sys";
     import JSZip from "jszip";
     import FileSaver from "file-saver";
 
@@ -515,8 +482,7 @@
                                     });
                                 }
                             })
-                        }).catch(() => {
-                        });
+                        }).catch(() => {});
                     }
 
                 })
@@ -537,9 +503,11 @@
             looking(index, data) {
                 console.log(data)
                 this.lookingVisible = true;
-                this.query2.relationId = data.id;
-                this.query2.type = 3;
-                getAnnex(this.query2).then(response => {
+                let obj = {};
+                obj.id = data.id;
+                obj.type = data.type;
+                getAnnex(obj).then(response => {
+                    console.log(response);
                     this.fileList = response.rows;
                 })
             },
@@ -547,9 +515,10 @@
             FileDownload(index, data) {
                 if (data.fileName != '') {
                     console.log(data);
-                    this.relationId = data.id;
-                    console.log(this.relationId);
-                    downloadimg(this.relationId).then(response => {
+                    let obj = {};
+                    obj.businessId = data.id;
+                    obj.type = data.type;
+                    downloadimg(obj).then(response => {
                         if (response.data != []) {
                             for (var i = 0; i < response.data.length; i++) {
                                 let link = document.createElement('a')
@@ -574,18 +543,23 @@
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
                         this.relationId = this.zipfile.join(',');
-                        console.log(this.relationId);
-                        downloadimg(this.relationId).then(response => {
+                        let obj = {};
+                        obj.businessId = this.relationId;
+                        downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
                                 var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i];
-                                    var j=i+1
-                                    img.file("附件" + j + ".png", imgData, {base64: true});
+                                    var j = i + 1
+                                    img.file("附件" + j + ".png", imgData, {
+                                        base64: true
+                                    });
                                 }
-                                zip.generateAsync({type: "blob"})
+                                zip.generateAsync({
+                                        type: "blob"
+                                    })
                                     .then(function (content) {
                                         FileSaver.saveAs(content, "附件.rar");
                                     });
@@ -594,18 +568,23 @@
                             }
                         })
                     } else {
-                        this.businessId = this.$route.query.id;
-                        downloadZip(this.businessId).then(response => {
+                        let obj = {};
+                        obj.businessId = this.$route.query.id
+                        downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
                                 var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i];
-                                    var j=i+1
-                                    img.file("附件" + j + ".png", imgData, {base64: true});
+                                    var j = i + 1
+                                    img.file("附件" + j + ".png", imgData, {
+                                        base64: true
+                                    });
                                 }
-                                zip.generateAsync({type: "blob"})
+                                zip.generateAsync({
+                                        type: "blob"
+                                    })
                                     .then(function (content) {
                                         FileSaver.saveAs(content, "附件.rar");
                                     });
@@ -620,18 +599,23 @@
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
                         this.relationId = this.zipfile.join(',');
-                        console.log(this.relationId);
-                        downloadimg(this.relationId).then(response => {
+                        let obj = {};
+                        obj.businessId = this.relationId;
+                        downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
                                 var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i]
-                                    var j=i+1
-                                    img.file("附件" +j+ ".png", imgData, {base64: true});
+                                    var j = i + 1
+                                    img.file("附件" + j + ".png", imgData, {
+                                        base64: true
+                                    });
                                 }
-                                zip.generateAsync({type: "blob"})
+                                zip.generateAsync({
+                                        type: "blob"
+                                    })
                                     .then(function (content) {
                                         FileSaver.saveAs(content, "附件.zip");
                                     });
@@ -640,18 +624,24 @@
                             }
                         })
                     } else {
-                        this.businessId = this.$route.query.id;
-                        downloadZip(this.businessId).then(response => {
+                        let obj = {};
+                        obj.businessId = this.$route.query.id;
+                        // this.businessId = this.$route.query.id;
+                        downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
                                 var img = zip.folder("附件");
                                 for (var i = 0; i < response.data.length; i++) {
                                     console.log(response.data[i]);
                                     var imgData = response.data[i]
-                                    var j=i+1
-                                    img.file("附件" + j + ".png", imgData, {base64: true});
+                                    var j = i + 1
+                                    img.file("附件" + j + ".png", imgData, {
+                                        base64: true
+                                    });
                                 }
-                                zip.generateAsync({type: "blob"})
+                                zip.generateAsync({
+                                        type: "blob"
+                                    })
                                     .then(function (content) {
                                         FileSaver.saveAs(content, "附件.zip");
                                     });
@@ -757,9 +747,9 @@
             selectInit(row, index) {
                 // console.log(row)
                 if (index == 0) {
-                    return false  //不可勾选
+                    return false //不可勾选
                 } else {
-                    return true  //可勾选
+                    return true //可勾选
                 }
             },
             preview() {

@@ -35,4 +35,6 @@ public interface ServeBusinessDetailDao {
     int deleteByBusinessIds(String[] ids);
 
     List<String> selectBusinessIds(@Param("businessIds") String[] businessIds);
+
+    List<ServeBusinessDetailVo> previewImg(@Param("id") String id,@Param("type") String type);
 }

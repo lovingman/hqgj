@@ -3,8 +3,11 @@
     <van-image width="750rpx" fit="cover" height="400rpx" src="{{basicForm.fmUrl}}" />
     <view class="subject">
         <view class="title van-multi-ellipsis--l2">{{basicForm.title}} </view>
-        <view class="adress">
-            <van-icon name="location" />{{basicForm.detailedAddress}}</view>
+        <view class="adress" bindtap="getLocation">
+            <van-icon name="location" />{{basicForm.detailedAddress}}
+            <view style="float:left;width:30rpx;height:30rpx;"><image src="/assets/image/icon-dh.png" style="width:30rpx;height:30rpx;"></image></view>
+        </view>
+        <!-- <view style="float:left;width:32rpx;height:32rpx;">111</view> -->
     </view>
     <view class="organization" bindtap="orgClick" data-id="{{basicForm.baseOrganization.id}}">
         <view class="image">

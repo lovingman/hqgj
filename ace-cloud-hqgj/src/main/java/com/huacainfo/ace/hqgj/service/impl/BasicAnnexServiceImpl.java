@@ -186,11 +186,11 @@ public class BasicAnnexServiceImpl implements BasicAnnexService {
      * @throws Exception
      */
     @Override
-    public ResponseDTO<String> businessFileUrlList(String businessId) throws Exception {
+    public ResponseDTO<String> businessFileUrlList(String businessId,String type) throws Exception {
         if(CommonUtils.isBlank(businessId)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        List<String> urlList=basicAnnexDao.businessFileUrlList(businessId);
+        List<String> urlList=basicAnnexDao.businessFileUrlList(businessId,type);
         String[] list=new String[urlList.size()];
         //多个图片下载地址
         for(int i=0;i<urlList.size();i++ ) {

@@ -165,8 +165,8 @@
     </delete>
 
     <resultMap id="annexResultMap" type="com.huacainfo.ace.hqgj.vo.AnnexVo">
-            <result column="did" jdbcType="VARCHAR" property="id"/>
-            <result column="dtype" jdbcType="VARCHAR" property="dtype"/>
+            <result column="bid" jdbcType="VARCHAR" property="id"/>
+            <result column="dtype" jdbcType="VARCHAR" property="type"/>
             <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
             <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
             <result column="annexNum" jdbcType="INTEGER" property="annexNum"/>
@@ -179,7 +179,7 @@
     </update>
     <select id="annexList" parameterType="java.lang.String" resultMap="annexResultMap">
   SELECT DISTINCT
-	d.id did,
+	b.id bid,
 	d.type dtype,
 	d.createDate,
 	ba.fileName,
@@ -192,7 +192,7 @@
 		LEFT JOIN serve_business b ON b.id = d.businessId
 		WHERE
 			b.id = #{id,jdbcType=VARCHAR}
-		AND did = ba.relationId
+			AND dtype =d.type
 	) AS annexNum
     FROM
 	`basic_annex` ba
@@ -209,5 +209,35 @@
         <foreach item="businessIds" collection="businessIds" open="(" separator="," close=")">
             #{businessIds}
         </foreach>
+    </select>
+
+    <resultMap id="previewImgResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="businessId" jdbcType="VARCHAR" property="businessId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="sharesProportion" jdbcType="VARCHAR" property="sharesProportion"/>
+            <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+                <result column="baid" jdbcType="VARCHAR" property="id"/>
+                <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+                <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+                <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+                <result column="relationId" jdbcType="VARCHAR" property="relationId"/>
+        </collection>
+    </resultMap>
+
+    <select id="previewImg" parameterType="java.lang.String" resultMap="previewImgResultMap">
+	SELECT
+		 d.id, d.businessId, d.name, d.sex, d.idCard, d.mobile, d.jobs, d.sharesProportion, d.type,
+		 ba.id baid, ba.relationId, ba.fileType, ba.fileName, ba.fileURL
+		FROM
+			`basic_annex` ba
+		LEFT JOIN serve_business_detail d ON ba.relationId = d.id
+		LEFT JOIN serve_business b ON b.id = d.businessId
+		WHERE
+			b.id = #{id,jdbcType=VARCHAR}
+		AND d.type =#{type,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -19,4 +19,23 @@
     <delete id="deleteByUnionId" parameterType="java.lang.String">
      delete from ace_hqgj_wxms.map_wechat_sys where unionId = #{unionId}
     </delete>
+
+    <select id="selectAreaName" parameterType="java.lang.String"  resultType="java.lang.String">
+  select case p.type
+        when '4' then   '常德市'
+        when '3' then   concat('常德市',p.name)
+        when '2' then   concat( ppp.ppNames,pp.pName,p.name)
+        when '1' then   concat('常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
+       from  portal_hqgj.province p
+     left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_hqgj.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_hqgj.province p
+        )ppp on ppp.pppcode = pp.ppCode
+   where p.code=#{code}
+    </select>
 </mapper>

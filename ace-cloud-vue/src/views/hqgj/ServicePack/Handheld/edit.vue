@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <div class="title">财税服务包编辑</div>
+    <div class="title">财税服务编辑</div>
     <div class="content-box">
       <div class="title">基本信息</div>
       <el-form
@@ -434,6 +434,7 @@ export default {
     changeContactPerson(value) {
       let obj = {};
       obj = this.contactPersonArr.find(item => {
+        console.log(item);
         //这里的userList就是上面遍历的数据源
         return item.id === value; //筛选出匹配数据
       });
@@ -469,6 +470,8 @@ export default {
                 let obj = {};
                 obj.id = personnelRows[i].id;
                 obj.name = personnelRows[i].name;
+                obj.fmUrl = personnelRows[i].imagePhoto;
+                obj.phone = personnelRows[i].mobile;
                 this.contactPersonArr.push(obj);
               }
             }
