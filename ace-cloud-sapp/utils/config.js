@@ -29,10 +29,11 @@ var config = {
     enrollPage: `${server}/hqgj/www/serveCultivate/enrollPage`, //报名管理列表查看
     myEnrollPage: `${server}/hqgj/serveCultivateEnroll/enrollPage`, //我的培训列表
     cancelEnroll: `${server}/hqgj/serveCultivateEnroll/cancelEnroll`, //取消报名
-    deleteEnroll: `${server}/hqgj/serveCultivateEnroll/deleteById`, //删除培训报名  /serveFinanceOrder/page
-    orderPage: `${server}/hqgj/serveFinanceOrder/page`, //订单。  serveFinanceOrder/updateStatus
-    updateOrderStatus: `${server}/hqgj/serveFinanceOrder/updateStatus`, //订单修改状态
-    deleteOrder: `${server}/hqgj/serveFinanceOrder/deleteById`, //删除订单。deleteById  /serveFinanceEvaluate/create
+    deleteEnroll: `${server}/hqgj/serveCultivateEnroll/deleteById`, //删除培训报名  
+    orderPage: `${server}/hqgj/serveFinanceOrder/page`, //订单。 
+    myOrderPage: `${server}/hqgj/serveFinanceOrder/orderPage`, //我的订单订单。 
+    updateOrderStatus: `${server}/hqgj/serveFinanceOrder/updateStatus1`, //订单修改状态
+    deleteOrder: `${server}/hqgj/serveFinanceOrder/deleteById`, //删除订单。
     evaluateOrder: `${server}/hqgj/serveFinanceEvaluate/create`, //评价订单
     homePage: `${server}/hqgj/personalCenter/homePage`, //用户信息
     getAreaTreeUrl: `${server}/hqgj-portal/system/getAreaTree`, //获取行政区划

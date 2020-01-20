@@ -52,15 +52,16 @@ function getJSON(url, data) {
  */
 function post(url, data) {
     var postRequest = wxPromisify(wx.request)
+    console.log(wx.getStorageSync('Authorization'));
     return postRequest({
         url: url,
         method: 'POST',
         data: data,
-        dataType: "json",
         header: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             'Authorization': wx.getStorageSync('Authorization'),
             'WX-SESSION-ID': wx.getStorageSync('WX-SESSION-ID'),
+            "text":url,
         },
     })
 }

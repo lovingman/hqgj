@@ -1,26 +1,27 @@
 <view class="index">
-    <van-tabs sticky animated swipeable active="{{ active }}" bind:change="changeTabHandler" data-active="{{active}}" bind:click="clickTab">
+    <van-tabs sticky animated active="{{ active }}" bind:change="changeTabHandler" data-active="{{active}}" bind:click="clickTab">
         <van-tab title="基本信息">
             <view>
                 <van-cell-group class="marginBottom">
-                    <van-field value="{{ formCollection[0].companyName }}" data-model="companyName" bind:input="bindinput" clearable label="企业名称" placeholder="请输入企业名称" />
-                    <van-field value="{{ formCollection[0].readyName }}" data-model="readyName" bind:input="bindinput" label="备用名称" placeholder="请输入企业备用名称" />
-                    <van-field value="{{ formCollection[0].regBonus }}" data-model="regBonus" bind:input="bindinput" label="注册资金" placeholder="请输入金额" border="{{ false }}" use-button-slot>
+                    <van-field error="{{vailForm[0].companyName}}" bind:focus="focusHandler" bind:blur="blurHandler" data-index="0" value="{{ formCollection[0].companyName }}" data-model="companyName" bind:input="bindinput" clearable label="企业名称" placeholder="请输入企业名称" />
+                    <van-field error="{{vailForm[0].readyName}}" value="{{ formCollection[0].readyName }}" bind:focus="focusHandler" bind:blur="blurHandler" data-model="readyName" data-index="0" bind:input="bindinput" label="备用名称" placeholder="请输入企业备用名称" />
+                    <van-field error="{{vailForm[0].regBonus}}" value="{{ formCollection[0].regBonus }}" bind:focus="focusHandler" bind:blur="blurHandler" data-model="regBonus" data-index="0" bind:input="bindinput" label="注册资金" placeholder="请输入金额" border="{{ false }}" use-button-slot>
                         <van-button slot="button" size="small" type="primary">万元</van-button>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
-                    <van-cell title="企业地址" is-link value="{{ formCollection[0].areaType }}" bind:input="bindinput" size="large" bind:click="showPickerArea" />
+                    <van-cell title="企业地址" is-link value="{{ formCollection[0].areaType }}" data-index="0" bind:input="bindinput" size="large" bind:click="showPickerArea" />
                 </van-cell-group>
-                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea" value="{{formCollection[0].companyAddress}}" data-model="companyAddress" bindinput="bindinput" placeholder="请输入详细地址，XX路XX号(XX小区XX栋XX楼XX号）" wx:if="{{!showPickerAreas}}" auto-height
-                />
+                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea" value="{{formCollection[0].companyAddress}}" data-model="companyAddress" data-index="0" bindinput="bindinput" placeholder="请输入详细地址，XX路XX号(XX小区XX栋XX楼XX号）" wx:if="{{!showPickerAreas}}"
+                    auto-height />
                 <view class="textarea" wx:else>
                     {{formCollection[0].companyAddress}}
                 </view>
                 <van-cell-group>
                     <van-field readonly clickable label="经营范围" bind:click="showPicker = true" />
                 </van-cell-group>
-                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" bindinput="bindinput" placeholder="请输入经营范围，中间用“，”隔开，如基础软件开发，支撑软件开发，应用软件开发" wx:if="{{!showPickerAreas}}" auto-height />
+                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" data-index="0" bindinput="bindinput" placeholder="请输入经营范围，中间用“，”隔开，如基础软件开发，支撑软件开发，应用软件开发" wx:if="{{!showPickerAreas}}"
+                    auto-height />
                 <view class="textarea textarea1" wx:else>
                     {{formCollection[0].manageExtent}}
                 </view>
@@ -40,13 +41,16 @@
                     法人
                 </view>
                 <van-cell-group>
-                    <van-field value="{{ item.name }}" data-obj="formCollection[1].type1" data-model="name" data-index="{{index}}" bind:input="bindObjInput" clearable label="法人姓名" placeholder="请输入真实姓名" />
-                    <van-field value="{{ item.mobile }}" data-obj="formCollection[1].type1" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput" label="联系电话" placeholder="请输入联系电话" />
+                    <van-field error="{{vailForm[1].type1[index].name}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[1].type1" value="{{ item.name }}" data-obj="formCollection[1].type1" data-model="name" data-index="{{index}}" bind:input="bindObjInput"
+                        clearable label="法人姓名" placeholder="请输入真实姓名" />
+                    <van-field error="{{vailForm[1].type1[index].mobile}}" data-vail="vailForm[1].type1" bind:focus="focusObjHandler" bind:blur="blurObjHandler" value="{{ item.mobile }}" data-obj="formCollection[1].type1" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput"
+                        label="联系电话" placeholder="请输入联系电话" />
                 </van-cell-group>
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
+                        <view class="tip">
+                            <van-icon name="warning-o" class="warning" />上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">
@@ -73,13 +77,16 @@
                         <van-button wx:if="{{index}}" data-index="{{index}}" type="info" color="#E1EEFD" size="mini" bindtap="removeSupervisor">删除</van-button>
                     </view>
                     <van-cell-group>
-                        <van-field value="{{ item.name }}" data-obj="formCollection[1].type2" data-model="name" data-index="{{index}}" bind:input="bindObjInput" clearable label="监事姓名" placeholder="请输入真实姓名" />
-                        <van-field value="{{ item.mobile }}" data-obj="formCollection[1].type2" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput" label="联系电话" placeholder="请输入联系电话" />
+                        <van-field error="{{vailForm[1].type2[index].name}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[1].type2" value="{{ item.name }}" data-obj="formCollection[1].type2" data-model="name" data-index="{{index}}" bind:input="bindObjInput"
+                            clearable label="监事姓名" placeholder="请输入真实姓名" />
+                        <van-field error="{{vailForm[1].type2[index].mobile}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[1].type2" value="{{ item.mobile }}" data-obj="formCollection[1].type2" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput"
+                            label="联系电话" placeholder="请输入联系电话" />
                     </van-cell-group>
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
+                            <view class="tip">
+                                <van-icon name="warning-o" class="warning" />上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
@@ -123,20 +130,23 @@
                         <van-button wx:if="{{index}}" data-index="{{index}}" type="info" color="#E1EEFD" size="mini" bindtap="removeShareholder">删除</van-button>
                     </view>
                     <van-cell-group>
-                        <van-field value="{{ item.name }}" data-obj="formCollection[2].type3" data-model="name" data-index="{{index}}" bind:input="bindObjInput" clearable label="股东姓名" placeholder="请输入真实姓名" />
-                        <van-field value="{{ item.sharesProportion }}" data-obj="formCollection[2].type3" data-model="sharesProportion" data-index="{{index}}" bind:input="bindObjInput" label="股东比例" placeholder="请输入数值" use-button-slot>
+                        <van-field error="{{vailForm[2].type3[index].name}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[2].type3" value="{{ item.name }}" data-obj="formCollection[2].type3" data-model="name" data-index="{{index}}" bind:input="bindObjInput"
+                            clearable label="股东姓名" placeholder="请输入真实姓名" />
+                        <van-field error="{{vailForm[2].type3[index].sharesProportion}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[2].type3" value="{{ item.sharesProportion }}" data-obj="formCollection[2].type3" data-model="sharesProportion"
+                            data-index="{{index}}" bind:input="bindObjInput" label="股东比例" placeholder="请输入数值" use-button-slot>
                             <van-button slot="button" size="small" type="primary">%</van-button>
                         </van-field>
                     </van-cell-group>
                     <view class="upload">
                         <view class="text">
                             <view>身份证</view>
-                            <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
+                            <view class="tip">
+                                <van-icon name="warning-o" class="warning" />上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                         </view>
                         <view class="imgs">
                             <view class="img">
                                 <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[0].fileType==1}}" src="{{item.basicAnnexes[0].fileURL}}"></image>
-                                <image  mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
+                                <image mode="aspectFill" class="idcard1" wx:if="{{item.basicAnnexes[1].fileType==1}}" src="{{item.basicAnnexes[1].fileURL}}"></image>
                                 <van-uploader class="van-uploaders" data-obj="formCollection[2].type3" data-index="{{index}}" data-type="0" bind:after-read="afterRead">
                                 </van-uploader>
                                 <text>拍摄/上传正面</text>
@@ -164,7 +174,7 @@
                 </view>
             </view>
             <view class="phoneBtn" catchtap="callPhone">
-                <image  class="customer" src="/assets/image/customer.png"></image>遇到问题了？点击致电咨询
+                <image class="customer" src="/assets/image/customer.png"></image>遇到问题了？点击致电咨询
             </view>
         </van-tab>
         <van-tab title="财务">
@@ -173,13 +183,16 @@
                     财务
                 </view>
                 <van-cell-group>
-                    <van-field value="{{ item.name }}" data-obj="formCollection[3].type4" data-model="name" data-index="{{index}}" bind:input="bindObjInput" clearable label="财务姓名" placeholder="请输入真实姓名" />
-                    <van-field value="{{ item.mobile }}" data-obj="formCollection[3].type4" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput" label="联系电话" placeholder="请输入联系电话" />
+                    <van-field error="{{vailForm[3].type4[index].name}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[3].type4" value="{{ item.name }}" data-obj="formCollection[3].type4" data-model="name" data-index="{{index}}" bind:input="bindObjInput"
+                        clearable label="财务姓名" placeholder="请输入真实姓名" />
+                    <van-field error="{{vailForm[3].type4[index].mobile}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[3].type4" value="{{ item.mobile }}" data-obj="formCollection[3].type4" data-model="mobile" data-index="{{index}}" bind:input="bindObjInput"
+                        label="联系电话" placeholder="请输入联系电话" />
                 </van-cell-group>
                 <view class="upload">
                     <view class="text">
                         <view>身份证</view>
-                        <view class="tip"><van-icon name="warning-o" class="warning"/>上传的身份证确保边框完整，字体清晰，亮度均匀</view>
+                        <view class="tip">
+                            <van-icon name="warning-o" class="warning" />上传的身份证确保边框完整，字体清晰，亮度均匀</view>
                     </view>
                     <view class="imgs">
                         <view class="img">
@@ -403,7 +416,7 @@
                     <van-button round hairline plain size="large" type="info" bindtap="preClick">上一步</van-button>
                 </view>
                 <view class="btn">
-                    <van-button round type="info" size="large" bindtap="submit">提交</van-button>
+                    <van-button wx:if="{{submitBtn}}" round type="info" size="large" bindtap="submit">提交</van-button>
                 </view>
             </view>
             <view class="phoneBtn" catchtap="callPhone">

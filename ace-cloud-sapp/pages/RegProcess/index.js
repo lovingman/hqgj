@@ -1,6 +1,7 @@
 // pages/RegProcess/index.js
 var cfg = require("../../utils/config.js");
 var request = require("../../utils/request.js");
+var validate = require('../../utils/validate.js');
 import Toast from '../../vant/weapp/toast/toast';
 Page({
 
@@ -15,6 +16,7 @@ Page({
         areaCodeList: [],
         active: 0, //tab切换
         phoneBar: false,
+        submitBtn:true,
         username: "",
         showPickerAreas: false, //是否显示picker
         dataCollection: [],
@@ -38,11 +40,11 @@ Page({
                     type: 1,
                     basicAnnexes: [{
                         fileURL: "",
-                        fileName: "法人身份证附件(正面)",
+                        fileName: "法人身份证附件",
                         fileType: 1
                     }, {
                         fileURL: "",
-                        fileName: "法人身份证附件(反面)",
+                        fileName: "法人身份证附件",
                         fileType: 2
                     }]
                 }],
@@ -52,11 +54,11 @@ Page({
                     type: 2,
                     basicAnnexes: [{
                         fileURL: "",
-                        fileName: "监事身份证附件(正面)",
+                        fileName: "监事身份证附件",
                         fileType: 1
                     }, {
                         fileURL: "",
-                        fileName: "监事身份证附件(反面)",
+                        fileName: "监事身份证附件",
                         fileType: 2
                     }]
                 }]
@@ -68,12 +70,12 @@ Page({
                     type: 3,
                     basicAnnexes: [{
                             fileURL: "",
-                            fileName: "股东身份证附件(正面)",
+                            fileName: "股东身份证附件",
                             fileType: 1
                         },
                         {
                             fileURL: "",
-                            fileName: "股东身份证附件(反面)",
+                            fileName: "股东身份证附件",
                             fileType: 2
                         }
                     ]
@@ -86,12 +88,12 @@ Page({
                     type: 4,
                     basicAnnexes: [{
                             fileURL: "",
-                            fileName: "财务身份证附件(正面)",
+                            fileName: "财务身份证附件",
                             fileType: 1
                         },
                         {
                             fileURL: "",
-                            fileName: "财务身份证附件(反面)",
+                            fileName: "财务身份证附件",
                             fileType: 2
                         }
                     ]
@@ -141,7 +143,43 @@ Page({
                     option: 0,
                 }
             }
-        ]
+        ],
+        vailForm: [{
+                companyName: false,
+                readyName: false,
+                regBonus: false,
+            },
+            {
+                type1: [{
+                    name: false,
+                    mobile: false,
+                }],
+                type2: [{
+                    name: false,
+                    mobile: false
+                }]
+            },
+            {
+                type3: [{
+                    name: false,
+                    sharesProportion: false,
+                }]
+            },
+            {
+                type4: [{
+                    name: false,
+                    mobile: false,
+                }]
+            }
+        ],
+        vailMap: {
+            companyName: 'companyName',
+            readyName: 'companyName',
+            regBonus: 'floatNum4',
+            name: 'chineseName',
+            mobile: 'mobilePhone',
+            sharesProportion: 'float2Num2',
+        }
     },
     getData() { //获取创业服务包详情
         let that = this;
@@ -206,9 +244,21 @@ Page({
             type1: b.type1,
             type2: b.type2,
         });
+        for (let n = 0; n < b.type2.length; n++) {
+            that.data.vailForm[1].type2.push({
+                name: false,
+                mobile: false
+            });
+        }
         that.data.dataCollection.push({
             type3: b.type3,
         })
+        for (let n = 0; n < b.type3.length; n++) {
+            that.data.vailForm[2].type3.push({
+                name: false,
+                sharesProportion: false
+            });
+        }
         that.data.dataCollection.push({
             type4: b.type4,
         })
@@ -321,26 +371,35 @@ Page({
             type: 2,
             basicAnnexes: [{
                 fileURL: "",
-                fileName: "监事身份证附件（正面）",
+                fileName: "监事身份证附件",
                 fileType: 1
             }, {
                 fileURL: "",
-                fileName: "监事身份证附件（反面）",
+                fileName: "监事身份证附件",
                 fileType: 2
             }]
         };
         this.data.formCollection[1].type2.push(obj);
+        this.data.vailForm[1].type2.push({
+            name: false,
+            mobile: false
+        });
         let f = 'formCollection[1].type2'
+        let n = 'vailForm[1].type2'
         this.setData({
-            [f]: this.data.formCollection[1].type2
+            [f]: this.data.formCollection[1].type2,
+            [n]: this.data.vailForm[1].type2
         })
     },
     removeSupervisor(e) {
         let index = e.currentTarget.dataset.index;
         this.data.formCollection[1].type2.splice(index, 1);
+        this.data.vailForm[1].type2.splice(index, 1);
+        let n = 'vailForm[1].type2'
         let f = 'formCollection[1].type2'
         this.setData({
-            [f]: this.data.formCollection[1].type2
+            [f]: this.data.formCollection[1].type2,
+            [n]: this.data.vailForm[1].type2
         })
     },
 
@@ -352,26 +411,35 @@ Page({
             type: 3,
             basicAnnexes: [{
                 fileURL: "",
-                fileName: "股东身份证附件（正面）",
+                fileName: "股东身份证附件",
                 fileType: 1
             }, {
                 fileURL: "",
-                fileName: "股东身份证附件（反面）",
+                fileName: "股东身份证附件",
                 fileType: 2
             }]
         };
         this.data.formCollection[2].type3.push(obj);
+        this.data.vailForm[2].type3.push({
+            name: false,
+            sharesProportion: false
+        });
         let f = 'formCollection[2].type3';
+        let n = 'vailForm[2].type3'
         this.setData({
-            [f]: this.data.formCollection[2].type3
+            [f]: this.data.formCollection[2].type3,
+            [n]: this.data.vailForm[2].type3
         })
     },
     removeShareholder(e) {
         let index = e.currentTarget.dataset.index;
         this.data.formCollection[2].type3.splice(index, 1);
+        this.data.vailForm[2].type3.splice(index, 1);
         let f = 'formCollection[2].type3'
+        let n = 'vailForm[2].type3'
         this.setData({
-            [f]: this.data.formCollection[2].type3
+            [f]: this.data.formCollection[2].type3,
+            [n]: this.data.vailForm[2].type3
         })
     },
     //图片上传前
@@ -385,7 +453,7 @@ Page({
         } = e.detail;
         //当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
         wx.uploadFile({
-            url: 'http://192.168.2.114/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
+            url: 'https://test.huacainfo.com/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
             filePath: file.path,
             name: 'file',
             formData: {
@@ -410,7 +478,7 @@ Page({
         } = e.detail;
         //当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
         wx.uploadFile({
-            url: 'http://192.168.2.114/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
+            url: 'https://test.huacainfo.com/hqgj-portal/www/uploadFile', // 仅为示例，非真实的接口地址
             filePath: file.path,
             name: 'file',
             formData: {
@@ -431,14 +499,67 @@ Page({
     },
     //其它双向绑定
     bindinput(e) {
-        let feild = 'formCollection[' + this.data.active + '].' + e.currentTarget.dataset.model;
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+        let feild = 'formCollection[' + index + '].' + model;
         let v = e.detail;
-        if (typeof(e.detail) == 'object') {
+        if (typeof(v) == 'object') {
             v = v.value
         }
         this.setData({
             [feild]: v
         })
+    },
+    focusHandler(e) {
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+        let feild = 'vailForm[' + index + '].' + model;
+        this.setData({
+            [feild]: false
+        })
+    },
+    focusObjHandler(e) {
+        let vail = e.currentTarget.dataset.vail;
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+        this.setData({
+            [vail + '[' + index + '].' + model]: false
+        })
+    },
+    blurHandler(e) {
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+        let that = this;
+        let feild = 'vailForm[' + index + '].' + model;
+        console.log(e.detail);
+        if (that.validateHandler(model, e.detail.value)) {
+            that.setData({
+                [feild]: true,
+            })
+        }
+    },
+    blurObjHandler(e) {
+        let vail = e.currentTarget.dataset.vail;
+        let model = e.currentTarget.dataset.model;
+        let index = e.currentTarget.dataset.index;
+
+        let that = this;
+        let feild = vail + '[' + index + '].' + model;
+        console.log(e.detail);
+        if (that.validateHandler(model, e.detail.value)) {
+            that.setData({
+                [feild]: true,
+            })
+        }
+    },
+    validateHandler(target, val) {
+        let that = this;
+        if (validate[that.data.vailMap[target]].test(val)) {
+            console.log('ok')
+            return false;
+        }
+        console.log('no ok')
+        return true
     },
     bindObjInput(e) {
         let obj = e.currentTarget.dataset.obj;
@@ -499,10 +620,14 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        console.log(1);
         this.getAreaTree();
         if (options.id) {
             this.data.id = options.id
+        }
+        if(options.flag){
+            this.setData({
+                submitBtn:false
+            })
         }
     },
     clickTab(e) {
@@ -542,6 +667,19 @@ Page({
                 return;
             }
         }
+        for (let n = 0; n < 4; n++) {
+            let k = that.deeploopFlase(that.data.vailForm[n])
+            if (k) {
+                Toast.fail({
+                    message: "填写类容格式错误",
+                    zIndex: 1000
+                });
+                that.setData({
+                    active: n
+                })
+                return;
+            }
+        };
         let b = that.data.formCollection[4];
         let flag = false;
         if (b.type6.basicAnnexes.length < 1) {
@@ -613,6 +751,26 @@ Page({
         }
         return false;
     },
+
+    deeploopFlase(data) {
+        let that = this;
+        for (let keys in data) { // 遍历目标
+            if (data.hasOwnProperty(keys)) {
+                console.log(JSON.stringify(data[keys]));
+                if (data[keys] && typeof data[keys] === 'object') { // 如果值是对象，就递归一下
+                    if (that.deeploopFlase(data[keys])) {
+                        return true;
+                    };
+                } else { // 如果不是，就直接赋值
+                    if (data[keys]) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    },
+
     addData(obj) { //新增
         let that = this;
         request.postJSON(cfg.serveBusinessCreateUrl, obj).then(rst => {
@@ -672,7 +830,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        console.log(2);
         this.getDic();
     },
 

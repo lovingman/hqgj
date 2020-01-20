@@ -18,7 +18,7 @@
           <van-image round width="100%" height="100%" fit="cover" src="{{item.fmUrl}}" />
         </view>
         <view class="info">
-          <view class="name">{{item.enrollName}}</view>
+          <view class="name">{{item.enrollName}} <text class="tip" wx:if="{{item.status==2}}"> （已签到）</text></view>
           <view class="org">{{item.companyName}}</view>
         </view>
       </view>

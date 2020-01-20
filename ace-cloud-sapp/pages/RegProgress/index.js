@@ -20,7 +20,7 @@ Page({
     onLoad: function(options) {
         this.getDic();
         this.getData(options.id)
-        this.data.id = option.id
+        this.data.id = options.id
     },
     getData(id) { //获取创业服务包详情
         let that = this;

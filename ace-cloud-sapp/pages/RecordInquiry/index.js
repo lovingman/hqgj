@@ -99,7 +99,7 @@ Page({
         let index = that.data.active;
         let targetObj = that.data.tabs[index];
         that.showloading();
-        request.getJSON(config.orderPage, targetObj.query).then(res => {
+        request.getJSON(config.myOrderPage, targetObj.query).then(res => {
             that.hideloading();
             let e = res.data;
             let len = e.rows ? e.rows.length : 0;
@@ -153,7 +153,7 @@ Page({
         let that = this;
         Dialog.confirm({
             title: '注意',
-            message: '确定取消报名'
+            message: '确定取消预约'
         }).then(() => {
             let id = e.currentTarget.dataset.id;
             let index = e.currentTarget.dataset.index;

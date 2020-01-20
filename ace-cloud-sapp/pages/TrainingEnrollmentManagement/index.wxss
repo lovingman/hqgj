@@ -65,6 +65,10 @@
   font-weight: bold;
   line-height: 2em;
 }
+.modal .card .tip{
+     color: #4b90ff;
+     font-size: 24rpx;
+}
 
 .modal .card .org {
   color: rgba(121, 128, 146, 1);

@@ -32,6 +32,12 @@ Page({
             url: `/pages/RegProgress/index?id=${id}`,
         })
     },
+    companyDetail(e) {
+        let id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+            url: `/pages/RegProcess/index?flag=true&id=${id}`
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */

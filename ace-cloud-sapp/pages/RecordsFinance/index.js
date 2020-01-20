@@ -97,7 +97,7 @@ Page({
         let index = that.data.active;
         let targetObj = that.data.tabs[index];
         that.showloading();
-        request.getJSON(config.orderPage, targetObj.query).then(res => {
+        request.getJSON(config.myOrderPage, targetObj.query).then(res => {
             that.hideloading();
             let e = res.data;
             let len = e.rows ? e.rows.length : 0;

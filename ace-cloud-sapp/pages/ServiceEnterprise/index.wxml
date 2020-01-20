@@ -6,7 +6,7 @@
                 <van-icon name="arrow" />
             </view>
         </view>
-        <view class="content">
+        <view class="content" catchtap="companyDetail" data-id="{{item.id}}">
             <view class="title">{{item.companyName}}</view>
             <view class="footer">
                 <text>申请时间：{{item.createDate}}</text>
