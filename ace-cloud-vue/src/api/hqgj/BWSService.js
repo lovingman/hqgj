@@ -11,14 +11,18 @@ export function getById(id) {
     return request({
         url: '/hqgj/serveBusiness/getById',
         method: 'get',
-        params: {id:id}
+        params: {
+            id: id
+        }
     })
 }
 export function deleteById(id) {
     return request({
         url: '/hqgj/serveBusiness/deleteById',
         method: 'post',
-        params: {id:id}
+        params: {
+            id: id
+        }
     })
 }
 export function update(data) {
@@ -28,25 +32,33 @@ export function update(data) {
         data: data
     })
 }
-export function updateBasicStatus(id,status,type) {
+export function updateBasicStatus(id, status, type) {
     return request({
         url: '/hqgj/serveBusiness/updateBasicStatus',
         method: 'post',
-        params: {id: id, status: status,type:type}
+        params: {
+            id: id,
+            status: status,
+            type: type
+        }
     })
 }
 export function selectBasicStatus(id) {
     return request({
         url: '/hqgj/serveBusiness/selectBasicStatus',
         method: 'get',
-        params: {id: id}
+        params: {
+            id: id
+        }
     })
 }
 export function previewInfo(id) {
     return request({
         url: '/hqgj/serveBusiness/previewInfo',
         method: 'get',
-        params: {id:id}
+        params: {
+            id: id
+        }
     })
 }
 export function getPage(query) {
@@ -67,7 +79,9 @@ export function deleteIntegral(id) {
     return request({
         url: '/hqgj/serveBusinessIntegral/deleteById',
         method: 'post',
-        params: {id:id}
+        params: {
+            id: id
+        }
     })
 }
 
@@ -89,7 +103,9 @@ export function getannexList(id) {
     return request({
         url: '/hqgj/serveBusinessDetail/annexList',
         method: 'get',
-        params: {id:id}
+        params: {
+            id: id
+        }
     })
 }
 export function getAppend(query) {
@@ -101,23 +117,15 @@ export function getAppend(query) {
 }
 export function getAnnex(query) {
     return request({
-        url: '/hqgj/basicAnnex/page',
+        url: '/hqgj/serveBusinessDetail/previewImg',
         method: 'get',
         params: query
     })
 }
-export function downloadimg(relationId) {
+export function downloadimg(query) {
     return request({
-        url: '/hqgj/basicAnnex/download',
+        url: '/hqgj/basicAnnex/downloadFile',
         method: 'get',
-        params:{relationId:relationId}
-    })
-}
-
-export function downloadZip(businessId) {
-    return request({
-        url: '/hqgj/basicAnnex/downloadZip',
-        method: 'get',
-        params:{businessId:businessId}
+        params: query
     })
 }
