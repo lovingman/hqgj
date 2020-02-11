@@ -50,6 +50,13 @@ page {
     border-width: 0 !important;
 }
 
+.van-cell__title{
+    font-size: 28rpx !important;
+}
+.van-cell__value{
+     color: #323233 !important;
+}
+
 .van-tabs__wrap--scrollable .van-tab {
     color: rgba(255, 255, 255, 1);
     font-size: 28rpx;

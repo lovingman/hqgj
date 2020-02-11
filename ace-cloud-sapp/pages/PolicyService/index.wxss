@@ -11,7 +11,16 @@
 .search .title {
     color: rgba(255, 255, 255, 1);
     font-size: 36rpx;
-    font-family: PingFangSC-regular;
+    font-family: "FZZhengHeiS-B-GB";
+    /* font-family: "" */
+    
+}
+.search .title .style{
+    color: #fcde14;
+}
+.search .tip{
+    color: rgba(255, 255, 255, 1);
+    font-size: 24rpx;
     margin-bottom: 16rpx;
 }
 

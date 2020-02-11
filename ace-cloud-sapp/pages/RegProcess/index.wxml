@@ -20,7 +20,7 @@
                 <van-cell-group>
                     <van-field readonly clickable label="经营范围" bind:click="showPicker = true" />
                 </van-cell-group>
-                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" data-index="0" bindinput="bindinput" placeholder="请输入经营范围，中间用“，”隔开，如基础软件开发，支撑软件开发，应用软件开发" wx:if="{{!showPickerAreas}}"
+                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" data-index="0" bindinput="bindinput" placeholder="请输入经营范围，字数最好控制在80字以内。如基础软件开发，应用软件开发；架线工程服务，智能化安装工程服务" wx:if="{{!showPickerAreas}}"
                     auto-height />
                 <view class="textarea textarea1" wx:else>
                     {{formCollection[0].manageExtent}}
@@ -407,7 +407,7 @@
                 </view>
                 <view class="upload">
                     <van-cell-group>
-                        <van-field class="textarea" value="{{ formCollection[5].option1.content }}" data-model="content" bind:input="bindinput_two" type="textarea" placeholder="字数限制在50以内" autosize border="{{ false }}" />
+                        <van-field class="textarea" value="{{ formCollection[5].option1.content }}" maxlength="200" show-word-limit data-model="content" bind:input="bindinput_two" type="textarea" placeholder="字数限制在200以内" autosize border="{{ false }}" />
                     </van-cell-group>
                 </view>
             </view>

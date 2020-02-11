@@ -13,6 +13,7 @@
                 常德市武陵区中小企业公共服务平台
             </view>
         </view>
+        <view class="tip">温馨提示：常通风、戴口罩、勤洗手、少外出</view>
     </view>
     <view class="entrance">
         <block wx:for="{{navigates}}" wx:key="index">
@@ -31,7 +32,8 @@
         </view>
         <view wx:if="{{trainTotal == 0}}" class="no-tis">
             <view class="no-text">
-                因临近春节，暂未安排培训
+                抗击“新冠”疫情，减少人群聚集。
+                <view>暂未安排培训</view>
             </view>
         </view>
         <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" wx:if="{{trainTotal != 0}}">

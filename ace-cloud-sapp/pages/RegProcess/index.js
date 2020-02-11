@@ -877,7 +877,7 @@ Page({
         wx.makePhoneCall({
             phoneNumber: number, //仅为示例，并非真实的电话号码
             fail() {
-                Toast.fail("调用电话失败")
+                Toast.fail("已取消")
             }
         })
     }

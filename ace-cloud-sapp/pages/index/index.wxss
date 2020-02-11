@@ -13,6 +13,19 @@
     padding-bottom: 40rpx;
 }
 
+.hat{
+    position: relative;
+}
+
+.hat .tip{
+    width: 750rpx;
+    position: absolute;
+    bottom: 60rpx;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%,0);
+}
+
 .banner .left {
     height: 42rpx;
     display: flex;

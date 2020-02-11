@@ -1,6 +1,9 @@
 <view>
   <view class="search">
-    <view class="title">为企业提供有价值的政策信息</view>
+    <!-- <view class="title">增产提质保供给， <text class="style">防疫生产</text>两不误</view>  -->
+    <!-- <view class="tip">增产提质保供给，防疫生产两不误</view> -->
+    <van-image width="520rpx" height="36rpx" fit="cover" src="/assets/image/by.png" />
+    <view class="tip"></view>
     <van-search background="#2E88F2" use-left-icon-slot clearable shape="round" right-icon="search" value="{{ value }}" placeholder="搜索政策" bind:change="onChange" bind:search="onSearch">
     </van-search>
   </view>
