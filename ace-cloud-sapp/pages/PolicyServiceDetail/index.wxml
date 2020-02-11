@@ -4,6 +4,6 @@
         发布时间：{{basicForm.createDate}}
     </view>
     <view class="text">
-        <rich-text nodes="{{basicForm.content}}"></rich-text>
+        <rich-text nodes="{{basicFormContent}}"></rich-text>
     </view>
 </view>
