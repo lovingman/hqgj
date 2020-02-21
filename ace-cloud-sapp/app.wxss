@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import "/vantyle/index.wxss";
 @import '/assets/fonts/iconfont.wxss';
+/* @import '/assets/fonts/FZZCHJW-1.wxss'; */
 .container {
   height: 100%;
   display: flex;
@@ -19,6 +20,9 @@ view{
 
 .hat {
     position: relative;
+}
+.frist-line{
+    text-indent: 2em;
 }
 
 .hat::before {

@@ -295,6 +295,13 @@
 					"pathName": "pages/ServiceEnterprise/index",
 					"query": "id=db5cb124d6e54dccb12488afbd459f62",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "企业诉求",
+					"pathName": "pages/appeal/index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

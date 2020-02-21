@@ -7,6 +7,9 @@ var validate = {
     companyName: /^[\u4e00-\u9fa5]{2,500}$/,//中国公司名称
     floatNum: /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/,//无限制小数
     float2Num2: /^[1-9]\d{0,1}(\.\d{1,3})?$|^0(\.\d{1,2})?$/, //正数2位小数点后2位
+    ageNum: /^[1-9]\d{0,2}$/, //正数2位小数点后2位
     floatNum4: /^\d+(\.\d{1,4})?$/, //小数点后位
+    notEmpty: /\S/,  //不能为空
+    integer:/^[1-9]\d*$/ //整数
 };
 module.exports = validate

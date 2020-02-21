@@ -1,0 +1,18 @@
+{
+    "enablePullDownRefresh": true,
+    "navigationBarBackgroundColor": "#2E88F2",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "企业诉求",
+    "usingComponents": {
+                "van-field": "/vant/weapp/field/index",
+                "van-cell": "/vant/weapp/cell/index",
+                "van-cell-group": "/vant/weapp/cell-group/index",
+                "van-button": "/vant/weapp/button/index",
+                "van-popup": "/vant/weapp/popup/index",
+                "van-picker": "/vant/weapp/picker/index",
+                "van-datetime-picker": "/vant/weapp/datetime-picker/index",
+                "van-checkbox": "/vant/weapp/checkbox/index",
+                "van-dialog": "/vant/weapp/dialog/index",
+                "van-checkbox-group": "/vant/weapp/checkbox-group/index"
+    }
+}
