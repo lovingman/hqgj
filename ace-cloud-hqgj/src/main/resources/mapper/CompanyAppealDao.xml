@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacainfo.ace.hqgj.dao.CompanyAppealDao">
+  <resultMap id="BaseResultMap" type="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="companyNumber" jdbcType="INTEGER" property="companyNumber" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="bank" jdbcType="VARCHAR" property="bank" />
+    <result column="personName" jdbcType="VARCHAR" property="personName" />
+    <result column="personTel" jdbcType="VARCHAR" property="personTel" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+    <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    <result column="text" jdbcType="LONGVARCHAR" property="text" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, companyName, type, companyNumber, title, money, bank, personName, 
+    personTel, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
+    modifyDate, status
+  </sql>
+  <sql id="Blob_Column_List">
+    text
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from company_appeal
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from company_appeal
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    insert into company_appeal (id, companyId, companyName, 
+      type, companyNumber, title, 
+      money, bank, personName, 
+      personTel, createUserId, createUserName, 
+      createDate, modifyUserId, modifyUserName, 
+      modifyDate, status, text
+      )
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{companyNumber,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DECIMAL}, #{bank,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+      #{personTel,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{text,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    insert into company_appeal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="companyName != null">
+        companyName,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="companyNumber != null">
+        companyNumber,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+      <if test="personName != null">
+        personName,
+      </if>
+      <if test="personTel != null">
+        personTel,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="createUserName != null">
+        createUserName,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId,
+      </if>
+      <if test="modifyUserName != null">
+        modifyUserName,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNumber != null">
+        #{companyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="personTel != null">
+        #{personTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    update company_appeal
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        companyName = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNumber != null">
+        companyNumber = #{companyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="bank != null">
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        personName = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="personTel != null">
+        personTel = #{personTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        createUserName = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    update company_appeal
+    set companyId = #{companyId,jdbcType=VARCHAR},
+      companyName = #{companyName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      companyNumber = #{companyNumber,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      bank = #{bank,jdbcType=VARCHAR},
+      personName = #{personName,jdbcType=VARCHAR},
+      personTel = #{personTel,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR},
+      text = #{text,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+    update company_appeal
+    set companyId = #{companyId,jdbcType=VARCHAR},
+      companyName = #{companyName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      companyNumber = #{companyNumber,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      bank = #{bank,jdbcType=VARCHAR},
+      personName = #{personName,jdbcType=VARCHAR},
+      personTel = #{personTel,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.CompanyAppealVo">
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+  </resultMap>
+  <sql id="Vo_Column_List">
+    t.id, t.companyId, t.companyName, t.type, t.companyNumber, t.title, t.money, t.bank, t.personName, t.personTel, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status, t.text
+  </sql>
+  <sql id="From_Statement">
+    FROM company_appeal t
+    left join company_material m on  m.appealId =t.id
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      1 = 1
+      <if test="condition.companyId != null and condition.companyId != ''">
+         and t.companyId = #{condition.companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.companyName != null and condition.companyName != ''">
+         and t.companyName = #{condition.companyName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.type != null and condition.type != ''">
+         and t.type = #{condition.type,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.companyNumber != null and condition.companyNumber != ''">
+         and t.companyNumber = #{condition.companyNumber,jdbcType=INTEGER}
+      </if>
+      <if test="condition.title != null and condition.title != ''">
+         and t.title = #{condition.title,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.money != null and condition.money != ''">
+         and t.money = #{condition.money,jdbcType=DECIMAL}
+      </if>
+      <if test="condition.bank != null and condition.bank != ''">
+         and t.bank = #{condition.bank,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.personName != null and condition.personName != ''">
+         and t.personName = #{condition.personName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.personTel != null and condition.personTel != ''">
+         and t.personTel = #{condition.personTel,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserId != null and condition.createUserId != ''">
+         and t.createUserId = #{condition.createUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createUserName != null and condition.createUserName != ''">
+         and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.createDate != null and condition.createDate != ''">
+         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
+         and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.modifyUserName != null and condition.modifyUserName != ''">
+         and t.modifyUserName = #{condition.modifyUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.modifyDate != null and condition.modifyDate != ''">
+         and t.modifyDate = #{condition.modifyDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.status != null and condition.status != ''">
+         and t.status = #{condition.status,jdbcType=CHAR}
+      </if>
+      <if test="condition.text != null and condition.text != ''">
+         and t.text = #{condition.text,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
+      select
+        <include refid="Vo_Column_List"/>,m.category,m.number
+        <include refid="From_Statement"/>
+        where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
+            select
+        <include refid="Vo_Column_List"/>,m.category,m.number
+        <include refid="From_Statement"/>
+        <include refid="Where_Condition"/>
+        <choose>
+            <when test='orderBy!=null and orderBy!=""'>
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY t.createDate desc
+            </otherwise>
+        </choose>
+    limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+  </select>
+  <select id="findCount" resultType="int">
+    SELECT COUNT(*)
+<include refid="From_Statement"/>
+<include refid="Where_Condition"/>
+  </select>
+  <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal" resultType="int">
+            select count(1)
+        from company_appeal
+        where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByIds">
+     delete from company_appeal
+ where id in
+ <foreach collection="ids" item="id" open="(" separator="," close=")">
+    #{id}
+ </foreach>
+  </delete>
+</mapper>
