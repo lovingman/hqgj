@@ -16,6 +16,8 @@ public interface CompanyAppealDao {
 
     int updateByPrimaryKey(CompanyAppeal o);
 
+    int updateProjectState(CompanyAppeal companyAppeal);
+
     CompanyAppealVo selectVoByPrimaryKey(String id);
 
     List<CompanyAppealVo> findList(@Param("condition") CompanyAppealQVo condition,

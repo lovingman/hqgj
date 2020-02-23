@@ -101,4 +101,5 @@ public interface CompanyAppealService {
         */
         ResponseDTO deleteByIds(String[] ids) throws Exception;
 
+    ResponseDTO updateProjectState(CompanyAppeal companyAppeal) throws Exception;
 }

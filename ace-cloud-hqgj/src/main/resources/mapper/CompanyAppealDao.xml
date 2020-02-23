@@ -413,4 +413,9 @@
     #{id}
  </foreach>
   </delete>
+  <update id="updateProjectState" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+     update company_appeal
+     set status = #{status,jdbcType=CHAR}
+     where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

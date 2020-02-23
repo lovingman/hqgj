@@ -205,5 +205,15 @@ private CompanyAppealService companyAppealService;
         writer.finish();
         outputStream.flush();
     }
-
+    /**
+     * 修改企业诉求状态
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "/updateProjectState", notes = "根据主键企业诉求状态")
+    @PostMapping(value = "/updateProjectState", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateProjectState(@RequestBody  CompanyAppeal companyAppeal)throws Exception {
+        return  this.companyAppealService.updateProjectState(companyAppeal);
+    }
 }
