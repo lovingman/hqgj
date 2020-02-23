@@ -19,26 +19,8 @@
     <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="CHAR" property="status" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.huacainfo.ace.hqgj.model.CompanyAppeal">
-    <result column="text" jdbcType="LONGVARCHAR" property="text" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, companyId, companyName, type, companyNumber, title, money, bank, personName, 
-    personTel, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
-    modifyDate, status
-  </sql>
-  <sql id="Blob_Column_List">
-    text
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from company_appeal
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from company_appeal
     where id = #{id,jdbcType=VARCHAR}
@@ -56,7 +38,7 @@
       #{money,jdbcType=DECIMAL}, #{bank,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{personTel,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{text,jdbcType=LONGVARCHAR}
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{text,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
@@ -170,7 +152,7 @@
         #{status,jdbcType=CHAR},
       </if>
       <if test="text != null">
-        #{text,jdbcType=LONGVARCHAR},
+        #{text,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -226,7 +208,7 @@
         status = #{status,jdbcType=CHAR},
       </if>
       <if test="text != null">
-        text = #{text,jdbcType=LONGVARCHAR},
+        text = #{text,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -249,7 +231,7 @@
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=CHAR},
-      text = #{text,jdbcType=LONGVARCHAR}
+      text = #{text,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
@@ -350,7 +332,7 @@
          and t.status = #{condition.status,jdbcType=CHAR}
       </if>
       <if test="condition.text != null and condition.text != ''">
-         and t.text = #{condition.text,jdbcType=LONGVARCHAR}
+         and t.text = #{condition.text,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>
