@@ -87,32 +87,32 @@ private CompanyMaterialDao companyMaterialDao;
             }
             o.setId(id);
             o.setCreateDate(new Date());
-            o.setStatus("0");
+            o.setStatus("1");
             o.setCreateUserName(userProp.getName());
             o.setCreateUserId(userProp.getUserId());
             o.setModifyDate(new Date());
             this.companyAppealDao.insert(o);
 
-            if (o.getType().equals("1")) {
-                    CompanyMaterial companyMaterial = new CompanyMaterial();
-                    companyMaterial.setId(GUIDUtil.getGUID());
-                    companyMaterial.setAppealId(id);
-                    companyMaterial.setCategory(o.getCategory());
-                    companyMaterial.setNumber(o.getNumber());
-                    companyMaterial.setStatus("1");
-                    companyMaterialDao.insert(companyMaterial);
-            }
-//                if (o.getCompanyMaterial().size()>0 && o.getType()=="1") {
-//                    List<CompanyMaterial> fileURL = o.getCompanyMaterial();
-//                    for (CompanyMaterial a : fileURL) {
-//                        a.setId(GUIDUtil.getGUID());
-//                        a.setAppealId(id);
-//                        a.setCategory(a.getCategory());
-//                        a.setNumber(a.getNumber());
-//                        a.setStatus("1");
-//                        this.companyMaterialDao.insert(a);
-//                    }
-//                }
+//            if (o.getType().equals("1")) {
+//                    CompanyMaterial companyMaterial = new CompanyMaterial();
+//                    companyMaterial.setId(GUIDUtil.getGUID());
+//                    companyMaterial.setAppealId(id);
+//                    companyMaterial.setCategory(o.getCategory());
+//                    companyMaterial.setNumber(o.getNumber());
+//                    companyMaterial.setStatus("1");
+//                    companyMaterialDao.insert(companyMaterial);
+//            }
+                if (o.getCompanyMaterial().size()>0 && o.getType().equals("1")) {
+                    List<CompanyMaterial> fileURL = o.getCompanyMaterial();
+                    for (CompanyMaterial a : fileURL) {
+                        a.setId(GUIDUtil.getGUID());
+                        a.setAppealId(id);
+                        a.setCategory(a.getCategory());
+                        a.setNumber(a.getNumber());
+                        a.setStatus("1");
+                        this.companyMaterialDao.insert(a);
+                    }
+                }
             return new ResponseDTO(ResultCode.SUCCESS, "成功！");
             }
 

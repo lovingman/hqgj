@@ -9,6 +9,10 @@ private static final long serialVersionUID = 1L;
 
     private Integer number;
 
+    private String categoryName;
+
+    private String typeName;
+
     @Override
     public String getCategory() {
         return category;
@@ -27,5 +31,21 @@ private static final long serialVersionUID = 1L;
     @Override
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

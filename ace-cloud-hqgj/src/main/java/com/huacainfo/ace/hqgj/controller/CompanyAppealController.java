@@ -1,5 +1,10 @@
 package com.huacainfo.ace.hqgj.controller;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.Sheet;
+import com.huacainfo.ace.common.tools.CommonBeanUtils;
+import com.huacainfo.ace.hqgj.vo.CompanyAppealExcelVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +23,11 @@ import com.huacainfo.ace.hqgj.model.CompanyAppeal;
 import com.huacainfo.ace.hqgj.service.CompanyAppealService;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealVo;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealQVo;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -166,5 +176,33 @@ private CompanyAppealService companyAppealService;
                 public ResponseDTO deleteByIds(String ids) throws Exception {
                     return this.companyAppealService.deleteByIds(ids.split(","));
                 }
+
+    /**
+     *导出
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/exportXls",  method = RequestMethod.GET)
+    public void exportXls(HttpServletResponse response) throws Exception {
+
+        response.setContentType("multipart/form-data");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=default.xlsx");
+        Sheet sheet=new Sheet(1,1, CompanyAppealExcelVo.class);
+
+        CompanyAppealQVo condition=new CompanyAppealQVo();
+        PageDTO<CompanyAppealVo> rst = this.companyAppealService.page(condition, 0, 10000, null);
+        List<CompanyAppealExcelVo> data=new ArrayList();
+        for(CompanyAppealVo o:rst.getRows()){
+            CompanyAppealExcelVo obj=new CompanyAppealExcelVo();
+            CommonBeanUtils.copyProperties(obj,o);
+            data.add(obj);
+        }
+        OutputStream outputStream =response.getOutputStream();
+        ExcelWriter writer = EasyExcelFactory.getWriter(outputStream);
+        writer.write(data,sheet);
+        writer.finish();
+        outputStream.flush();
+    }
 
 }
