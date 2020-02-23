@@ -80,6 +80,21 @@ public class CompanyAppealServiceImpl implements CompanyAppealService {
 
     @Override
     public PageDTO
+            <CompanyAppealVo> userpage(CompanyAppealQVo condition, UserProp userProp, int start, int limit, String orderBy) throws Exception {
+        PageDTO<CompanyAppealVo> rst = new PageDTO<>();
+        condition.setCreateUserId(userProp.getUserId());
+        List<CompanyAppealVo> list = this.companyAppealDao.findList(condition, start, limit, orderBy);
+        rst.setRows(list);
+        if (start <= 1) {
+            int allRows = this.companyAppealDao.findCount(condition);
+            rst.setTotal(allRows);
+        }
+        return rst;
+
+    }
+
+    @Override
+    public PageDTO
             <CompanyAppealExlVo> exportPage(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<CompanyAppealExlVo> rst = new PageDTO<>();
         List<CompanyAppealExlVo> list = this.companyAppealDao.exportList(condition, start, limit, orderBy);

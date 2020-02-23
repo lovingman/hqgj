@@ -73,6 +73,17 @@ private CompanyAppealService companyAppealService;
             }
             return rst;
             }
+    @ApiOperation(value = "/userpage", notes = "获取企业诉求表数据集合，支持分页查询")
+    @GetMapping(value = "/userpage", produces = "application/json;charset=UTF-8")
+    public PageDTO
+            <CompanyAppealVo> userpage(CompanyAppealQVo condition, PageParam page) throws Exception {
+
+        PageDTO<CompanyAppealVo> rst =this.companyAppealService.userpage(condition,this.getCurUserProp(), page.getStart(), page.getLimit(), page.getOrderBy());
+        if (page.getStart() > 1) {
+            rst.setTotal(page.getTotalRecord());
+        }
+        return rst;
+    }
 
             /**
             *

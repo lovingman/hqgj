@@ -30,6 +30,8 @@ public interface CompanyAppealService {
     PageDTO
     <CompanyAppealVo> page(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception;
 
+    PageDTO
+            <CompanyAppealVo> userpage(CompanyAppealQVo condition,  UserProp userProp, int start, int limit, String orderBy) throws Exception;
 
     PageDTO
     <CompanyAppealExlVo> exportPage(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception;
