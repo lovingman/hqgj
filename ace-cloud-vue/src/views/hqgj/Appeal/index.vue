@@ -243,7 +243,14 @@
             },
 
             exportXls() {
-                exportXls().then(response => {
+                if(this.Time){
+                    this.query.startTime = this.Time[0];
+                    this.query.endTime = this.Time[1];
+                }else{
+                    this.query.startTime='';
+                    this.query.endTime='';
+                }
+                exportXls(this.query).then(response => {
                     const blob = new Blob([response], {
                         type: "application/vnd.ms-excel"
                     });
