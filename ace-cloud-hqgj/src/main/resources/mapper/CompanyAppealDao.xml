@@ -308,7 +308,7 @@
          and t.type = #{condition.type,jdbcType=VARCHAR}
       </if>
       <if test="condition.companyNumber != null and condition.companyNumber != ''">
-         and t.companyNumber = #{condition.companyNumber,jdbcType=INTEGER}
+         and t.companyNumber like ('%',#{condition.companyNumber,jdbcType=INTEGER},'%')
       </if>
       <if test="condition.title != null and condition.title != ''">
          and t.title = #{condition.title,jdbcType=VARCHAR}
