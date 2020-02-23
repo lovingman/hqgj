@@ -184,14 +184,14 @@ private CompanyAppealService companyAppealService;
      * @throws Exception
      */
     @RequestMapping(value = "/exportXls",  method = RequestMethod.GET)
-    public void exportXls(HttpServletResponse response) throws Exception {
+    public void exportXls(HttpServletResponse response, CompanyAppealQVo condition) throws Exception {
 
         response.setContentType("multipart/form-data");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename=default.xlsx");
         Sheet sheet=new Sheet(1,1, CompanyAppealExcelVo.class);
 
-        CompanyAppealQVo condition=new CompanyAppealQVo();
+//        CompanyAppealQVo condition=new CompanyAppealQVo();
         PageDTO<CompanyAppealExlVo> rst = this.companyAppealService.exportPage(condition, 0, 10000, null);
         List<CompanyAppealExcelVo> data=new ArrayList();
         for(CompanyAppealExlVo o:rst.getRows()){

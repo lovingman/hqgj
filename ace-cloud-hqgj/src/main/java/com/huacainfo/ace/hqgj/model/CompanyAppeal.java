@@ -125,8 +125,6 @@ public class CompanyAppeal extends BaseModel {
      * 注释：诉求描述
      */
     private String text;
-    private String category;
-    private Integer number;
     private List<CompanyMaterial> companyMaterial ;
 
     public String getId() {
@@ -281,19 +279,4 @@ public class CompanyAppeal extends BaseModel {
         this.companyMaterial = companyMaterial;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 }
