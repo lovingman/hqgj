@@ -5,6 +5,7 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.huacainfo.ace.common.tools.CommonBeanUtils;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealExcelVo;
+import com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -191,9 +192,9 @@ private CompanyAppealService companyAppealService;
         Sheet sheet=new Sheet(1,1, CompanyAppealExcelVo.class);
 
         CompanyAppealQVo condition=new CompanyAppealQVo();
-        PageDTO<CompanyAppealVo> rst = this.companyAppealService.page(condition, 0, 10000, null);
+        PageDTO<CompanyAppealExlVo> rst = this.companyAppealService.exportPage(condition, 0, 10000, null);
         List<CompanyAppealExcelVo> data=new ArrayList();
-        for(CompanyAppealVo o:rst.getRows()){
+        for(CompanyAppealExlVo o:rst.getRows()){
             CompanyAppealExcelVo obj=new CompanyAppealExcelVo();
             CommonBeanUtils.copyProperties(obj,o);
             data.add(obj);

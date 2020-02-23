@@ -2,12 +2,15 @@ package com.huacainfo.ace.hqgj.service.impl;
 
 import com.huacainfo.ace.common.constant.ResultCode;
 import com.huacainfo.ace.common.dto.PageDTO;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.BaseCompanyDao;
 import com.huacainfo.ace.hqgj.dao.CompanyMaterialDao;
 import com.huacainfo.ace.hqgj.model.CompanyMaterial;
+import com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -55,6 +58,14 @@ private CompanyMaterialDao companyMaterialDao;
     public PageDTO
     <CompanyAppealVo> page(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception {
             PageDTO<CompanyAppealVo> rst = new PageDTO<>();
+        if (!CommonUtils.isBlank(condition.getEndTime()) && !CommonUtils.isBlank(condition.getStartTime())) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String endTime = sdf.format(condition.getEndTime()) + " 23:59:59 ";
+            String startTime = sdf.format(condition.getStartTime()) + " 00:00:00 ";
+            condition.setEndTime(sdf2.parse(endTime));
+            condition.setStartTime(sdf2.parse(startTime));
+        }
                 List<CompanyAppealVo> list = this.companyAppealDao.findList(condition, start, limit, orderBy);
                     rst.setRows(list);
                     if (start <= 1) {
@@ -64,6 +75,20 @@ private CompanyMaterialDao companyMaterialDao;
                     return rst;
 
             }
+
+    @Override
+    public PageDTO
+            <CompanyAppealExlVo> exportPage(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception {
+        PageDTO<CompanyAppealExlVo> rst = new PageDTO<>();
+        List<CompanyAppealExlVo> list = this.companyAppealDao.exportList(condition, start, limit, orderBy);
+        rst.setRows(list);
+        if (start <= 1) {
+            int allRows = this.companyAppealDao.findCount(condition);
+            rst.setTotal(allRows);
+        }
+        return rst;
+
+    }
 
             /**
             *

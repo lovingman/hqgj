@@ -3,6 +3,7 @@ import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.dto.PageDTO;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.hqgj.model.CompanyAppeal;
+import com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealVo;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealQVo;
 /**
@@ -29,7 +30,11 @@ public interface CompanyAppealService {
     PageDTO
     <CompanyAppealVo> page(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception;
 
-        /**
+
+    PageDTO
+    <CompanyAppealExlVo> exportPage(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception;
+
+    /**
         *
         * @Title:insert
         * @Description: TODO(创建企业诉求表)

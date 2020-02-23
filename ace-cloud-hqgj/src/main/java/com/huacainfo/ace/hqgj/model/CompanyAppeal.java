@@ -2,6 +2,7 @@ package com.huacainfo.ace.hqgj.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -91,6 +92,7 @@ public class CompanyAppeal extends BaseModel {
      * 字段名：company_appeal.createDate
      * 注释：创建时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 

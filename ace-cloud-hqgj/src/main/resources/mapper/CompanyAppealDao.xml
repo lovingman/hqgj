@@ -273,19 +273,27 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.CompanyAppealVo">
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="number" jdbcType="INTEGER" property="number" />
-    <result column="categoryName" jdbcType="INTEGER" property="categoryName" />
     <result column="typeName" jdbcType="INTEGER" property="typeName" />
+    <collection property="companyMaterial" column="id" ofType="com.huacainfo.ace.hqgj.model.CompanyMaterial">
+      <id column="mid" jdbcType="VARCHAR" property="id" />
+      <result column="mappealId" jdbcType="VARCHAR" property="appealId" />
+      <result column="mcategory" jdbcType="VARCHAR" property="category" />
+      <result column="mnumber" jdbcType="INTEGER" property="number" />
+      <result column="mstatus" jdbcType="CHAR" property="status" />
+      <result column="mcategoryName" jdbcType="VARCHAR" property="categoryName" />
+    </collection>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="exlVoResultMap" type="com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo">
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="typeName" jdbcType="INTEGER" property="typeName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
   </resultMap>
   <sql id="Vo_Column_List">
     t.id, t.companyId, t.companyName, t.type, t.companyNumber, t.title, t.money, t.bank, t.personName, t.personTel, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status, t.text
   </sql>
   <sql id="From_Statement">
     FROM company_appeal t
-    left join company_material m on  m.appealId =t.id
-    LEFT JOIN portal_hqgj.dict c ON c.categoryId = 62 AND c.code = t.type
-    LEFT JOIN portal_hqgj.dict d ON d.categoryId = 63 AND d.code = m.category
   </sql>
   <sql id="Where_Condition">
     <where>
@@ -323,8 +331,11 @@
       <if test="condition.createUserName != null and condition.createUserName != ''">
          and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
       </if>
-      <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+      <if test="condition.startTime != null">
+        and t.createDate <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.endTime != null">
+        and t.createDate <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
          and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
@@ -345,13 +356,16 @@
   </sql>
   <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
       select
-        <include refid="Vo_Column_List"/>,m.category,m.number,d.name categoryName,c.name typeName
+        <include refid="Vo_Column_List"/>,m.id mid,m.appealId mappealId,m.category mcategory,m.number mnumber,m.status mstatus,d.name mcategoryName,c.name typeName
         <include refid="From_Statement"/>
+        left join company_material m on  m.appealId =t.id
+        LEFT JOIN portal_hqgj.dict c ON c.categoryId = 62 AND c.code = t.type
+        LEFT JOIN portal_hqgj.dict d ON d.categoryId = 63 AND d.code = m.category
         where t.id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
             select
-        <include refid="Vo_Column_List"/>,m.category,m.number,d.name categoryName,c.name typeName
+        <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
         <choose>
@@ -362,6 +376,24 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
+    limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+  </select>
+  <select id="exportList" parameterType="java.lang.String" resultMap="exlVoResultMap">
+    select
+    <include refid="Vo_Column_List"/>,m.category,m.number,d.name categoryName,c.name typeName
+    <include refid="From_Statement"/>
+    left join company_material m on  m.appealId =t.id
+    LEFT JOIN portal_hqgj.dict c ON c.categoryId = 62 AND c.code = t.type
+    LEFT JOIN portal_hqgj.dict d ON d.categoryId = 63 AND d.code = m.category
+    <include refid="Where_Condition"/>
+    <choose>
+      <when test='orderBy!=null and orderBy!=""'>
+        ORDER BY ${orderBy}
+      </when>
+      <otherwise>
+        ORDER BY t.createDate desc
+      </otherwise>
+    </choose>
     limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
   </select>
   <select id="findCount" resultType="int">
