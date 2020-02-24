@@ -566,11 +566,10 @@
             handleCommand(command) {
                 //rar下载
                 if (command == 'rarDownload') {
-                    console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
-                        this.relationId = this.zipfile.join(',');
+                        // this.relationId = this.zipfile.join(',');
                         let obj = {};
-                        obj.businessId = this.relationId;
+                        obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
@@ -624,9 +623,9 @@
                 if (command == 'zipDownload') {
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
-                        this.relationId = this.zipfile.join(',');
+                        // this.relationId = this.zipfile.join(',');
                         let obj = {};
-                        obj.businessId = this.relationId;
+                        obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
