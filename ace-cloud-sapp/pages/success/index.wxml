@@ -1,0 +1,13 @@
+<!--pages/success/index.wxml-->
+<view class="success">
+    <van-icon name="checked" />
+</view>
+<view class="title">
+    提交成功
+</view>
+<view class="subTitle">
+
+</view>
+<view class="btn">
+    <van-button  bindtap="back" size="large">返回首页</van-button>
+</view>

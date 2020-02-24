@@ -53,6 +53,9 @@ var config = {
     lawServeTemplate: `${server}/hqgj/www/lawServe/page`, //法律模板
     financeOrder: `${server}/hqgj/serveFinanceOrder/create`, //财税下单
     serveBusinessUpdateUrl: `${server}/hqgj/serveBusiness/update`, //创业服务page
+    createAppeal: `${server}/hqgj/companyAppeal/create`,//提交诉求
+    getMyAppeal: `${server}/hqgj/companyAppeal/userpage`,//我的诉求
+    getAppealList: `${server}/hqgj/companyAppeal/page`//我的诉求
 };
 
 module.exports = config

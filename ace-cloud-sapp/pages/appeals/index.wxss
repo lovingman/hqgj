@@ -1,0 +1,2 @@
+/* pages/appealList/index.wxss */
+@import "../ServiceEnterprise/index.wxss";

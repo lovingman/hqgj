@@ -69,6 +69,19 @@ module.exports = {
                 return '专家问诊';
         }
     },
+    // （1-代理记账 2-财税管理 3-专家问诊）',
+    appealType: function (str) {
+        switch (str) {
+            case '1':
+                return '防疫物资';
+            case '2':
+                return '法律服务';
+            case '3':
+                return '融资需求';
+            case '4':
+                return '其它';
+        }
+    },
     addressIntercept: function(str) {
         if (str) {
             var index = str.indexOf("武陵区");

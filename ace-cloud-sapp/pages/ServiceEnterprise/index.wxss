@@ -58,6 +58,15 @@
     margin-left: auto;
 }
 
+.modal .content .state1 {
+color: #FF7D18;
+}
+
+
+.modal .content .state3 {
+color: #5BD984;
+}
+
 .modal .card {
     display: flex;
     justify-content: space-between;

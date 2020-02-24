@@ -36,6 +36,11 @@ Page({
                 text: '政策服务',
                 imgUrl: '/assets/image/icon1-7.png',
                 path: '../PolicyService/index'
+            },
+            {
+                text: '企业诉求',
+                imgUrl: '/assets/image/icon1-8.png',
+                path: '../appeal/index'
             }
         ],
         lawServeList: [], //政策服务page

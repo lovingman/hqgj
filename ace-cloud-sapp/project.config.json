@@ -302,6 +302,13 @@
 					"pathName": "pages/appeal/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/success/index",
+					"pathName": "pages/success/index",
+					"query": "id=9570effaf222408d93d0bfae6572e05e",
+					"scene": null
 				}
 			]
 		}
