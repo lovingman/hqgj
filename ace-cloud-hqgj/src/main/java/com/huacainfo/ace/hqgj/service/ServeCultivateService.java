@@ -104,7 +104,7 @@ public interface ServeCultivateService {
      * @param status
      * @return
      */
-    ResponseDTO updateStatus(String id,String status);
+    ResponseDTO updateStatus(String id,String status,String reason);
 
 
     ResponseDTO selectByIdDetails(String id,String userId);

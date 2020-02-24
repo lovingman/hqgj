@@ -31,7 +31,7 @@ public interface ServeCultivateDao {
 
     int updateCoverUrl(@Param("id") String id, @Param("coverUrl") String coverUrl);
 
-    int updateStatus(@Param("id") String id,@Param("status") String status);
+    int updateStatus(@Param("id") String id,@Param("status") String status,@Param("reason") String reason);
 
     int addEnrollNum(@Param("id") String id);
 

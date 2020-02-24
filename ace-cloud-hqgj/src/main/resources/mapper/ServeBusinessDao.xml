@@ -198,6 +198,7 @@
     </delete>
 
     <resultMap extends="BaseResultMap" id="previewResultMap" type="com.huacainfo.ace.hqgj.vo.ServeBusinessVo">
+        <result column="areaName" jdbcType="VARCHAR" property="areaName"/>
         <association property="serveBusiness" column="id"  javaType="com.huacainfo.ace.hqgj.model.ServeBusiness">
             <id column="id" jdbcType="VARCHAR" property="id"/>
             <id column="lsNo" jdbcType="VARCHAR" property="lsNo"/>
@@ -245,17 +246,33 @@
             <result column="option" jdbcType="VARCHAR" property="option"/>
             <result column="content" jdbcType="VARCHAR" property="content"/>
         </collection>
+
     </resultMap>
 
     <select id="previewInfo" parameterType="java.lang.String" resultMap="previewResultMap">
          select s.id,s.applyPersonName,s.idCard,s.createDate,s.lsNo,s.companyName,s.readyName,s.regBonus,s.manageExtent,s.areaCode,s.companyAddress, s.status,s.tab,s.basicStatus,
          d.id did,d.name,d.mobile,d.type,d.sharesProportion,
          a.id appendId,a.type appendType,a.`option`,a.content,
-         an.id anid,an.fileName,an.fileType,an.fileURL,an.relationId
+         an.id anid,an.fileName,an.fileType,an.fileURL,an.relationId,
+          case p.type
+        when '4' then   '常德市'
+        when '3' then   concat('常德市',p.name)
+        when '2' then   concat( ppp.ppNames,pp.pName,p.name)
+        when '1' then   concat('常德市', ppp.ppNames,pp.pName,p.name)
+        end  areaName
          from serve_business s
          left join serve_business_detail d on s.id=d.businessId
          left join serve_business_append a on a.businessId=s.id
          left join basic_annex an on an.relationId=d.id
+         left join  portal_hqgj.province p on p.code=s.areaCode
+        left join (	select
+        name as pName, p.`code` as pCode, parent_code as ppCode
+        from portal_hqgj.province p
+        )pp on pp.pCode = p.parent_code
+        left join  (select
+        name as ppNames, p.`code` as pppcode
+        from portal_hqgj.province p
+        )ppp on ppp.pppcode = pp.ppCode
          where s.id=#{id,jdbcType=VARCHAR} ORDER BY an.fileType asc
     </select>
 

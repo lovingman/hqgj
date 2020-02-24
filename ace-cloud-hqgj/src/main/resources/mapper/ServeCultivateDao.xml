@@ -22,11 +22,12 @@
         <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
         <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
     </resultMap>
     <sql id="Base_Column_List">
     id,orgId, title, maxPersonNumber, enrollPersopnNumber, cultivatePersonNumber, startDate,
     endDate, startLng, startLat, detailedAddress, fmUrl, content, createUserId, createUserName, 
-    createDate, modifyUserId, modifyUserName, modifyDate, status
+    createDate, modifyUserId, modifyUserName, modifyDate, status,reason
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -212,6 +213,9 @@
     <update id="updateStatus">
       update serve_cultivate
       set status = #{status,jdbcType=VARCHAR}
+        <if test='status =="2" and reason != null and reason!= ""'>
+          , reason = #{reason,jdbcType=VARCHAR}
+        </if>
       where id = #{id,jdbcType=VARCHAR}
     </update>
 
