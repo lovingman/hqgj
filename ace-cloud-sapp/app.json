@@ -37,7 +37,9 @@
         "pages/LawyerTemplate/index",
         "pages/LawyerDetails/index",
         "pages/InstitutionalDetails/index",
-        "pages/appeal/index"
+        "pages/appeal/index",
+        "pages/appealList/index",
+        "pages/success/index"
     ],
     "permission": {
         "scope.userLocation": {

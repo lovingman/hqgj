@@ -1,0 +1,38 @@
+/* pages/success/index.wxss */
+
+page {
+    background: #fff;
+}
+
+.success {
+    font-size: 200rpx;
+    text-align: center;
+    color: #5dc261;
+}
+
+.van-button {
+    background: #5dc261 !important;
+}
+
+.btn {
+    width: 690rpx;
+    margin: auto;
+    margin-top: 60rpx;
+}
+
+.title {
+    font-size: 48rpx;
+    text-align: center;
+    color: #000;
+}
+
+.van-button__text {
+    color: #fff !important;
+}
+
+.subTitle {
+    font-size: 30rpx;
+    color: #666;
+    text-align: center;
+    line-height: 2em;
+}

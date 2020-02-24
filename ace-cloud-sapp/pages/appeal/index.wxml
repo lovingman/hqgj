@@ -1,3 +1,4 @@
+<wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
 <view class="index">
     <view class="header">
         <view class="card">
@@ -11,15 +12,15 @@
             </view>
             <view class="news">
                 <view class="iconImg">
-
+                    <image src="/assets/image/a.png"></image>
                 </view>
                 <view class="content">
                     <view class="title">
-                        <view class="companyName van-ellipsis">这个就是公司名称这个就是公司名称这个就是公司名称这个就是公司名称</view>上报了
-                        <text class="tip">防疫物资</text>
+                        <view class="companyName van-ellipsis">{{nowData.companyName}}</view>上报了
+                        <text class="tip">{{astFilter.appealType(nowData.type)}}</text>
                     </view>
                     <view class="date">
-                        02-19 12:00:00
+                        {{nowData.createDate}}
                     </view>
                 </view>
                 <view class="more">
@@ -35,38 +36,40 @@
             <view class="msg" data-name="base">
                 <view>
                     <van-cell-group border="{{false}}">
-                        <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="企业名称" placeholder="请输入企业全称" />
-                        <van-field readonly clickable label="诉求类型" size="large" value="{{info.categoryName}}" required placeholder="请选择诉求类型" bindtap="showTypeClick" is-link/>
+                        <van-field readonly value="{{ info.companyName }}" title-width="28%" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="企业名称" placeholder="请输入企业全称" />
+                        <van-field readonly clickable label="诉求类型" title-width="28%" size="large" value="{{info.typeName}}" required placeholder="请选择诉求类型" bindtap="showTypeClick" is-link/>
                     </van-cell-group>
-                    <van-cell-group border="{{false}}">
-                        <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="诉求标题" placeholder="请输入标题" />
+                    <van-cell-group wx:if="{{info.type==2||info.type==4}}" border="{{false}}">
+                        <van-field value="{{ info.title }}" error="{{state.title}}" title-width="28%" data-field="title" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="诉求标题" placeholder="请输入标题" />
                     </van-cell-group>
-
-                    <van-cell-group border="{{false}}">
-                        <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="融资需求" placeholder="请输入金额" use-button-slot>
+                    <van-cell-group wx:if="{{info.type==3}}" border="{{false}}">
+                        <van-field title-width="28%" value="{{ info.money }}" type="digit" error="{{state.money}}" data-field="money" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="融资需求" placeholder="请输入金额" use-button-slot>
                             <text class="unit" slot="button">万元</text>
                         </van-field>
-                        <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="期望银行" placeholder="请输入银行名称" />
+                        <van-field title-width="28%" value="{{ info.bank }}" error="{{state.bank}}" data-field="bank" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="期望银行" placeholder="请输入银行名称" />
                     </van-cell-group>
-                    <view>
+                    <view wx:if="{{info.type==1}}">
                         <van-cell-group border="{{false}}">
-                            <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="企业人数" placeholder="请输入企业人数" />
+                            <van-field  title-width="28%"  type="digit" value="{{ info.companyNumber }}" error="{{state.companyNumber}}" data-field="companyNumber" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="企业人数" placeholder="请输入企业人数" />
                         </van-cell-group>
-                        <van-cell-group border="{{false}}">
-                            <view class="index">物资1</view>
-                            <van-field readonly clickable label="物资" size="large" value="{{info.categoryName}}" required placeholder="请选择" bindtap="showTypeClick" is-link/>
-                            <van-field value="{{ info.companyName }}" error="{{state.companyName}}" data-field="companyName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="物资数量" placeholder="请输入数量" use-button-slot>
+                        <van-cell-group border="{{false}}" wx:for="{{info.companyMaterial}}" wx:key="index" wx:for-item="item">
+                            <view class="index">物资{{index+1}}
+                                <view class="remove" wx:if="{{index}}" bindtap="removeMaterial" data-index="{{index}}">删除</view>
+                            </view>
+                            <van-field title-width="28%" readonly clickable label="物资" size="large" data-index="{{index}}" value="{{item.categoryName}}" required placeholder="请选择" bindtap="showGoodsClick" is-link/>
+                            <van-field title-width="28%" value="{{ item.number }}" error="{{state.number}}" data-index="{{index}}" data-field="number" bind:change="onChangeMaterial" required clearable size="large" type="digit" label="物资数量" placeholder="请输入数量" use-button-slot>
                                 <text class="unit" slot="button">个/瓶/台</text>
                             </van-field>
                         </van-cell-group>
                         <view class="add-material">
-                            <van-button custom-style="background: #E3EDFB;color:#2E88F1;border-radius:8rpx;" color="#E3EDFB" size="large">+添加物资</van-button>
+                            <van-button bindtap="addMaterial" custom-style="background: #E3EDFB;color:#2E88F1;border-radius:8rpx;" color="#E3EDFB" size="large">+添加物资</van-button>
                         </view>
                     </view>
                     <van-cell-group border="{{false}}">
-                        <van-field value="{{ info.text }}" error="{{state.text}}" data-field="text" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required size="large" label="诉求描述" type="textarea" placeholder="请描述您的诉求" autosize />
-                        <van-field value="{{ info.name }}" error="{{state.name}}" data-field="name" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable label="联系人" size="large" placeholder="请输入联系人" />
-                        <van-field value="{{ info.tel }}" error="{{state.tel}}" data-field="tel" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable type="number" size="large" label="联系电话" placeholder="请输入联系电话" />
+                        <van-field wx:if="{{flagText}}" value="{{ info.text }}" title-width="28%" error="{{state.text}}" data-field="text" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required size="large" label="诉求描述" type="textarea" placeholder="请描述您的诉求" autosize />
+                        <van-cell wx:else required class="special"  title="诉求描述" title-width="28%" size="large" value="{{text2}}" />
+                        <van-field value="{{ info.personName }}" title-width="28%" error="{{state.personName}}" data-field="personName" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable label="联系人" size="large" placeholder="请输入联系人" />
+                        <van-field value="{{ info.personTel }}" title-width="28%" error="{{state.personTel}}" data-field="personTel" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable type="number" size="large" label="联系电话" placeholder="请输入联系电话" />
                     </van-cell-group>
                 </view>
             </view>
@@ -75,9 +78,28 @@
             <van-button bindtap="submission" round type="info" size="large">提交</van-button>
         </view>
     </view>
-
     <view class="phoneBtn" catchtap="callPhone">
         <image class="customer" src="/assets/image/customer.png"></image>遇到问题了？点击致电咨询
     </view>
-
 </view>
+<view style="height:30rpx"></view>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
+<!-- 诉求类型 -->
+<van-popup safe-area-inset-bottom show="{{showType}}" position="bottom">
+    <van-picker show-toolbar round columns="{{ typeArr }}" value-key="name" bind:cancel="cancelType" bind:confirm="confirms" />
+</van-popup>
+<!-- 物资类型 -->
+<van-popup safe-area-inset-bottom show="{{showGoods}}" position="bottom">
+    <van-picker show-toolbar round columns="{{ goodsArr }}" value-key="name" bind:cancel="cancelGoods" bind:confirm="confirmsGoods" />
+</van-popup>
+<!-- 区域选择 -->
+<van-popup safe-area-inset-bottom show="{{showPickerAreas}}" position="bottom">
+    <van-picker show-toolbar round columns="{{ areaList }}" value-key="text" bind:cancel="cancelshowPickerArea" bind:confirm="areaConfirmsHandler" />
+</van-popup>
+<!-- 联系电话 -->
+<van-popup safe-area-inset-bottom show="{{ phoneBar  }}" round position="bottom" bind:close="phoneBarCloseHandler">
+    <van-cell title="客服热线" />
+    <van-cell title="电话：(0736-7221075)" is-link data-number="07367221075" bind:click="callPhoneHandler" />
+    <van-cell title="电话：(0736-7221027)" is-link data-number="07367221027" bind:click="callPhoneHandler" />
+</van-popup>

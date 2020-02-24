@@ -31,6 +31,11 @@ Page({
                 text: '财税订单',
                 imgUrl: '/assets/image/icon3-4.png',
                 path: '/pages/RecordsFinance/index'
+            },
+            {
+                text: '我的诉求',
+                imgUrl: '/assets/image/icon3-6.png',
+                path: '/pages/appealList/index'
             }
         ],
         service: {
