@@ -25,13 +25,14 @@
         <result column="shUserId" jdbcType="VARCHAR" property="shUserId"/>
         <result column="shUserName" jdbcType="VARCHAR" property="shUserName"/>
         <result column="shDate" jdbcType="TIMESTAMP" property="shDate"/>
+        <result column="shOrg" jdbcType="VARCHAR" property="shOrg"/>
         <result column="basicStatus" jdbcType="VARCHAR" property="basicStatus"/>
 
     </resultMap>
     <sql id="Base_Column_List">
     id, applyPersonName, applyPersonTel, idCard, companyName, readyName, legalPerson,
     regBonus, areaCode, companyAddress, manageExtent, createUserId, createUserName, createDate,
-    modifyUserId, modifyUserName, modifyDate, status,lsNo,tab,shUserId,shUserName,shDate,basicStatus
+    modifyUserId, modifyUserName, modifyDate, status,lsNo,tab,shUserId,shUserName,shDate,shOrg,basicStatus
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -49,7 +50,7 @@
       legalPerson, regBonus, areaCode,
       companyAddress, manageExtent, createUserId,
       createUserName, createDate, modifyUserId,
-      modifyUserName, modifyDate, status,tab,shUserId,shUserName,shDate,basicStatus
+      modifyUserName, modifyDate, status,tab,shUserId,shUserName,shDate,shOrg,basicStatus
       )
     values (#{id,jdbcType=VARCHAR},#{lsNo,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, #{applyPersonTel,jdbcType=VARCHAR},
       #{idCard,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{readyName,jdbcType=VARCHAR},
@@ -58,7 +59,7 @@
       #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
       #{tab,jdbcType=VARCHAR}, #{shUserId,jdbcType=VARCHAR},
-      #{shUserName,jdbcType=VARCHAR}, #{shDate,jdbcType=TIMESTAMP},#{basicStatus,jdbcType=VARCHAR}
+      #{shUserName,jdbcType=VARCHAR}, #{shDate,jdbcType=TIMESTAMP},#{shOrg,jdbcType=VARCHAR},#{basicStatus,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -79,6 +80,7 @@
       shUserId = #{shUserId,jdbcType=VARCHAR},
       shUserName = #{shUserName,jdbcType=VARCHAR},
       shDate = #{shDate,jdbcType=TIMESTAMP},
+      shOrg=#{shOrg,jdbcType=VARCHAR},
       basicStatus= #{basicStatus,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -88,7 +90,7 @@
     <sql id="Vo_Column_List">
     t.id,t.lsNo, t.applyPersonName, t.applyPersonTel, t.idCard, t.companyName, t.readyName, t.legalPerson, t.regBonus, t.areaCode,
     t.companyAddress, t.manageExtent, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate,
-    t.status,t.tab,t.shUserId,t.shUserName,t.shDate,t.basicStatus
+    t.status,t.tab,t.shUserId,t.shUserName,t.shDate,shOrg,t.basicStatus
   </sql>
     <sql id="From_Statement">
     FROM serve_business t
@@ -267,6 +269,7 @@
       update serve_business
       set shUserId = #{shUserId,jdbcType=VARCHAR},
       shUserName = #{shUserName,jdbcType=VARCHAR},
+      shOrg=#{shOrg,jdbcType=VARCHAR},
       shDate = now(),
       modifyDate =  now()
       where id = #{id,jdbcType=VARCHAR}
