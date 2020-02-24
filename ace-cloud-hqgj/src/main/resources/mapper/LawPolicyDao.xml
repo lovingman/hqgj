@@ -47,7 +47,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.LawPolicyVo">
-
+      <collection property="basicAnnexes" column="id" ofType="com.huacainfo.ace.hqgj.model.BasicAnnex">
+          <result column="baId" jdbcType="VARCHAR" property="id"/>
+          <result column="fileType" jdbcType="VARCHAR" property="fileType"/>
+          <result column="fileName" jdbcType="VARCHAR" property="fileName"/>
+          <result column="fileURL" jdbcType="VARCHAR" property="fileURL"/>
+          <result column="batype" jdbcType="VARCHAR" property="type"/>
+      </collection>
   </resultMap>
   <sql id="Vo_Column_List">
     t.id, t.title, t.source, t.content, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status
@@ -92,8 +98,9 @@
   </sql>
   <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
       select
-        <include refid="Vo_Column_List"/>
+        <include refid="Vo_Column_List"/>,ba.id baId,ba.fileURL,ba.fileType,ba.fileName,ba.type batype
         <include refid="From_Statement"/>
+        left join basic_annex ba on ba.relationId = t.id and ba.type='4'
         where t.id = #{id,jdbcType=VARCHAR}
   </select>
     <update id="updateStatus">
