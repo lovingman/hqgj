@@ -79,15 +79,15 @@
                                 <span>{{form.createDate}}</span>
                             </el-form-item>
                             </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="审核机构:" prop="name">
+                            <el-col :span="8" v-if="form.shOrg!=null">
+                                <el-form-item label="审核机构:" prop="name" >
                                     <span v-if="form.shOrg=='1'">律师事务所</span>
                                     <span v-if="form.shOrg=='2'">会计事务所</span>
                                     <span v-if="form.shOrg=='3'">培训机构</span>
                                     <span v-if="form.shOrg=='4'">工信局</span>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="8">
+                            <el-col :span="8" v-if="form.shOrg!=null">
                                 <el-form-item label="审核时间:" prop="name">
                                     <span>{{form.shDate}}</span>
                                 </el-form-item>
