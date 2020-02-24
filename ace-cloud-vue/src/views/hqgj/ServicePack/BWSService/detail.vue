@@ -120,7 +120,14 @@
             ref="multipleTable" v-loading="loading">
             <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
             <el-table-column label="姓名" prop="name" sortable="custom" width="120"></el-table-column>
-            <el-table-column label="职位" prop="jobs" width="150"></el-table-column>
+            <el-table-column label="职位" prop="type" width="150">
+              <template slot-scope="scope">
+                <div type="text" v-if="scope.row.type=='1'">法人</div>
+                <div type="text" v-if="scope.row.type=='2'">监事</div>
+                <div type="text" v-if="scope.row.type=='3'">股东</div>
+                <div type="text" v-if="scope.row.type=='4'">财务</div>
+              </template>
+            </el-table-column>
             <el-table-column label="联系电话" prop="mobile" width="150"></el-table-column>
             <el-table-column label="身份证附件" prop="basicAnnexes">
               <template slot-scope="scope">
