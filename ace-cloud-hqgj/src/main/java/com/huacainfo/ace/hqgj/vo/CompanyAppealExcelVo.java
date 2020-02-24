@@ -7,25 +7,28 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class CompanyAppealExcelVo extends BaseRowModel implements java.io.Serializable {
-    @ExcelProperty(value ={"企业名称"},index=0)
+    @ExcelProperty(value ={"序号"},index=0)
+    private Integer order;
+
+    @ExcelProperty(value ={"企业名称"},index=1)
     private String companyName;
 
-    @ExcelProperty(value ={"企业人数"},index=1)
+    @ExcelProperty(value ={"企业人数"},index=2)
     private Integer companyNumber;
 
-    @ExcelProperty(value ={"联系人"},index=2)
+    @ExcelProperty(value ={"联系人"},index=3)
     private String personName;
 
-    @ExcelProperty(value ={"联系方式"},index=3)
+    @ExcelProperty(value ={"联系方式"},index=4)
     private String personTel;
 
-    @ExcelProperty(value ={"物资名称"},index=4)
+    @ExcelProperty(value ={"物资名称"},index=5)
     private String categoryName;
 
-    @ExcelProperty(value ={"物资数量"},index=5)
+    @ExcelProperty(value ={"物资数量"},index=6)
     private Integer number;
 
-    @ExcelProperty(value ={"上报时间"},index=6)
+    @ExcelProperty(value ={"上报时间"},index=7)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
@@ -83,5 +86,13 @@ public class CompanyAppealExcelVo extends BaseRowModel implements java.io.Serial
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

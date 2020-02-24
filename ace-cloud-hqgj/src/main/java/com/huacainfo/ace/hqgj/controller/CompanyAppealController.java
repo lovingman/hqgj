@@ -205,8 +205,10 @@ private CompanyAppealService companyAppealService;
 //        CompanyAppealQVo condition=new CompanyAppealQVo();
         PageDTO<CompanyAppealExlVo> rst = this.companyAppealService.exportPage(condition, 0, 10000, null);
         List<CompanyAppealExcelVo> data=new ArrayList();
+        int num = 1;
         for(CompanyAppealExlVo o:rst.getRows()){
             CompanyAppealExcelVo obj=new CompanyAppealExcelVo();
+            obj.setOrder(num++);
             CommonBeanUtils.copyProperties(obj,o);
             data.add(obj);
         }

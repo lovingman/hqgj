@@ -97,6 +97,14 @@ public class CompanyAppealServiceImpl implements CompanyAppealService {
     public PageDTO
             <CompanyAppealExlVo> exportPage(CompanyAppealQVo condition, int start, int limit, String orderBy) throws Exception {
         PageDTO<CompanyAppealExlVo> rst = new PageDTO<>();
+        if (!CommonUtils.isBlank(condition.getEndTime()) && !CommonUtils.isBlank(condition.getStartTime())) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String endTime = sdf.format(condition.getEndTime()) + " 23:59:59 ";
+            String startTime = sdf.format(condition.getStartTime()) + " 00:00:00 ";
+            condition.setEndTime(sdf2.parse(endTime));
+            condition.setStartTime(sdf2.parse(startTime));
+        }
         List<CompanyAppealExlVo> list = this.companyAppealDao.exportList(condition, start, limit, orderBy);
         rst.setRows(list);
         if (start <= 1) {
