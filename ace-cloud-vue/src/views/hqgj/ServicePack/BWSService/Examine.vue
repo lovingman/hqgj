@@ -111,19 +111,24 @@
                         <el-row class="elrow">
                             <el-col :span="12">
                                 <el-form-item label="注册资金:" prop="name">
-                                    <span>{{form.regBonus}}</span>
+                                    <span>{{form.regBonus}}&nbsp; 万</span>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="企业地址:" prop="name">
-                                    <span>{{form.companyAddress}}</span>
+                                    <span>{{form.areaName}}{{form.companyAddress}}</span>
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row class="elrow">
+                            <el-col :span="12">
                             <el-form-item label="经营范围:" prop="name">
                                 <span>{{form.manageExtent}}</span>
                             </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                &nbsp;
+                            </el-col>
                         </el-row>
                     </el-form>
                 </el-tab-pane>
