@@ -19,26 +19,8 @@
     <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="CHAR" property="status" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.huacainfo.ace.hqgj.model.CompanyAppeal">
-    <result column="text" jdbcType="LONGVARCHAR" property="text" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, companyId, companyName, type, companyNumber, title, money, bank, personName, 
-    personTel, createUserId, createUserName, createDate, modifyUserId, modifyUserName, 
-    modifyDate, status
-  </sql>
-  <sql id="Blob_Column_List">
-    text
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from company_appeal
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from company_appeal
     where id = #{id,jdbcType=VARCHAR}
@@ -56,7 +38,7 @@
       #{money,jdbcType=DECIMAL}, #{bank,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{personTel,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{text,jdbcType=LONGVARCHAR}
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{text,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
@@ -170,7 +152,7 @@
         #{status,jdbcType=CHAR},
       </if>
       <if test="text != null">
-        #{text,jdbcType=LONGVARCHAR},
+        #{text,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -226,7 +208,7 @@
         status = #{status,jdbcType=CHAR},
       </if>
       <if test="text != null">
-        text = #{text,jdbcType=LONGVARCHAR},
+        text = #{text,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -249,7 +231,7 @@
       modifyUserName = #{modifyUserName,jdbcType=VARCHAR},
       modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=CHAR},
-      text = #{text,jdbcType=LONGVARCHAR}
+      text = #{text,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
@@ -273,15 +255,27 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <resultMap extends="BaseResultMap" id="VoResultMap" type="com.huacainfo.ace.hqgj.vo.CompanyAppealVo">
+    <result column="typeName" jdbcType="INTEGER" property="typeName" />
+    <collection property="companyMaterial" column="id" ofType="com.huacainfo.ace.hqgj.model.CompanyMaterial">
+      <id column="mid" jdbcType="VARCHAR" property="id" />
+      <result column="mappealId" jdbcType="VARCHAR" property="appealId" />
+      <result column="mcategory" jdbcType="VARCHAR" property="category" />
+      <result column="mnumber" jdbcType="INTEGER" property="number" />
+      <result column="mstatus" jdbcType="CHAR" property="status" />
+      <result column="mcategoryName" jdbcType="VARCHAR" property="categoryName" />
+    </collection>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="exlVoResultMap" type="com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo">
     <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="typeName" jdbcType="INTEGER" property="typeName" />
     <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
   </resultMap>
   <sql id="Vo_Column_List">
     t.id, t.companyId, t.companyName, t.type, t.companyNumber, t.title, t.money, t.bank, t.personName, t.personTel, t.createUserId, t.createUserName, t.createDate, t.modifyUserId, t.modifyUserName, t.modifyDate, t.status, t.text
   </sql>
   <sql id="From_Statement">
     FROM company_appeal t
-    left join company_material m on  m.appealId =t.id
   </sql>
   <sql id="Where_Condition">
     <where>
@@ -296,7 +290,7 @@
          and t.type = #{condition.type,jdbcType=VARCHAR}
       </if>
       <if test="condition.companyNumber != null and condition.companyNumber != ''">
-         and t.companyNumber = #{condition.companyNumber,jdbcType=INTEGER}
+         and t.companyNumber like ('%',#{condition.companyNumber,jdbcType=INTEGER},'%')
       </if>
       <if test="condition.title != null and condition.title != ''">
          and t.title = #{condition.title,jdbcType=VARCHAR}
@@ -319,8 +313,11 @@
       <if test="condition.createUserName != null and condition.createUserName != ''">
          and t.createUserName = #{condition.createUserName,jdbcType=VARCHAR}
       </if>
-      <if test="condition.createDate != null and condition.createDate != ''">
-         and t.createDate = #{condition.createDate,jdbcType=TIMESTAMP}
+      <if test="condition.startTime != null">
+        and t.createDate <![CDATA[ >= ]]> #{condition.startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.endTime != null">
+        and t.createDate <![CDATA[ <= ]]> #{condition.endTime,jdbcType=TIMESTAMP}
       </if>
       <if test="condition.modifyUserId != null and condition.modifyUserId != ''">
          and t.modifyUserId = #{condition.modifyUserId,jdbcType=VARCHAR}
@@ -335,19 +332,22 @@
          and t.status = #{condition.status,jdbcType=CHAR}
       </if>
       <if test="condition.text != null and condition.text != ''">
-         and t.text = #{condition.text,jdbcType=LONGVARCHAR}
+         and t.text = #{condition.text,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>
   <select id="selectVoByPrimaryKey" parameterType="java.lang.String" resultMap="VoResultMap">
       select
-        <include refid="Vo_Column_List"/>,m.category,m.number
+        <include refid="Vo_Column_List"/>,m.id mid,m.appealId mappealId,m.category mcategory,m.number mnumber,m.status mstatus,d.name mcategoryName,c.name typeName
         <include refid="From_Statement"/>
+        left join company_material m on  m.appealId =t.id
+        LEFT JOIN portal_hqgj.dict c ON c.categoryId = 62 AND c.code = t.type
+        LEFT JOIN portal_hqgj.dict d ON d.categoryId = 63 AND d.code = m.category
         where t.id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="findList" parameterType="java.lang.String" resultMap="VoResultMap">
             select
-        <include refid="Vo_Column_List"/>,m.category,m.number
+        <include refid="Vo_Column_List"/>
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
         <choose>
@@ -358,6 +358,24 @@
                 ORDER BY t.createDate desc
             </otherwise>
         </choose>
+    limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
+  </select>
+  <select id="exportList" parameterType="java.lang.String" resultMap="exlVoResultMap">
+    select
+    <include refid="Vo_Column_List"/>,m.category,m.number,d.name categoryName,c.name typeName
+    <include refid="From_Statement"/>
+    left join company_material m on  m.appealId =t.id
+    LEFT JOIN portal_hqgj.dict c ON c.categoryId = 62 AND c.code = t.type
+    LEFT JOIN portal_hqgj.dict d ON d.categoryId = 63 AND d.code = m.category
+    <include refid="Where_Condition"/>
+    <choose>
+      <when test='orderBy!=null and orderBy!=""'>
+        ORDER BY ${orderBy}
+      </when>
+      <otherwise>
+        ORDER BY t.createDate desc
+      </otherwise>
+    </choose>
     limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
   </select>
   <select id="findCount" resultType="int">
@@ -377,4 +395,9 @@
     #{id}
  </foreach>
   </delete>
+  <update id="updateProjectState" parameterType="com.huacainfo.ace.hqgj.model.CompanyAppeal">
+     update company_appeal
+     set status = #{status,jdbcType=CHAR}
+     where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

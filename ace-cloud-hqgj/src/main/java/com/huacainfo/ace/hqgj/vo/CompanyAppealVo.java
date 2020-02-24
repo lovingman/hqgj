@@ -1,31 +1,33 @@
 package com.huacainfo.ace.hqgj.vo;
 
 import com.huacainfo.ace.hqgj.model.CompanyAppeal;
+import com.huacainfo.ace.hqgj.model.CompanyMaterial;
+
+import java.util.List;
 
 
 public class CompanyAppealVo extends CompanyAppeal {
 private static final long serialVersionUID = 1L;
-    private String category;
 
-    private Integer number;
+    private String typeName;
 
-    @Override
-    public String getCategory() {
-        return category;
+    private List<CompanyMaterial> companyMaterial ;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     @Override
-    public void setCategory(String category) {
-        this.category = category;
+    public List<CompanyMaterial> getCompanyMaterial() {
+        return companyMaterial;
     }
 
     @Override
-    public Integer getNumber() {
-        return number;
-    }
-
-    @Override
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setCompanyMaterial(List<CompanyMaterial> companyMaterial) {
+        this.companyMaterial = companyMaterial;
     }
 }

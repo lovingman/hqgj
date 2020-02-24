@@ -1,6 +1,8 @@
 package com.huacainfo.ace.hqgj.dao;
 
 import java.util.List;
+
+import com.huacainfo.ace.hqgj.vo.CompanyAppealExlVo;
 import org.apache.ibatis.annotations.Param;
 import com.huacainfo.ace.hqgj.model.CompanyAppeal;
 import com.huacainfo.ace.hqgj.vo.CompanyAppealQVo;
@@ -14,12 +16,19 @@ public interface CompanyAppealDao {
 
     int updateByPrimaryKey(CompanyAppeal o);
 
+    int updateProjectState(CompanyAppeal companyAppeal);
+
     CompanyAppealVo selectVoByPrimaryKey(String id);
 
     List<CompanyAppealVo> findList(@Param("condition") CompanyAppealQVo condition,
         @Param("start") int start,
         @Param("limit") int limit,
         @Param("orderBy") String orderBy);
+
+    List<CompanyAppealExlVo> exportList(@Param("condition") CompanyAppealQVo condition,
+                                           @Param("start") int start,
+                                           @Param("limit") int limit,
+                                           @Param("orderBy") String orderBy);
 
     int findCount(@Param("condition") CompanyAppealQVo condition);
 

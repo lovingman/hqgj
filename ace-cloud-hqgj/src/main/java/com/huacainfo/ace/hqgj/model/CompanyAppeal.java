@@ -1,6 +1,8 @@
 package com.huacainfo.ace.hqgj.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -90,6 +92,8 @@ public class CompanyAppeal extends BaseModel {
      * 字段名：company_appeal.createDate
      * 注释：创建时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
     /**
@@ -121,8 +125,6 @@ public class CompanyAppeal extends BaseModel {
      * 注释：诉求描述
      */
     private String text;
-    private String category;
-    private Integer number;
     private List<CompanyMaterial> companyMaterial ;
 
     public String getId() {
@@ -277,19 +279,4 @@ public class CompanyAppeal extends BaseModel {
         this.companyMaterial = companyMaterial;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 }

@@ -28,6 +28,8 @@ public class CompanyMaterial extends BaseModel {
      */
     private String category;
 
+    private String categoryName;
+
     /**
      * 字段名：company_material.number
      * 注释：数量
@@ -78,5 +80,13 @@ public class CompanyMaterial extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
