@@ -43,6 +43,9 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         if (CommonKeys.WX_LOGIN_TAG.equals(arr[0])) {
             //指定用户授权登录信息
             String account = feignSecurityService.selectUsersByWx(arr[1]);
+            if(account==null || account==""){
+                throw new BadCredentialsException("微信未绑定账号");
+            }
             // 指定用户授权登录信息
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String password = encoder.encode(CommonKeys.WX_LOGIN_PWD);
