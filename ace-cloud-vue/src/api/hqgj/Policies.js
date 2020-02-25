@@ -77,4 +77,10 @@ export function deleteServeById(id) {
         params: {id:id}
     })
 }
-
+export function basicAnnexPage(query) {
+    return request({
+        url: '/hqgj/basicAnnex/page',
+        method: 'get',
+        params: query
+    })
+}

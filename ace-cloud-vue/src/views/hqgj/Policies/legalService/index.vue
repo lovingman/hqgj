@@ -38,8 +38,7 @@
 </template>
 
 <script>
-    import {getServe, deleteServeById} from "@/api/hqgj/Policies";
-    import {getAnnex} from "@/api/hqgj/BWSService";
+    import {getServe, deleteServeById,basicAnnexPage} from "@/api/hqgj/Policies";
     import {mapGetters} from "vuex";
     export default {
         name: "index",
@@ -53,7 +52,8 @@
                     title: "" //搜索
                 },
                 query2: {
-                    relationId: "" //搜索
+                    relationId: "", //搜索
+                    type:"2"
                 },
                 tableData: []
             };
@@ -123,7 +123,7 @@
                 })
                     .then(() => {
                         this.query2.relationId = data.id;
-                        getAnnex(this.query2).then(response => {
+                        basicAnnexPage(this.query2).then(response => {
                             for (var i = 0; i < response.rows.length; i++) {
                                 this.downloading(response.rows[i].fileURL);
                             }
