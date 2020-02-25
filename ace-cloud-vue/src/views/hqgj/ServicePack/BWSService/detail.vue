@@ -389,6 +389,7 @@
         name: "details",
         data() {
             return {
+                zipfile: [],
                 dict: [],
                 dict2: [],
                 dict3: [],
@@ -738,8 +739,10 @@
                 //rar下载
                 if (command == 'rarDownload') {
                     if (this.multipleSelection.length != 0) {
+                        this.type = this.zipfile.join(',');
                         let obj = {};
-                        obj.businessId = this.$route.query.id;
+                        obj.type = this.type;
+                        obj.businessId = this.$route.query.id
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
@@ -764,7 +767,7 @@
                         })
                     } else {
                         let obj = {};
-                        obj.businessId = this.$route.query.id
+                        obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
@@ -793,7 +796,9 @@
                 if (command == 'zipDownload') {
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
+                        this.type = this.zipfile.join(',');
                         let obj = {};
+                        obj.type = this.type;
                         obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
@@ -856,6 +861,11 @@
             //获取选中行数据
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+                console.log(this.multipleSelection);
+                for (var i = 0; i < this.multipleSelection.length; i++) {
+                    this.zipfile[i] = this.multipleSelection[i].type;
+                }
+                console.log(this.zipfile);
             },
             back() {
                 this.$router.push({
