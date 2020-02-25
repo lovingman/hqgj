@@ -31,7 +31,7 @@
                                 </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
-                                    v-if="scope.row.id != null">预览
+                                           v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
                                     <router-link :to="{name:'application',query:{id:form.id,name:'see'}}"
@@ -332,9 +332,14 @@
         <!--预览弹窗-->
         <el-dialog :visible.sync="lookingVisible" title="预览" width="60%">
             <div class="dialog-main">
-                <viewer :images="fileList">
-                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pics" v-for="attach in fileList" />
-                </viewer>
+                <div class="dialog-box" v-for="attach in fileList">
+                    <div class="list-box">
+                        <div class="title">{{attach.name}}</div>
+                        <div class="img" v-for="imgArr in attach.basicAnnexes">
+                            <img :src="imgArr.fileURL" class="img-box">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="dialog-footer" slot="footer">
                 <el-button @click="lookingVisible = false">取 消</el-button>
@@ -527,14 +532,12 @@
 
             //预览
             looking(index, data) {
-                console.log(data)
                 this.lookingVisible = true;
                 let obj = {};
                 obj.id = data.id;
                 obj.type = data.type;
                 getAnnex(obj).then(response => {
-                    console.log(response);
-                    this.fileList = response.rows;
+                    this.fileList = response.data;
                 })
             },
             //下载
@@ -567,8 +570,9 @@
                 //rar下载
                 if (command == 'rarDownload') {
                     if (this.multipleSelection.length != 0) {
-                        // this.relationId = this.zipfile.join(',');
+                        this.type = this.zipfile.join(',');
                         let obj = {};
+                        obj.type = this.type;
                         obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
@@ -623,8 +627,9 @@
                 if (command == 'zipDownload') {
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
-                        // this.relationId = this.zipfile.join(',');
+                        this.type = this.zipfile.join(',');
                         let obj = {};
+                        obj.type = this.type;
                         obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
@@ -764,8 +769,9 @@
             //获取选中行数据
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+                console.log(this.multipleSelection);
                 for (var i = 0; i < this.multipleSelection.length; i++) {
-                    this.zipfile[i] = this.multipleSelection[i].id;
+                    this.zipfile[i] = this.multipleSelection[i].type;
                 }
                 console.log(this.zipfile);
             },

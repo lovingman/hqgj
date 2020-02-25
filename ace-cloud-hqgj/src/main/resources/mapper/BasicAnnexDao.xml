@@ -140,7 +140,10 @@
     WHERE
         <choose>
             <when test="type !=null and type != ''">
-                d.type=#{type}
+                 d.type in
+                <foreach collection="types" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </when>
             <otherwise>
                 ba.type = '3'
