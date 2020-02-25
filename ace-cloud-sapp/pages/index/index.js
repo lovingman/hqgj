@@ -46,6 +46,11 @@ Page({
         lawServeList: [], //政策服务page
         trainList: [], //培训page
         trainTotal: "", //培训数量
+        query: {
+            pageSize: 10,
+            pageNum: 1,
+            status: '2', //2代表请求已发布的状态
+        },
     },
     //事件处理函数
     bindViewTap: function() {
@@ -57,7 +62,7 @@ Page({
     //请求政策page
     getLawServe: function() {
         var that = this;
-        request.getJSON(cfg.lawServePageUrl).then(res => {
+        request.getJSON(cfg.lawServePageUrl, that.data.query).then(res => {
             if (res.data.status == 1) {
                 that.setData({
                     lawServeList: res.data.rows

@@ -28,3 +28,39 @@
     font-family: Microsoft Yahei;
     line-height: 1.6em;
 }
+
+.enclosure {
+    padding-bottom: 40rpx;
+}
+
+.enclosure .title {
+    font-size: 34rpx;
+    margin-bottom: 10rpx;
+}
+
+.enclosure-text {
+    width: 690rpx;
+    margin: auto;
+    color: rgba(38, 33, 70, 1);
+    font-size: 30rpx;
+    font-family: Microsoft Yahei;
+    line-height: 1.6em;
+    margin-top: 10rpx;
+}
+
+.enclosure-list {
+    padding: 20rpx;
+    margin-bottom: 20rpx;
+    background-color: rgba(247, 249, 252, 0.37);
+}
+
+.enclosure-list .fileName {
+    font-size: 28rpx;
+}
+
+.enclosure-list .download {
+    color: rgba(75, 144, 255, 1);
+    font-size: 24rpx;
+    padding: 10rpx 0 10rpx 30rpx;
+    text-align: right;
+}

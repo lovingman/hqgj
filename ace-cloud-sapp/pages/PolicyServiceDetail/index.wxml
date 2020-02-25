@@ -4,6 +4,16 @@
         发布时间：{{basicForm.createDate}}
     </view>
     <view class="text">
-        <rich-text nodes="{{basicFormContent}}"></rich-text>
+        <rich-text nodes="{{basicFormContent}}" bindlongpress="copy" data-text="{{basicFormContent}}" selectable='true'></rich-text>
     </view>
+    <view class="enclosure">
+        <view class="title">附件下载：</view>
+        <view class="enclosure-text">
+            <view class="enclosure-list" wx:for="{{basicAnnexesArr}}" wx:for-item="item" data-src='{{item.fileURL}}'>
+                <view class="fileName">{{item.fileName}}</view>
+                <view data-url='{{item.fileURL}}' catchtap="downloadFile" class="download">复制链接</view>
+            </view>
+        </view>
+    </view>
+    <van-notify id="van-notify" />
 </view>
