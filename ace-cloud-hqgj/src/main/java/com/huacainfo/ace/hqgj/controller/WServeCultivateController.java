@@ -150,11 +150,11 @@ public class WServeCultivateController extends BaseController {
      */
     @ApiOperation(value = "/updateStatus", notes = "修改状态")
     @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
-    public ResponseDTO updateStatus(String id, String status){
+    public ResponseDTO updateStatus(String id, String status,String reason){
         if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
-     return serveCultivateService.updateStatus(id,status);
+     return serveCultivateService.updateStatus(id,status,reason);
     }
 
     /**

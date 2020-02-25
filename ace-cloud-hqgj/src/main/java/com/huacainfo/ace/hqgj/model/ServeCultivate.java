@@ -136,6 +136,19 @@ public class ServeCultivate extends BaseModel {
      */
     private String status;
 
+    /**
+     * 审核原因
+     */
+    private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     public String getId() {
         return id;
     }

@@ -74,9 +74,24 @@
                             </el-col>
                         </el-row>
                         <el-row class="elrow">
+                            <el-col :span="8">
                             <el-form-item label="申请日期:" prop="name">
                                 <span>{{form.createDate}}</span>
                             </el-form-item>
+                            </el-col>
+                            <el-col :span="8" v-if="form.shOrg!=null">
+                                <el-form-item label="审核机构:" prop="name" >
+                                    <span v-if="form.shOrg=='1'">律师事务所</span>
+                                    <span v-if="form.shOrg=='2'">会计事务所</span>
+                                    <span v-if="form.shOrg=='3'">培训机构</span>
+                                    <span v-if="form.shOrg=='4'">工信局</span>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8" v-if="form.shOrg!=null">
+                                <el-form-item label="审核时间:" prop="name">
+                                    <span>{{form.shDate}}</span>
+                                </el-form-item>
+                            </el-col>
                         </el-row>
                     </el-form>
                 </el-tab-pane>
@@ -111,19 +126,24 @@
                         <el-row class="elrow">
                             <el-col :span="12">
                                 <el-form-item label="注册资金:" prop="name">
-                                    <span>{{form.regBonus}}</span>
+                                    <span>{{form.regBonus}}&nbsp; 万</span>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="企业地址:" prop="name">
-                                    <span>{{form.companyAddress}}</span>
+                                    <span>{{form.areaName}}{{form.companyAddress}}</span>
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row class="elrow">
+                            <el-col :span="12">
                             <el-form-item label="经营范围:" prop="name">
                                 <span>{{form.manageExtent}}</span>
                             </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                &nbsp;
+                            </el-col>
                         </el-row>
                     </el-form>
                 </el-tab-pane>
@@ -137,7 +157,13 @@
                         <el-table-column align="center" label="序号" type="index" width="55"></el-table-column>
                         <el-table-column label="姓名" prop="name" sortable='custom' width="120">
                         </el-table-column>
-                        <el-table-column label="职位" prop="jobs" width="150">
+                        <el-table-column label="职位" prop="type" width="150">
+                            <template slot-scope="scope">
+                                <div type="text" v-if="scope.row.type=='1'">法人</div>
+                                <div type="text" v-if="scope.row.type=='2'">监事</div>
+                                <div type="text" v-if="scope.row.type=='3'">股东</div>
+                                <div type="text" v-if="scope.row.type=='4'">财务</div>
+                            </template>
                         </el-table-column>
                         <el-table-column label="联系电话" prop="mobile" width="150">
                         </el-table-column>
@@ -540,11 +566,10 @@
             handleCommand(command) {
                 //rar下载
                 if (command == 'rarDownload') {
-                    console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
-                        this.relationId = this.zipfile.join(',');
+                        // this.relationId = this.zipfile.join(',');
                         let obj = {};
-                        obj.businessId = this.relationId;
+                        obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();
@@ -598,9 +623,9 @@
                 if (command == 'zipDownload') {
                     console.log(this.multipleSelection.length)
                     if (this.multipleSelection.length != 0) {
-                        this.relationId = this.zipfile.join(',');
+                        // this.relationId = this.zipfile.join(',');
                         let obj = {};
-                        obj.businessId = this.relationId;
+                        obj.businessId = this.$route.query.id;
                         downloadimg(obj).then(response => {
                             if (response.data != []) {
                                 var zip = new JSZip();

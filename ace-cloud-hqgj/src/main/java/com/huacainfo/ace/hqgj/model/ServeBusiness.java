@@ -145,8 +145,13 @@ public class ServeBusiness extends BaseModel {
      * 字段名：serve_business.shDate
      * 注释：审核时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date shDate;
 
+    /**
+     * 审核人机构
+     */
+    private String shOrg;
     /**
      * 基本信息审核状态
      */
@@ -342,5 +347,13 @@ public class ServeBusiness extends BaseModel {
 
     public void setBasicStatus(String basicStatus) {
         this.basicStatus = basicStatus;
+    }
+
+    public String getShOrg() {
+        return shOrg;
+    }
+
+    public void setShOrg(String shOrg) {
+        this.shOrg = shOrg;
     }
 }

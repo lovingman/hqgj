@@ -35,6 +35,29 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="文件" prop="fileList">
+              <el-upload
+                      :before-upload="beforeAvatarUpload"
+                      :file-list="serviceForm.fileList"
+                      :http-request="uploadServer"
+                      :on-remove="fileRemove"
+                      action="none"
+                      class="upload-demo"
+                      drag
+                      multiple
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                  将文件拖到此处，或
+                  <em>点击上传</em>
+                </div>
+                <div class="el-upload__tip" slot="tip">支持扩展名：.rar .zip .doc .docx .pdf .jpg....</div>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="24">
             <el-form-item label="内容:" prop="content">
               <!-- 工具栏容器 -->
@@ -70,7 +93,7 @@
 
 <script>
 import { createPolicy } from "@/api/hqgj/Policies";
-import { fileUpImg } from "@/api/sys";
+import { fileUpImg, fileUpload } from "@/api/sys";
 import EditorBar from "../../publicTemplate/wangEnduit";
 import CKEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import "@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn";
@@ -80,12 +103,15 @@ export default {
   components: { EditorBar },
   data() {
     return {
+      basicAnnexesArr: [],
       editor: "", //编辑器实例
       //数据
       serviceForm: {
         title: "",
         source: "",
-        content: ""
+        content: "",
+        basicAnnexes: [],
+        fileList: []
       },
       //验证
       serviceRules: {
@@ -125,6 +151,86 @@ export default {
         }
       });
     },
+      FileUpload(obj) {
+          console.log(obj);
+          this.actionUrls = "/hqgj-portal/www/uploadFile";
+          fileUpload(obj, this.actionUrls).then(response => {
+              if (response.status == 1) {
+                  // this.serviceForm.basicAnnexes.push({fileName:obj.file.name.substring(0,obj.file.name.indexOf(".")),fileURL:response.data})
+                  this.serviceForm.fileList.push({
+                      name: obj.file.name,
+                      url: response.data
+                  });
+                  this.uploadSuccess(response, obj.file, this.serviceForm.fileList);
+              } else {
+                  this.$message({
+                      message: response.message,
+                      type: "warning"
+                  });
+                  this.uploadError(response, obj.file, this.serviceForm.fileList);
+              }
+              return response.status;
+          });
+      },
+      //文件移除
+      fileRemove(file, fileList) {
+          this.basicAnnexesArr = [];
+          for (var i = 0; i < fileList.length; i++) {
+              this.basicAnnexesArr.push({
+                  fileName: fileList[i].name.substring(
+                      0,
+                      fileList[i].name.indexOf(".")
+                  ),
+                  fileURL: fileList[i].url
+              });
+          }
+          this.serviceForm.basicAnnexes = this.basicAnnexesArr;
+          console.log(fileList);
+          this.serviceForm.fileList = fileList;
+      },
+      //自定义上传
+      uploadServer(param) {
+          let obj = {};
+          obj.file = param.file;
+          this.FileUpload(obj);
+          const prom = new Promise((resolve, reject) => {});
+          prom.abort = () => {};
+          return prom;
+          // return true
+      },
+      uploadSuccess(response, file, fileList) {
+          this.basicAnnexesArr = [];
+          for (var i = 0; i < fileList.length; i++) {
+              this.basicAnnexesArr.push({
+                  fileName: fileList[i].name.substring(
+                      0,
+                      fileList[i].name.indexOf(".")
+                  ),
+                  fileURL: fileList[i].url
+              });
+          }
+          this.serviceForm.basicAnnexes = this.basicAnnexesArr;
+          this.serviceForm.fileList = fileList;
+      },
+      uploadError(response, file, fileList) {
+          this.$message.error("上传失败");
+      },
+      // 上传前对文件的大小的判断
+      beforeAvatarUpload(file) {
+          let isRightType = /\.xls$|\.xlsx$|\.doc$|\.docx$|\.pptx$|\.ppt$|\.pdf$/i.test(
+              file.name
+          );
+          const isLt2M = file.size / 1024 / 1024 < 50;
+          if (!isRightType) {
+              this.$message.warning(
+                  "上传文件只能是 xls、xlsx、doc、docx 、pdf、pptx、ppt格式!"
+              );
+          }
+          if (!isLt2M) {
+              this.$message.warning("上传模板大小不能超过 10MB!");
+          }
+          return isRightType && isLt2M;
+      },
     //富文本编辑器
     initCKEditor() {
       class myUploadLoader {

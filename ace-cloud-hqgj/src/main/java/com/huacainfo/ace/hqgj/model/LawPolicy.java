@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huacainfo.ace.common.model.BaseModel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名：law_policy
@@ -80,6 +81,7 @@ public class LawPolicy extends BaseModel {
      * 注释：状态  1-待发布  2-已发布
      */
     private String status;
+    private List<BasicAnnex> basicAnnexes ;
 
     public String getId() {
         return id;
@@ -167,5 +169,13 @@ public class LawPolicy extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public List<BasicAnnex> getBasicAnnexes() {
+        return basicAnnexes;
+    }
+
+    public void setBasicAnnexes(List<BasicAnnex> basicAnnexes) {
+        this.basicAnnexes = basicAnnexes;
     }
 }

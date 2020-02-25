@@ -169,7 +169,7 @@
             },
             //发布
             release(index, data) {
-                this.$confirm("发布成功后，将发送发布成功通知，是否继续?", "提示", {
+                this.$confirm("发布成功后，将公开展示，是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
                     type: "warning"

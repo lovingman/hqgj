@@ -15,8 +15,7 @@ import com.huacainfo.ace.common.security.model.Users;
 import com.huacainfo.ace.common.tools.GUIDUtil;
 import com.huacainfo.ace.hqgj.dao.*;
 import com.huacainfo.ace.hqgj.model.*;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailQVo;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessDetailVo;
+import com.huacainfo.ace.hqgj.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -26,8 +25,6 @@ import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.hqgj.service.ServeBusinessService;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessVo;
-import com.huacainfo.ace.hqgj.vo.ServeBusinessQVo;
 
 import javax.annotation.Resource;
 
@@ -377,6 +374,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status) || CommonUtils.isBlank(type)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
+       UsersVo userInfo= personCenterDao.selectUserInfo(userProp.getUserId());
         //基础信息审核状态
         if (type.equals("1")) {
             type = "basicStatus";
@@ -391,7 +389,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
         }
         int i = serveBusinessDao.updateBasicStatus(id, status, type);
         if (type.equals("basicStatus") && status.equals("2")) {
-            int o = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName());
+            int o = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName(),userInfo.getUserType());
             if (o < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }
@@ -405,7 +403,7 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
             if (o < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }
-            int s = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName());
+            int s = serveBusinessDao.updateShUserId(id, userProp.getUserId(), userProp.getName(),userInfo.getUserType());
             if (s < 0) {
                 return new ResponseDTO(ResultCode.FAIL, "内部错误");
             }

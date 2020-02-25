@@ -110,7 +110,7 @@
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt; text-align:center"><span
-                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.regBonus}}</span>
+                                    style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF">{{list.regBonus}}万元</span>
                             </p>
                         </td>
                         <td style="vertical-align:top"></td>
@@ -169,7 +169,7 @@
                             <p style="margin:0pt; orphans:0; text-align:center; widows:0"
                                v-for="item in list.businessDetailList"><span
                                     style="font-family:宋体; font-size:10.5pt; font-weight:bold;color:#1890FF"
-                                    v-if="item.type == 3">{{item.name}}:{{item.sharesProportion}}</span></p>
+                                    v-if="item.type == 3">{{item.name}}:{{item.sharesProportion}}%</span></p>
                         </td>
                         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt; orphans:0; text-align:center; widows:0"><span
@@ -192,8 +192,8 @@
                                     style="font-family:宋体; font-size:10.5pt; font-weight:bold">经营范围</span></p></td>
                         <td colspan="10"
                             style="border-bottom-color:#000000;border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                            <p style="margin:0pt; text-align:center"><span
-                                    style="font-family:宋体; font-size:10.5pt;color:#1890FF;float: left">{{list.manageExtent}}</span>
+                            <p style="margin:0pt; text-align:center;font-family:宋体; font-size:10.5pt;color:#1890FF;float: left">
+                                {{list.manageExtent}}
                             </p></td>
                         <td style="vertical-align:top"></td>
                     </tr>
@@ -206,7 +206,7 @@
                             style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt">
                             <span
-                                    style="font-family:宋体; font-size:10.5pt;color:#1890FF">{{list.companyAddress}}</span>
+                                    style="font-family:宋体; font-size:10.5pt;color:#1890FF">{{list.areaName}}{{list.companyAddress}}</span>
                             </p></td>
                         <td style="vertical-align:top"></td>
                     </tr>

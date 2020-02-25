@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.huacainfo.ace.common.tools.GUIDUtil;
+import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
+import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huacainfo.ace.common.log.annotation.Log;
@@ -34,6 +36,8 @@ public class LawPolicyServiceImpl implements LawPolicyService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private LawPolicyDao lawPolicyDao;
+    @Resource
+    private BasicAnnexDao basicAnnexDao;
 
     /**
      * @throws
@@ -77,19 +81,31 @@ public class LawPolicyServiceImpl implements LawPolicyService {
     @Transactional
     @Log(operationObj = "政策服务", operationType = "创建", detail = "创建政策服务")
     public ResponseDTO create(LawPolicy o, UserProp userProp) throws Exception {
-        o.setId(GUIDUtil.getGUID());
-
+        String cultivateId = GUIDUtil.getGUID();
+        o.setId(cultivateId);
         int temp = this.lawPolicyDao.isExist(o);
         if (temp > 0) {
             return new ResponseDTO(ResultCode.FAIL, "政策服务名称重复！");
         }
-        o.setId(GUIDUtil.getGUID());
         o.setCreateDate(new Date());
         o.setStatus("1");
         o.setCreateUserName(userProp.getName());
         o.setCreateUserId(userProp.getUserId());
         o.setModifyDate(new Date());
         this.lawPolicyDao.insert(o);
+        if (o.getBasicAnnexes().size()>0) {
+            List<BasicAnnex> fileURL = o.getBasicAnnexes();
+            for (BasicAnnex a : fileURL) {
+                a.setId(GUIDUtil.getGUID());
+                a.setRelationId(cultivateId);
+                a.setFileURL(a.getFileURL());
+                a.setType("4");
+                a.setStatus("1");
+                a.setCreateDate(new Date());
+                a.setRemark("政策服务附件");
+                basicAnnexDao.insert(a);
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -115,6 +131,20 @@ public class LawPolicyServiceImpl implements LawPolicyService {
         o.setModifyUserName(userProp.getName());
         o.setModifyUserId(userProp.getUserId());
         this.lawPolicyDao.updateByPrimaryKey(o);
+        basicAnnexDao.deleteByRelationIds(o.getId().split(","));
+        if (o.getBasicAnnexes().size()>0) {
+            List<BasicAnnex> fileURL = o.getBasicAnnexes();
+            for (BasicAnnex a : fileURL) {
+                a.setId(GUIDUtil.getGUID());
+                a.setRelationId(o.getId());
+                a.setFileURL(a.getFileURL());
+                a.setType("4");
+                a.setStatus("1");
+                a.setCreateDate(new Date());
+                a.setRemark("政策服务附件");
+                basicAnnexDao.insert(a);
+            }
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -150,6 +180,7 @@ public class LawPolicyServiceImpl implements LawPolicyService {
     @Log(operationObj = "政策服务", operationType = "删除", detail = "删除政策服务")
     public ResponseDTO deleteById(String id) throws Exception {
         this.lawPolicyDao.deleteByPrimaryKey(id);
+        basicAnnexDao.deleteByRelationIds(id.split(","));
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
