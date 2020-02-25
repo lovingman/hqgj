@@ -62,7 +62,6 @@ Page({
      */
     onLoad: function(options) {
         let that = this;
-        Auth.checkLogin(that);
         that.initUserInfo();
     },
 
@@ -113,35 +112,46 @@ Page({
     // /personalCenter/relieveByUnionId   解绑微信
     // /personalCenter/bindUnionId?unionId=123456  绑定微信
     relieveByUnionId() {
-        request.post(cfg.relieveByUnionId).then(rst => {
-            let r = rst.data;
-            if (r.status == 1) {
-                Toast.success(r.message)
-                app.globalData.islogin = false;
-                this.isloginHandler();
-                Auth.checkLogin(that);
-            } else {
-                Toast.fail(r.message)
-            }
-        })
-    },
-    onGotUserInfo(e) {
-        Auth.wxUserInfo(e).then(rst => {
-            request.post(cfg.bindUnionId, {
-                unionId: rst.unionId
-            }).then(rs => {
-                let r = rs.data;
-                if (r.status == "1") {
-                    Toast.success(r.message);
+        Dialog.confirm({
+            title: '注意',
+            message: '您确定解除绑定微信'
+        }).then(() => {
+            request.post(cfg.relieveByUnionId).then(rst => {
+                let r = rst.data;
+                if (r.status == 1) {
+                    Toast.success(r.message)
                     app.globalData.islogin = false;
                     this.isloginHandler();
                 } else {
-                    Toast.fail(r.message);
+                    Toast.fail(r.message)
                 }
             })
-        }).catch(() => {
-            Toast.fail('授权失败，请重试');
         });
+    },
+    onGotUserInfo(e) {
+        Dialog.confirm({
+            title: '注意',
+            message: '您确定绑定微信'
+        }).then(() => {
+            Auth.wxUserInfo(e).then(rst => {
+                console.log(rst);
+                request.post(cfg.bindUnionId, {
+                    unionId: rst.data.unionId
+                }).then(rs => {
+                    let r = rs.data;
+                    if (r.status == "1") {
+                        Toast.success(r.message);
+                        app.globalData.islogin = false;
+                        this.isloginHandler();
+                    } else {
+                        Toast.fail(r.message);
+                    }
+                })
+            }).catch(() => {
+                Toast.fail('授权失败，请重试');
+            });
+        });
+
     },
     initUserInfo() {
         let that = this;
@@ -153,14 +163,20 @@ Page({
         }
     },
     relieveBind() {
-        request.post(cfg.relieveBind).then(rst => {
-            let r = rst.data;
-            if (r.status == 1) {
-                app.globalData.islogin = false;
-                this.isloginHandler();
-            }
+        Dialog.confirm({
+            title: '注意',
+            message: '您确定解除绑定企业'
+        }).then(() => {
+            request.post(cfg.relieveBind).then(rst => {
+                let r = rst.data;
+                if (r.status == 1) {
+                    app.globalData.islogin = false;
+                    this.isloginHandler();
+                }
+            })
         })
     },
+
     signOutHandler() {
         wx.setStorageSync('Authorization', '');
         app.globalData.islogin = false;

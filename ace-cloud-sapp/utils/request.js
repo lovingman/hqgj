@@ -10,7 +10,6 @@ function wxPromisify(fn) {
             }
             obj.fail = function(res) {
                 //失败
-                console.log(2)
                 reject(res)
             }
             fn(obj)
@@ -52,7 +51,6 @@ function getJSON(url, data) {
  */
 function post(url, data) {
     var postRequest = wxPromisify(wx.request)
-    console.log(wx.getStorageSync('Authorization'));
     return postRequest({
         url: url,
         method: 'POST',

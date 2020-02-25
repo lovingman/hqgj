@@ -309,6 +309,20 @@
 					"pathName": "pages/success/index",
 					"query": "id=9570effaf222408d93d0bfae6572e05e",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/appeals/index",
+					"pathName": "pages/appeals/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 37,
+					"name": "pages/appealDetail/index",
+					"pathName": "pages/appealDetail/index",
+					"query": "id=390980fd6b564770aa0a2cc0bf28da3e",
+					"scene": null
 				}
 			]
 		}
