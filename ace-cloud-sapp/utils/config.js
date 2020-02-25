@@ -55,7 +55,8 @@ var config = {
     serveBusinessUpdateUrl: `${server}/hqgj/serveBusiness/update`, //创业服务page
     createAppeal: `${server}/hqgj/companyAppeal/create`,//提交诉求
     getMyAppeal: `${server}/hqgj/companyAppeal/userpage`,//我的诉求
-    getAppealList: `${server}/hqgj/companyAppeal/page`//我的诉求
+    getAppealList: `${server}/hqgj/companyAppeal/page`,//我的诉求
+    getAppealgetById: `${server}/hqgj/companyAppeal/getById`//查询单个诉求
 };
 
 module.exports = config

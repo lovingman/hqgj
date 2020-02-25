@@ -32,10 +32,10 @@ Page({
             url: `/pages/RegProgress/index?id=${id}`,
         })
     },
-    companyDetail(e) {
+    appealDetail(e) {
         let id = e.currentTarget.dataset.id;
         wx.navigateTo({
-            url: `/pages/RegProcess/index?flag=true&id=${id}`
+            url: `/pages/appealDetail/index?id=${id}`
         })
     },
     /**

@@ -10,6 +10,6 @@ var validate = {
     ageNum: /^[1-9]\d{0,2}$/, //正数2位小数点后2位
     floatNum4: /^\d+(\.\d{1,4})?$/, //小数点后位
     notEmpty: /\S/,  //不能为空
-    integer:/^[1-9]\d*$/ //整数
+    integer:/^[1-9]\d*$/   //整数
 };
 module.exports = validate

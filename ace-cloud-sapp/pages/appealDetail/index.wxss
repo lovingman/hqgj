@@ -1,0 +1,46 @@
+.title {
+    height: 90rpx;
+    color: rgba(16, 16, 16, 1);
+    font-size: 28rpx;
+    line-height: 90rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    padding: 0 30rpx;
+}
+
+.content {
+    width: 690rpx;
+    margin: auto;
+    background: #fff;
+}
+
+page {
+    background: #f7f9fc;
+}
+
+.van-cell__value, .van-cell__label {
+    text-align: left !important;
+    color: rgba(55, 63, 83, 1) !important;
+    font-size: 28rpx !important;
+    font-family: Microsoft Yahei;
+    font-weight: bold;
+}
+
+.van-cell__label {
+    line-height: 1.5em;
+}
+
+.status2 .van-cell__value {
+    color: #2e88f2 !important;
+}
+
+.status1 .van-cell__value {
+    color: #ff7d18 !important;
+}
+
+.status3 .van-cell__value {
+    color: #5bd984 !important;
+}
+.bottom{
+    height: 100rpx;
+}

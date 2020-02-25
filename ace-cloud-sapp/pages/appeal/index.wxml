@@ -23,7 +23,7 @@
                         {{nowData.createDate}}
                     </view>
                 </view>
-                <view class="more">
+                <view class="more" bindtap="lookMore">
                     查看全部
                 </view>
             </view>
@@ -43,7 +43,7 @@
                         <van-field value="{{ info.title }}" error="{{state.title}}" title-width="28%" data-field="title" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="诉求标题" placeholder="请输入标题" />
                     </van-cell-group>
                     <van-cell-group wx:if="{{info.type==3}}" border="{{false}}">
-                        <van-field title-width="28%" value="{{ info.money }}" type="digit" error="{{state.money}}" data-field="money" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="融资需求" placeholder="请输入金额" use-button-slot>
+                        <van-field title-width="28%" value="{{ info.money }}" type="digit" error="{{state.money}}" data-field="money" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="需求额度" placeholder="请输入金额" use-button-slot>
                             <text class="unit" slot="button">万元</text>
                         </van-field>
                         <van-field title-width="28%" value="{{ info.bank }}" error="{{state.bank}}" data-field="bank" bind:blur="validate" bind:focus="initValidate" bind:change="onChange" required clearable size="large" label="期望银行" placeholder="请输入银行名称" />

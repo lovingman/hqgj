@@ -1,17 +1,17 @@
 <wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
 <view class="index">
-    <view class="modal" wx:for="{{servicePack}}" wx:key="index" wx:for-item="item">
+    <view class="allTitel">全部诉求</view>
+    <view class="modal van-hairline--bottom" wx:for="{{servicePack}}" wx:key="index" wx:for-item="item">
         <view class="content">
-            <view class="title">{{astFilter.appealType(item.type)}}</view>
+            <view class="title"><view class="companyName van-ellipsis">{{item.companyName}}</view>上报了{{astFilter.appealType(item.type)}}</view>
             <view class="footer">
                 <text>上报时间{{item.createDate}}</text>
-                <text class="state state1" wx:if="{{item.status==1}}">待受理</text>
+                <!-- <text class="state state1" wx:if="{{item.status==1}}">待受理</text> -->
                 <text class="state" wx:if="{{item.status==2}}">已受理</text>
                 <text class="state state3" wx:if="{{item.status==3}}">已解决</text>
             </view>
         </view>
     </view>
-    <view class="tip" wx:if="{{!servicePack.length}}">          
-        无诉求记录
-    </view>
+    <view wx:if="{{load}}" class="status-info">正在加载...</view>
+    <view wx:if="{{nomore}}" class="status-info">已经加载全部</view>
 </view>

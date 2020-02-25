@@ -1,0 +1,38 @@
+<view class="title">
+    企业信息
+</view>
+<view class="content">
+    <van-cell-group border="{{false}}">
+        <van-cell title-width="30%" size="large" title="企业名称" value="{{info.companyName}}" />
+        <van-cell wx:if="{{info.type==1}}" title-width="30%" size="large" title="企业人数" value="{{info.companyNumber}}" />
+        <van-cell title-width="30%" size="large" title="联系人" value="{{info.personName}}" />
+        <van-cell title-width="30%" size="large" title="联系电话" value="{{info.personTel}}" />
+    </van-cell-group>
+</view>
+<view class="title">
+    诉求信息
+</view>
+<view class="content">
+    <van-cell-group border="{{false}}">
+        <van-cell title-width="30%" size="large" title="上报时间" value="{{info.createDate}}" />
+        <van-cell class="status1" title-width="30%" wx:if="{{info.status==1}}" size="large" title="状态"  value="待受理" />
+        <van-cell class="status2" title-width="30%" wx:if="{{info.status==2}}" size="large" title="状态" value="已受理" />
+        <van-cell class="status3" title-width="30%" wx:if="{{info.status==3}}" size="large" title="状态" value="已解决" />
+        <van-cell title-width="30%"  size="large" title="诉求类型" value="{{info.typeName}}" />
+    </van-cell-group>
+    <van-cell-group wx:if="{{info.type==1}}" border="{{false}}" wx:for="{{info.companyMaterial}}">
+        <van-cell title-width="30%" size="large" title="物资{{1+index}}" value="{{item.categoryName}}" />
+        <van-cell title-width="30%" size="large" title="数量" value="{{item.number}}" />
+    </van-cell-group>
+    <van-cell-group wx:if="{{info.type==3}}" border="{{false}}">
+        <van-cell title-width="30%" size="large" title="需求额度" value="{{info.money}}" />
+        <van-cell title-width="30%" size="large" title="期望银行" value="{{info.bank}}" />
+    </van-cell-group>
+    <van-cell-group wx:if="{{info.type==2||info.type==4}}" border="{{false}}">
+        <van-cell title-width="30%" size="large" title="诉求标题" value="{{info.title}}" />
+    </van-cell-group>
+    <van-cell-group border="{{false}}">
+        <van-cell size="large" title="诉求描述" label="{{info.text}}" border="{{ false }}" />
+    </van-cell-group>
+</view>
+<view class="bottom"></view>

@@ -1,2 +1,43 @@
 /* pages/appealList/index.wxss */
 @import "../ServiceEnterprise/index.wxss";
+@import "../appeal/index.wxss";
+
+.allTitel {
+    color: rgba(55, 63, 83, 1);
+    font-size: 32rpx;
+    font-family: PingFangSC-bold;
+    font-weight: bold;
+    margin-left: 36rpx;
+}
+
+.index {
+    /* margin-top: ; */
+    width: 710rpx;
+    border-radius: 20px;
+    margin: 190rpx auto 0;
+    line-height: 1.5em;
+    background: #fff;
+}
+
+.modal {
+    width: 680rpx;
+    padding: 0 20rpx;
+    margin: 0 auto;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.status-info {
+    text-align: center;
+    color: #555;
+    font-size: 28rpx;
+}
+
+.companyName {
+   max-width: 400rpx;
+}
+
+.title {
+    display: flex;
+    line-height: 1.5em;
+}
