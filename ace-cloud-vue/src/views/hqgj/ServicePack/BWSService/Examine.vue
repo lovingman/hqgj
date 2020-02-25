@@ -31,7 +31,7 @@
                                 </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
-                                    v-if="scope.row.id != null">预览
+                                           v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
                                     <router-link :to="{name:'application',query:{id:form.id,name:'see'}}"
@@ -332,9 +332,14 @@
         <!--预览弹窗-->
         <el-dialog :visible.sync="lookingVisible" title="预览" width="60%">
             <div class="dialog-main">
-                <viewer :images="fileList">
-                    <img :key="attach.fileURL" :src="attach.fileURL" class="head_pics" v-for="attach in fileList" />
-                </viewer>
+                <div class="dialog-box" v-for="attach in fileList">
+                    <div class="list-box">
+                        <div class="title">{{attach.name}}</div>
+                        <div class="img" v-for="imgArr in attach.basicAnnexes">
+                            <img :src="imgArr.fileURL" class="img-box">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="dialog-footer" slot="footer">
                 <el-button @click="lookingVisible = false">取 消</el-button>
@@ -527,14 +532,12 @@
 
             //预览
             looking(index, data) {
-                console.log(data)
                 this.lookingVisible = true;
                 let obj = {};
                 obj.id = data.id;
                 obj.type = data.type;
                 getAnnex(obj).then(response => {
-                    console.log(response);
-                    this.fileList = response.rows;
+                    this.fileList = response.data;
                 })
             },
             //下载
