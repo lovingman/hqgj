@@ -152,7 +152,7 @@ Page({
         let that = this;
         Dialog.confirm({
             title: '注意',
-            message: '确定取消报名'
+            message: '确定取消订单'
         }).then(() => {
             let id = e.currentTarget.dataset.id;
             let index = e.currentTarget.dataset.index;

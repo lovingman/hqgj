@@ -8,22 +8,44 @@ Page({
      * 页面的初始数据
      */
     data: {
-        servicePack: []
+        load: false,
+        nomore: false,
+        servicePack: [],
+        query: {
+            pageSize: 10,
+            pageNum: 1
+        }
     },
     getData() {
         let that = this;
-        request.getJSON(cfg.getMyAppeal, {
-            pageSize: 100,
-            pageNum: 1
-        }).then(rst => {
-            const res = rst.data;
-            if (res.status == 1) {
-                if (res.rows && res.rows.length > 0) {
-                    that.setData({
-                        servicePack: res.rows
-                    })
-                }
+        that.showloading();
+        request.getJSON(cfg.getAppealList, that.data.query).then(rst => {
+            that.hideloading();
+            let e = rst.data;
+            let len = e.rows ? e.rows.length : 0;
+            if (len < that.data.query.pageSize) {
+                that.setData({
+                    nomore: true
+                })
             }
+            if (e.status == 1) {
+                let list = that.data.servicePack.concat(e.rows);
+                that.setData({
+                    servicePack: list
+                })
+            }
+        })
+    },
+    // 显示正在加载
+    showloading() {
+        this.setData({
+            load: true
+        })
+    },
+    // 隐藏正在加载
+    hideloading() {
+        this.setData({
+            load: false
         })
     },
     progressHandler(e) {
@@ -41,56 +63,68 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         this.getData();
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
-
-    },
+    onPullDownRefresh: function() {
+        let that = this;
+        that.data.query.pageNum = 1;
+        that.data.servicePack = [];
+        that.getData();
+        wx.stopPullDownRefresh();
+        that.setData({
+            nomore:false
+        })
+    },  
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
-
+    onReachBottom: function() {
+        let that = this;
+        if (that.data.nomore){
+            return;
+        }
+        that.data.query.pageNum++;
+        that.getData();
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

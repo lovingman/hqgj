@@ -45,7 +45,7 @@ Page({
     },
     //显示加载
     showloading() {
-        console.log("11111111")
+
         let that = this;
         that.setData({
             loading: true

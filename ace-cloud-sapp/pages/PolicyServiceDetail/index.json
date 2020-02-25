@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "政策服务详情",
-  "usingComponents": {}
+    "navigationBarTitleText": "政策服务详情",
+    "usingComponents": {
+        "van-notify": "/vant/weapp/notify/index"
+    }
 }

@@ -1,7 +1,7 @@
 <wxs module="astFilter" src="../../utils/filter.wxs"></wxs>
 <view class="index">
     <view class="modal" wx:for="{{servicePack}}" wx:key="index" wx:for-item="item">
-        <view class="content">
+        <view class="content" bindtap="appealDetail" data-id="{{item.id}}">
             <view class="title">{{astFilter.appealType(item.type)}}</view>
             <view class="footer">
                 <text>上报时间{{item.createDate}}</text>

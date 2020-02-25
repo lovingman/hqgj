@@ -61,7 +61,13 @@ Page({
             bank: 'companyName'
         },
         appealList: [],
-        idx:0
+        idx:1,
+        timer:'',
+    },
+    lookMore(){
+        wx.navigateTo({
+            url: '/pages/appeals/index',
+        })
     },
 
     /**
@@ -82,13 +88,16 @@ Page({
             let res = rst.data;
             if (res.status == 1) {
                 that.data.appealList = res.rows;
+                that.setData({
+                    nowData:res.rows[0]
+                })
                 that.showTime();
             }
         })
     },
     showTime() {
         let that = this;
-        that.data.timer = setInterval(function() {
+        that.data.timer = setInterval(()=>{
             that.setData({
                 nowData:that.data.appealList[that.data.idx]
             })
@@ -105,6 +114,7 @@ Page({
             let res = rst.data;
             if (res.status == 1) {
                 if (!res.data.companyId) {
+                    that.showSpecialTextarea();
                     Dialog.alert({
                         confirmButtonText: "个人中心",
                         title: '提示',
@@ -116,6 +126,7 @@ Page({
                     });
                 }
                 that.data.info.companyName = res.data.companyName;
+                that.data.info.companyId = res.data.companyId;
                 that.data.info.personName = res.data.name;
                 that.data.info.personTel = res.data.mobile;
                 that.setData({
@@ -297,14 +308,14 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function() {
-        clearInterval(this.data.timer)
+       
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-
+        clearInterval(this.data.timer)
     },
 
     /**

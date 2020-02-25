@@ -38,8 +38,10 @@
         "pages/LawyerDetails/index",
         "pages/InstitutionalDetails/index",
         "pages/appeal/index",
+        "pages/appeals/index",
         "pages/appealList/index",
-        "pages/success/index"
+        "pages/success/index",
+        "pages/appealDetail/index"
     ],
     "permission": {
         "scope.userLocation": {
