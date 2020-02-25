@@ -26,13 +26,11 @@ Page({
     onLoad: function(options) {
         var that = this;
         that.data.url=options.url;
-        Auth.checkLogin(that);
     },
     getUserInfo: function(e) {
         let that = this;
         Auth.wxUserInfo(e).then(rst=>{
-            console.log(rst);
-            that.data.username ='WX-LOGIN|'+rst.unionId,
+            that.data.username ='WX-LOGIN|'+rst.data.unionId,
             that.data.password ='123weiuryweiryiwqe!@#';
             that.submitForm();
         });
