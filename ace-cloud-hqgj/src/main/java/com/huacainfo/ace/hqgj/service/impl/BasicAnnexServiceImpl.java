@@ -190,7 +190,11 @@ public class BasicAnnexServiceImpl implements BasicAnnexService {
         if(CommonUtils.isBlank(businessId)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        List<String> urlList=basicAnnexDao.businessFileUrlList(businessId,type);
+        String[] types=new String[type==null?0:type.length()];
+        if(!CommonUtils.isBlank(type)) {
+            types = type.split(",");
+        }
+        List<String> urlList=basicAnnexDao.businessFileUrlList(businessId,types,type);
         String[] list=new String[urlList.size()];
         //多个图片下载地址
         for(int i=0;i<urlList.size();i++ ) {
