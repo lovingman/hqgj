@@ -177,11 +177,11 @@ public class BasicAnnexController extends BaseController {
 
     /**
      * 下载文件
-     * @param relationId
+     * @param
      * @param res
      * @throws Exception
      */
-    @RequestMapping(value = "/download")
+ /*   @RequestMapping(value = "/download")
     public ResponseDTO download(String relationId, HttpServletResponse res) throws Exception {
         if(CommonUtils.isBlank(relationId)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
@@ -207,7 +207,7 @@ public class BasicAnnexController extends BaseController {
             }
 
 
-
+*/
     /**
      * 下载压缩包文件
      * @param businessId 创业服务包id
