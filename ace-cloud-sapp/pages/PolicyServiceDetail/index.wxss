@@ -29,9 +29,7 @@
     line-height: 1.6em;
 }
 
-.enclosure {
-    padding-bottom: 40rpx;
-}
+ 
 
 .enclosure .title {
     font-size: 34rpx;

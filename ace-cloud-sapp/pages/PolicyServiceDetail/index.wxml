@@ -1,4 +1,4 @@
-<view>
+<view style="padding-bottom:40rpx;">
     <view class="title">{{basicForm.title}}</view>
     <view class="time">
         发布时间：{{basicForm.createDate}}
@@ -6,7 +6,7 @@
     <view class="text">
         <rich-text nodes="{{basicFormContent}}" bindlongpress="copy" data-text="{{basicFormContent}}" selectable='true'></rich-text>
     </view>
-    <view class="enclosure">
+    <view class="enclosure" wx:if="{{basicAnnexesArr.length >=1}}">
         <view class="title">附件下载：</view>
         <view class="enclosure-text">
             <view class="enclosure-list" wx:for="{{basicAnnexesArr}}" wx:for-item="item" data-src='{{item.fileURL}}'>
