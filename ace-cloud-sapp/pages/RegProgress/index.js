@@ -12,13 +12,14 @@ Page({
         active: 0,
         id: '',
         flag: false,
+        res: {}
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        this.getDic();
+        // this.getDic();
         this.getData(options.id)
         this.data.id = options.id
     },
@@ -32,15 +33,8 @@ Page({
         }).then(rst => {
             let r = rst.data;
             if (r.status == 1) {
-                if (r.data.status == "2") {
-                    that.setData({
-                        activeColor: '#EE0A24',
-                        flag: true
-                    })
-                }
-                that.setData({
-                    active: r.data.tab || 0
-                })
+                that.getDic();
+                that.data.res = r.data
             }
         })
     },
@@ -59,11 +53,30 @@ Page({
         request.getJSON(cfg.getByCategoryUrl, datas).then(rst => {
             let res = rst.data;
             if (res.status == 1) {
-                for (let i of res.data['54']) {
+                let list = res.data['54'];
+                for (let i of list) {
                     i.text = i.name
                 }
+                let n = that.data.res;
+                if (n.tab == null) {
+                    n.tab = 0;
+                    list[0].text += '(审核中)'
+                } else if (n.tab == 0 && n.status == "2") {
+                    list[0].text += '(审核驳回)'
+                } else {
+                    list[0].text += '(审核通过)'
+                }
+                if (n.status == "2") {
+                    that.setData({
+                        activeColor: '#EE0A24',
+                        flag: true
+                    })
+                }
                 that.setData({
-                    steps: res.data['54']
+                    steps: list
+                })
+                that.setData({
+                    active: n.tab
                 })
             }
         })
