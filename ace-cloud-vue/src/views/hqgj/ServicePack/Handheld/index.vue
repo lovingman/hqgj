@@ -260,6 +260,7 @@
       },
       //选择类型检索服务机构
       changType(value) {
+
         let obj = {
           type: value
         };
