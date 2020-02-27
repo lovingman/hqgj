@@ -31,7 +31,7 @@
                                 </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
-                                           v-if="scope.row.id != null">预览
+                                    v-if="scope.row.id != null">预览
                                 </el-button>
                                 <el-button type="text" v-else="scope.row.id != null">
                                     <router-link :to="{name:'application',query:{id:form.id,name:'see'}}"
@@ -75,12 +75,12 @@
                         </el-row>
                         <el-row class="elrow">
                             <el-col :span="8">
-                            <el-form-item label="申请日期:" prop="name">
-                                <span>{{form.createDate}}</span>
-                            </el-form-item>
+                                <el-form-item label="申请日期:" prop="name">
+                                    <span>{{form.createDate}}</span>
+                                </el-form-item>
                             </el-col>
                             <el-col :span="8" v-if="form.shOrg!=null">
-                                <el-form-item label="审核机构:" prop="name" >
+                                <el-form-item label="审核机构:" prop="name">
                                     <span v-if="form.shOrg=='1'">律师事务所</span>
                                     <span v-if="form.shOrg=='2'">会计事务所</span>
                                     <span v-if="form.shOrg=='3'">培训机构</span>
@@ -137,9 +137,9 @@
                         </el-row>
                         <el-row class="elrow">
                             <el-col :span="12">
-                            <el-form-item label="经营范围:" prop="name">
-                                <span>{{form.manageExtent}}</span>
-                            </el-form-item>
+                                <el-form-item label="经营范围:" prop="name">
+                                    <span>{{form.manageExtent}}</span>
+                                </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 &nbsp;
