@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.huacainfo.ace.common.vo.UserProp;
 import com.huacainfo.ace.common.dto.ResponseDTO;
-import com.huacainfo.ace.common.dto.NewPageDTO;
 import com.huacainfo.ace.common.tools.CommonUtils;
 import com.huacainfo.ace.hqgj.dao.BasicAnnexDao;
-import com.huacainfo.ace.hqgj.model.BasicAnnex;
 import com.huacainfo.ace.hqgj.dao.LawServeDao;
 import com.huacainfo.ace.hqgj.model.LawServe;
 import com.huacainfo.ace.hqgj.service.LawServeService;
@@ -203,6 +201,4 @@ public class LawServeServiceImpl implements LawServeService {
         this.lawServeDao.deleteByIds(ids);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
-
-
 }
