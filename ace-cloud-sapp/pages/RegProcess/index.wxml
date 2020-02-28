@@ -6,7 +6,7 @@
                     <van-field error="{{vailForm[0].companyName}}" bind:focus="focusHandler" bind:blur="blurHandler" data-index="0" value="{{ formCollection[0].companyName }}" data-model="companyName" bind:input="bindinput" clearable label="企业名称" placeholder="请输入企业名称" />
                     <van-field error="{{vailForm[0].readyName}}" value="{{ formCollection[0].readyName }}" bind:focus="focusHandler" bind:blur="blurHandler" data-model="readyName" data-index="0" bind:input="bindinput" label="备用名称" placeholder="请输入企业备用名称" />
                     <van-field error="{{vailForm[0].regBonus}}" value="{{ formCollection[0].regBonus }}" bind:focus="focusHandler" bind:blur="blurHandler" data-model="regBonus" data-index="0" bind:input="bindinput" label="注册资金" placeholder="请输入金额" border="{{ false }}" use-button-slot>
-                        <van-button slot="button" size="small" type="primary">万元</van-button>
+                        <text slot="button">万元</text>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -20,7 +20,7 @@
                 <van-cell-group>
                     <van-field readonly clickable label="经营范围" bind:click="showPicker = true" />
                 </van-cell-group>
-                <textarea placeholder-style="font-size:28rpx; color:#798092" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" data-index="0" bindinput="bindinput" placeholder="请输入经营范围，字数最好控制在80字以内。如基础软件开发，应用软件开发；架线工程服务，智能化安装工程服务" wx:if="{{!showPickerAreas}}"
+                <textarea placeholder-style="font-size:28rpx; color:#798092" maxlength="200" class="textarea textarea1" value="{{formCollection[0].manageExtent}}" data-model="manageExtent" data-index="0" bindinput="bindinput" placeholder="请输入经营范围，字数最好控制在80字以内。如基础软件开发，应用软件开发；架线工程服务，智能化安装工程服务" wx:if="{{!showPickerAreas}}"
                     auto-height />
                 <view class="textarea textarea1" wx:else>
                     {{formCollection[0].manageExtent}}
@@ -134,7 +134,7 @@
                             clearable label="股东姓名" placeholder="请输入真实姓名" />
                         <van-field error="{{vailForm[2].type3[index].sharesProportion}}" bind:focus="focusObjHandler" bind:blur="blurObjHandler" data-vail="vailForm[2].type3" value="{{ item.sharesProportion }}" data-obj="formCollection[2].type3" data-model="sharesProportion"
                             data-index="{{index}}" bind:input="bindObjInput" label="股东比例" placeholder="请输入数值" use-button-slot>
-                            <van-button slot="button" size="small" type="primary">%</van-button>
+                            <text slot="button" size="small" type="primary">%</text>
                         </van-field>
                     </van-cell-group>
                     <view class="upload">

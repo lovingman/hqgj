@@ -94,9 +94,10 @@ Page({
             return;
         }
         Auth.wxUserInfo(e).then(rst => {
+
             that.setData({
-                nickName: rst.nickName,
-                unionId: rst.unionId
+                nickName: rst.data.nickName,
+                unionId: rst.data.unionId
             })
             Toast.success('授权成功');
         }).catch(() => {
@@ -113,7 +114,6 @@ Page({
      */
     onLoad: function(options) {
         let that = this;
-        Auth.checkLogin(that);
         that.data.nextData = options;
     },
 
