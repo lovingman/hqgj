@@ -105,6 +105,9 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="condition.type != null and condition.type != ''">
+                and t.type = #{condition.type,jdbcType=VARCHAR}
+            </if>
             <if test="condition.status != null and condition.status != ''">
                 and t.status = #{condition.status,jdbcType=VARCHAR}
             </if>
