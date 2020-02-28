@@ -326,7 +326,10 @@
                     <div class="list-box">
                         <div class="title">{{attach.name}}</div>
                         <div class="img" v-for="imgArr in attach.basicAnnexes">
-                            <img :src="imgArr.fileURL" class="img-box">
+                            <i class="image" @click="previews(imgArr.fileURL)"><img :src="imgArr.fileURL" alt=""class="img"></i>
+                            <el-dialog :visible.sync="dialogVisible" append-to-body>
+                                <img :src="dialogImageUrl" alt="" width="100%">
+                            </el-dialog>
                         </div>
                     </div>
                 </div>
@@ -389,6 +392,7 @@
         name: "details",
         data() {
             return {
+                dialogVisible:false,
                 zipfile: [],
                 dict: [],
                 dict2: [],
@@ -879,6 +883,11 @@
                 } else {
                     return true //可勾选
                 }
+            },
+            // 图片预览
+            previews(data) {
+                this.dialogImageUrl = data;
+                this.dialogVisible = true;
             },
             preview() {
                 this.$router.push('/application');
