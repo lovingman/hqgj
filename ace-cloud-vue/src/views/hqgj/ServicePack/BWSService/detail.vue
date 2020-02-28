@@ -325,12 +325,14 @@
                 <div class="dialog-box" v-for="attach in fileList">
                     <div class="list-box">
                         <div class="title">{{attach.name}}</div>
-                        <div class="img" v-for="imgArr in attach.basicAnnexes">
-                            <i class="image" @click="previews(imgArr.fileURL)"><img :src="imgArr.fileURL" alt=""class="img"></i>
-                            <el-dialog :visible.sync="dialogVisible" append-to-body>
-                                <img :src="dialogImageUrl" alt="" width="100%">
-                            </el-dialog>
-                        </div>
+                        <ul style="padding-left: 42px!important">
+                            <li style="list-style: none;display: inline;" v-for="imgArr in attach.basicAnnexes">
+                                <i class="image" @click="previews(imgArr.fileURL)"><img :src="imgArr.fileURL" alt="" class="img-box"></i>
+                                <el-dialog :visible.sync="dialogVisible" append-to-body>
+                                    <img :src="dialogImageUrl" alt="" width="100%">
+                                </el-dialog>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -926,9 +928,10 @@
     }
 
     .img-box {
-        width: 240px;
-        height: 160px;
+        width: 148px;
+        height: 148px;
         object-fit: cover;
+        margin-right: 10px;
     }
 
     .head_pic {
