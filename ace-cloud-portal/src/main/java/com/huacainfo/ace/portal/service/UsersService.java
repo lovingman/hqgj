@@ -134,6 +134,19 @@ public interface UsersService {
      */
     ResponseDTO assignRoles(String userId,String[] roleIds) throws Exception;
 
+    /**
+     * @throws
+     * @Title:assignRoles
+     * @Description: TODO(分配角色)
+     * @param: @param userId
+     * @param: @param roleIds
+     * @param: @throws Exception
+     * @return: ResponseDTO
+     * @author: 陈晓克
+     * @version: 2019-05-12
+     */
+    ResponseDTO deleteassignRoles(String userId) throws Exception;
+
 
     /**
      * @throws

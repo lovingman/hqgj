@@ -148,6 +148,10 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
+    <delete id="deleteassignRoles">
+    delete from users_role
+    where user_id=#{userId};
+  </delete>
 
     <insert id="assignRoles">
         update users_role set role_id='0' where 0=1;

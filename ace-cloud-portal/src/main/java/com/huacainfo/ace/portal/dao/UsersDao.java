@@ -39,6 +39,7 @@ public interface UsersDao {
 
     int updateStatus(@Param("userId") String userId,@Param("status") String status);
 
+    int deleteassignRoles(@Param("userId") String userId);
 
     int assignRoles(@Param("userId") String userId, @Param("roleIds") String[] roleId);
 

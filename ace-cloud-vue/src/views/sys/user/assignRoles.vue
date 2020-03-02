@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getAllRoles,assignRoles,getMyRoles,getById} from "@/api/sys/user";
+import { getAllRoles,assignRoles,getMyRoles,getById,deleteassignRoles} from "@/api/sys/user";
 import { mapGetters } from 'vuex';
 export default {
   data() {
@@ -83,24 +83,47 @@ export default {
     },
     submitForm(formName) {
         this.loading = true;
-        assignRoles({userId:this.id,roleId:this.value.join(",")})
-        .then(response => {
-            this.loading = false;
-            this.$confirm(response.message + " 是否返回?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "success",
-                center: true
-            })
-            .then(() => {
-                this.back();
-            })
-            .catch(() => {});
-        })
-        .catch(error => {
-            this.loading = false;
+        if(this.value.length>0){
+            assignRoles({userId:this.id,roleId:this.value.join(",")})
+                .then(response => {
+                    this.loading = false;
+                    this.$confirm(response.message + " 是否返回?", "提示", {
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        type: "success",
+                        center: true
+                    })
+                        .then(() => {
+                            this.back();
+                        })
+                        .catch(() => {});
+                })
+                .catch(error => {
+                    this.loading = false;
 
-        });
+                });
+        }else{
+            deleteassignRoles({userId:this.id})
+            .then(response => {
+                this.loading = false;
+                this.$confirm(response.message + " 是否返回?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "success",
+                    center: true
+                })
+                    .then(() => {
+                        this.back();
+                    })
+                    .catch(() => {});
+            })
+            .catch(error => {
+                this.loading = false;
+
+            });
+
+        }
+
     },
     back() {
       this.$router.push({ path: "/sys/user" });

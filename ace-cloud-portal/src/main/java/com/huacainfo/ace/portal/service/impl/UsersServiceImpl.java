@@ -272,6 +272,28 @@ public class UsersServiceImpl implements UsersService {
 
     /**
      * @throws
+     * @Title:assignRoles
+     * @Description: TODO(删除已分配分配角色)
+     * @param: @param userId
+     * @param: @param roleIds
+     * @param: @throws Exception
+     * @return: ResponseDTO
+     * @author: 陈晓克
+     * @version: 2019-05-12
+     */
+    @Override
+    @Transactional
+    @Log(operationObj = "系统用户", operationType = "删除已分配分配角色", detail = "删除已分配分配角色")
+    public ResponseDTO deleteassignRoles(String userId) throws Exception{
+        if(CommonUtils.isBlank(userId)){
+            return new ResponseDTO(ResultCode.FAIL, "用户编号不能为空！");
+        }
+        this.usersDao.deleteassignRoles(userId);
+        return new ResponseDTO(ResultCode.SUCCESS, "成功！");
+    }
+
+    /**
+     * @throws
      * @Title:getAllRoles
      * @Description: TODO(获取系统已有角色)
      * @param: @param userId

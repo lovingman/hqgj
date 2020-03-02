@@ -204,6 +204,24 @@ public class UsersController extends BaseController {
         return this.usersService.assignRoles(userId, roleId.split(","));
     }
 
+    /**
+     * @throws
+     * @Title:assignRoles
+     * @Description: TODO(删除已分配分配角色)
+     * @param: @param userId
+     * @param: @param roleIds
+     * @param: @throws Exception
+     * @return: ResponseDTO
+     * @author: 陈晓克
+     * @version: 2019-05-12
+     */
+    @PostMapping(value = "/deleteassignRoles", produces = "application/json;charset=UTF-8")
+    public ResponseDTO deleteassignRoles(String userId) throws Exception {
+        if (CommonUtils.isBlank(userId)) {
+            return new ResponseDTO(ResultCode.FAIL, "用户编号不能为空！");
+        }
+        return this.usersService.deleteassignRoles(userId);
+    }
 
     /**
      * @throws
