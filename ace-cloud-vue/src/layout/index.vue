@@ -1,32 +1,33 @@
 <template>
     <div :class="classObj" class="app-wrapper">
-        <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened"/>
-        <div :class="{title:isCollapse}" style=" background-color:rgb(0, 65, 136);display: block;position: absolute;transition: width 0.28s;width: 240px;height: 45px;z-index: 1001;overflow: hidden;">
+        <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
+        <div :class="{title:isCollapse}"
+            style=" background-color:rgb(0, 65, 136);display: block;position: absolute;transition: width 0.28s;width: 240px;height: 45px;z-index: 1001;overflow: hidden;">
             <!--<el-row style="margin-left: 20px;">-->
-                <!--<el-col :span="4" style="margin-top: 5px">-->
+            <!--<el-col :span="4" style="margin-top: 5px">-->
 
             <div class="undertone">
                 <img alt="" src="@/assets/images/hqgjlogo.png" style="width: 33px;height: 33px">
                 <span style=" color: white">慧企管家服务平台</span>
             </div>
 
-                <!--</el-col>-->
-                <!--<el-col :span="14">-->
-                    <!--<div class="title-nm">-->
-                       <!---->
-                    <!--</div>-->
-                <!--</el-col>-->
+            <!--</el-col>-->
+            <!--<el-col :span="14">-->
+            <!--<div class="title-nm">-->
+            <!---->
+            <!--</div>-->
+            <!--</el-col>-->
             <!--</el-row>-->
         </div>
-        <sidebar class="sidebar-container"/>
+        <sidebar class="sidebar-container" />
         <div :class="{hasTagsView:needTagsView}" class="main-container">
             <div class="navbar">
-                <navbar/>
-                <tags-view v-if="needTagsView"/>
+                <navbar />
+                <tags-view v-if="needTagsView" />
             </div>
-            <app-main/>
+            <app-main />
             <right-panel v-if="showSettings">
-                <settings/>
+                <settings />
             </right-panel>
         </div>
     </div>
@@ -34,9 +35,17 @@
 
 <script>
     import RightPanel from "@/components/RightPanel";
-    import {AppMain, Navbar, Settings, Sidebar, TagsView} from "./components";
+    import {
+        AppMain,
+        Navbar,
+        Settings,
+        Sidebar,
+        TagsView
+    } from "./components";
     import ResizeMixin from "./mixin/ResizeHandler";
-    import {mapState} from "vuex";
+    import {
+        mapState
+    } from "vuex";
 
     export default {
         name: "Layout",
@@ -71,7 +80,9 @@
         },
         methods: {
             handleClickOutside() {
-                this.$store.dispatch("app/closeSideBar", {withoutAnimation: false});
+                this.$store.dispatch("app/closeSideBar", {
+                    withoutAnimation: false
+                });
             }
         }
     };
@@ -95,7 +106,7 @@
     }
 
     .app-main {
-        height: calc(100% - 100px);
+        /* height: calc(100% - 100px); */
         overflow-x: hidden;
         overflow-y: auto;
 
@@ -105,23 +116,26 @@
     }
 
     .title {
-        width: 54px!important;
-        .undertone span{
+        width: 54px !important;
+
+        .undertone span {
             display: none;
 
         }
 
     }
-    .undertone{
+
+    .undertone {
         display: inline-flex;
         line-height: 45px;
     }
-    .undertone img{
+
+    .undertone img {
         margin-left: 14px;
         margin-top: 8px;
     }
 
-    .undertone span{
+    .undertone span {
         color: #ffffff;
 
     }

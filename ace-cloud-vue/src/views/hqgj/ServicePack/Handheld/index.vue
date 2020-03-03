@@ -33,9 +33,9 @@
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%" v-loading="loading" element-loading-text="加载中"
+      <el-table :data="tableData" max-height="475" style="width: 100%" v-loading="loading" element-loading-text="加载中"
         element-loading-spinner="el-icon-loading">
-        <el-table-column type="index" sortable label="序号" width="80"></el-table-column>
+        <el-table-column type="index" sortable label="序号" width="60"></el-table-column>
         <el-table-column prop="type" sortable label="类型" width="120">
           <template slot-scope="scope">
             <div type="text" v-if="scope.row.type=='1'">代理记账</div>
@@ -59,7 +59,7 @@
             <div type="text" class="gray" v-if="scope.row.status=='4'">已下线</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="240" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="180" align="right" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateStatus'] && scope.row.status =='0'"
               @click="examine(scope.row)">{{userBtn['/hqgj/serveFinance/updateStatus']}}</el-button>

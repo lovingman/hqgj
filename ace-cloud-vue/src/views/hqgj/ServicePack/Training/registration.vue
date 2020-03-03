@@ -17,7 +17,7 @@
       </el-row>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%" v-loading="loading" element-loading-text="加载中"
+      <el-table :data="tableData" max-height="475" style="width: 100%" v-loading="loading" element-loading-text="加载中"
         element-loading-spinner="el-icon-loading">
         <el-table-column type="index" width="80" label="序号"></el-table-column>
         <el-table-column prop="companyName" sortable label="企业名称"></el-table-column>
