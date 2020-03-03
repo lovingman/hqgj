@@ -194,6 +194,7 @@
         <include refid="Where_Condition"/>
         GROUP by t.id
         ) a
+
     </select>
     <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivate" resultType="int">
             select count(1)
