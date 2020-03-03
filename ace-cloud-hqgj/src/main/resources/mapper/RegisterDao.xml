@@ -27,7 +27,7 @@
         from portal_hqgj.users
         where mobile = #{mobile}
     </select>
-  
+
     <select id="getAreaCode" resultType="java.util.Map">
          select
             IFNULL(t.areaCode,'') as areaCode,
@@ -118,7 +118,7 @@
     update portal_hqgj.users
     set userType = #{userType,jdbcType=VARCHAR}
         <if test="corp != null and corp != ''">
-        , corp = #{corp,jdbcType=VARCHAR}
+        , corpId = #{corp,jdbcType=VARCHAR}
         </if>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
