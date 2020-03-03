@@ -83,7 +83,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                      return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
                  }
              }
-            registerDao.updateUserType("5",userProp.getUserId());
+            registerDao.updateUserType("5",userProp.getUserId(),null);
         }else{
             //机构
               String memberId=organizationMemberDao.existMember(id,user.getIdCard());
@@ -96,7 +96,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                  }
               BaseOrganization org =baseOrganizationDao.selectVoByPrimaryKey(id);
                  if(org!=null){
-                     registerDao.updateUserType(org.getType(),userProp.getUserId());
+                     registerDao.updateUserType(org.getType(),userProp.getUserId(),id);
                  }
       }
         return new ResponseDTO(ResultCode.SUCCESS, "绑定成功！");
@@ -141,7 +141,7 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
                     return new ResponseDTO(ResultCode.FAIL, "绑定失败！");
                 }
             }
-            registerDao.updateUserType(null, userProp.getUserId());
+            registerDao.updateUserType(null, userProp.getUserId(),null);
 
         return new ResponseDTO(ResultCode.SUCCESS, "解除成功！");
     }
