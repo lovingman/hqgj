@@ -117,6 +117,9 @@
     <update id="updateUserType" parameterType="java.lang.String">
     update portal_hqgj.users
     set userType = #{userType,jdbcType=VARCHAR}
+        <if test="corp != null and corp != ''">
+        , corp = #{corp,jdbcType=VARCHAR}
+        </if>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 

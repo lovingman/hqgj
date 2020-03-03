@@ -49,7 +49,7 @@ public interface RegisterDao {
 
     UsersVo selectUserInfo(String userId);
 
-    int updateUserType(@Param("userType") String userType,@Param("userId") String userId);
+    int updateUserType(@Param("userType") String userType,@Param("userId") String userId,@Param("corp") String corp);
 
     int insertMapWechatSys(MapWechatSys mapWechatSys);
 

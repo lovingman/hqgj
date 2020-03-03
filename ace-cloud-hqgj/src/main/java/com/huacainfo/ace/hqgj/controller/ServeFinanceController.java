@@ -205,7 +205,7 @@ public class ServeFinanceController extends BaseController {
 
     /**
      * 修改状态 0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线',
-     * @param id 主键
+     * @param id 主键(审核)
      * @param status 状态
      * @param reason 不通过原因
      * @return
@@ -218,4 +218,23 @@ public class ServeFinanceController extends BaseController {
         }
         return serveFinanceService.updateStatus(id,status,reason);
     }
+
+
+    /**
+     * 修改状态 0-待审核 1-审核通过 2-未通过 3-已上线 4-已下线',
+     * @param id 主键（上线下线）
+     * @param status 状态
+     * @param reason 不通过原因
+     * @return
+     */
+    @ApiOperation(value = "/updateOnline", notes = "修改状态")
+    @PostMapping(value = "/updateOnline", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateOnline(String id, String status,String reason){
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        return serveFinanceService.updateStatus(id,status,reason);
+    }
+
+
 }
