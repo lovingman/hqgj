@@ -74,6 +74,14 @@ export function updateStatus(query) {
     params: query,
   })
 }
+//上线下线
+export function updateOnline(query) {
+  return request({
+    url: '/hqgj/serveFinance/updateOnline',
+    method: 'post',
+    params: query,
+  })
+}
 
 //订单管理page
 export function orderPage(query) {

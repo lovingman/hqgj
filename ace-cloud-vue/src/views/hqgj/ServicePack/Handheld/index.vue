@@ -63,10 +63,10 @@
           <template slot-scope="scope">
             <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateStatus'] && scope.row.status =='0'"
               @click="examine(scope.row)">{{userBtn['/hqgj/serveFinance/updateStatus']}}</el-button>
-            <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateStatusa'] && scope.row.status =='1'"
-              @click="online(scope.row)">{{userBtn['/hqgj/serveFinance/updateStatusa']}}</el-button>
-            <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateStatusb'] && scope.row.status =='3'"
-              @click="offline(scope.row)">{{userBtn['/hqgj/serveFinance/updateStatusb']}}</el-button>
+            <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateOnlineA'] && scope.row.status =='1'"
+              @click="online(scope.row)">{{userBtn['/hqgj/serveFinance/updateOnlineA']}}</el-button>
+            <el-button type="text" v-if="userBtn['/hqgj/serveFinance/updateOnlineB'] && scope.row.status =='3'"
+              @click="offline(scope.row)">{{userBtn['/hqgj/serveFinance/updateOnlineB']}}</el-button>
             <el-button type="text"
               v-if="userBtn['/hqgj/serveFinance/update'] && scope.row.status !='4' && scope.row.status !='2'"
               @click="edit(scope.row)">{{userBtn['/hqgj/serveFinance/update']}}</el-button>
@@ -328,7 +328,7 @@
             type: "warning"
           })
           .then(() => {
-            updateStatus(obj).then(res => {
+            updateOnline(obj).then(res => {
               if (res.status == 1) {
                 this.$message.success("成功下架改商品");
                 this.getList();
@@ -383,7 +383,7 @@
             type: "warning"
           })
           .then(() => {
-            updateStatus(obj).then(res => {
+            updateOnline(obj).then(res => {
               if (res.status == 1) {
                 this.$message.success("上线成功");
                 this.getList();
