@@ -41,9 +41,11 @@
             <div type="text" class="blue" v-if="scope.row.status=='4'">待发布</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="180" align="right" header-align="center">
+        <el-table-column label="操作" fixed="right" width="200" align="right" header-align="center">
           <template slot-scope="scope">
-            <el-button type="text" @click="release(scope.row)" v-if="scope.row.status =='4'">发布</el-button>
+            <el-button type="text" @click="release(scope.row)"
+              v-if="userBtn['/hqgj/serveCultivate/updateRelease'] && scope.row.status =='4'">
+              {{userBtn['/hqgj/serveCultivate/updateRelease']}}</el-button>
             <el-button type="text" @click="examine(scope.row)"
               v-if="userBtn['/hqgj/serveCultivate/updateStatus']&& scope.row.status =='0'">
               {{userBtn['/hqgj/serveCultivate/updateStatus']}}</el-button>
@@ -89,7 +91,8 @@
   import {
     page,
     deleteByIds,
-    updateStatus
+    updateStatus,
+    updateRelease
   } from "@/api/hqgj/training";
   import {
     getUser
@@ -298,7 +301,7 @@
             type: "warning"
           })
           .then(() => {
-            updateStatus(obj).then(res => {
+            updateRelease(obj).then(res => {
               if (res.status == 1) {
                 this.$message.success("发布成功");
                 this.getList();

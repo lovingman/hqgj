@@ -52,6 +52,14 @@ export function updateStatus(query) {
     params: query
   })
 }
+//发布
+export function updateRelease(query) {
+  return request({
+    url: '/hqgj/serveCultivate/updateRelease',
+    method: 'post',
+    params: query
+  })
+}
 //报名管理
 export function registrationPage(query) {
   return request({
