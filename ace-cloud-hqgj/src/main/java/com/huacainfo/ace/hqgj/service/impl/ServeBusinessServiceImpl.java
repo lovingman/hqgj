@@ -185,7 +185,6 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
                     serveBusinessAppendDao.insert(append);
                 }
             }
-
         }catch (Exception e){
             return new ResponseDTO(ResultCode.FAIL, "系统异常！");
         }
