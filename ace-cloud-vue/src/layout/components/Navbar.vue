@@ -4,26 +4,26 @@
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
-    <div class="right-menu">
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <div class="head-img">
-            <!--<img src="@/assets/images/huiqiicon.png" alt />-->
-          </div>
-         <div class="user-name text-center">{{ name }}</div>
-          <i class="el-icon-caret-bottom" style="float:left;" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <!--<router-link to="/profile/index">-->
-            <!--<el-dropdown-item>个人中心</el-dropdown-item>-->
-          <!--</router-link>-->
+    <!--<div class="right-menu">-->
+      <!--<el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">-->
+        <!--<div class="avatar-wrapper">-->
+          <!--<div class="head-img">-->
+            <!--&lt;!&ndash;<img src="@/assets/images/huiqiicon.png" alt />&ndash;&gt;-->
+          <!--</div>-->
+         <!--<div class="user-name text-center">{{ name }}</div>-->
+          <!--<i class="el-icon-caret-bottom" style="float:left;" />-->
+        <!--</div>-->
+        <!--<el-dropdown-menu slot="dropdown">-->
+          <!--&lt;!&ndash;<router-link to="/profile/index">&ndash;&gt;-->
+            <!--&lt;!&ndash;<el-dropdown-item>个人中心</el-dropdown-item>&ndash;&gt;-->
+          <!--&lt;!&ndash;</router-link>&ndash;&gt;-->
 
-          <el-dropdown-item>
-            <span style="display:block;" @click="logout">安全退出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+          <!--<el-dropdown-item>-->
+            <!--<span style="display:block;" @click="logout">安全退出</span>-->
+          <!--</el-dropdown-item>-->
+        <!--</el-dropdown-menu>-->
+      <!--</el-dropdown>-->
+    <!--</div>-->
   </div>
 </template>
 

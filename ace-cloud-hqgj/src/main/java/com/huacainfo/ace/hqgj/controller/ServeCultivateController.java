@@ -243,13 +243,28 @@ public class ServeCultivateController extends BaseController {
      * @param status
      * @return
      */
-    @ApiOperation(value = "/updateStatus", notes = "修改状态")
+    @ApiOperation(value = "/updateStatus", notes = "审核修改状态")
     @PostMapping(value = "/updateStatus", produces = "application/json;charset=UTF-8")
     public ResponseDTO updateStatus(String id, String status,String reason){
         if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
             return new ResponseDTO(ResultCode.FAIL, "参数错误");
         }
      return serveCultivateService.updateStatus(id,status,reason);
+    }
+
+    /**
+     * 修改状态 0-待审核  1-进行中 2-未通过 3-已结束',
+     * @param id
+     * @param status
+     * @return
+     */
+    @ApiOperation(value = "/updateRelease", notes = "发布修改状态")
+    @PostMapping(value = "/updateRelease", produces = "application/json;charset=UTF-8")
+    public ResponseDTO updateRelease(String id, String status,String reason){
+        if (CommonUtils.isBlank(id) || CommonUtils.isBlank(status)) {
+            return new ResponseDTO(ResultCode.FAIL, "参数错误");
+        }
+        return serveCultivateService.updateStatus(id,status,reason);
     }
 
 }

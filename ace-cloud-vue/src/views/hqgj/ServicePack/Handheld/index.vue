@@ -107,7 +107,8 @@
     page,
     orgChange,
     updateStatus,
-    deleteByIds
+    deleteByIds,
+    updateOnline
   } from "@/api/hqgj/handheld";
   import {
     getDict,

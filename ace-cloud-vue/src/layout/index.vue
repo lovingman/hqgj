@@ -1,24 +1,34 @@
 <template>
     <div :class="classObj" class="app-wrapper">
-        <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
-        <div :class="{title:isCollapse}"
-            style=" background-color:rgb(0, 65, 136);display: block;position: absolute;transition: width 0.28s;width: 240px;height: 45px;z-index: 1001;overflow: hidden;">
-            <!--<el-row style="margin-left: 20px;">-->
-            <!--<el-col :span="4" style="margin-top: 5px">-->
-
+        <div class="title">
             <div class="undertone">
                 <img alt="" src="@/assets/images/hqgjlogo.png" style="width: 33px;height: 33px">
-                <span style=" color: white">慧企管家服务平台</span>
+                <span style=" color: white;margin-left:10px;font-size: 20px;line-height:60px;">慧企管家服务平台</span>
             </div>
+            <div class="right-menu col-middle">
 
-            <!--</el-col>-->
-            <!--<el-col :span="14">-->
-            <!--<div class="title-nm">-->
-            <!---->
-            <!--</div>-->
-            <!--</el-col>-->
-            <!--</el-row>-->
+
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        {{ name }}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>
+                            <span style="display:block;" @click="logout">安全退出</span>
+                        </el-dropdown-item>
+
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
         </div>
+        <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
+        <!--<div :class="{title:isCollapse}"-->
+            <!--style=" background-color:rgb(0, 65, 136);display: block;position: absolute;transition: width 0.28s;width: 240px;height: 45px;z-index: 1001;overflow: hidden;">-->
+            <!--<div class="undertone">-->
+                <!--<img alt="" src="@/assets/images/hqgjlogo.png" style="width: 33px;height: 33px">-->
+                <!--<span style=" color: white">慧企管家服务平台</span>-->
+            <!--</div>-->
+        <!--</div>-->
         <sidebar class="sidebar-container" />
         <div :class="{hasTagsView:needTagsView}" class="main-container">
             <div class="navbar">
@@ -46,6 +56,7 @@
     import {
         mapState
     } from "vuex";
+    import { mapGetters } from 'vuex'
 
     export default {
         name: "Layout",
@@ -76,13 +87,20 @@
                     withoutAnimation: this.sidebar.withoutAnimation,
                     mobile: this.device === "mobile"
                 };
-            }
+            },
+            ...mapGetters([
+                'name'
+            ])
         },
         methods: {
             handleClickOutside() {
                 this.$store.dispatch("app/closeSideBar", {
                     withoutAnimation: false
                 });
+            },
+            async logout() {
+                await this.$store.dispatch('user/logout')
+                this.$router.push(`/login?redirect=${this.$route.fullPath}`)
             }
         }
     };
@@ -116,23 +134,54 @@
     }
 
     .title {
-        width: 54px !important;
+        background-color: $menuBg;
+        height: 60px;
+        width: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        top: 0;
+        filter: none;
+        position: relative;
+        /*width: 54px !important;*/
 
-        .undertone span {
-            display: none;
+        /*.undertone span {*/
+            /*display: none;*/
 
+        /*}*/
+
+    }
+
+    .right-menu {
+        float: right;
+        padding-right: 30px;
+        line-height: 60px;
+        .el-dropdown-link {
+            cursor: pointer;
+            color: #e8f4ff;
         }
+    }
 
+
+    .user-name {
+        font-size: 12px;
+        font-weight: 400
+    }
+    .col-middle{
+        display: flex;
+        color: #fff;
+        line-height: 60px;
+        align-items: flex-start;
     }
 
     .undertone {
         display: inline-flex;
-        line-height: 45px;
+        line-height: 60px;
     }
 
     .undertone img {
-        margin-left: 14px;
-        margin-top: 8px;
+        margin-left: 17px;
+        margin-top: 14px;
     }
 
     .undertone span {
