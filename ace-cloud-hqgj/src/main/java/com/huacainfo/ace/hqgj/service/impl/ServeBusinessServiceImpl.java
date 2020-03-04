@@ -105,86 +105,90 @@ public class ServeBusinessServiceImpl implements ServeBusinessService {
     @Transactional
     @Log(operationObj = "创业服务包", operationType = "创建", detail = "创建创业服务包")
     public ResponseDTO create(String jsons, UserProp userProp) throws Exception {
-        JSONObject jsonObj = JSON.parseObject(jsons);
-        if (!jsonObj.containsKey("serveBusiness") || !jsonObj.containsKey("serveBusinessDetail")) {
-            return new ResponseDTO(ResultCode.FAIL, "参数错误！");
-        }
-        ServeBusiness serveBusiness = JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
-        List<ServeBusinessDetail> serveBusinessDetails = new ArrayList<ServeBusinessDetail>(
-                JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
-        List<ServeBusinessAppend> appends = new ArrayList<ServeBusinessAppend>(
-                JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
-        Users user = registerDao.selectUserInfo(userProp.getUserId());
-        //基础信息
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
-        String businessId = GUIDUtil.getGUID();
-        serveBusiness.setId(businessId);
-        serveBusiness.setLsNo("CY" + sdf.format(new Date()));
-        serveBusiness.setApplyPersonName(userProp.getName());
-        serveBusiness.setApplyPersonTel(user.getMobile());
-        serveBusiness.setIdCard(user.getIdCard());
-        serveBusiness.setCreateDate(new Date());
-        serveBusiness.setStatus("0");
-        serveBusiness.setCreateUserName(userProp.getName());
-        serveBusiness.setCreateUserId(userProp.getUserId());
-        serveBusiness.setModifyDate(new Date());
-        serveBusiness.setBasicStatus("0");
-
-        int i = this.serveBusinessDao.insert(serveBusiness);
-        if (i < 0) {
-            return new ResponseDTO(ResultCode.FAIL, "失败！");
-        }
-        //人员信息
-        for (ServeBusinessDetail o : serveBusinessDetails) {
-            String memberId = GUIDUtil.getGUID();
-            o.setId(memberId);
-            o.setBusinessId(businessId);
-            if (CommonUtils.isBlank(o.getName())) {
-                return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+        try {
+            JSONObject jsonObj = JSON.parseObject(jsons);
+            if (!jsonObj.containsKey("serveBusiness") || !jsonObj.containsKey("serveBusinessDetail")) {
+                return new ResponseDTO(ResultCode.FAIL, "参数错误！");
             }
+            ServeBusiness serveBusiness = JSON.parseObject(jsonObj.getString("serveBusiness"), ServeBusiness.class);
+            List<ServeBusinessDetail> serveBusinessDetails = new ArrayList<ServeBusinessDetail>(
+                    JSONArray.parseArray(jsonObj.getString("serveBusinessDetail"), ServeBusinessDetail.class));
+            List<ServeBusinessAppend> appends = new ArrayList<ServeBusinessAppend>(
+                    JSONArray.parseArray(jsonObj.getString("serveBusinessAppend"), ServeBusinessAppend.class));
+            Users user = registerDao.selectUserInfo(userProp.getUserId());
+            //基础信息
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmssSSS");
+            String businessId = GUIDUtil.getGUID();
+            serveBusiness.setId(businessId);
+            serveBusiness.setLsNo("CY" + sdf.format(new Date()));
+            serveBusiness.setApplyPersonName(userProp.getName());
+            serveBusiness.setApplyPersonTel(user.getMobile());
+            serveBusiness.setIdCard(user.getIdCard());
+            serveBusiness.setCreateDate(new Date());
+            serveBusiness.setStatus("0");
+            serveBusiness.setCreateUserName(userProp.getName());
+            serveBusiness.setCreateUserId(userProp.getUserId());
+            serveBusiness.setModifyDate(new Date());
+            serveBusiness.setBasicStatus("0");
+
+            int i = this.serveBusinessDao.insert(serveBusiness);
+            if (i < 0) {
+                return new ResponseDTO(ResultCode.FAIL, "失败！");
+            }
+            //人员信息
+            for (ServeBusinessDetail o : serveBusinessDetails) {
+                String memberId = GUIDUtil.getGUID();
+                o.setId(memberId);
+                o.setBusinessId(businessId);
+                if (CommonUtils.isBlank(o.getName())) {
+                    return new ResponseDTO(ResultCode.FAIL, "名称不能为空！");
+                }
            /* int temp = serveBusinessDetailDao.isExist(o);
             if (temp > 0) {
                 return new ResponseDTO(ResultCode.FAIL, "创业服务资料清单人员表名称重复！");
             }*/
-            o.setCreateDate(new Date());
-            o.setStatus("0");
-            o.setCreateUserName(userProp.getName());
-            o.setCreateUserId(userProp.getUserId());
-            o.setModifyDate(new Date());
-            //人员资料附件
-            if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
-                List<BasicAnnex> fileURL = o.getBasicAnnexes();
-                for (BasicAnnex a : fileURL) {
+                o.setCreateDate(new Date());
+                o.setStatus("0");
+                o.setCreateUserName(userProp.getName());
+                o.setCreateUserId(userProp.getUserId());
+                o.setModifyDate(new Date());
+                //人员资料附件
+                if (!CommonUtils.isBlank(o.getBasicAnnexes())) {
+                    List<BasicAnnex> fileURL = o.getBasicAnnexes();
+                    for (BasicAnnex a : fileURL) {
 
-                    a.setId(GUIDUtil.getGUID());
-                    a.setRelationId(memberId);
-                    a.setFileURL(a.getFileURL());
-                    a.setFileName(a.getFileName() == null ? o.getName() : a.getFileName());
-                    //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
-                    a.setType("3");
-                    a.setRemark("创业服务资料清单附件");
-                    a.setCreateDate(new Date());
-                    a.setStatus("1");
-                    basicAnnexDao.insert(a);
+                        a.setId(GUIDUtil.getGUID());
+                        a.setRelationId(memberId);
+                        a.setFileURL(a.getFileURL());
+                        a.setFileName(a.getFileName() == null ? o.getName() : a.getFileName());
+                        //1-培训提升日程安排附件；2-法律服务附件; 3-创业服务资料清单人员附件; 4-创业服务其它附件
+                        a.setType("3");
+                        a.setRemark("创业服务资料清单附件");
+                        a.setCreateDate(new Date());
+                        a.setStatus("1");
+                        basicAnnexDao.insert(a);
+                    }
+                }
+                serveBusinessDetailDao.insert(o);
+            }
+            //其他选项
+            if (appends != null) {
+                for (ServeBusinessAppend append : appends) {
+                    append.setId(GUIDUtil.getGUID());
+                    append.setBusinessId(businessId);
+                    append.setCreateDate(new Date());
+                    append.setStatus("1");
+                    append.setCreateDate(new Date());
+                    append.setCreateUserName(userProp.getName());
+                    append.setCreateUserId(userProp.getUserId());
+                    append.setModifyDate(new Date());
+                    serveBusinessAppendDao.insert(append);
                 }
             }
-            serveBusinessDetailDao.insert(o);
-        }
-        //其他选项
-        if (appends != null) {
-            for (ServeBusinessAppend append : appends) {
-                append.setId(GUIDUtil.getGUID());
-                append.setBusinessId(businessId);
-                append.setCreateDate(new Date());
-                append.setStatus("1");
-                append.setCreateDate(new Date());
-                append.setCreateUserName(userProp.getName());
-                append.setCreateUserId(userProp.getUserId());
-                append.setModifyDate(new Date());
-                serveBusinessAppendDao.insert(append);
-            }
-        }
 
+        }catch (Exception e){
+            return new ResponseDTO(ResultCode.FAIL, "系统异常！");
+        }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
