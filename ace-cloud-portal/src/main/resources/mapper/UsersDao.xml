@@ -150,7 +150,7 @@
 
     <delete id="deleteByIdMapWechatSys" parameterType="java.lang.String">
     delete from ace_hqgj_wxms.map_wechat_sys
-    where userId = #{id,jdbcType=VARCHAR}
+    where userId = #{userId,jdbcType=VARCHAR}
   </delete>
 
     <delete id="deleteassignRoles">
