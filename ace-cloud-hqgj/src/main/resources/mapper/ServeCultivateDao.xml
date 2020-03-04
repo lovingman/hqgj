@@ -187,9 +187,14 @@
         limit #{start,jdbcType=DECIMAL}, #{limit,jdbcType=DECIMAL}
     </select>
     <select id="findCount" resultType="int">
-        SELECT COUNT(*)
+        SELECT COUNT(1)
+        FROM (
+        SELECT t.id
         <include refid="From_Statement"/>
         <include refid="Where_Condition"/>
+        GROUP by t.id
+        ) a
+
     </select>
     <select id="isExist" parameterType="com.huacainfo.ace.hqgj.model.ServeCultivate" resultType="int">
             select count(1)

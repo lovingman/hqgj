@@ -428,7 +428,7 @@
                 type: [],
                 others: [],
                 query: {
-                    type: "",
+                    types: "",
                     businessId: ""
                 },
                 query2: {
@@ -692,22 +692,22 @@
             //标签页查看
             handleClick(tab, event) {
                 if (tab.name == 4) {
-                    this.query.type = "1,2";
+                    this.query.types = "1,2";
                     this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 5) {
-                    this.query.type = "3";
+                    this.query.types = "3";
                     this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 6) {
-                    this.query.type = "4";
+                    this.query.types = "4";
                     this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }
                 if (tab.name == 7) {
-                    this.query.type = "5,6,7,8";
+                    this.query.types = "5,6,7,8";
                     this.query.businessId = this.$route.query.id;
                     this.getMemberlist();
                 }

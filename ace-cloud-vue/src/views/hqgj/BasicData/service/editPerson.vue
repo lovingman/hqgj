@@ -60,7 +60,7 @@
                         <el-form-item label="形象照:" prop="imagePhotoarr">
                             <el-upload
                                     :before-upload="beforeAvatarUpload"
-                                    :class="{hide:hideUpload}"
+                                    :class="{hides:hideUpload}"
                                     :file-list="form.imagePhotoarr"
                                     :http-request="uploadServerEdit"
                                     :limit="limitImgCount"
@@ -588,14 +588,14 @@
         padding-bottom: 0;
     }
 
-    .hide /deep/ .el-upload--picture-card {
+    .hides /deep/ .el-upload--picture-card {
         display: none;
     }
 
-    .hide2 /deep/ .el-upload--picture-card {
+    .hides2 /deep/ .el-upload--picture-card {
         display: none;
     }
-    .hide /deep/.el-upload-list--picture-card .el-upload-list__item-thumbnail{
+    .hides /deep/.el-upload-list--picture-card .el-upload-list__item-thumbnail{
         width: 100%;
         height: 100%;
         object-fit: cover;
