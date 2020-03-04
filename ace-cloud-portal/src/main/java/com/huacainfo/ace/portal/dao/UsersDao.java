@@ -41,6 +41,8 @@ public interface UsersDao {
 
     int deleteassignRoles(@Param("userId") String userId);
 
+    int deleteByIdMapWechatSys(@Param("userId") String userId);
+
     int assignRoles(@Param("userId") String userId, @Param("roleIds") String[] roleId);
 
     List<Map<String,Object>> getAllRoles(@Param("syid") String syid);

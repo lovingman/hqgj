@@ -148,6 +148,11 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
+    <delete id="deleteByIdMapWechatSys" parameterType="java.lang.String">
+    delete from ace_hqgj_wxms.map_wechat_sys
+    where userId = #{id,jdbcType=VARCHAR}
+  </delete>
+
     <delete id="deleteassignRoles">
     delete from users_role
     where user_id=#{userId};

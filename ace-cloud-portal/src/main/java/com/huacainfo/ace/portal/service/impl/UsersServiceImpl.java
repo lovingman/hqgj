@@ -168,6 +168,7 @@ public class UsersServiceImpl implements UsersService {
     @Log(operationObj = "系统用户", operationType = "删除", detail = "删除系统用户")
     public ResponseDTO deleteById(String id) throws Exception {
         this.usersDao.deleteByPrimaryKey(id);
+        this.usersDao.deleteByIdMapWechatSys(id);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
