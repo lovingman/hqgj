@@ -45,6 +45,7 @@ public interface RegisterDao {
 
     int isUnionid(@Param("unionid") String unionid);
 
+    int isUserId(@Param("userId") String userId);
     int updateUsers(Users o);
 
     UsersVo selectUserInfo(String userId);
