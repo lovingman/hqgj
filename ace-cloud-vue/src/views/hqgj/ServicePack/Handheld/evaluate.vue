@@ -63,6 +63,10 @@
     evaluatePage,
     evaluateDelete
   } from "@/api/hqgj/handheld";
+  import {
+    getUser
+  } from "@/api/sys";
+
   export default {
     name: "evaluate",
     data() {
@@ -104,8 +108,22 @@
     },
     created() {
       this.getList();
+      this.getUser();
     },
     methods: {
+      //请求登陆人信息
+      getUser() {
+        getUser().then(res => {
+          if (this.userType != 4) {
+            //如果不是工信局传递当前登录人的机构ID来匹配列表
+            this.query.orgId = res.data.corpId;
+            this.getList();
+          } else {
+            this.query.orgId = "";
+            this.getList();
+          }
+        });
+      },
       //请求page
       getList() {
         this.loading = true;

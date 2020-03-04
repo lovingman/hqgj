@@ -87,6 +87,10 @@
     orderPage,
     orderStatus
   } from "@/api/hqgj/handheld";
+  import {
+    getUser
+  } from "@/api/sys";
+
   export default {
     name: "order",
     data() {
@@ -101,7 +105,8 @@
           type: "", //类型
           status: "", //状态
           startTime: "", //开始日期
-          endTime: "" //结束日期
+          endTime: "", //结束日期
+          orgId: "",
         },
         //类型容器
         typeArr: [{
@@ -145,8 +150,22 @@
     },
     created() {
       this.getList();
+      this.getUser();
     },
     methods: {
+      //请求登陆人信息
+      getUser() {
+        getUser().then(res => {
+          if (this.userType != 4) {
+            //如果不是工信局传递当前登录人的机构ID来匹配列表
+            this.query.orgId = res.data.corpId;
+            this.getList();
+          } else {
+            this.query.orgId = "";
+            this.getList();
+          }
+        });
+      },
       //选择tableSize事件
       handleTableSize(size) {
         this.tableSize = size;
