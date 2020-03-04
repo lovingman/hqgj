@@ -129,6 +129,12 @@
         where unionId = #{unionid,jdbcType=VARCHAR}
   </select>
 
+    <select id="isUserId" parameterType="java.lang.String" resultType="int">
+            select count(1)
+        from ace_hqgj_wxms.map_wechat_sys
+        where userId = #{userId,jdbcType=VARCHAR}
+  </select>
+
     <insert id="insertMapWechatSys" parameterType="com.huacainfo.ace.hqgj.model.MapWechatSys">
     insert into ace_hqgj_wxms.map_wechat_sys (id, appType, unionId,
       userId, status, remark,
