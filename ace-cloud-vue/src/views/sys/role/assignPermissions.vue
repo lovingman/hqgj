@@ -120,7 +120,10 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped lang="less">
+  .app-container{
+    padding-bottom: 100px;
+  }
 </style>
 
 
