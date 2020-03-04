@@ -137,6 +137,9 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="condition.orgId != null and condition.orgId != ''">
+                and t.orgId = #{condition.orgId,jdbcType=VARCHAR}
+            </if>
             <if test="condition.content != null and condition.content != ''">
                 and t.content = #{condition.content,jdbcType=VARCHAR}
             </if>
