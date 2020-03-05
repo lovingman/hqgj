@@ -98,7 +98,7 @@
         total: 0, //tablepage总数
         tablePage: 1, //第几页参数
         tableSize: 10, //每页参数
-        // timeArr: [], //时间数组
+        timeArr: [], //时间数组
         loading: false, //loadign加载状态
         query: {
           orderNo: "", //订单号
@@ -149,7 +149,6 @@
       };
     },
     created() {
-      this.getList();
       this.getUser();
     },
     methods: {

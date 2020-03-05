@@ -107,7 +107,6 @@
       };
     },
     created() {
-      this.getList();
       this.getUser();
     },
     methods: {
