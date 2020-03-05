@@ -21,7 +21,14 @@
                         <el-table-column label="附件数" prop="annexNum" width="250"></el-table-column>
                         <el-table-column align="right" fixed="right" header-align="center" label="操作" width="100">
                             <template slot-scope="scope">
-                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text">下载</el-button>
+                                <el-button @click="FileDownload(scope.$index,scope.row)" type="text"
+                                           v-if="scope.row.id != null">下载
+                                </el-button>
+                                <el-button type="text" v-else="scope.row.id != null">
+                                    <router-link :to="{name:'application',query:{id:form.id,name:'download'}}"
+                                                 target="_blank">下载
+                                    </router-link>
+                                </el-button>
                                 <span class="strightline">|</span>
                                 <el-button @click="looking(scope.$index,scope.row)" type="text"
                                            v-if="scope.row.id != null">预览

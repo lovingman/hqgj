@@ -192,7 +192,7 @@
                                     style="font-family:宋体; font-size:10.5pt; font-weight:bold">经营范围</span></p></td>
                         <td colspan="10"
                             style="border-bottom-color:#000000;border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
-                            <p style="margin:0pt; text-align:center;font-family:宋体; font-size:10.5pt;color:#1890FF;float: left">
+                            <p style="margin:0pt;font-family:宋体; font-size:10.5pt;color:#1890FF;float: left;font-weight:bold">
                                 {{list.manageExtent}}
                             </p></td>
                         <td style="vertical-align:top"></td>
@@ -206,7 +206,7 @@
                             style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.4pt; padding-right:5.03pt; vertical-align:middle">
                             <p style="margin:0pt">
                             <span
-                                    style="font-family:宋体; font-size:10.5pt;color:#1890FF">{{list.areaName}}{{list.companyAddress}}</span>
+                                    style="font-family:宋体;font-weight:bold;font-size:10.5pt;color:#1890FF">{{list.areaName}}{{list.companyAddress}}</span>
                             </p></td>
                         <td style="vertical-align:top"></td>
                     </tr>
