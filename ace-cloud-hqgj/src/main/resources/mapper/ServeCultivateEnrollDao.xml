@@ -164,7 +164,8 @@
 
     <update id="updateStatus" parameterType="java.lang.String">
         update  serve_cultivate_enroll
-        set status=#{status,jdbcType=VARCHAR}
+        set status=#{status,jdbcType=VARCHAR},
+        isSign = #{isSign,jdbcType=VARCHAR}
         where id in
         <foreach collection="ids" item="ids" open="(" separator="," close=")">
             #{ids}

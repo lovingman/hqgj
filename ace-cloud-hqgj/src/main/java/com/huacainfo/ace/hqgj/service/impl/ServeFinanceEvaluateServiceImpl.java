@@ -111,17 +111,19 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         if (CommonUtils.isBlank(o.getEvaluateGrade())) {
             return new ResponseDTO(ResultCode.FAIL, "评分不能为空！");
         }
-        UsersVo vo =personCenterDao.selectUserInfo(userProp.getUserId());
-        o.setCompanyId(vo.getCompanyId());
-        o.setCreateDate(new Date());
-        o.setStatus("1");
-        o.setCreateUserName(userProp.getName());
-        o.setCreateUserId(userProp.getUserId());
-        o.setModifyDate(new Date());
-        this.serveFinanceEvaluateDao.insert(o);
-        //已完成已评价
-        int i=serveFinanceOrderDao.updateStatus(orderId,"32");
-        if(i==0){
+        try {
+            UsersVo vo = personCenterDao.selectUserInfo(userProp.getUserId());
+            o.setCompanyId(vo.getCompanyId());
+            o.setCreateDate(new Date());
+            o.setStatus("1");
+            o.setCreateUserName(userProp.getName());
+            o.setCreateUserId(userProp.getUserId());
+            o.setModifyDate(new Date());
+            this.serveFinanceEvaluateDao.insert(o);
+            //已完成已评价
+            int i = serveFinanceOrderDao.updateStatus(orderId, "32");
+        }catch (Exception e){
+            e.printStackTrace();
             return new ResponseDTO(ResultCode.FAIL, "内部错误！");
         }
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");

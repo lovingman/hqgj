@@ -146,7 +146,7 @@
         (select min(i.price) from serve_finance_item i where i.financeId=t.id) as minPrice,
         (select max(i.price) from serve_finance_item i where i.financeId=t.id) as maxPrice,
         (select  IFNULL(b.surplusIntegral,0) as integral from  serve_business_integral b where b.companyId=(select m.companyId from base_company_member m where m.id=#{userId})) as integral,
-        (SELECT count(1) FROM `serve_finance_order` o where o.financeId=t.id and o.type='3' and o.createUserId=#{userId,jdbcType=VARCHAR} and o.status!='1')as isOrder,
+        (SELECT count(1) FROM `serve_finance_order` o where o.financeId=t.id and o.type='3' and o.createUserId=#{userId,jdbcType=VARCHAR} and o.status not in ('1','31','32'))as isOrder,
         case p.type
         when '4' then   '常德市'
         when '3' then   concat_ws(">",'常德市',p.name)

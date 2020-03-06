@@ -207,7 +207,11 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if(CommonUtils.isBlank(status) || CommonUtils.isBlank(ids)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        this.serveCultivateEnrollDao.updateStatus(status,ids);
+        String isSign="y";
+        if(status.equals("1") || status.equals("0")){
+            isSign="n";
+        }
+        this.serveCultivateEnrollDao.updateStatus(status,ids,isSign);
         return new ResponseDTO(ResultCode.SUCCESS, "成功！");
     }
 
@@ -222,7 +226,7 @@ public class ServeCultivateEnrollServiceImpl implements ServeCultivateEnrollServ
         if(CommonUtils.isBlank(id)){
             return new ResponseDTO(ResultCode.FAIL, "参数错误！");
         }
-        serveCultivateEnrollDao.updateStatus("1",id.split(","));
+        serveCultivateEnrollDao.updateStatus("1",id.split(","),"n");
         ServeCultivateEnrollVo vo =serveCultivateEnrollDao.selectVoByPrimaryKey(id);
         if(vo==null){
             return new ResponseDTO(ResultCode.FAIL, "内部错误！");
