@@ -113,7 +113,7 @@ public class ServeFinanceEvaluateServiceImpl implements ServeFinanceEvaluateServ
         }
         try {
             UsersVo vo = personCenterDao.selectUserInfo(userProp.getUserId());
-            o.setCompanyId(vo.getCompanyId());
+            o.setCompanyId(vo.getCompanyId()==null?vo.getOrgId():vo.getCompanyId());
             o.setCreateDate(new Date());
             o.setStatus("1");
             o.setCreateUserName(userProp.getName());

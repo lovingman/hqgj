@@ -76,7 +76,7 @@ public class ServeFinanceEvaluateController extends BaseController {
                     paramType = "form"),
     })
     @PostMapping(value = "/create", produces = "application/json;charset=UTF-8")
-    public ResponseDTO create(@RequestBody String jsons) throws Exception {
+    public ResponseDTO create(String jsons) throws Exception {
         ServeFinanceEvaluate obj = JSON.parseObject(jsons, ServeFinanceEvaluate.class);
         return this.serveFinanceEvaluateService.create(obj, this.getCurUserProp());
     }
