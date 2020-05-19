@@ -58,7 +58,7 @@
                 <el-form-item label="简介:" prop="content">
                     <el-input
                             v-model.trim="addform.content"
-                            maxlength="1000"
+                            maxlength="2000"
                             placeholder="请输入机构简介"
                             rows="4"
                             show-word-limit

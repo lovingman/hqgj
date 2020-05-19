@@ -39,7 +39,7 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 50= navbar  50  */
-  height: 100%;
+  height: calc(100% - 104px);
   width: 100%;
   position: relative;
   overflow-y: scroll;

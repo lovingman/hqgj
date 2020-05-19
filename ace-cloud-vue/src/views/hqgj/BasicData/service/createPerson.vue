@@ -46,7 +46,7 @@
                         <el-form-item label="简介:" prop="content">
                             <el-input
                                     maxRows="6"
-                                    maxlength="500"
+                                    maxlength="2000"
                                     placeholder="请输入简介"
                                     rows="6"
                                     show-word-limit

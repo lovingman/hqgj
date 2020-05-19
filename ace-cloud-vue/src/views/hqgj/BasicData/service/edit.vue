@@ -57,7 +57,7 @@
                     <el-input
                             v-model.trim="form.content"
                             type="textarea"
-                            maxlength="1000"
+                            maxlength="2000"
                             rows="4"
                             show-word-limit
                             placeholder="请输入机构简介"
